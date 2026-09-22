@@ -68,9 +68,6 @@ export enum AppEvent {
   switchUserKeymap = 'switchUserKeymap',
   openPluginManager = 'openPluginManager',
   openKeyboardShortcuts = 'openKeyboardShortcuts',
-  updateJsonViewerSidebar = 'updateJsonViewerSidebar',
-  jsonViewerSidebarExpandPath = 'jsonViewerSidebarExpandPath',
-  jsonViewerSidebarValueChange = 'jsonViewerSidebarValueChange',
   /** A tab is about to be switched. First argument is the tab. */
   switchingTab = 'switchingTab',
   /** A tab has been switched. First argument is the tab. */

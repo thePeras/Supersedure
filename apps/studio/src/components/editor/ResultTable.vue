@@ -72,7 +72,6 @@
   import EditorModal from '../tableview/EditorModal.vue'
   import { AppEvent } from "@/common/AppEvent";
   import XLSX from 'xlsx';
-  import { parseRowDataForJsonViewer } from '@/lib/data/jsonViewer'
   import { vueEditor } from '@shared/lib/tabulator/helpers';
   import NullableInputEditorVue from '@shared/components/tabulator/NullableInputEditor.vue';
   import rawLog from '@bksLogger';
@@ -107,9 +106,7 @@ import { stringToTypedArray } from '@/common/utils'
       return {
         tabulator: null,
         actualTableHeight: '100%',
-        selectedRowData: {},
         filterValue: '',
-        selectedRowPosition: -1,
         hiddenFilter: true,
         pendingChanges: {
           updates: [],
@@ -244,9 +241,6 @@ import { stringToTypedArray } from '@/common/utils'
         const columns = 'columns-' + this.result.fields.reduce((str, field) => `${str},${field.name}`, '')
         return `${workspace}.${connection}.${table}.${columns}`
       },
-      selectedRowId() {
-        return `${this.tableId ? `${this.tableId}.` : ''}tab-${this.tab.id}.row-${this.selectedRowPosition}`
-      },
       rootBindings() {
         return [
           { event: AppEvent.switchedTab, handler: this.handleSwitchedTab },
@@ -272,7 +266,6 @@ import { stringToTypedArray } from '@/common/utils'
           downloadConfig: {
             columnHeaders: true
           },
-          onRangeChange: this.handleRangeChange,
           rowFormatter: this.rowFormatter,
           rowHeader: {
             // @ts-ignore
@@ -1097,31 +1090,8 @@ import { stringToTypedArray } from '@/common/utils'
       triggerFocus() {
         this.tabulator.rowManager.getElement().focus();
       },
-      updateJsonViewerSidebar() {
-        /** @type {import('@/lib/data/jsonViewer').UpdateOptions} */
-        const data = {
-          dataId: this.selectedRowId,
-          value: this.selectedRowData,
-          expandablePaths: [],
-          editablePaths: [],
-          signs: {},
-        }
-        this.trigger(AppEvent.updateJsonViewerSidebar, data)
-      },
-      handleRangeChange(ranges) {
-        const row = ranges[0].getRows()[0];
-        const parsedData = parseRowDataForJsonViewer(row.getData(), this.tableColumns)
-        this.selectedRowData = this.dataToJson(parsedData, true)
-        this.selectedRowPosition = row.getPosition()
-        this.updateJsonViewerSidebar()
-      },
-      handleTabActive() {
-        this.updateJsonViewerSidebar()
-      },
-      handleSwitchedTab(tab) {
-        if (tab.id === this.tab.id) {
-          this.handleTabActive()
-        }
+      handleSwitchedTab() {
+        // no-op
       },
     },
     beforeDestroy() {
@@ -1138,9 +1108,6 @@ import { stringToTypedArray } from '@/common/utils'
           this.tabulator.off('tableBuilt', onTableBuilt)
         }
         this.tabulator.on('tableBuilt', onTableBuilt)
-      }
-      if (this.active) {
-        this.handleTabActive()
       }
       this.registerHandlers(this.rootBindings)
     },

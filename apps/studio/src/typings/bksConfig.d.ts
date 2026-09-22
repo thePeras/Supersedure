@@ -224,7 +224,6 @@ declare interface IBksConfig {
             cloneSelection: string;
             copySelection: string;
             deleteSelection: string[];
-            jsonViewerSidebar: string;
             openInSqlEditor: string;
             openQuickSearch: string;
             pasteSelection: string;
@@ -232,11 +231,6 @@ declare interface IBksConfig {
             refresh: string[];
             save: string;
             undo: string;
-        };
-        plugins: {
-            "bks-ai-shell": {
-                "new-tab-dropdown-item": string;
-            };
         };
         queryEditor: {
             closeTableFilter: string;
@@ -294,17 +288,9 @@ declare interface IBksConfig {
         };
     };
     pluginSystem: {
-        allow: string[];
+        allow: any[];
         communityDisabled: boolean;
         disabled: boolean;
-    };
-    plugins: {
-        "bks-ai-shell": {
-            disabled: boolean;
-        };
-        "bks-er-diagram": {
-            disabled: boolean;
-        };
     };
     security: {
         activityEvents: string[];

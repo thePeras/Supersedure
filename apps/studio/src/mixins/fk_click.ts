@@ -1,9 +1,6 @@
 import rawLog from '@bksLogger'
-import { monthAgo } from '@/common/date';
-import { SmartLocalStorage } from '@/common/LocalStorage';
 import helpers from '@shared/lib/tabulator'
 import { CellComponent } from 'tabulator-tables';
-import { AppEvent } from '@/common/AppEvent';
 import { TabulatorFormatterParams } from '@/common/tabulator';
 
 const log = rawLog.scope('fk_click');
@@ -144,24 +141,10 @@ export const FkLinkMixin = {
         });
       });
 
-      let openJsonViewer = true
-      if (this.$store.getters.isCommunity) {
-        const lastOpen = SmartLocalStorage.getDate('openJSONViewerViaFK__community')
-        if (!lastOpen || lastOpen < monthAgo()) {
-          SmartLocalStorage.setDate('openJSONViewerViaFK__community', new Date())
-        } else {
-          openJsonViewer = false
-        }
-      }
-
       const payload = {
         table, filters, titleScope: values.join(','),
       }
       this.$root.$emit('loadTable', payload)
-      if (openJsonViewer) {
-        this.trigger(AppEvent.selectSecondarySidebarTab, "json-viewer")
-        this.trigger(AppEvent.toggleSecondarySidebar, true)
-      }
     },
 
   }

@@ -5,12 +5,6 @@ import path from 'path';
 import _ from 'lodash'
 import fs from 'fs'
 
-// NOTE: keep in sync with src/common/globals.ts -> plugins.ensureInstalled
-const ensureInstalled = [
-  "@beekeeperstudio/bks-ai-shell",
-  "@beekeeperstudio/bks-er-diagram",
-];
-
 const isWatching = process.argv[2] === 'watch';
 
 function getElectronBinary() {
@@ -39,7 +33,6 @@ const externals = ['better-sqlite3', 'sqlite3',
         // installed and the app never selects that dialect, so leave the
         // require unresolved rather than failing the bundle.
         'oracledb',
-        ...ensureInstalled,
       ]
 
 let electron = null

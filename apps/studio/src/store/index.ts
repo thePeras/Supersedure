@@ -306,15 +306,6 @@ const store = new Vuex.Store<State>({
     aiShellHintShown(_state, getters) {
       return !_.isEmpty(getters["settings/settings"]["tabDropdownAIShellHintShown"]?.value);
     },
-    aiShellAvailable(_state, getters) {
-      return getters["tabs/newTabDropdownItems"].some(
-        ({ config }) => config.pluginId === "bks-ai-shell"
-      );
-    },
-    erDiagramAvailable(_state, getters) {
-      const items = getters["popupMenu/getExtraPopupMenu"]("structure.statusbar");
-      return items.some((item) => item.slug === "bks-er-diagram-showOneTable");
-    }
   },
   mutations: {
     storeInitialized(state, b: boolean) {

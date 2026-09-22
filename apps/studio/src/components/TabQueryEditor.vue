@@ -221,14 +221,6 @@
             <i class="material-icons">history</i>
           </x-button>
           <x-button
-            v-if="aiShellAvailable"
-            @click.prevent="askAi"
-            class="btn btn-flat btn-small ask-ai"
-          >
-            <i class="material-icons">auto_awesome</i> Ask AI
-          </x-button>
-
-          <x-button
             @click.prevent="triggerSave"
             class="btn btn-flat btn-small"
             :disabled="readOnly"
@@ -701,7 +693,7 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
       }
     },
     computed: {
-      ...mapGetters(['dialect', 'dialectData', 'defaultSchema', 'isCloud', 'aiShellAvailable']),
+      ...mapGetters(['dialect', 'dialectData', 'defaultSchema', 'isCloud']),
       ...mapGetters({
         'isCommunity': 'licenses/isCommunity',
         'userKeymap': 'settings/userKeymap',
@@ -1442,7 +1434,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           }
         }
         this.editingResult = true;
-        wait(800).then(() => this.$tour.start("startedEditingResult"));
       },
       async saveChanges() {
         // This covers the instance where someone runs a query, toggles manual commit on, and then makes edits and tries to save them. This ensures it will then be inside a transaction
@@ -1563,14 +1554,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
       },
       onChange(text) {
         this.unsavedText = text
-      },
-      askAi() {
-        const sql = this.hasSelectedText
-          ? this.editor.selection
-          : this.unsavedText;
-        this.$bksPlugin.execute('bks-ai-shell', 'new-tab-dropdown-item', {
-          message: "```sql\n" + sql + "\n```\nHelp me with the above query" ,
-        });
       },
       escapeRegExp(string) {
         return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
@@ -1835,7 +1818,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           if (found) {
             this.$store.dispatch('updateTables')
           }
-          wait(1200).then(() => this.$tour.start("ranQuerySuccessfully"));
         } catch (ex) {
           log.error(ex)
           if(this.running) {
@@ -2033,15 +2015,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         }
         return [
           ...items,
-          ...(this.aiShellAvailable
-            ? [
-                {
-                  label: "Ask AI",
-                  id: "ask-ai",
-                  handler: this.askAi,
-                },
-              ]
-            : []),
           {
             label: "Open Query Formatter",
             id: "formatter",

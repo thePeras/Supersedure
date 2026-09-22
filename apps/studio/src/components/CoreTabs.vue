@@ -376,7 +376,6 @@ export default Vue.extend({
         if (!this.tabItems?.length) {
           await this.createQuery()
         }
-        wait(800).then(() => this.$tour.start("connectedScreen"));
       }
     }
   },

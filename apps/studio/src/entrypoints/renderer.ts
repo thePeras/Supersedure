@@ -41,7 +41,6 @@ import { PersistenceGuardTabulatorModule } from '@/plugins/PersistenceGuardTabul
 import { WebPluginManager } from '@/services/plugin/web'
 import PluginStoreService from '@/services/plugin/web/PluginStoreService'
 import * as UIKit from '@supersedure-studio/ui-kit'
-import ProductTourPlugin from '@/plugins/ProductTourPlugin'
 
 (async () => {
 
@@ -182,7 +181,6 @@ import ProductTourPlugin from '@/plugins/ProductTourPlugin'
       closeWith: ['button', 'click'],
     })
     Vue.use(VueKeyboardTrapDirectivePlugin)
-    Vue.use(ProductTourPlugin, { store, utility })
 
     const app = new Vue({
       render: h => h(App),

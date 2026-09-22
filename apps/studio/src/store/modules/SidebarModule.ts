@@ -58,12 +58,7 @@ export const SidebarModule: Module<State, RootState> = {
     queries: TreeExpansionModule,
   },
   state: () => ({
-    tabs: [
-      {
-        id: "json-viewer",
-        label: "JSON Viewer",
-      },
-    ],
+    tabs: [],
 
     // PRIMARY SIDEBAR
     primarySidebarOpen: SmartLocalStorage.getBool(PRIMARY_SIDEBAR_OPEN_KEY, true),
@@ -72,7 +67,7 @@ export const SidebarModule: Module<State, RootState> = {
     // SECONDARY SIDEBAR
     secondarySidebarOpen: SmartLocalStorage.getBool(SECONDARY_SIDEBAR_OPEN_KEY, false),
     secondarySidebarWidth: SmartLocalStorage.getJSON(SECONDARY_SIDEBAR_WIDTH_KEY, SECONDARY_SIDEBAR_INITIAL_WIDTH),
-    secondaryActiveTabId: "json-viewer",
+    secondaryActiveTabId: null,
 
     globalSidebarActiveItem: getInitialGlobalSidebarActiveItem(),
   }),

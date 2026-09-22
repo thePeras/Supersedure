@@ -80,11 +80,7 @@ export const MenuBarModule: Module<State, RootState> = {
           accelerator: externalItem.accelerator,
         };
 
-        if (externalItem.id.startsWith("bks-er-diagram")) {
-          submenu.unshift(item);
-        } else {
-          submenu.push(item);
-        }
+        submenu.push(item);
       }
 
       return menus;
