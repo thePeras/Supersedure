@@ -2,7 +2,7 @@
 title: Trino
 summary: "El soporte de Trino esta actualmente en alpha temprano"
 icon: simple/trino
-description: "Conectate a un coordinador Trino para ejecutar consultas usando Beekeeper Studio"
+description: "Conectate a un coordinador Trino para ejecutar consultas usando Supersedure Studio"
 ---
 
 # Soporte de Trino
@@ -14,7 +14,7 @@ Super emocionados de tener soporte de Trino aqui para todos ustedes. Por favor t
 El soporte ha sido limitado a basicamente un estado de "solo lectura" ya que cualquier forma de escritura debe hacerse dentro de los limites de la base de datos misma.
 
 ## Como conectarse
-Conectarse a una base de datos Trino desde Beekeeper Studio es sencillo. Selecciona Trino del menu desplegable, y completa los campos de host, puerto, nombre de usuario y contrasena del Cluster Trino (no de ninguna de las bases de datos subyacentes), luego haz clic en Conectar.
+Conectarse a una base de datos Trino desde Supersedure Studio es sencillo. Selecciona Trino del menu desplegable, y completa los campos de host, puerto, nombre de usuario y contrasena del Cluster Trino (no de ninguna de las bases de datos subyacentes), luego haz clic en Conectar.
 
 ### Detalles de conexion de Trino
 
@@ -28,9 +28,9 @@ Para conectarte a una base de datos Trino, necesitaras la siguiente informacion:
 
 ### Conexiones SSL / HTTPS
 
-Si tu coordinador Trino esta configurado con TLS/HTTPS, habilita **SSL** en el formulario de conexion. Beekeeper Studio soporta tres modos de SSL:
+Si tu coordinador Trino esta configurado con TLS/HTTPS, habilita **SSL** en el formulario de conexion. Supersedure Studio soporta tres modos de SSL:
 
-1. **Confiar en el certificado del servidor** — Habilita SSL sin proporcionar archivos de certificado. Beekeeper Studio se conectara por HTTPS pero no verificara el certificado del servidor. Esta es la opcion mas sencilla y funciona con certificados autofirmados.
+1. **Confiar en el certificado del servidor** — Habilita SSL sin proporcionar archivos de certificado. Supersedure Studio se conectara por HTTPS pero no verificara el certificado del servidor. Esta es la opcion mas sencilla y funciona con certificados autofirmados.
 2. **Proporcionar un certificado CA** — Si tu servidor Trino usa un certificado firmado por una CA privada, proporciona el archivo de certificado CA. Deja "Rechazar no autorizados" desmarcado para permitir la conexion.
 3. **Verificacion completa de certificados** — Proporciona el certificado CA y opcionalmente un certificado de cliente y archivo de clave, luego marca "Rechazar no autorizados" para aplicar la verificacion TLS completa.
 
@@ -39,7 +39,7 @@ Si tu coordinador Trino esta configurado con TLS/HTTPS, habilita **SSL** en el f
 
 ### Probar tu conexion de Trino
 
-Antes de guardar los detalles de tu conexion, Beekeeper Studio te permite probar la conexion:
+Antes de guardar los detalles de tu conexion, Supersedure Studio te permite probar la conexion:
 
 1. Ingresa los detalles de tu conexion.
 2. Haz clic en el boton *Probar conexion*.

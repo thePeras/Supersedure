@@ -1,8 +1,8 @@
 <template>
   <div class="style-wrapper" :style="{ '--bks-text-editor-font-size': `${editorFontSize}px` }">
     <div
-      class="beekeeper-studio-wrapper"
-      :class="{ 'beekeeper-studio-minimal-mode': $store.getters.minimalMode }"
+      class="supersedure-studio-wrapper"
+      :class="{ 'supersedure-studio-minimal-mode': $store.getters.minimalMode }"
     >
       <titlebar />
       <template v-if="storeInitialized">
@@ -231,7 +231,7 @@ export default Vue.extend({
           queue: 'trial',
           buttons: [
             Noty.button('Buy a License', 'btn btn-flat', () => {
-              window.location.href = "https://beekeeperstudio.io/pricing"
+              window.location.href = "https://supersedurestudio.io/pricing"
             }),
             Noty.button('Enter License', 'btn btn-primary', () => {
               this.$root.$emit(AppEvent.enterLicense)

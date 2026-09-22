@@ -128,7 +128,7 @@
 
 <script lang="ts">
 import Vue, { PropType } from "vue";
-import { Tree, TreeFolder } from "@beekeeperstudio/ui-kit/vue/tree";
+import { Tree, TreeFolder } from "@supersedure-studio/ui-kit/vue/tree";
 import { TreeExpansionModule } from '@/store/modules/sidebar/TreeExpansionModule';
 import { DataModules } from '@/store/DataModules';
 import ContentPlaceholder from '@/components/common/loading/ContentPlaceholder.vue'

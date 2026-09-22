@@ -27,7 +27,7 @@ services:
       - TZ=Europe/London
       - PASSWORD_ACCESS=true #optional
       - USER_PASSWORD=password #optional
-      - USER_NAME=beekeeper #optional
+      - USER_NAME=supersedure #optional
       - SUDO_ACCESS=true
     ports:
       - 2222
@@ -46,7 +46,7 @@ services:
       - TZ=Europe/London
       - PASSWORD_ACCESS=true
       - USER_PASSWORD=password
-      - USER_NAME=beekeeper
+      - USER_NAME=supersedure
       - SUDO_ACCESS=true
     ports:
       - 2222

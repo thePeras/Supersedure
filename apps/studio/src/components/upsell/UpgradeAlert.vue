@@ -37,8 +37,8 @@ export default Vue.extend({
     },
   },
   data: () => ({
-    learnUrl: "https://www.beekeeperstudio.io/upgrade",
-    buyUrl: "https://www.beekeeperstudio.io/pricing",
+    learnUrl: "https://www.supersedurestudio.io/upgrade",
+    buyUrl: "https://www.supersedurestudio.io/pricing",
   }),
   computed: {
     trialAvailable(): boolean {

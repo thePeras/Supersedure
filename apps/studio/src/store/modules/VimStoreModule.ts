@@ -28,14 +28,14 @@ async function readVimrc(): Promise<string[]> {
 /** One line gets its reason; several would be unreadable, so those get located. */
 function describeErrors(errors: VimrcParseError[]): string {
   if (errors.length === 1) {
-    return `.beekeeper.vimrc line ${errors[0].line}: ${errors[0].reason}`;
+    return `.supersedure.vimrc line ${errors[0].line}: ${errors[0].reason}`;
   }
   const lines = errors.map((e) => e.line).join(", ");
-  return `.beekeeper.vimrc: ${errors.length} lines could not be parsed (lines ${lines})`;
+  return `.supersedure.vimrc: ${errors.length} lines could not be parsed (lines ${lines})`;
 }
 
 /**
- * The user's `.beekeeper.vimrc`, read once per app run rather than per tab.
+ * The user's `.supersedure.vimrc`, read once per app run rather than per tab.
  */
 export const VimStoreModule: Module<State, RootState> = {
   namespaced: true,
@@ -76,11 +76,11 @@ export const VimStoreModule: Module<State, RootState> = {
           context.commit("setResult", { directives, errors });
 
           if (errors.length > 0) {
-            log.warn("Could not parse every line of .beekeeper.vimrc", errors);
+            log.warn("Could not parse every line of .supersedure.vimrc", errors);
             Vue.prototype.$noty.warning(describeErrors(errors));
           }
         } catch (e) {
-          log.error("Could not read .beekeeper.vimrc", e);
+          log.error("Could not read .supersedure.vimrc", e);
           context.commit("setResult", { directives: [], errors: [] });
         } finally {
           context.commit("setLoading", null);

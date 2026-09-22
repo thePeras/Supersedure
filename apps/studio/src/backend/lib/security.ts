@@ -10,7 +10,7 @@ let idleCheckInterval: NodeJS.Timer;
 
 let initialized = false;
 
-// Tracks the last time any Beekeeper window reported user input. powerMonitor's
+// Tracks the last time any Supersedure window reported user input. powerMonitor's
 // system idle time is unreliable on Linux (especially Wayland and tiling WMs)
 // and can report the user as idle while they're actively using the app, so we
 // combine it with renderer-reported activity (see the `userActive` IPC, which

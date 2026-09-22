@@ -4,7 +4,7 @@ summary: "Un formateador completo para guardar y usar preajustes para formatear 
 icon: material/format-align-center
 ---
 
-El formateador de consultas SQL de Beekeeper es una excelente manera de asegurar que tu SQL cumpla con requisitos de formato estrictos, ya sea de tu jefe o simplemente de ti mismo. El formateador de consultas SQL trae las opciones del [paquete NPM SQL Formatter](https://www.npmjs.com/package/sql-formatter) a tu alcance para establecer, guardar y usar preajustes de formato.
+El formateador de consultas SQL de Supersedure es una excelente manera de asegurar que tu SQL cumpla con requisitos de formato estrictos, ya sea de tu jefe o simplemente de ti mismo. El formateador de consultas SQL trae las opciones del [paquete NPM SQL Formatter](https://www.npmjs.com/package/sql-formatter) a tu alcance para establecer, guardar y usar preajustes de formato.
 
 ## Primeros pasos
 
@@ -18,7 +18,7 @@ Haz clic derecho en la ventana del editor y selecciona **Abrir formateador de co
 3. prettier-sql
 
 ### Actualizar preajuste predeterminado
-Puedes establecer el formateador predeterminado para tus consultas usando el [sistema de configuracion](./configuration.md) de Beekeeper Studio. Por defecto esto sera **bk-default**.
+Puedes establecer el formateador predeterminado para tus consultas usando el [sistema de configuracion](./configuration.md) de Supersedure Studio. Por defecto esto sera **bk-default**.
 
 ```ini
 [ui.queryEditor]

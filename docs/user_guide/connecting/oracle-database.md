@@ -1,14 +1,14 @@
 ---
 title: Oracle Database
 summary: "Specific instructions for making connections with Oracle Database"
-description: "Beekeeper Studio supports connecting to Oracle databases in both thin and thick mode. This guide provides instructions for setting up the Oracle Instant Client and connecting to your database."
-old_url: "https://docs.beekeeperstudio.io/docs/oracle-database"
+description: "Supersedure Studio supports connecting to Oracle databases in both thin and thick mode. This guide provides instructions for setting up the Oracle Instant Client and connecting to your database."
+old_url: "https://docs.supersedurestudio.io/docs/oracle-database"
 icon: material/database
 ---
 
 # How To Connect to Oracle Database
 
-Beekeeper Studio supports connecting to Oracle databases in two modes:
+Supersedure Studio supports connecting to Oracle databases in two modes:
 
 1. **Thin Mode**: This is the default mode and does not require any additional configuration. Not all connection options are available in this mode. If you get a `thin mode` error, you may need to use `Thick Mode`.
 2. **Thick Mode**: This mode requires the Oracle Instant Client to be installed on your system. It allows for more advanced connection options and is recommended for most users.
@@ -41,7 +41,7 @@ sudo yum install libaio #redhat/fedora
 
 ## Connecting To Oracle Databases
 
-There are a number of ways you can connect to an Oracle database using Beekeeper Studio.
+There are a number of ways you can connect to an Oracle database using Supersedure Studio.
 
 1. PSA connection string
 1. SID or Service Name connection string
@@ -50,11 +50,11 @@ There are a number of ways you can connect to an Oracle database using Beekeeper
 
 ## Using tnsnames.ora
 
-You can specify your 'config' directory when adding an Oracle connection. Beekeeper Studio will use this to find your tnsnames.ora file, you can then use an alias in your connection string.
+You can specify your 'config' directory when adding an Oracle connection. Supersedure Studio will use this to find your tnsnames.ora file, you can then use an alias in your connection string.
 
 ### Enter Your Oracle Connection String
 
-If you are using a connection string to connect to your database, Beekeeper supports all common forms of Oracle connection strings. See the examples below, or [more on the Oracle website](https://docs.oracle.com/en/database/other-databases/essbase/21/essoa/connection-string-formats.html)
+If you are using a connection string to connect to your database, Supersedure supports all common forms of Oracle connection strings. See the examples below, or [more on the Oracle website](https://docs.oracle.com/en/database/other-databases/essbase/21/essoa/connection-string-formats.html)
 
 #### Oracle Connection String Examples
 

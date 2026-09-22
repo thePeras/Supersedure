@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve Beekeeper Studio
+about: Create a report to help us improve Supersedure Studio
 title: 'BUG: Say something here'
 labels: ''
 assignees: ''
@@ -25,7 +25,7 @@ If applicable, add screenshots or GIFS to help explain your problem.
 
 **Version Information (please complete the following information):**
  - OS: [e.g. Windows/Mac/Ubuntu]
- - App Version [e.g. help -> About Beekeeper Studio]
+ - App Version [e.g. help -> About Supersedure Studio]
  - Database type and version [eg Posgresql 9.3]
 
 **Additional context**

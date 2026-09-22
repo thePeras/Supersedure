@@ -54,7 +54,7 @@ const DEFAULT_TITLE = "Are you sure?";
 const DEFAULT_MESSAGE = "This action cannot be undone.";
 const DEFAULT_YES_LABEL = "Confirm";
 const DEFAULT_NO_LABEL = "Cancel";
-const MODAL_NAME_PREFIX = "beekeeper-confirmation-modal";
+const MODAL_NAME_PREFIX = "supersedure-confirmation-modal";
 
 export default Vue.extend({
   components: { ConfirmationModal },

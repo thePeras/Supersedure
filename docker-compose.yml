@@ -36,7 +36,7 @@ services:
     image: mongo
     platform: linux/amd64
     environment:
-      MONGO_INITDB_ROOT_USERNAME: beekeeper
+      MONGO_INITDB_ROOT_USERNAME: supersedure
       MONGO_INITDB_ROOT_PASSWORD: example
       MONGO_INITDB_DATABASE: sakila
     volumes:
@@ -50,7 +50,7 @@ services:
     environment:
       ORACLE_PASSWORD: example
       ORACLE_DATABASE: sakila
-      APP_USER: beekeeper
+      APP_USER: supersedure
       APP_USER_PASSWORD: example
     volumes:
       - oracle18:/opt/oracle/oradata

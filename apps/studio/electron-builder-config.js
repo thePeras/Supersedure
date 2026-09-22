@@ -20,8 +20,8 @@ const bksErDiagramPath = path.dirname(require.resolve('@beekeeperstudio/bks-er-d
 
 
 module.exports = {
-  appId: "io.beekeeperstudio.desktop",
-  productName: "Beekeeper Studio",
+  appId: "io.supersedurestudio.desktop",
+  productName: "Supersedure Studio",
   releaseInfo: {
     releaseNotesFile: "build/release-notes.md"
   },
@@ -159,7 +159,7 @@ module.exports = {
   mac: {
     entitlements: "./build/entitlements.mac.plist",
     entitlementsInherit: "./build/entitlements.mac.plist",
-    icon: './public/icons/mac/bk-icon.icns',
+    icon: './public/icons/mac/supersedure-icon.icns',
     category: "public.app-category.developer-tools",
     "hardenedRuntime": true,
     notarize: true,
@@ -179,11 +179,11 @@ module.exports = {
     // Align the installed .desktop filename with the WM_CLASS Electron reports at
     // runtime (derived from desktopName in package.json) so desktop environments
     // associate running windows with the launcher entry. Both resolve to
-    // beekeeper-studio.desktop / StartupWMClass=beekeeper-studio.
+    // supersedure-studio.desktop / StartupWMClass=supersedure-studio.
     syncDesktopName: true,
     desktop: {
       entry: {
-        'StartupWMClass': 'beekeeper-studio',
+        'StartupWMClass': 'supersedure-studio',
       }
     },
     publish: ['github']
@@ -277,8 +277,8 @@ module.exports = {
     include: './build/win/msvc-redist.nsh'
   },
   appx: {
-    applicationId: "beekeeperstudio",
+    applicationId: "supersedurestudio",
     publisher: certSubject.replaceAll('"', "&quot;"),
-    publisherDisplayName: "Beekeeper Studio"
+    publisherDisplayName: "Supersedure Studio"
   }
 }

@@ -1,11 +1,11 @@
 ---
 title: Vista de estructura
 icon: material/hammer-wrench
-summary: "El creador de tablas SQL de Beekeeper Studio te permite construir visualmente una tabla SQL sin tener que recordar la sintaxis correcta."
-old_url: "https://docs.beekeeperstudio.io/docs/editing-data"
+summary: "El creador de tablas SQL de Supersedure Studio te permite construir visualmente una tabla SQL sin tener que recordar la sintaxis correcta."
+old_url: "https://docs.supersedurestudio.io/docs/editing-data"
 ---
 
-Beekeeper Studio te permite **CREAR** y **MODIFICAR** tablas de base de datos con una interfaz amigable **sin tener que escribir ningun SQL**.
+Supersedure Studio te permite **CREAR** y **MODIFICAR** tablas de base de datos con una interfaz amigable **sin tener que escribir ningun SQL**.
 
 ## Crear nuevas tablas SQL
 
@@ -25,7 +25,7 @@ Puedes agregar tantas de estas como quieras.
 
 ### Agregar una clave primaria
 
-Probablemente querras establecer una clave primaria en tu nueva tabla, por defecto seleccionamos la columna `id` como la clave primaria, pero puedes marcar multiples columnas y Beekeeper Studio creara una clave primaria compuesta.
+Probablemente querras establecer una clave primaria en tu nueva tabla, por defecto seleccionamos la columna `id` como la clave primaria, pero puedes marcar multiples columnas y Supersedure Studio creara una clave primaria compuesta.
 
 ### Crear indices y relaciones
 
@@ -47,9 +47,9 @@ Esta vista funciona de manera muy similar a la vista de creacion de tablas, exce
 
 ![Image Alt Tag](../assets/images/editing-data-22.png)
 
-**Nota**: Algunos motores de base de datos no soportan algunos tipos de modificaciones de esquema, en estos casos Beekeeper Studio proporcionara una advertencia y esa funcion estara deshabilitada
+**Nota**: Algunos motores de base de datos no soportan algunos tipos de modificaciones de esquema, en estos casos Supersedure Studio proporcionara una advertencia y esa funcion estara deshabilitada
 {: .alert .alert-info }
 
 ## Vista previa del creador de tablas SQL
 
-Quieres jugar con nuestro codigo de creador de tablas? Puedes usar la version en linea del creador de tablas en el [sitio web de SQL Tools aqui](https://sqltools.beekeeperstudio.io/build). Esta es una version simplificada de nuestro creador de tablas integrado y no puede crear tu nueva tabla, pero te proporciona el SQL generado para descargar.
+Quieres jugar con nuestro codigo de creador de tablas? Puedes usar la version en linea del creador de tablas en el [sitio web de SQL Tools aqui](https://sqltools.supersedurestudio.io/build). Esta es una version simplificada de nuestro creador de tablas integrado y no puede crear tu nueva tabla, pero te proporciona el SQL generado para descargar.

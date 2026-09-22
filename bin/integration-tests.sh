@@ -12,7 +12,7 @@ LOCATION="$BASE/.instant"
 SPEC="${1:-}"
 SPEC_REL="${SPEC#apps/studio/}"
 if [[ "$SPEC_REL" == tests/vitest/* ]]; then
-  exec yarn workspace beekeeper-studio vitest:integration "$SPEC_REL"
+  exec yarn workspace supersedure-studio vitest:integration "$SPEC_REL"
 fi
 
 eval "$BINBASE/get-instant-client.sh '$LOCATION'"
@@ -22,4 +22,4 @@ export LD_LIBRARY_PATH="$ORACLE_CLI_PATH"
 export ELECTRON_RUN_AS_NODE=1
 export TEST_MODE=1
 
-yarn workspace beekeeper-studio internal:integration "$@"
+yarn workspace supersedure-studio internal:integration "$@"

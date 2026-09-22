@@ -1,7 +1,7 @@
 import { EditorState, StateEffect, StateField } from "@codemirror/state";
 import { CompletionContext, CompletionResult } from "@codemirror/autocomplete";
 import { EditorView, ViewPlugin } from "@codemirror/view";
-import { PromptLineField, PromptSymbolField } from "@beekeeperstudio/ui-kit/mongo-shell/state";
+import { PromptLineField, PromptSymbolField } from "@supersedure-studio/ui-kit/mongo-shell/state";
 import rawLog from "@bksLogger";
 
 const log = rawLog.scope('MongoHint');

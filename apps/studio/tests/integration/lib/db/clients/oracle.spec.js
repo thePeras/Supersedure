@@ -36,8 +36,8 @@ function testWith(info) {
       container = await new GenericContainer(`gvenzl/oracle-xe:${info.version}`)
         .withEnvironment({
           "ORACLE_PASSWORD": "password",
-          "ORACLE_DATABASE": "beekeeper",
-          "APP_USER": "beekeeper",
+          "ORACLE_DATABASE": "supersedure",
+          "APP_USER": "supersedure",
           "APP_USER_PASSWORD": "password"
         })
         .withExposedPorts(1521)
@@ -47,7 +47,7 @@ function testWith(info) {
           mode: 'ro'
         }])
         .withHealthCheck({
-          test: ["CMD-SHELL", "sqlplus -s beekeeper/password@//localhost/BEEKEEPER <<< \"select * from actor;\" | grep 'no rows'"],
+          test: ["CMD-SHELL", "sqlplus -s supersedure/password@//localhost/SUPERSEDURE <<< \"select * from actor;\" | grep 'no rows'"],
           interval: 10000,
           timeout: 10000,
           retries: 12, // 2 minutes
@@ -59,11 +59,11 @@ function testWith(info) {
 
       const tsaNamesPath = path.join(tsaDir, 'tnsnames.ora');
       const tsaContent = `
-BEEKEEPER =
+SUPERSEDURE =
   (DESCRIPTION =
     (ADDRESS = (PROTOCOL = TCP)(HOST = ${container.getHost()})(PORT = ${container.getMappedPort(1521)}))
     (CONNECT_DATA =
-      (SERVICE_NAME = BEEKEEPER)
+      (SERVICE_NAME = SUPERSEDURE)
     )
   )
         `;
@@ -77,15 +77,15 @@ BEEKEEPER =
         port: container.getMappedPort(1521),
         instantClientLocation: info.mode === 'thick' ? process.env['ORACLE_CLI_PATH'] : undefined,
         oracleConfigLocation: tsaDir,
-        user: 'beekeeper',
+        user: 'supersedure',
         password: 'password',
-        serviceName: 'BEEKEEPER',
+        serviceName: 'SUPERSEDURE',
         options: {
           connectionMethod: 'manual',
         }
       }
-      util = new DBTestUtil(config, "BEEKEEPER", {
-        defaultSchema: "BEEKEEPER",
+      util = new DBTestUtil(config, "SUPERSEDURE", {
+        defaultSchema: "SUPERSEDURE",
         dialect: "oracle",
         // oracle will throw a "ORA-01100: database already mounted" error if trying to create
         skipCreateDatabase: true,
@@ -103,7 +103,7 @@ BEEKEEPER =
 
     it("Should be able to see the ORCL service name", async () => {
       const result = await OracleDB.getNetworkServiceNames(tsaDir)
-      expect(result).toContain('BEEKEEPER')
+      expect(result).toContain('SUPERSEDURE')
     })
 
     describe("When running block queries", () => {
@@ -119,7 +119,7 @@ BEEKEEPER =
     describe("createUpsertSQL tests", () => {
       it("should properly escape string values to prevent SQL injection", async () => {
         // Test with data containing characters that need escaping
-        const entity = { schema: 'BEEKEEPER', name: 'addresses' };
+        const entity = { schema: 'SUPERSEDURE', name: 'addresses' };
         const data = [
           { id: 1, street: "Normal Street" },
           { id: 2, street: "Dangerous Street with ' single quote" },
@@ -148,8 +148,8 @@ BEEKEEPER =
         expect(databases).toBeDefined();
         expect(databases.length).toBeGreaterThanOrEqual(1);
 
-        // Should contain 'BEEKEEPER' as that's our test database
-        expect(databases).toContain('BEEKEEPER');
+        // Should contain 'SUPERSEDURE' as that's our test database
+        expect(databases).toContain('SUPERSEDURE');
       });
     })
 
@@ -166,7 +166,7 @@ BEEKEEPER =
 
           // Now test if listRoutines works
           const routines = await util.connection.listRoutines({
-            schema: 'BEEKEEPER'
+            schema: 'SUPERSEDURE'
           });
 
           // Should return at least our test procedure
@@ -177,7 +177,7 @@ BEEKEEPER =
           const testProc = routines.find(r => r.name === 'TEST_PROCEDURE');
           expect(testProc).toBeDefined();
           expect(testProc.type).toBe('procedure');
-          expect(testProc.schema).toBe('BEEKEEPER');
+          expect(testProc.schema).toBe('SUPERSEDURE');
 
         } finally {
           // Clean up
@@ -244,17 +244,17 @@ BEEKEEPER =
     //     // Create a temporary tnsnames.ora file using connection info from testcontainers.
     //     const tsaConfig = {
     //       client: 'oracle',
-    //       user: 'beekeeper',
+    //       user: 'supersedure',
     //       password: 'password',
     //       options: {
-    //         connectionString: `(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=${container.getHost()})(PORT=${container.getMappedPort(1521)}))(CONNECT_DATA=(SERVICE_NAME=BEEKEEPER)))`,
+    //         connectionString: `(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=${container.getHost()})(PORT=${container.getMappedPort(1521)}))(CONNECT_DATA=(SERVICE_NAME=SUPERSEDURE)))`,
     //         connectionMethod: 'connectionString'
     //       },
     //       oracleConfigLocation: tsaDir,
     //       instantClientLocation: info.mode === 'thick' ? process.env['ORACLE_CLI_PATH'] : undefined,
     //     }
-    //     tsaUtil = new DBTestUtil(tsaConfig, "BEEKEEPER", {
-    //       defaultSchema: "BEEKEEPER",
+    //     tsaUtil = new DBTestUtil(tsaConfig, "SUPERSEDURE", {
+    //       defaultSchema: "SUPERSEDURE",
     //       dialect: "oracle",
     //       skipCreateDatabase: true,
     //     });
@@ -290,14 +290,14 @@ BEEKEEPER =
           port: container.getMappedPort(1521),
           user: 'wrong_user',
           password: 'wrong_password',
-          serviceName: 'BEEKEEPER',
+          serviceName: 'SUPERSEDURE',
           instantClientLocation: process.env['ORACLE_CLI_PATH'],
           oracleConfigLocation: tsaDir,
           options: { connectionMethod: 'manual' },
         }
 
         const server = createServer(badConfig)
-        const connection = server.createConnection('BEEKEEPER')
+        const connection = server.createConnection('SUPERSEDURE')
 
         // Should throw a meaningful Oracle error, not crash.
         await expect(connection.connect()).rejects.toThrow(/ORA-/)
@@ -306,23 +306,23 @@ BEEKEEPER =
       it("should connect via TNS alias using configDir from initOracleClient", async () => {
         // The initial beforeAll connection set configDir = tsaDir via
         // initOracleClient. Verify a new connection can resolve the
-        // BEEKEEPER alias from that same directory's tnsnames.ora.
+        // SUPERSEDURE alias from that same directory's tnsnames.ora.
         const { createServer } = require('@commercial/backend/lib/db/server')
 
         const aliasConfig = {
           client: 'oracle',
-          user: 'beekeeper',
+          user: 'supersedure',
           password: 'password',
           instantClientLocation: process.env['ORACLE_CLI_PATH'],
           oracleConfigLocation: tsaDir,
           options: {
             connectionMethod: 'connectionString',
-            connectionString: 'BEEKEEPER',
+            connectionString: 'SUPERSEDURE',
           },
         }
 
         const server = createServer(aliasConfig)
-        const connection = server.createConnection('BEEKEEPER')
+        const connection = server.createConnection('SUPERSEDURE')
         await connection.connect()
 
         const result = await connection.executeQuery('SELECT 1 FROM dual')

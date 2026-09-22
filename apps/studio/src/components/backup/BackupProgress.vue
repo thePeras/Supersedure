@@ -6,7 +6,7 @@
       </h2>
     </div>
     <div class="backup-log">
-      <div class="beekeeper-log">
+      <div class="supersedure-log">
         <div class="title">
           Backup started
         </div>
@@ -16,7 +16,7 @@
       </div>
       <div
         v-if="commandEnd != null"
-        class="beekeeper-log"
+        class="supersedure-log"
       >
         <div class="title">
           Backup ended
@@ -27,7 +27,7 @@
       </div>
       <div
         v-if="elapsedTime != null"
-        class="beekeeper-log"
+        class="supersedure-log"
       >
         <div class="title">
           Time elapsed

@@ -28,6 +28,6 @@ To import query files, you can click the import button, and then click `Import .
 
 ![Clicking import from File menu](../../assets/images/saving-queries-4.png)
 
-## Where does Beekeeper Studio save my SQL Queries?
+## Where does Supersedure Studio save my SQL Queries?
 
-When you save SQL queries in Beekeeper Studio they are persisted to a SQLite database in your local configuration directory. Please see [Data Storage Location](../../support/data-location.md) for more details.
+When you save SQL queries in Supersedure Studio they are persisted to a SQLite database in your local configuration directory. Please see [Data Storage Location](../../support/data-location.md) for more details.

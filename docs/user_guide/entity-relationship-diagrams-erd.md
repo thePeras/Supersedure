@@ -1,11 +1,11 @@
 ---
 title: Entity Relationship Diagrams (ERD)
 summary: "Visualize schema using our entity relationship diagrams"
-old_url: "https://docs.beekeeperstudio.io/docs/entity-relationship-diagrams-erd"
+old_url: "https://docs.supersedurestudio.io/docs/entity-relationship-diagrams-erd"
 icon: material/file-tree
 ---
 
-To visualize your database schema, Beekeeper Studio provides Entity Relationship Diagram (ERD). It gives you a clear, interactive view of how your tables connect, so you can understand the structure at a glance.
+To visualize your database schema, Supersedure Studio provides Entity Relationship Diagram (ERD). It gives you a clear, interactive view of how your tables connect, so you can understand the structure at a glance.
 
 ## Multi-schema Relationship
 
@@ -35,7 +35,7 @@ Or you can open it from the **Structure tab** while viewing a specific table. Th
 
 ## ER Diagram Pricing
 
-The ER Diagram **is included in all paid versions of Beekeeper Studio**, with no additional charge.
+The ER Diagram **is included in all paid versions of Supersedure Studio**, with no additional charge.
 
-All downloads of Beekeeper Studio come with a 14 day free trial, [download Beekeeper Studio](https://beekeeperstudio.io/get) to try the ER Diagram right now.
+All downloads of Supersedure Studio come with a 14 day free trial, [download Supersedure Studio](https://supersedurestudio.io/get) to try the ER Diagram right now.
 

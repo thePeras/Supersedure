@@ -1,7 +1,7 @@
 ---
 title: Snowflake
-summary: "Connect to a Snowflake instance using Beekeeper Studio"
-description: Connect to Snowflake with Beekeeper Studio.
+summary: "Connect to a Snowflake instance using Supersedure Studio"
+description: Connect to Snowflake with Supersedure Studio.
 icon: simple/snowflake
 ---
 
@@ -20,9 +20,9 @@ To connect to a Snowflake instance, you'll need the following information:
 
 ## MFA Authentication
 
-Beekeeper supports connecting to Snowflake with Multi-Factor Authentication, both with Duo SEcurity and with an Authenticator app. All you need to do is select the desired method in the Authentication Method dropdown.
+Supersedure supports connecting to Snowflake with Multi-Factor Authentication, both with Duo SEcurity and with an Authenticator app. All you need to do is select the desired method in the Authentication Method dropdown.
 
-If you select "Multi-Factor Authentication with Code", Beekeeper will prompt you for the Authenticator passcode before connecting.
+If you select "Multi-Factor Authentication with Code", Supersedure will prompt you for the Authenticator passcode before connecting.
 
 If you select "Multi-Factor Authentication with Duo", you will receive a notification from Duo on your device to authenticate when you attempt to connect.
 

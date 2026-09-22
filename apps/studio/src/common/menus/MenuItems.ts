@@ -139,7 +139,7 @@ export function menuItems(actionHandler: IMenuActionHandler, settings: IGroupedU
     // help
     about: {
       id: 'about',
-      label: 'About Beekeeper Studio',
+      label: 'About Supersedure Studio',
       click: actionHandler.about,
       role: 'about',
     },
@@ -151,7 +151,7 @@ export function menuItems(actionHandler: IMenuActionHandler, settings: IGroupedU
     },
     restart: {
       id: 'restart',
-      label: "Restart Beekeeper",
+      label: "Restart Supersedure",
       click: actionHandler.restart
     },
     checkForUpdate: {
@@ -186,10 +186,10 @@ export function menuItems(actionHandler: IMenuActionHandler, settings: IGroupedU
       accelerator: "CommandOrControl+Shift+N",
       click: actionHandler.newWindow
     },
-    addBeekeeper: {
-      id: 'add-beekeeper',
-      label: "Add Beekeeper's Database",
-      click: actionHandler.addBeekeeper
+    addSupersedure: {
+      id: 'add-supersedure',
+      label: "Add Supersedure's Database",
+      click: actionHandler.addSupersedure
     },
     newTab: {
       id: "new-query-menu",

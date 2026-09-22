@@ -115,7 +115,7 @@ import { stringToTypedArray } from '@/common/utils'
           updates: [],
           deletes: []
         },
-        internalClassTrackerColumn: "__beekeeper_internal_class_tracker",
+        internalClassTrackerColumn: "__supersedure_internal_class_tracker",
         propogatedChangesFilters: new Map<string, Filter[]>(),
         fieldOriginalClassMap: new Map<string, string>(),
         saveError: null,

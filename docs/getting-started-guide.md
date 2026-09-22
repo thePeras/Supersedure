@@ -1,44 +1,44 @@
 ---
 title: Beginners Guide
-summary: "This guide will help you setup and use Beekeeper Studio for the first time. Don't worry, it's pretty painless. :-)"
-old_url: "https://docs.beekeeperstudio.io/docs/getting-started-guide"
+summary: "This guide will help you setup and use Supersedure Studio for the first time. Don't worry, it's pretty painless. :-)"
+old_url: "https://docs.supersedurestudio.io/docs/getting-started-guide"
 ---
 
-👋 Hello and welcome to the Beekeeper Studio community. I think you're going to like it here.
+👋 Hello and welcome to the Supersedure Studio community. I think you're going to like it here.
 
-Beekeeper Studio is more than an app, come say hi:
+Supersedure Studio is more than an app, come say hi:
 
-- [Join the community Slack group](https://beekeeperstudio.io/slack)
-- [Explore feature requests on Github](https://github.com/beekeeper-studio/beekeeper-studio)
+- [Join the community Slack group](https://supersedurestudio.io/slack)
+- [Explore feature requests on Github](https://github.com/thePeras/supersedure-studio)
 
 
 
 !!! note "Hey there!"
-    This page will help you get familiar with Beekeeper Studio. If you've used similar applications in the past, feel free to explore the rest of the documentation site, or just start using Beekeeper Studio (it's pretty intuitive!)
+    This page will help you get familiar with Supersedure Studio. If you've used similar applications in the past, feel free to explore the rest of the documentation site, or just start using Supersedure Studio (it's pretty intuitive!)
 
 
-If you're new to database management apps in general it might help to watch this walkthrough of Beekeeper Studio, I go through a bunch of major features
+If you're new to database management apps in general it might help to watch this walkthrough of Supersedure Studio, I go through a bunch of major features
 
 <iframe width="100%" height="315" src="https://www.youtube-nocookie.com/embed/id37-ZRZNkQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-👉  [Watch the Beekeeper Studio Walkthrough on YouTube](https://www.youtube.com/watch?v=id37-ZRZNkQ)
+👉  [Watch the Supersedure Studio Walkthrough on YouTube](https://www.youtube.com/watch?v=id37-ZRZNkQ)
 
-## First step - install Beekeeper Studio
-
-
-Beekeeper Studio is a desktop application, so the first step is to [Install Beekeeper Studio](./installation/index.md)
+## First step - install Supersedure Studio
 
 
+Supersedure Studio is a desktop application, so the first step is to [Install Supersedure Studio](./installation/index.md)
 
-## Lets explore Beekeeper Studio with a demo database
 
-A quick and easy way to explore Beekeeper Studio's functionality is with the `Sakila` demo database -- it's a sample database modeling an old-school DVD rental store, like a Blockbuster.
+
+## Lets explore Supersedure Studio with a demo database
+
+A quick and easy way to explore Supersedure Studio's functionality is with the `Sakila` demo database -- it's a sample database modeling an old-school DVD rental store, like a Blockbuster.
 
 
 !!! tip "Experts can skip to the end"
     If you already have a database you want to view, edit, and query, hop to it!
 
-    These topics will help you get started with the most commonly used features of Beekeeper Studio
+    These topics will help you get started with the most commonly used features of Supersedure Studio
 
     - [Connecting to a database](./user_guide/connecting/connecting.md)
     - [Write some SQL](./user_guide/sql_editor/editor.md)
@@ -46,15 +46,15 @@ A quick and easy way to explore Beekeeper Studio's functionality is with the `Sa
     - [Create & modify tables](./user_guide/modify-tables.md)
 
 
-### Getting started with Sakila and Beekeeper Studio
+### Getting started with Sakila and Supersedure Studio
 
-1. Make sure you have Beekeeper Studio [downloaded and installed](./installation/index.md)
+1. Make sure you have Supersedure Studio [downloaded and installed](./installation/index.md)
 1. [Download the Sakila database](https://github.com/ivanceras/sakila/raw/master/sqlite-sakila-db/sakila.db) - this is a `.db` file - a self contained SQLite database file.
 2. Double click the `sakila.db` file you just downloaded.
 
-Beekeeper will open, showing you the contents of the database:
+Supersedure will open, showing you the contents of the database:
 
-![Opening the demo database in Beekeeper Studio](./assets/images/getting-started-guide-60.gif)
+![Opening the demo database in Supersedure Studio](./assets/images/getting-started-guide-60.gif)
 
 ### Open a table and change some data
 
@@ -90,9 +90,9 @@ Executing this produces the below result:
 | R      | 189        |
 | G      | 171        |
 
-### Explore other Beekeeper Studio Features
+### Explore other Supersedure Studio Features
 
-It's time to fly the nest and explore Beekeeper Studio on your own 🕊.
+It's time to fly the nest and explore Supersedure Studio on your own 🕊.
 
 - Try [creating a new table](./user_guide/modify-tables.md)
 - Maybe [export some data to Excel](./user_guide/data-export.md)
@@ -101,4 +101,4 @@ It's time to fly the nest and explore Beekeeper Studio on your own 🕊.
 
 ## Reach out if you need help
 
-Stuck? Confused? Email us and we'll help - [support@beekeeperstudio.io](mailto:support@beekeeperstudio.io)
+Stuck? Confused? Email us and we'll help - [support@supersedurestudio.io](mailto:support@supersedurestudio.io)

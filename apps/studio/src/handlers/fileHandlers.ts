@@ -2,7 +2,7 @@ import { promises as fs } from 'fs'
 import path from 'path';
 import platformInfo from '@/common/platform_info';
 
-const VIMRC_FILENAME = '.beekeeper.vimrc';
+const VIMRC_FILENAME = '.supersedure.vimrc';
 // queries are limited to 2_000_000 characters, so the upper limit is 4x that amount
 const MAX_SQL_FILE_BYTES = 4 * 2_000_000;
 const SQL_FILE_EXTENSIONS = new Set(['.sql', '.txt']);
@@ -11,7 +11,7 @@ const SQL_FILE_EXTENSIONS = new Set(['.sql', '.txt']);
 export interface IFileHandlers {
   /**
    * Read the user's vim config file from a fixed location inside the
-   * beekeeper user directory. The renderer cannot pass a path. Returns the
+   * supersedure user directory. The renderer cannot pass a path. Returns the
    * file contents as utf-8, or null if the file does not exist.
    */
   "config/readVimrc": () => Promise<string | null>;

@@ -1,4 +1,4 @@
-// Regression test for https://github.com/beekeeper-studio/beekeeper-studio/issues/4193
+// Regression test for https://github.com/thePeras/supersedure-studio/issues/4193
 //
 // SSH Agent mode must succeed even when the user's ~/.ssh/config has an
 // IdentityFile pointing at a path that doesn't exist on disk. Before the
@@ -95,7 +95,7 @@ describe('SSH Tunnel Tests (agent mode, #4193)', () => {
       sshMode: 'agent',
       sshHost: container.getHost(),
       sshPort: container.getMappedPort(2222),
-      sshUsername: 'beekeeper',
+      sshUsername: 'supersedure',
     }
 
     connection = ConnectionProvider.for(config)

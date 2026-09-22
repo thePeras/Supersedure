@@ -5,7 +5,7 @@
       @before-open="beforeOpen"
       @opened="opened"
       @closed="closed"
-      class="vue-dialog beekeeper-modal input-pin-modal"
+      class="vue-dialog supersedure-modal input-pin-modal"
     >
       <form v-kbd-trap="true" @submit.prevent="submit">
         <div class="dialog-content">
@@ -41,7 +41,7 @@
             </i>
           </div>
 
-          <small style="margin-top: 8px; display: block;"><external-link href="https://docs.beekeeperstudio.io/user_guide/configuration#forgot-pin" style="text-decoration: underline;">Forgot your PIN?</external-link></small>
+          <small style="margin-top: 8px; display: block;"><external-link href="https://docs.supersedurestudio.io/user_guide/configuration#forgot-pin" style="text-decoration: underline;">Forgot your PIN?</external-link></small>
         </div>
         <div class="vue-dialog-buttons">
           <button

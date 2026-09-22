@@ -1,7 +1,7 @@
 ---
 title: Google Big Query
-summary: "Como conectarse a Google Big Query desde Beekeeper Studio, ejecutar consultas, modificar tablas y mas!"
-old_url: "https://docs.beekeeperstudio.io/docs/google-bigquery"
+summary: "Como conectarse a Google Big Query desde Supersedure Studio, ejecutar consultas, modificar tablas y mas!"
+old_url: "https://docs.supersedurestudio.io/docs/google-bigquery"
 icon: simple/googlebigquery
 ---
 
@@ -14,14 +14,14 @@ Conectarse a Google BigQuery requiere que configures un usuario IAM (ya sea un '
 
 (o BigQuery Data Viewer + BigQuery Job User)
 
-Como minimo, los usuarios necesitan tener el rol `BigQuery User`. Esto proporciona acceso a la mayoria de las funciones de Beekeeper Studio.
+Como minimo, los usuarios necesitan tener el rol `BigQuery User`. Esto proporciona acceso a la mayoria de las funciones de Supersedure Studio.
 
 Esto *no* proporcionara acceso a la funcionalidad completa de tu cluster BigQuery. Si necesitas acceso mas avanzado, recomendamos usar `BigQuery Admin` para desbloquear la modificacion de esquema y datos.
 
 Tu administrador de Google Cloud probablemente puede proporcionar controles mas detallados si es necesario.
 
 
-## Conectarse desde Beekeeper Studio
+## Conectarse desde Supersedure Studio
 
 Una vez que hayas configurado tu usuario IAM y descargado tu archivo JSON de clave privada, solo necesitas la siguiente informacion para conectarte a tu instancia de Big Query:
 
@@ -38,7 +38,7 @@ Al configurar un dataset en BigQuery, asegurate de especificar explicitamente un
 
 ![Image Alt Tag](../../assets/images/google-bigquery-100.png)
 
-Si eliges 'Multi-Region', muchas funciones comunes no funcionaran, tanto en Beekeeper Studio como en la consola de Google Cloud.
+Si eliges 'Multi-Region', muchas funciones comunes no funcionaran, tanto en Supersedure Studio como en la consola de Google Cloud.
 
 Ejemplos de tareas que no funcionaran con multi-region habilitado:
 
@@ -51,4 +51,4 @@ Ejemplos de tareas que no funcionaran con multi-region habilitado:
 
 
 
-Al conectarte a BigQuery desde Beekeeper Studio, proporciona la ruta a este archivo JSON de clave privada para autenticarte con Google Cloud. Este es el unico metodo de autenticacion actualmente soportado por Beekeeper Studio.
+Al conectarte a BigQuery desde Supersedure Studio, proporciona la ruta a este archivo JSON de clave privada para autenticarte con Google Cloud. Este es el unico metodo de autenticacion actualmente soportado por Supersedure Studio.

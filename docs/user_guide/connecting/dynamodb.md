@@ -1,14 +1,14 @@
 ---
 title: DynamoDB
-summary: "Connect to Amazon DynamoDB with Beekeeper Studio"
+summary: "Connect to Amazon DynamoDB with Supersedure Studio"
 icon: amazondynamodb
-description: "Browse tables, run PartiQL queries, and edit data in DynamoDB using Beekeeper Studio"
+description: "Browse tables, run PartiQL queries, and edit data in DynamoDB using Supersedure Studio"
 ---
 
 # DynamoDB Support
 
 !!! note "Beta feature"
-    DynamoDB support is currently in beta. It works well, but you may run into the occasional rough edge — please [report any issues](https://github.com/beekeeper-studio/beekeeper-studio/issues/new/choose).
+    DynamoDB support is currently in beta. It works well, but you may run into the occasional rough edge — please [report any issues](https://github.com/thePeras/supersedure-studio/issues/new/choose).
 
 ## Connecting to DynamoDB
 

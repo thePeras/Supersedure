@@ -6,7 +6,7 @@ icon: simple/clickhouse
 
 # Como conectarse a ClickHouse
 
-Conectarse a una base de datos ClickHouse desde Beekeeper Studio es sencillo. Simplemente selecciona ClickHouse del menu desplegable, completa los campos de host, puerto, nombre de usuario y contrasena, luego haz clic en Conectar.
+Conectarse a una base de datos ClickHouse desde Supersedure Studio es sencillo. Simplemente selecciona ClickHouse del menu desplegable, completa los campos de host, puerto, nombre de usuario y contrasena, luego haz clic en Conectar.
 
 ## Detalles de conexion de ClickHouse
 
@@ -19,7 +19,7 @@ Para conectarte a una base de datos ClickHouse, necesitaras la siguiente informa
 
 ## Probar tu conexion de ClickHouse
 
-Antes de guardar los detalles de tu conexion, Beekeeper Studio te permite probar la conexion:
+Antes de guardar los detalles de tu conexion, Supersedure Studio te permite probar la conexion:
 
 1. Ingresa los detalles de tu conexion.
 2. Haz clic en el boton Probar conexion.

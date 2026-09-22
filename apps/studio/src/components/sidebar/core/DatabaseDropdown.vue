@@ -38,7 +38,7 @@
     </div>
     <portal to="modals">
       <modal
-        class="vue-dialog beekeeper-modal save-add-database"
+        class="vue-dialog supersedure-modal save-add-database"
         name="config-add-database"
         height="auto"
         :scrollable="true"
@@ -53,9 +53,9 @@
             Oracle has a lot of <a
               class="external-link"
               href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/create.htm#i1008760"
-            >configuration requirements to create a new database</a> which makes it difficult for Beekeeper to do automatically.
+            >configuration requirements to create a new database</a> which makes it difficult for Supersedure to do automatically.
           </p>
-          <p>Beekeeper can generate you some boilerplate code to get you started if you like.</p>
+          <p>Supersedure can generate you some boilerplate code to get you started if you like.</p>
           <div class="vue-dialog-buttons">
             <button
               class="btn btn-flat"

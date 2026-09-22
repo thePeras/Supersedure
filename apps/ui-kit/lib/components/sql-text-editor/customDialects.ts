@@ -85,7 +85,7 @@ export const PartiQL = SQLDialect.define({
 
 /**
  * The dialect used for each `languageId`. This is the single source of truth
- * for which CodeMirror SQL dialect backs each Beekeeper language mode, so
+ * for which CodeMirror SQL dialect backs each Supersedure language mode, so
  * tests can exercise exactly what the editor wires up per database.
  */
 export const langIdToDialect = {

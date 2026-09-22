@@ -1,5 +1,5 @@
 <template>
-  <modal name="license" class="vue-dialog beekeeper-modal" @opened="init">
+  <modal name="license" class="vue-dialog supersedure-modal" @opened="init">
     <form @submit.prevent="submitLicense">
       <div class="dialog-content">
         <div class="dialog-c-title">
@@ -20,7 +20,7 @@
             <i class="material-icons-outlined">info</i>
             <span>Entering a license will unlock premium features such as Oracle, DuckDB, and ClickHouse connections,
               JSON view, multi-table features, and more. <a
-                href="https://docs.beekeeperstudio.io/support/upgrading-from-the-community-edition/"
+                href="https://docs.supersedurestudio.io/support/upgrading-from-the-community-edition/"
               >Learn
                 more</a>.</span>
           </div>
@@ -44,7 +44,7 @@
         <span class="app-version small text-muted">Current app version: {{ $config.appVersion }}</span>
         <span class="expand" />
         <span>
-          <a href="https://beekeeperstudio.io/pricing" class="btn btn-flat">Buy a new license</a>
+          <a href="https://supersedurestudio.io/pricing" class="btn btn-flat">Buy a new license</a>
           <button v-if="!realLicenses?.length" type="submit" class="btn btn-primary mt-2">Submit</button>
         </span>
       </div>
@@ -103,7 +103,7 @@ export default Vue.extend({
     async submitLicense() {
       try {
         await this.$store.dispatch('licenses/add', { email: this.email, key: this.key })
-        this.$noty.success("License registered, thanks for supporting Beekeeper Studio.")
+        this.$noty.success("License registered, thanks for supporting Supersedure Studio.")
         this.$modal.hide('license')
         this.$store.dispatch('licenseEntered')
       } catch (error) {

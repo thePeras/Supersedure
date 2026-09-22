@@ -2,7 +2,7 @@
   <portal to="modals">
     <modal
       :name="modalName"
-      class="beekeeper-modal vue-dialog editor-dialog"
+      class="supersedure-modal vue-dialog editor-dialog"
       @opened="onOpen"
       @before-close="onBeforeClose"
     >
@@ -162,7 +162,7 @@ import { Languages, LanguageData, TextLanguage, getLanguageByContent } from '../
 import { uuidv4 } from "@/lib/uuid"
 import _ from 'lodash'
 import { mapGetters } from 'vuex'
-import TextEditor from '@beekeeperstudio/ui-kit/vue/text-editor'
+import TextEditor from '@supersedure-studio/ui-kit/vue/text-editor'
 import { typedArrayToString } from "@/common/utils";
 import { monokaiInit } from '@uiw/codemirror-theme-monokai';
 

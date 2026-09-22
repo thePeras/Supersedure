@@ -1079,7 +1079,7 @@ export class DBTestUtil {
       sqlserver: "insert into [dbo].[jobs] ([hourly_rate], [job_name]) values (41, 'Programmer')",
       cockroachdb: `insert into "public"."jobs" ("hourly_rate", "job_name") values (41, 'Programmer')`,
       firebird: "insert into jobs (hourly_rate, job_name) values (41, 'Programmer')",
-      oracle: `insert into "BEEKEEPER"."jobs" ("hourly_rate", "job_name") values (41, 'Programmer')`,
+      oracle: `insert into "SUPERSEDURE"."jobs" ("hourly_rate", "job_name") values (41, 'Programmer')`,
       duckdb: `insert into "main"."jobs" ("hourly_rate", "job_name") values (41, 'Programmer')`,
       clickhouse: `insert into "jobs" ("hourly_rate", "job_name") values (41, 'Programmer')`,
     }
@@ -1121,7 +1121,7 @@ export class DBTestUtil {
         INSERT ("ID", "job_name", "hourly_rate")
       VALUES (source."ID", source."job_name", source."hourly_rate");`.trim(),
       oracle: `
-      MERGE INTO "BEEKEEPER"."jobs" target
+      MERGE INTO "SUPERSEDURE"."jobs" target
       USING (
         SELECT
           ${initialID} AS "id", 'Programmer' AS "job_name", 41 AS "hourly_rate" FROM dual
@@ -1162,7 +1162,7 @@ export class DBTestUtil {
       firebird: '',
       clickhouse: '',
       oracle: `
-      MERGE INTO "BEEKEEPER"."jobs" target
+      MERGE INTO "SUPERSEDURE"."jobs" target
       USING (
         SELECT ${initialID} AS "id", 'Programmer' AS "job_name", 41 AS "hourly_rate" FROM dual
         UNION ALL
@@ -1357,7 +1357,7 @@ export class DBTestUtil {
       sqlserver: "SELECT * FROM [dbo].[jobs] WHERE [hourly_rate] IS NULL ORDER BY (SELECT NULL) OFFSET 0 ROWS FETCH NEXT 100 ROWS ONLY",
       cockroachdb: `SELECT * FROM "public"."jobs" WHERE "hourly_rate" IS NULL LIMIT 100 OFFSET 0`,
       firebird: "SELECT FIRST 100 SKIP 0 * FROM jobs WHERE hourly_rate IS NULL",
-      oracle: `SELECT * FROM "BEEKEEPER"."jobs" WHERE "hourly_rate" IS NULL OFFSET 0 ROWS FETCH NEXT 100 ROWS ONLY`,
+      oracle: `SELECT * FROM "SUPERSEDURE"."jobs" WHERE "hourly_rate" IS NULL OFFSET 0 ROWS FETCH NEXT 100 ROWS ONLY`,
       duckdb: `SELECT * FROM "main"."jobs" WHERE "hourly_rate" IS NULL LIMIT 100 OFFSET 0`,
       clickhouse: `SELECT * FROM "jobs" WHERE "hourly_rate" IS NULL LIMIT 100 OFFSET 0`,
     }
@@ -1384,7 +1384,7 @@ export class DBTestUtil {
       sqlserver: "SELECT * FROM [dbo].[jobs] WHERE [hourly_rate] IS NOT NULL ORDER BY (SELECT NULL) OFFSET 0 ROWS FETCH NEXT 100 ROWS ONLY",
       cockroachdb: `SELECT * FROM "public"."jobs" WHERE "hourly_rate" IS NOT NULL LIMIT 100 OFFSET 0`,
       firebird: "SELECT FIRST 100 SKIP 0 * FROM jobs WHERE hourly_rate IS NOT NULL",
-      oracle: `SELECT * FROM "BEEKEEPER"."jobs" WHERE "hourly_rate" IS NOT NULL OFFSET 0 ROWS FETCH NEXT 100 ROWS ONLY`,
+      oracle: `SELECT * FROM "SUPERSEDURE"."jobs" WHERE "hourly_rate" IS NOT NULL OFFSET 0 ROWS FETCH NEXT 100 ROWS ONLY`,
       duckdb: `SELECT * FROM "main"."jobs" WHERE "hourly_rate" IS NOT NULL LIMIT 100 OFFSET 0`,
       clickhouse: `SELECT * FROM "jobs" WHERE "hourly_rate" IS NOT NULL LIMIT 100 OFFSET 0`,
     }

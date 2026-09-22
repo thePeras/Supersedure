@@ -341,7 +341,7 @@ export default {
       if (this.result?.truncated) {
         return `Re - run the query and send the full result to a file${ this.result?.truncated ? ' (' + this.result.totalRowCount + ' rows)' : '' }`
       }
-      return `Only needed for result sets that have been truncated (Beekeeper will tell you if this happens)`
+      return `Only needed for result sets that have been truncated (Supersedure will tell you if this happens)`
     },
     keymap() {
       return this.$vHotkeyKeymap({

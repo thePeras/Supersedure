@@ -41,7 +41,7 @@ export type PluginErrorCode =
 
 /**
  * Thrown by the plugin system itself — registry lookups, install/update
- * flows, IPC timeouts, asset resolution. Raised by Beekeeper, not by a
+ * flows, IPC timeouts, asset resolution. Raised by Supersedure, not by a
  * plugin's own code.
  */
 export class PluginSystemError extends Error {

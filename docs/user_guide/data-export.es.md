@@ -1,11 +1,11 @@
 ---
 title: Exportacion de datos
 summary: "Exporta o copia datos de tu base de datos a CSV, JSON, Excel y mas con un par de clics."
-old_url: "https://docs.beekeeperstudio.io/docs/data-export"
+old_url: "https://docs.supersedurestudio.io/docs/data-export"
 icon: material/export
 ---
 
-Hay dos formas de exportar datos de base de datos en Beekeeper Studio.
+Hay dos formas de exportar datos de base de datos en Supersedure Studio.
 
 1. Exportar los resultados de una consulta SQL
 2. Exportar una tabla(s) completa o una vista de tabla filtrada
@@ -13,7 +13,7 @@ Hay dos formas de exportar datos de base de datos en Beekeeper Studio.
 
 ## Formatos de exportacion
 
-Beekeeper soporta guardar datos en varios formatos
+Supersedure soporta guardar datos en varios formatos
 
 
 ## Exportar resultados de consultas SQL
@@ -34,7 +34,7 @@ Puedes elegir descargar como archivo o copiar el resultado a tu portapapeles.
 
 ### Limites en descargas de consultas SQL
 
-Por defecto, Beekeeper Studio limita los resultados de consultas a 20,000 registros (para que no colapses la aplicacion). Este limite tambien se aplica a la descarga.
+Por defecto, Supersedure Studio limita los resultados de consultas a 20,000 registros (para que no colapses la aplicacion). Este limite tambien se aplica a la descarga.
 
 Para acceder al conjunto de resultados completo, puedes seleccionar `Descargar resultados completos` en el menu de descarga para obtener el resultado completo de la consulta y enviarlo directamente a un archivo JSON o CSV.
 
@@ -42,7 +42,7 @@ Para acceder al conjunto de resultados completo, puedes seleccionar `Descargar r
 
 Exportar una tabla es un poco mas complejo, porque una tabla podria contener millones de registros.
 
-Cuando exportas una tabla, tablas o vista de tabla filtrada, Beekeeper Studio ejecutara la consulta y luego transmitira los resultados al archivo de descarga.
+Cuando exportas una tabla, tablas o vista de tabla filtrada, Supersedure Studio ejecutara la consulta y luego transmitira los resultados al archivo de descarga.
 
 Hay algunas opciones para comenzar:
 - Ve a la vista del explorador de tablas, haz clic en el icono de engranaje en la parte inferior derecha y elige `Exportar`.
@@ -79,7 +79,7 @@ Cada tabla se almacena como un archivo separado con un formato determinado de `n
 
 ## Copiar filas individuales
 
-Para cualquier tabla en Beekeeper Studio, ya sea en el explorador de tablas o en los resultados de consultas, puedes hacer clic derecho en una celda y elegir exportar toda la fila en varios formatos.
+Para cualquier tabla en Supersedure Studio, ya sea en el explorador de tablas o en los resultados de consultas, puedes hacer clic derecho en una celda y elegir exportar toda la fila en varios formatos.
 
 ![Image Alt Tag](../assets/images/data-export-26.png)
 
@@ -93,7 +93,7 @@ Para cualquier tabla en Beekeeper Studio, ya sea en el explorador de tablas o en
 
 ## Exportar facilmente a Excel o Google Sheets
 
-El formato de copia de filas de Beekeeper Studio esta disenado para permitir pegar datos de forma rapida y facil en Google Sheets y Microsoft Excel.
+El formato de copia de filas de Supersedure Studio esta disenado para permitir pegar datos de forma rapida y facil en Google Sheets y Microsoft Excel.
 
 Pegar datos en una hoja de calculo usando este formato permitira que tu software de hoja de calculo analice automaticamente los datos y los distribuya correctamente entre columnas.
 

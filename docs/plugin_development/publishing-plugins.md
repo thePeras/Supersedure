@@ -1,13 +1,13 @@
 ---
 title: Publishing Plugins
-summary: "Learn how to package, distribute, and publish your Beekeeper Studio plugins."
+summary: "Learn how to package, distribute, and publish your Supersedure Studio plugins."
 icon: material/publish
 ---
 
 # Publishing Plugins
 
 !!! warning "Beta Feature"
-    The plugin system is in beta (available in Beekeeper Studio 5.3+). We'd love your feedback!
+    The plugin system is in beta (available in Supersedure Studio 5.3+). We'd love your feedback!
 
 ## Publishing Process
 
@@ -58,7 +58,7 @@ Your release must include:
 
 ### 3. Submit to Plugin Registry
 
-1. **Fork** the registry repository: [beekeeper-studio-plugins](https://github.com/beekeeper-studio/beekeeper-studio-plugins)
+1. **Fork** the registry repository: [supersedure-studio-plugins](https://github.com/supersedure-studio/supersedure-studio-plugins)
 
 2. **Edit `plugins.json`** and add your plugin entry:
    ```diff
@@ -84,6 +84,6 @@ Once you submit your PR:
 
 1. **Review process** - The maintainers will review your plugin for quality and security
 2. **Approval and merge** - After approval, your PR will be merged
-3. **Public availability** - Your plugin becomes available in the Beekeeper Studio Plugin Manager
+3. **Public availability** - Your plugin becomes available in the Supersedure Studio Plugin Manager
 
-Users can then discover and install your plugin directly from within Beekeeper Studio! 🎉
+Users can then discover and install your plugin directly from within Supersedure Studio! 🎉

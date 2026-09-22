@@ -45,7 +45,7 @@ const mmsqlErrors = {
 };
 
 // Setup guide for SQL Server integrated / Kerberos authentication prerequisites.
-const WIN_AUTH_DOCS_URL = 'https://docs.beekeeperstudio.io/user_guide/connecting/sql-server/'
+const WIN_AUTH_DOCS_URL = 'https://docs.supersedurestudio.io/user_guide/connecting/sql-server/'
 
 // Wrap a promise with a JS-level deadline. msnodesqlv8/ODBC's native conn_timeout
 // does NOT reliably cancel a stalled SQLDriverConnect -- it only covers the TCP
@@ -1372,8 +1372,8 @@ export class SQLServerClient extends BasicDatabaseClient<SQLServerResult, Transa
     } catch {
       throw new Error(
         (process.platform === 'win32'
-          ? 'Integrated authentication is unavailable: the msnodesqlv8 native module could not be loaded. Try reinstalling Beekeeper Studio.'
-          : 'Integrated authentication is unavailable: the msnodesqlv8 native module could not be loaded. Install unixODBC and the Microsoft ODBC Driver 18 for SQL Server, then reinstall Beekeeper Studio.') +
+          ? 'Integrated authentication is unavailable: the msnodesqlv8 native module could not be loaded. Try reinstalling Supersedure Studio.'
+          : 'Integrated authentication is unavailable: the msnodesqlv8 native module could not be loaded. Install unixODBC and the Microsoft ODBC Driver 18 for SQL Server, then reinstall Supersedure Studio.') +
         ` See ${WIN_AUTH_DOCS_URL} for setup.`
       )
     }
@@ -1470,7 +1470,7 @@ export class SQLServerClient extends BasicDatabaseClient<SQLServerResult, Transa
       server: host,
       database: database.database,
       requestTimeout: Infinity,
-      appName: 'beekeeperstudio',
+      appName: 'supersedurestudio',
       pool: {
         max: BksConfig.db.sqlserver.maxConnections
       }

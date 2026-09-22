@@ -1,6 +1,6 @@
 <template>
   <portal to="modals">
-    <modal class="vue-dialog beekeeper-modal wait-sso-modal" :name="modalName" :click-to-close="false">
+    <modal class="vue-dialog supersedure-modal wait-sso-modal" :name="modalName" :click-to-close="false">
       <div v-kbd-trap="true">
         <div class="dialog-content">
           <div class="dialog-c-title">

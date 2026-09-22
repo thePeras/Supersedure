@@ -163,7 +163,7 @@ describe("Basic Plugin Management", () => {
       await manager.installPlugin("test-plugin");
 
       let tempDirs = fs.readdirSync(tmpdir()).filter(
-        (dir) => dir.startsWith("beekeeper-plugin-test-plugin-")
+        (dir) => dir.startsWith("supersedure-plugin-test-plugin-")
       );
       expect(tempDirs).toHaveLength(0);
 
@@ -173,7 +173,7 @@ describe("Basic Plugin Management", () => {
       await manager.updatePlugin("test-plugin");
 
       tempDirs = fs.readdirSync(tmpdir()).filter(
-        (dir) => dir.startsWith("beekeeper-plugin-test-plugin-")
+        (dir) => dir.startsWith("supersedure-plugin-test-plugin-")
       );
       expect(tempDirs).toHaveLength(0);
     });

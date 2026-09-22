@@ -98,14 +98,14 @@ jobs:
         run: yarn lib:build
 
       - name: Build App
-        run: yarn workspace beekeeper-studio build
+        run: yarn workspace supersedure-studio build
 
       - name: Run Tests (Linux/macOS)
         if: runner.os != 'Windows'
         shell: bash
         run: |
           xvfb-maybe -a -s "-screen 0 1024x768x24" -- bash -c '
-            yarn workspace beekeeper-studio test:e2e:smoke
+            yarn workspace supersedure-studio test:e2e:smoke
           '
         env:
           ELECTRON_ENABLE_LOGGING: 1
@@ -116,7 +116,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: bash
         run: |
-          yarn workspace beekeeper-studio test:e2e:smoke
+          yarn workspace supersedure-studio test:e2e:smoke
         env:
           ELECTRON_ENABLE_LOGGING: 1
 

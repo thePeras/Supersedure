@@ -61,7 +61,7 @@
       >
         <i class="material-icons">error_outline</i>
         <div>
-          No CLI found. See the Beekeeper Studio docs for setup help. <a :href="docsHref">Read more</a>.
+          No CLI found. See the Supersedure Studio docs for setup help. <a :href="docsHref">Read more</a>.
         </div>
       </div>
       <file-picker

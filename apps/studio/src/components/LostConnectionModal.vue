@@ -1,7 +1,7 @@
 <template>
   <portal to="modals">
     <modal
-      class="vue-dialog beekeeper-modal"
+      class="vue-dialog supersedure-modal"
       :name="modalName"
       @before-close="beforeClose"
     >

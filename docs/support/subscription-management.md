@@ -3,7 +3,7 @@ title: Subscription Management
 summary: "How to manage licenses, billing details, and invoices"
 ---
 
-To manage your existing licenses you can use the license management dashboard available at [app.beekeeperstudio.io/purchases][1]
+To manage your existing licenses you can use the license management dashboard available at [app.supersedurestudio.io/purchases][1]
 
 ## Downloading invoices
 
@@ -41,4 +41,4 @@ You will be billed pro-rata for the remainder of the billing period.
 
 
 
-[1]: https://app.beekeeperstudio.io/purchases
+[1]: https://app.supersedurestudio.io/purchases

@@ -1,4 +1,4 @@
-import { ContextOption } from "@/plugins/BeekeeperPlugin";
+import { ContextOption } from "@/plugins/SupersedurePlugin";
 import {
   PluginMenuItem,
   PluginMenuItemPlacement,

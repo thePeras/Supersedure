@@ -80,7 +80,7 @@ redis-cli SET counter:api:calls:today 25000
 redis-cli SET counter:user:1:login:attempts 3
 
 # Configuration examples
-redis-cli HSET config:app name "Beekeeper Studio Demo" version "1.0.0" debug true max_connections 100
+redis-cli HSET config:app name "Supersedure Studio Demo" version "1.0.0" debug true max_connections 100
 redis-cli HSET config:features feature_flags '{"dark_mode":true,"beta_features":false,"analytics":true}'
 
 echo "Redis example data loaded successfully!"

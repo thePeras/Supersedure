@@ -4,7 +4,7 @@ summary: "A full featured formatter to save and use presets to format your SQL"
 icon: material/format-align-center
 ---
 
-The Beekeeper SQL Query Formatter is a great way to ensure your SQL meets strict formatting requirements either from your boss or just yourself. The SQL Query Formatter brings the options of the [SQL Formatter NPM Package](https://www.npmjs.com/package/sql-formatter) to your fingertips to set, save, and use formatting presets.
+The Supersedure SQL Query Formatter is a great way to ensure your SQL meets strict formatting requirements either from your boss or just yourself. The SQL Query Formatter brings the options of the [SQL Formatter NPM Package](https://www.npmjs.com/package/sql-formatter) to your fingertips to set, save, and use formatting presets.
 
 ## Getting Started
 
@@ -18,7 +18,7 @@ Right click on the editor window and select **Format Query → Custom...** or cl
 3. prettier-sql
 
 ### Update Default Preset
-You can set the default formatter for your queries using the Beekeeper Studio [configuration system](./configuration.md). Out of the box this will be **bk-default**.
+You can set the default formatter for your queries using the Supersedure Studio [configuration system](./configuration.md). Out of the box this will be **bk-default**.
 
 ```ini
 [ui.queryEditor]

@@ -1,6 +1,6 @@
 import { AppEvent } from "@/common/AppEvent"
 import Vue from 'vue'
-import { openMenu, MenuItem, DividerItem } from "@beekeeperstudio/ui-kit"
+import { openMenu, MenuItem, DividerItem } from "@supersedure-studio/ui-kit"
 import { IConnection } from "@/common/interfaces/IConnection"
 import { ConnectionType } from "@/lib/db/types"
 import { isBksInternalColumn } from "@/common/utils"
@@ -62,7 +62,7 @@ export function toMenuItem(option: ContextOption): MenuItem {
   }
 }
 
-export const BeekeeperPlugin = {
+export const SupersedurePlugin = {
   timeAgo(date: Date, style?: string) {
     if (date > new Date('2888-01-01')) {
       return 'forever'
@@ -185,8 +185,8 @@ export const BeekeeperPlugin = {
   async promptJwtToken(connectionName?: string): Promise<{ token?: string; cancelled: boolean }> {
     return new Promise((resolve) => {
       const description = connectionName
-        ? `Paste a fresh CockroachDB JWT to connect to ${connectionName}. Beekeeper will send it as the password for this connection.`
-        : 'Paste a fresh CockroachDB JWT. Beekeeper will send it as the password for this connection.';
+        ? `Paste a fresh CockroachDB JWT to connect to ${connectionName}. Supersedure will send it as the password for this connection.`
+        : 'Paste a fresh CockroachDB JWT. Supersedure will send it as the password for this connection.';
       const title = "CockroachDB JWT";
 
       Vue.prototype.$modal.show('input-ephemeral-modal', {
@@ -215,13 +215,13 @@ export const BeekeeperPlugin = {
   }
 }
 
-export type BeekeeperPlugin = typeof BeekeeperPlugin
+export type SupersedurePlugin = typeof SupersedurePlugin
 
 
 export default {
   install(Vue) {
-    Vue.prototype.$app = BeekeeperPlugin
-    Vue.prototype.$bks = BeekeeperPlugin
+    Vue.prototype.$app = SupersedurePlugin
+    Vue.prototype.$bks = SupersedurePlugin
     Vue.prototype.$pluralize = pluralize;
 
     Vue.prototype.$confirm = function(title?: string, message?: string, options?: { confirmLabel?: string, cancelLabel?: string, variant?: string }): Promise<boolean> {

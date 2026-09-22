@@ -1,10 +1,10 @@
 ---
 title: Firebird
-summary: "How to connect to Firebird 3+ from Beekeeper Studio with Legacy Authentication"
+summary: "How to connect to Firebird 3+ from Supersedure Studio with Legacy Authentication"
 icon: material/database
 ---
 
-Beekeeper Studio doesn't support the firebird 3+ wire protocol yet, so your firebird server needs to allow legacy connections.
+Supersedure Studio doesn't support the firebird 3+ wire protocol yet, so your firebird server needs to allow legacy connections.
 
 !!! Warning
     If security is a concern, you should not use the Legacy_Auth authentication plugin. The legacy connection method sends passwords over the wire unencrypted, does not support wire protocol encryption, and also limits (truncates!) the usable length of the password to 8 bytes.

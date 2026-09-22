@@ -27,12 +27,12 @@ We recommend using the Azure CLI authentication whenever possible.
 Uses your Microsoft EntraID credentials via a browser for a streamlined sign-in experience.
 
 <video controls>
-    <source id="workspaces" type="video/mp4" src="https://assets.beekeeperstudio.io/bks-azure-entra-sso.mp4" />
+    <source id="workspaces" type="video/mp4" src="https://assets.supersedurestudio.io/bks-azure-entra-sso.mp4" />
 </video>
 <small>Video walkthrough</small>
 
 !!! warning "Passes through the BKS webserver"
-    Signing in to your database this way does require authentication through the Beekeeper Studio web server which will temporarily store a token for the app to use. No credentials are stored by the webserver.
+    Signing in to your database this way does require authentication through the Supersedure Studio web server which will temporarily store a token for the app to use. No credentials are stored by the webserver.
 
 ### Steps
 
@@ -54,10 +54,10 @@ Uses your Microsoft EntraID credentials via a browser for a streamlined sign-in 
 
 Sign into azure using the Azure CLI, then use your authenticated session to access your database in Azure.
 
-This is the most enterprise-friendly workflow as it does not require the cooperation of the Beekeeper Studio servers, simply a pre-authenticated AZ client with the right permissions.
+This is the most enterprise-friendly workflow as it does not require the cooperation of the Supersedure Studio servers, simply a pre-authenticated AZ client with the right permissions.
 
 <video controls>
-    <source id="workspaces" type="video/mp4" src="https://assets.beekeeperstudio.io/bks-azure-entra-cli.mp4" />
+    <source id="workspaces" type="video/mp4" src="https://assets.supersedurestudio.io/bks-azure-entra-cli.mp4" />
 </video>
 <small>Azure CLI authentication walkthrough video</small>
 
@@ -68,22 +68,22 @@ If you're part of a large enterprise, they likely have documentation on how to d
 ### Steps
 
 1. Open your terminal and log in to Azure by typing `az login` and following the prompts
-2. Open Beekeeper Studio and select/enter the database credentials you wish to connect to
+2. Open Supersedure Studio and select/enter the database credentials you wish to connect to
 3. Select **Azure CLI Authentication** as the authentication method.
 3. Provide:
     - **Server**
     - **Database**
     - **Username**
     - Note: No password required!
-5. Click 'connect'. This takes a few moments as Beekeeper Studio asks for the temporary access key
+5. Click 'connect'. This takes a few moments as Supersedure Studio asks for the temporary access key
 
 
 ### Tips
 - If you are using EntraID group based authentication:
-    - Use the group name as the username in Beekeeper
+    - Use the group name as the username in Supersedure
     - Authenticate in the Azure CLI using an account that is part of that group
     - Ensure that the group has a matching **AADUSER** on the database server
-- If you created your **AADUSER** with an alias, ie `CREATE AADUSER '<reallylongupn>' as 'shortername'`, you may still need to use the `<reallylongupn>` as the username from within Beekeeper
+- If you created your **AADUSER** with an alias, ie `CREATE AADUSER '<reallylongupn>' as 'shortername'`, you may still need to use the `<reallylongupn>` as the username from within Supersedure
 
 ### CLI path
 
@@ -93,13 +93,13 @@ The path to the `az` binary is detected automatically — common install locatio
 
 !!! info "MS SQL Server Supported"
 
-Service principals are best suited for automated services or non-interactive applications, but we support them in Beekeeper Studio in case they are your only option.
+Service principals are best suited for automated services or non-interactive applications, but we support them in Supersedure Studio in case they are your only option.
 
 We recommend using Azure CLI whenever possible.
 
 
 <video controls>
-    <source id="workspaces" type="video/mp4" src="https://assets.beekeeperstudio.io/bks-azure-entra-principal.mp4" />
+    <source id="workspaces" type="video/mp4" src="https://assets.supersedurestudio.io/bks-azure-entra-principal.mp4" />
 </video>
 <small>Service Principal authentication walkthrough</small>
 
@@ -108,7 +108,7 @@ We recommend using Azure CLI whenever possible.
 
 1. [Create a Service Principal](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal) in Azure.
 2. Grant the Service Principal access to the database.
-1. Open Beekeeper Studio and select the database you wish to connect to.
+1. Open Supersedure Studio and select the database you wish to connect to.
 3. Select **Service Principal** as the authentication method.
 4. Provide:
     - **Server**
@@ -117,8 +117,8 @@ We recommend using Azure CLI whenever possible.
     - **Client ID**
     - **Client Secret**
 
-!!! warning "Beekeeper does store this"
-    Beekeeper Studio **will** store your client ID and Secret in this authentication workflow.
+!!! warning "Supersedure does store this"
+    Supersedure Studio **will** store your client ID and Secret in this authentication workflow.
 
 
 ## Troubleshooting

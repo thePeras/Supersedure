@@ -91,7 +91,7 @@ jobs:
       - name: Determine latest release
         id: latest_release
         run: |
-          latest=$(gh api repos/beekeeper-studio/beekeeper-studio/releases/latest --jq '.tag_name')
+          latest=$(gh api repos/thePeras/supersedure-studio/releases/latest --jq '.tag_name')
           echo "Latest release: $latest"
           echo "tag=$latest" >> "$GITHUB_OUTPUT"
         env:
@@ -102,9 +102,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LATEST_TAG: ${{ steps.latest_release.outputs.tag }}
-          R2_BUCKET: beekeeper-downloads
+          R2_BUCKET: supersedure-downloads
           R2_ENDPOINT: ${{ secrets.cloudflare_endpoint }}
-          PUBLIC_BASE_URL: https://downloads.beekeeperstudio.io
+          PUBLIC_BASE_URL: https://downloads.supersedurestudio.io
           AWS_ACCESS_KEY_ID: "${{ secrets.cloudflare_key_id }}"
           AWS_SECRET_ACCESS_KEY: "${{ secrets.cloudflare_secret_access_key }}"
           AWS_DEFAULT_REGION: "us-east-1"
@@ -144,7 +144,7 @@ jobs:
       - name: Download release packages
         run: |
           rm -rf ./artifacts; mkdir artifacts
-          gh release download "$TAG" --repo beekeeper-studio/beekeeper-studio \
+          gh release download "$TAG" --repo supersedure-studio/supersedure-studio \
             --pattern '*.deb' --pattern '*.rpm' --dir ./artifacts
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -152,7 +152,7 @@ jobs:
       - name: Publish DEB to R2
         run: |
           deb-s3 upload $(find ./artifacts -type f -name "*.deb") \
-            --bucket=beekeeper-deb-repo \
+            --bucket=supersedure-deb-repo \
             --codename=${{ needs.identify_channel.outputs.deb_codename }} \
             --endpoint=${{ secrets.cloudflare_endpoint }} \
             --lock \
@@ -179,7 +179,7 @@ jobs:
           .github/scripts/publish_rpm.sh $(find ./artifacts -type f -name "*.rpm")
         env:
           GPG_KEY_ID: "${{ steps.import_gpg.outputs.keyid }}"
-          R2_BUCKET: "beekeeper-rpm-repo/repo"
+          R2_BUCKET: "supersedure-rpm-repo/repo"
           R2_ENDPOINT: ${{ secrets.cloudflare_endpoint }}
           AWS_ACCESS_KEY_ID: "${{ secrets.cloudflare_key_id }}"
           AWS_SECRET_ACCESS_KEY: "${{ secrets.cloudflare_secret_access_key }}"
@@ -203,7 +203,7 @@ jobs:
       - name: Download release snaps
         run: |
           rm -rf ./artifacts; mkdir artifacts
-          gh release download "$TAG" --repo beekeeper-studio/beekeeper-studio \
+          gh release download "$TAG" --repo supersedure-studio/supersedure-studio \
             --pattern '*.snap' --dir ./artifacts
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -226,7 +226,7 @@ jobs:
         if: needs.identify_channel.outputs.channel == 'latest'
         continue-on-error: true
         run: |
-          snapcraft promote beekeeper-studio --from-channel "latest/edge" --to-channel "latest/stable" --yes
+          snapcraft promote supersedure-studio --from-channel "latest/edge" --to-channel "latest/stable" --yes
 
   notify_result:
     needs: [identify_channel, mirror_downloads, publish_repositories, publish_snapcraft]

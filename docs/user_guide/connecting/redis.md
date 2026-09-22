@@ -1,7 +1,7 @@
 ---
 title: Redis
-summary: "Connect to a Redis database using Beekeeper Studio with optional username authentication and ReJSON support"
-description: Connect to Redis with Beekeeper Studio. Supports username/password auth, TLS, and the ReJSON module.
+summary: "Connect to a Redis database using Supersedure Studio with optional username authentication and ReJSON support"
+description: Connect to Redis with Supersedure Studio. Supports username/password auth, TLS, and the ReJSON module.
 icon: simple/redis
 ---
 
@@ -35,4 +35,4 @@ For older Redis versions that only use password authentication, leave the userna
 
 ## ReJSON Support
 
-If your Redis server has the [ReJSON module](https://redis.io/docs/stack/json/) installed, Beekeeper Studio can display and edit JSON values stored with `JSON.SET`. JSON data will be rendered with syntax highlighting in the value viewer.
+If your Redis server has the [ReJSON module](https://redis.io/docs/stack/json/) installed, Supersedure Studio can display and edit JSON values stored with `JSON.SET`. JSON data will be rendered with syntax highlighting in the value viewer.

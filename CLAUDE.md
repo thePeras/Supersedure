@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Beekeeper Studio is a cross-platform SQL editor and database manager built with Electron, Vue.js 2, and TypeScript. It supports 15+ databases and offers both community (GPLv3) and paid editions.
+Supersedure Studio is a cross-platform SQL editor and database manager built with Electron, Vue.js 2, and TypeScript. It supports 15+ databases and offers both community (GPLv3) and paid editions.
 
 ## Architecture
 
 ### Monorepo Structure
 - **`apps/studio/`** - Main Electron application
-- **`apps/ui-kit/`** - Reusable UI components library (`@beekeeperstudio/ui-kit`)
+- **`apps/ui-kit/`** - Reusable UI components library (`@supersedure-studio/ui-kit`)
 - **`apps/sqltools/`** - Currently unused workspace
 
 ### Technology Stack
@@ -219,7 +219,7 @@ Translation files live alongside the original English files in the same director
    - File paths and URLs
    - Code blocks (unless comments need translation)
    - Technical terms that are commonly used in English (e.g., "plugin", "SQL")
-   - Brand names (e.g., "Beekeeper Studio", "GitHub")
+   - Brand names (e.g., "Supersedure Studio", "GitHub")
 
 ### Navigation Translations
 

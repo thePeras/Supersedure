@@ -122,7 +122,7 @@ export default class PluginFileManager {
     const mustCleanup = !this.options?.downloadDirectory;
     const tmpDirectory =
       this.options?.downloadDirectory ||
-      path.join(tmpdir(), `beekeeper-plugin-${pluginId}-${Date.now()}`);
+      path.join(tmpdir(), `supersedure-plugin-${pluginId}-${Date.now()}`);
 
     try {
       // Create temp directory for initial download
@@ -142,7 +142,7 @@ export default class PluginFileManager {
         signal: options.signal,
         fileName: `${pluginId}-${release.manifest.version}-${Date.now()}-tmp.zip`,
         headers: {
-          "User-Agent": "Beekeeper Studio",
+          "User-Agent": "Supersedure Studio",
         },
       });
 

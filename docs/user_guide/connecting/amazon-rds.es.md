@@ -32,7 +32,7 @@ Tambien puedes usar una politica similar a la siguiente:
 
 ## Conectarse a Amazon RDS
 
-A continuacion se muestra un ejemplo de configuracion en Beekeeper Studio una vez que los permisos IAM estan configurados, necesitaras el nombre de host, puerto, nombre de usuario, region de AWS y si tienes multiples perfiles de Amazon puedes especificar el perfil que deseas usar.
+A continuacion se muestra un ejemplo de configuracion en Supersedure Studio una vez que los permisos IAM estan configurados, necesitaras el nombre de host, puerto, nombre de usuario, region de AWS y si tienes multiples perfiles de Amazon puedes especificar el perfil que deseas usar.
 
 ![Image Alt Tag](../../assets/images/amazon-rds-config.png)
 

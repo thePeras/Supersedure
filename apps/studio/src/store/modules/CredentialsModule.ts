@@ -8,7 +8,7 @@ import Vue from "vue";
 import { TransportCloudCredential } from "@/common/transport";
 
 function genAppId() {
-  return `beekeeper-app-${uuidv4()}`
+  return `supersedure-app-${uuidv4()}`
 }
 
 export interface WSWithClient {

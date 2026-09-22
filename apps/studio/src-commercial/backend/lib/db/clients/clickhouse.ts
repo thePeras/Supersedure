@@ -168,7 +168,7 @@ export class ClickHouseClient extends BasicDatabaseClient<Result> {
       username: this.server.config.user,
       password: this.server.config.password,
       database: this.database.database,
-      application: "Beekeeper Studio",
+      application: "Supersedure Studio",
       clickhouse_settings: {
         default_format: "JSONCompact",
       },
@@ -192,7 +192,7 @@ export class ClickHouseClient extends BasicDatabaseClient<Result> {
         }
       }
 
-      // Beekeeper's default behavior is to disable verification unless certificates are provided.
+      // Supersedure's default behavior is to disable verification unless certificates are provided.
       if (!hasCerts || !this.server.config.sslRejectUnauthorized) {
         config.http_agent = new https.Agent({
           rejectUnauthorized: false

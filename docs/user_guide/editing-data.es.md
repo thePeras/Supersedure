@@ -1,7 +1,7 @@
 ---
 title: Vista de tabla
 summary: "Ve, busca y modifica los datos de tu tabla de base de datos usando nuestro explorador de tablas integrado."
-old_url: "https://docs.beekeeperstudio.io/docs/creating-tables"
+old_url: "https://docs.supersedurestudio.io/docs/creating-tables"
 icon: material/table
 ---
 
@@ -20,7 +20,7 @@ Esta vista te permite:
 
 ## Interaccion
 
-La vista de tabla proporciona una experiencia tipo hoja de calculo para seleccionar, copiar y pegar datos. Beekeeper soporta muchas primitivas de interaccion tipo hoja de calculo.
+La vista de tabla proporciona una experiencia tipo hoja de calculo para seleccionar, copiar y pegar datos. Supersedure soporta muchas primitivas de interaccion tipo hoja de calculo.
 
 1. Selecciona rangos arbitrarios de celdas usando clic y arrastrar, ctrl-clic y shift-clic.
 2. Oculta columnas haciendo clic derecho en el encabezado y eligiendo `ocultar columna`
@@ -59,17 +59,17 @@ Haz clic en el pequeno icono `<>` a la izquierda de los filtros para ingresar un
 En la vista de tabla puedes editar facilmente cualquier celda que desees. Simplemente haz doble clic en la celda para editar.
 
 !!! note
-    Beekeeper solo soporta edicion de tablas con claves primarias.
+    Supersedure solo soporta edicion de tablas con claves primarias.
 
 ### Editar JSON y otros valores grandes
 
 Editar un documento JSON en una pequena celda de tabla no es una gran experiencia. En su lugar, puedes hacer clic derecho en la celda y seleccionar `Editar en modal`. Esto proporcionara un modal emergente con resaltado de sintaxis y verificacion.
 
-![Editando valores JSON en base de datos SQL usando Beekeeper Studio](../assets/images/table-view-modal-edit.png)
+![Editando valores JSON en base de datos SQL usando Supersedure Studio](../assets/images/table-view-modal-edit.png)
 
 ### Editar tablas que no tienen claves primarias
 
-Beekeeper Studio tipicamente no te permite editar una tabla que no contiene una clave primaria, pero otras GUIs de base de datos lo permiten, entonces que pasa?
+Supersedure Studio tipicamente no te permite editar una tabla que no contiene una clave primaria, pero otras GUIs de base de datos lo permiten, entonces que pasa?
 
 En general, si no tienes una clave primaria en tu tabla, **no hay forma confiable de identificar una fila especifica**. Algunas GUIs soportan edicion en esta situacion, pero usan una *heuristica* para determinar que fila actualizar. Una tecnica comun es hacer coincidir todos los valores de la fila para realizar la actualizacion, o usar un identificador de fila secreto.
 
@@ -83,18 +83,18 @@ El [ROWID](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/R
 
 #### Suficientemente bueno no es suficiente
 
-Nunca queremos que Beekeeper Studio sea la razon por la que actualizas la fila incorrecta en una base de datos de produccion. Nunca. Una solucion que funciona el 99% del tiempo, o incluso el 99.9% del tiempo *no es suficiente* cuando se trata de datos de produccion.
+Nunca queremos que Supersedure Studio sea la razon por la que actualizas la fila incorrecta en una base de datos de produccion. Nunca. Una solucion que funciona el 99% del tiempo, o incluso el 99.9% del tiempo *no es suficiente* cuando se trata de datos de produccion.
 
 Por esa razon, la edicion de datos de tabla esta deshabilitada a menos que tu tabla tenga una clave primaria.
 
 #### Excepciones
 
-- SQLite siempre da a las filas una clave primaria, ya sea especificada o no. Este `rowid` es usado por Beekeeper Studio en SQLite para habilitar la edicion de datos donde no has especificado una clave primaria.
+- SQLite siempre da a las filas una clave primaria, ya sea especificada o no. Este `rowid` es usado por Supersedure Studio en SQLite para habilitar la edicion de datos donde no has especificado una clave primaria.
 
 
 ### Aplicar cambios
 
-Beekeeper tiene un diseno unico que 'prepara' los cambios antes de aplicarlos, para que puedas hacer multiples cambios que se apliquen dentro de una sola transaccion.
+Supersedure tiene un diseno unico que 'prepara' los cambios antes de aplicarlos, para que puedas hacer multiples cambios que se apliquen dentro de una sola transaccion.
 
 Los tipos de cambios preparados se indican por color:
 

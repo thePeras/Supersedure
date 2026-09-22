@@ -115,7 +115,7 @@ jobs:
         run: yarn lib:build
 
       - name: Build App
-        run: yarn workspace beekeeper-studio build
+        run: yarn workspace supersedure-studio build
 
       - name: Start postgres container
         run: docker compose up psql15 -d --wait
@@ -124,7 +124,7 @@ jobs:
         shell: bash
         run: |
           xvfb-run --auto-servernum --server-args "-screen 0 1600x1000x24" bash -c '
-            yarn workspace beekeeper-studio test:e2e:ci
+            yarn workspace supersedure-studio test:e2e:ci
           '
         env:
           ELECTRON_ENABLE_LOGGING: 1

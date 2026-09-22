@@ -7,7 +7,7 @@
     <div class="card-body">
       <table class="simple-table">
         <tr>
-          <td>License Type <a href="https://docs.beekeeperstudio.io/">learn more</a></td>
+          <td>License Type <a href="https://docs.supersedurestudio.io/">learn more</a></td>
           <td>{{ licenseStatus.fromFile ? "Offline File License" : "Online License" }}</td>
         </tr>
         <template v-if="licenseStatus.fromFile">

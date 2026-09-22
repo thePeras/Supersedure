@@ -1,11 +1,11 @@
 ---
 title: Data Export
 summary: "Export or copy data from your database to CSV, JSON, Excel, and more with a couple of clicks."
-old_url: "https://docs.beekeeperstudio.io/docs/data-export"
+old_url: "https://docs.supersedurestudio.io/docs/data-export"
 icon: material/export
 ---
 
-There are two ways you can export database data in Beekeeper Studio.
+There are two ways you can export database data in Supersedure Studio.
 
 1. Exporting the results of a SQL query
 2. Exporting a whole table(s), or a filtered table view
@@ -13,7 +13,7 @@ There are two ways you can export database data in Beekeeper Studio.
 
 ## Export Formats
 
-Beekeeper supports saving data in a number of formats
+Supersedure supports saving data in a number of formats
 
 
 ## Exporting SQL query results
@@ -34,7 +34,7 @@ You can choose to either download as a file, or copy the result to your clipboar
 
 ### Limits on SQL query downloads
 
-By default Beekeeper Studio limits query results to 20,000 records (so you don't crash the app). This limit also applies to the download.
+By default Supersedure Studio limits query results to 20,000 records (so you don't crash the app). This limit also applies to the download.
 
 To access the full result set You can select `Download full results` in the download menu to fetch the whole query result, and send it directly to a JSON or CSV file.
 
@@ -42,7 +42,7 @@ To access the full result set You can select `Download full results` in the down
 
 Exporting a table is a little more complex, because a table could contain millions of records.
 
-When you export a table, tables, or filtered table view, Beekeeper Studio will execute the query and then stream the results to the download file.
+When you export a table, tables, or filtered table view, Supersedure Studio will execute the query and then stream the results to the download file.
 
 There are a few options to get started:
 - Go to the table explorer view, click the ⚙ icon in the bottom right, and choose `Export`.
@@ -79,7 +79,7 @@ Each table is stored as a separate file with a determined format of `tablename.{
 
 ## Copying individual rows
 
-For any table in Beekeeper Studio, whether in the table explorer or the query results, you can right-click a cell and choose to export the whole row in a number of formats.
+For any table in Supersedure Studio, whether in the table explorer or the query results, you can right-click a cell and choose to export the whole row in a number of formats.
 
 ![Image Alt Tag](../assets/images/data-export-26.png)
 
@@ -93,7 +93,7 @@ For any table in Beekeeper Studio, whether in the table explorer or the query re
 
 ## Easily Export To Excel Or Google Sheets
 
-Beekeeper Studio's row-copy format is designed to allow the quick and easy pasting of data into Google Sheets and Microsoft Excel.
+Supersedure Studio's row-copy format is designed to allow the quick and easy pasting of data into Google Sheets and Microsoft Excel.
 
 Pasting data into a spreadsheet using this format will allow your spreadsheet software to automatically parse the data and distribute it across columns correctly.
 

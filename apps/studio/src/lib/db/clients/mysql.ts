@@ -1135,7 +1135,7 @@ export class MysqlClient extends BasicDatabaseClient<ResultType, mysql.PoolConne
             ) {
               const nuError = new ClientError(
                 `DELIMITER is only supported in the command line client, ${err.message}`,
-                "https://docs.beekeeperstudio.io/support/troubleshooting/#mysql"
+                "https://docs.supersedurestudio.io/support/troubleshooting/#mysql"
               );
               throw nuError;
             } else {

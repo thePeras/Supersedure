@@ -2,7 +2,7 @@
 title: Trino
 summary: "Trino support is currently in early alpha"
 icon: simple/trino
-description: "Connect to a Trino coordinator to run queries by using Beekeeper Studio"
+description: "Connect to a Trino coordinator to run queries by using Supersedure Studio"
 ---
 
 # Trino Support
@@ -14,7 +14,7 @@ Super excited to have Trino support here for you all. Please bear in mind that T
 Support has been limited to basically a "read only" state since any form of writing should be done in the confines of the database itself.
 
 ## How to Connect
-Connecting to a Trino database from Beekeeper Studio is straightforward. SElect Trino from the dropdown, and fill in the host, port, username, and password fields of the Trino Cluster (not any of the underlying databases), then click Connect.
+Connecting to a Trino database from Supersedure Studio is straightforward. SElect Trino from the dropdown, and fill in the host, port, username, and password fields of the Trino Cluster (not any of the underlying databases), then click Connect.
 
 ### Trino Connection Details
 
@@ -28,9 +28,9 @@ To connect to a Trino database, you'll need the following information:
 
 ### SSL / HTTPS Connections
 
-If your Trino coordinator is configured with TLS/HTTPS, enable **SSL** in the connection form. Beekeeper Studio supports three SSL modes:
+If your Trino coordinator is configured with TLS/HTTPS, enable **SSL** in the connection form. Supersedure Studio supports three SSL modes:
 
-1. **Trust the server certificate** — Enable SSL without providing any certificate files. Beekeeper Studio will connect over HTTPS but will not verify the server's certificate. This is the simplest option and works with self-signed certificates.
+1. **Trust the server certificate** — Enable SSL without providing any certificate files. Supersedure Studio will connect over HTTPS but will not verify the server's certificate. This is the simplest option and works with self-signed certificates.
 2. **Provide a CA certificate** — If your Trino server uses a certificate signed by a private CA, provide the CA certificate file. Leave "Reject Unauthorized" unchecked to allow the connection.
 3. **Full certificate verification** — Provide the CA certificate and optionally a client certificate and key file, then check "Reject Unauthorized" to enforce full TLS verification.
 
@@ -39,7 +39,7 @@ If your Trino coordinator is configured with TLS/HTTPS, enable **SSL** in the co
 
 ### Testing Your Trino Connection
 
-Before saving your connection details, Beekeeper Studio allows you to test the connection:
+Before saving your connection details, Supersedure Studio allows you to test the connection:
 
 1. Enter your connection details.
 2. Click the *Test Connection* button.

@@ -1,22 +1,22 @@
 {
-  "name": "@beekeeperstudio/ui-kit",
-  "description": "UI components library for Beekeeper Studio",
+  "name": "@supersedure-studio/ui-kit",
+  "description": "UI components library for Supersedure Studio",
   "author": {
-    "name": "Beekeeper Studio Team",
-    "email": "support@beekeeperstudio.io",
-    "url": "https://beekeeperstudio.io"
+    "name": "Supersedure Studio Team",
+    "email": "support@supersedurestudio.io",
+    "url": "https://supersedurestudio.io"
   },
   "private": false,
   "version": "0.4.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/beekeeper-studio/beekeeper-studio.git",
+    "url": "git+https://github.com/thePeras/supersedure-studio.git",
     "directory": "apps/ui-kit"
   },
   "bugs": {
-    "url": "https://github.com/beekeeper-studio/beekeeper-studio/issues"
+    "url": "https://github.com/thePeras/supersedure-studio/issues"
   },
-  "homepage": "https://beekeeperstudio.io",
+  "homepage": "https://supersedurestudio.io",
   "type": "module",
   "files": [
     "dist",

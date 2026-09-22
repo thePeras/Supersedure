@@ -819,7 +819,7 @@ export class OracleClient extends BasicDatabaseClient<DriverResult, oracle.Conne
         throw new Error(
           `Oracle configuration directory cannot be changed after the client has been initialized. ` +
           `Current: "${oracleInitConfigDir || '(none)'}",  requested: "${configLocation}". ` +
-          `Please restart Beekeeper Studio to use a different configuration directory.`
+          `Please restart Supersedure Studio to use a different configuration directory.`
         )
       }
     }

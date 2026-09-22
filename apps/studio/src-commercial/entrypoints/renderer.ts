@@ -25,7 +25,7 @@ import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import VueClipboard from 'vue-clipboard2'
 import { AppEventMixin } from '@/common/AppEvent'
-import BeekeeperPlugin from '@/plugins/BeekeeperPlugin'
+import SupersedurePlugin from '@/plugins/SupersedurePlugin'
 import _ from 'lodash'
 import NotyPlugin from '@/plugins/NotyPlugin'
 import '@/common/initializers/big_int_initializer.ts'
@@ -40,7 +40,7 @@ import { ForeignCacheTabulatorModule } from '@/plugins/ForeignCacheTabulatorModu
 import { PersistenceGuardTabulatorModule } from '@/plugins/PersistenceGuardTabulatorModule'
 import { WebPluginManager } from '@/services/plugin/web'
 import PluginStoreService from '@/services/plugin/web/PluginStoreService'
-import * as UIKit from '@beekeeperstudio/ui-kit'
+import * as UIKit from '@supersedure-studio/ui-kit'
 import ProductTourPlugin from '@/plugins/ProductTourPlugin'
 
 (async () => {
@@ -103,7 +103,7 @@ import ProductTourPlugin from '@/plugins/ProductTourPlugin'
     window.main.setTlsMinVersion("TLSv1");
     TimeAgo.addLocale(en)
     Tabulator.defaultOptions.layout = "fitDataFill";
-    Tabulator.defaultOptions.popupContainer = ".beekeeper-studio-wrapper";
+    Tabulator.defaultOptions.popupContainer = ".supersedure-studio-wrapper";
     Tabulator.defaultOptions.headerSortClickElement = 'icon';
     Tabulator.registerModule([HeaderSortTabulatorModule, KeyListenerTabulatorModule, ForeignCacheTabulatorModule, PersistenceGuardTabulatorModule]);
     // Tabulator.prototype.bindModules([EditModule]);
@@ -170,7 +170,7 @@ import ProductTourPlugin from '@/plugins/ProductTourPlugin'
     Vue.use(VModal)
     Vue.use(VueClipboard)
     Vue.use(ConfigPlugin)
-    Vue.use(BeekeeperPlugin)
+    Vue.use(SupersedurePlugin)
     Vue.use(SettingsPlugin)
     Vue.use(VueElectronPlugin)
     Vue.use(PortalVue)
@@ -189,7 +189,7 @@ import ProductTourPlugin from '@/plugins/ProductTourPlugin'
       store,
       mounted() {
         VTooltip.options.defaultBoundariesElement =
-          document.querySelector(".beekeeper-studio-wrapper") as HTMLElement;
+          document.querySelector(".supersedure-studio-wrapper") as HTMLElement;
       },
     })
 

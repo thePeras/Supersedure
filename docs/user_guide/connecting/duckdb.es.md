@@ -8,13 +8,13 @@ Conectarse a una base de datos DuckDB desde la aplicacion es sencillo. Simplemen
 
 ## Haz doble clic en archivos .duckdb
 
-Cuando instalas Beekeeper Studio, se creara una asociacion para archivos con la extension `.duckdb`.
+Cuando instalas Supersedure Studio, se creara una asociacion para archivos con la extension `.duckdb`.
 
-Mientras Beekeeper Studio siga siendo la aplicacion predeterminada para estos tipos de archivos, ahora puedes simplemente hacer doble clic en cualquier archivo DuckDB para abrirlo en Beekeeper Studio.
+Mientras Supersedure Studio siga siendo la aplicacion predeterminada para estos tipos de archivos, ahora puedes simplemente hacer doble clic en cualquier archivo DuckDB para abrirlo en Supersedure Studio.
 
 ## Abrir desde la linea de comandos
 
-Tambien puedes usar tu terminal para abrir una base de datos en Beekeeper Studio siempre que tengas las asociaciones de archivos configuradas.
+Tambien puedes usar tu terminal para abrir una base de datos en Supersedure Studio siempre que tengas las asociaciones de archivos configuradas.
 
 - **MacOS** `open ./ruta/a/ejemplo.duckdb`
 - **Linux** `xdg-open ./ruta/a/ejemplo.duckdb`

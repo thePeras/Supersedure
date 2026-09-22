@@ -9,7 +9,7 @@ icon: simple/clickhouse
 
 # How To Connect To ClickHouse
 
-Connecting to a ClickHouse database from Beekeeper Studio is straightforward. Simply select ClickHouse from the dropdown, and fill in the host, port, username, and password fields, then click Connect.
+Connecting to a ClickHouse database from Supersedure Studio is straightforward. Simply select ClickHouse from the dropdown, and fill in the host, port, username, and password fields, then click Connect.
 
 ## ClickHouse Connection Details
 
@@ -22,7 +22,7 @@ To connect to a ClickHouse database, you'll need the following information:
 
 ## Testing Your ClickHouse Connection
 
-Before saving your connection details, Beekeeper Studio allows you to test the connection:
+Before saving your connection details, Supersedure Studio allows you to test the connection:
 
 1. Enter your connection details.
 2. Click the Test Connection button.

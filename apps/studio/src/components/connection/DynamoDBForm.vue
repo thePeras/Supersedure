@@ -5,7 +5,7 @@
       <div>
         DynamoDB support is in beta. Connect to a region or a local endpoint
         (e.g. <a href="https://hub.docker.com/r/amazon/dynamodb-local">amazon/dynamodb-local</a>).
-        <a href="https://github.com/beekeeper-studio/beekeeper-studio/issues/new/choose">Report an issue</a>.
+        <a href="https://github.com/thePeras/supersedure-studio/issues/new/choose">Report an issue</a>.
       </div>
     </div>
 

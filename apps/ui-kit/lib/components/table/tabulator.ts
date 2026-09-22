@@ -98,6 +98,6 @@ export const rowHeaderField = '--row-header--bks';
 
 TabulatorFull.defaultOptions.layout = "fitDataFill";
 // FIXME we should be able to customize this
-// TabulatorFull.defaultOptions.popupContainer = ".beekeeper-studio-wrapper";
+// TabulatorFull.defaultOptions.popupContainer = ".supersedure-studio-wrapper";
 TabulatorFull.defaultOptions.headerSortClickElement = 'icon';
 TabulatorFull.registerModule([HeaderSortTabulatorModule, EventBridgeTabulatorModule, ForeignCacheTabulatorModule]);

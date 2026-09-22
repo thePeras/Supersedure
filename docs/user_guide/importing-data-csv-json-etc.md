@@ -1,7 +1,7 @@
 ---
 title: Importing Data (CSV, JSON, etc)
-summary: "Take your data and import it into Beekeeper Studio using our easy point-and-click interface"
-old_url: "https://docs.beekeeperstudio.io/docs/importing-data-csv-json-etc"
+summary: "Take your data and import it into Supersedure Studio using our easy point-and-click interface"
+old_url: "https://docs.supersedurestudio.io/docs/importing-data-csv-json-etc"
 icon: material/import
 ---
 
@@ -40,7 +40,7 @@ If you’d rather create a new table, flip the toggle. You can only follow one p
 
 - Choose the file to import.  
 - Decide whether to trim whitespace from each cell.  
-- Beekeeper auto-detects separators and sets sensible defaults — you can override them.  
+- Supersedure auto-detects separators and sets sensible defaults — you can override them.  
 - Specify which values in the file should be treated as `NULL`.  
 - Use the preview option to see the first 10 rows with current settings applied.  
 - When ready, click **Map To Table** to continue.
@@ -97,7 +97,7 @@ If everything looks correct, click **Run the Import**.
 - If creating a new table, it will be created before the import runs.  
 - Upon completion, you can close the window or view your newly imported data.
 
-If there's an error, Beekeeper will display the database error, which you can copy for support.  
+If there's an error, Supersedure will display the database error, which you can copy for support.  
 Since imports run in transactions, failures result in a rollback — your table's state will remain unchanged (or the new table will be removed).
 
-Need help? Join our [Slack community](https://launchpass.com/beekeeperstud-lvg5276).
+Need help? Join our [Slack community](https://launchpass.com/supersedurestud-lvg5276).

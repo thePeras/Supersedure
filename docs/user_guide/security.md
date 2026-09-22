@@ -1,12 +1,12 @@
 ---
 title: Security & Privacy
-summary: Configuration and features to give you more control of your Beekeeper Studio install
+summary: Configuration and features to give you more control of your Supersedure Studio install
 icon: material/security
 ---
 
 ## Our Security Approach
 
-Beekeeper Studio is a **desktop application** - the vast majority of your sensitive data never touches our servers.
+Supersedure Studio is a **desktop application** - the vast majority of your sensitive data never touches our servers.
 
 - **Database credentials** are stored locally on your device and are never sent to us.
 - **SQL queries** run directly from your machine to your database. We never see them.
@@ -15,55 +15,55 @@ Beekeeper Studio is a **desktop application** - the vast majority of your sensit
 
 ### Cloud Services Are Optional
 
-Beekeeper Studio's cloud services (account management, billing, and workspace sync) are entirely optional. If you don't use cloud workspaces, no query or connection data ever reaches our infrastructure. When you do use cloud workspaces, sensitive fields like saved passwords are application-encrypted before being stored.
+Supersedure Studio's cloud services (account management, billing, and workspace sync) are entirely optional. If you don't use cloud workspaces, no query or connection data ever reaches our infrastructure. When you do use cloud workspaces, sensitive fields like saved passwords are application-encrypted before being stored.
 
-All cloud features can be disabled for environments with strict security postures - Beekeeper Studio works fully offline, including offline license validation. See the [Configuration docs](./configuration.md) for details on disabling cloud features via administrator configuration.
+All cloud features can be disabled for environments with strict security postures - Supersedure Studio works fully offline, including offline license validation. See the [Configuration docs](./configuration.md) for details on disabling cloud features via administrator configuration.
 
 ### Trust Center
 
-For a full overview of our security practices, policies, and compliance posture, visit our [Trust & Security Center](https://www.beekeeperstudio.io/trust/).
+For a full overview of our security practices, policies, and compliance posture, visit our [Trust & Security Center](https://www.supersedurestudio.io/trust/).
 
 ---
 
 ## Security Features
 
-Beekeeper offers several features designed to help you manage the privacy of your session, secure your environment, or enforce security settings for all users.
+Supersedure offers several features designed to help you manage the privacy of your session, secure your environment, or enforce security settings for all users.
 
 
 ## Security Settings
 
-Beekeeper Studio has several security settings
+Supersedure Studio has several security settings
 
 {% ini-include section="security" %}
 
 ### PIN Lock Mode
 
-Enabling PIN lock mode requires any Beekeeper Studio user to enter a pin code before connecting to a database. Combine this setting with auto disconnect for extra security.
+Enabling PIN lock mode requires any Supersedure Studio user to enter a pin code before connecting to a database. Combine this setting with auto disconnect for extra security.
 
 !!! warning "Don't forget your PIN"
     If you forget your PIN, the only way to recover it is by deleting your local installation, or disabling PIN mode entirely.
 
 #### Reset Steps (if you forget your pin)
 
-1. **Close Beekeeper Studio completely**
+1. **Close Supersedure Studio completely**
 
 2. **Delete the application data directory**:
-   - **Windows**: `%APPDATA%\beekeeper-studio\`
-   - **macOS**: `~/Library/Application Support/beekeeper-studio/`
-   - **Linux**: `~/.config/beekeeper-studio/`
+   - **Windows**: `%APPDATA%\supersedure-studio\`
+   - **macOS**: `~/Library/Application Support/supersedure-studio/`
+   - **Linux**: `~/.config/supersedure-studio/`
 
-3. **Restart Beekeeper Studio** - it will start fresh with default settings
+3. **Restart Supersedure Studio** - it will start fresh with default settings
 
 
 ### SSH Config Match Rules
 
-When connecting over an SSH tunnel, Beekeeper Studio reads `~/.ssh/config` the same way `ssh` does, including `Match` blocks. `Match exec` decides whether a block applies by running an arbitrary command, so a config you don't fully control could execute commands when you connect.
+When connecting over an SSH tunnel, Supersedure Studio reads `~/.ssh/config` the same way `ssh` does, including `Match` blocks. `Match exec` decides whether a block applies by running an arbitrary command, so a config you don't fully control could execute commands when you connect.
 
-Beekeeper Studio already ignores `~/.ssh/config` entirely unless it is owned by you and is not writable by group or other users. To additionally skip `Match exec` sections, set `disableSshConfigMatchExec = true` in the `[security]` section of your config file. `Host` blocks and non-exec `Match` rules (`Match host`, `Match user`, etc.) are still applied — only `Match exec` is skipped.
+Supersedure Studio already ignores `~/.ssh/config` entirely unless it is owned by you and is not writable by group or other users. To additionally skip `Match exec` sections, set `disableSshConfigMatchExec = true` in the `[security]` section of your config file. `Host` blocks and non-exec `Match` rules (`Match host`, `Match user`, etc.) are still applied — only `Match exec` is skipped.
 
 ### Enterprise Security Recommendations
 
-To enforce security settings on all Beekeeper Studio users you can deploy an administrator configuration file (`system.config.ini`) (see [Configuration docs](./configuration.md) for reference)
+To enforce security settings on all Supersedure Studio users you can deploy an administrator configuration file (`system.config.ini`) (see [Configuration docs](./configuration.md) for reference)
 
 1. Create an ini file
 2. enable `lockMode = pin`.
@@ -75,7 +75,7 @@ This forces all users to set a PIN on first load of the app, requires pin entry 
 
 ## Privacy Mode
 
-Beekeeper Studio provides a Privacy Mode that hides sensitive data when you're sharing your screen, so you can keep private information private.
+Supersedure Studio provides a Privacy Mode that hides sensitive data when you're sharing your screen, so you can keep private information private.
 
 Go to View in the app menu and select the option to "Toggle Privacy Mode".
 

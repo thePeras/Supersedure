@@ -63,7 +63,7 @@ describe("SSH Tunnel Tests", () => {
       // ssh is directly reachable from the test runner via its mapped port
       sshHost: container.getHost(),
       sshPort: container.getMappedPort(2222),
-      sshUsername: 'beekeeper',
+      sshUsername: 'supersedure',
       sshPassword: 'password'
     }
 
@@ -96,13 +96,13 @@ describe("SSH Tunnel Tests", () => {
         // ssh is reachable from the bastion container via the bastion_ssh network (by container name)
         sshHost: 'test_ssh',
         sshPort: 2222,
-        sshUsername: 'beekeeper',
+        sshUsername: 'supersedure',
         sshPassword: 'password',
         // bastion is the only container reachable from the test runner via its mapped port
         sshBastionHost: bastionContainer.getHost(),
         sshBastionHostPort: bastionContainer.getMappedPort(2222),
         sshBastionMode: 'userpass',
-        sshBastionUsername: 'beekeeper',
+        sshBastionUsername: 'supersedure',
         sshBastionPassword: 'password',
       }
 
@@ -134,7 +134,7 @@ describe("SSH Tunnel Tests", () => {
   })
 })
 
-// Regression test for https://github.com/beekeeper-studio/beekeeper-studio/issues/4358
+// Regression test for https://github.com/thePeras/supersedure-studio/issues/4358
 //
 // SSH tunnels stopped working for "none"-auth servers in v5.8.0. Some SSH
 // servers (Tailscale's embedded SSH being the motivating case) authenticate the

@@ -1,11 +1,11 @@
 ---
 title: Respaldo y restauracion
 summary: "Respalda toda tu base de datos (o solo una parte) - esquemas, datos o ambos."
-old_url: "https://docs.beekeeperstudio.io/docs/backup-restore"
+old_url: "https://docs.supersedurestudio.io/docs/backup-restore"
 icon: material/backup-restore
 ---
 
-Beekeeper Studio proporciona una interfaz a herramientas nativas para respaldar y restaurar facilmente tus bases de datos.
+Supersedure Studio proporciona una interfaz a herramientas nativas para respaldar y restaurar facilmente tus bases de datos.
 
 ## Herramientas soportadas
 - Postgres

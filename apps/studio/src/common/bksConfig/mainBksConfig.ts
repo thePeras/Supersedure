@@ -182,14 +182,14 @@ export function loadConfig(file: ConfigFileName): IBksConfig | Partial<IBksConfi
     let systemConfigPath: string;
     switch (platformInfo.platform) {
       case "mac":
-        systemConfigPath = "/Library/Application Support/beekeeper-studio";
+        systemConfigPath = "/Library/Application Support/supersedure-studio";
       break;
       case "linux":
-        systemConfigPath = "/etc/beekeeper-studio";
+        systemConfigPath = "/etc/supersedure-studio";
       break;
       case "windows": {
         const programData = process.env.ProgramData || "C:\\ProgramData";
-        systemConfigPath = path.join(programData, "beekeeper-studio");
+        systemConfigPath = path.join(programData, "supersedure-studio");
         break;
       }
     }
@@ -231,7 +231,7 @@ function resolveConfigDir() {
   const dirpath = path.resolve(__dirname);
 
   if (platformInfo.testMode) {
-    return path.dirname(require.resolve('beekeeper-studio/package.json'));
+    return path.dirname(require.resolve('supersedure-studio/package.json'));
   }
 
   if (!platformInfo.isDevelopment) {

@@ -1,5 +1,5 @@
-import '@beekeeperstudio/ui-kit/style.css';
-import '@beekeeperstudio/ui-kit';
+import '@supersedure-studio/ui-kit/style.css';
+import '@supersedure-studio/ui-kit';
 import { getEntities } from "./data.js";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
       transport: {
         wsUri: "ws://localhost:3000/server",
       },
-      rootUri: "/home/user/dev/beekeeper-studio/apps/ui-kit/tests/fixtures/",
-      documentUri: "/home/user/dev/beekeeper-studio/apps/ui-kit/tests/fixtures/test.sql",
+      rootUri: "/home/user/dev/supersedure-studio/apps/ui-kit/tests/fixtures/",
+      documentUri: "/home/user/dev/supersedure-studio/apps/ui-kit/tests/fixtures/test.sql",
     }
   document.querySelector('#sql-text-editor-card').appendChild(textEditor);
 

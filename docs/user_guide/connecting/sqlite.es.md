@@ -2,7 +2,7 @@
 title: Como conectarse a SQLite
 summary: "Conectate a una base de datos SQLite haciendo doble clic, desde la linea de comandos o desde la aplicacion. Tambien puedes cargar extensiones de tiempo de ejecucion opcionalmente"
 description: Conectate a SQLite haciendo doble clic, desde la linea de comandos o desde la aplicacion. Funciona en Mac, Linux y Windows.
-old_url: "https://docs.beekeeperstudio.io/docs/sqlite"
+old_url: "https://docs.supersedurestudio.io/docs/sqlite"
 icon: simple/sqlite
 ---
 
@@ -12,19 +12,19 @@ Conectarse a una base de datos SQLite desde la aplicacion es bastante facil, sim
 
 ## Crear una nueva base de datos SQLite
 
-Puedes crear una nueva base de datos SQLite directamente desde Beekeeper Studio. Selecciona `SQLite` como tipo de conexion, luego haz clic en el boton `Create` junto al selector de archivos. Se te pedira que elijas una ubicacion y un nombre de archivo para tu nueva base de datos.
+Puedes crear una nueva base de datos SQLite directamente desde Supersedure Studio. Selecciona `SQLite` como tipo de conexion, luego haz clic en el boton `Create` junto al selector de archivos. Se te pedira que elijas una ubicacion y un nombre de archivo para tu nueva base de datos.
 
 ![Crear una nueva base de datos SQLite](../../assets/images/create-sqlite.png)
 
 ## Conectarse a SQLite haciendo doble clic
 
-Cuando instalas Beekeeper Studio, se creara una asociacion para archivos con las siguientes extensiones: `.db`, `.sqlite3` y `.sqlite`.
+Cuando instalas Supersedure Studio, se creara una asociacion para archivos con las siguientes extensiones: `.db`, `.sqlite3` y `.sqlite`.
 
-Mientras Beekeeper Studio siga siendo la aplicacion predeterminada para estos tipos de archivos, ahora puedes simplemente hacer doble clic en cualquier archivo SQLite para abrirlo en Beekeeper Studio.
+Mientras Supersedure Studio siga siendo la aplicacion predeterminada para estos tipos de archivos, ahora puedes simplemente hacer doble clic en cualquier archivo SQLite para abrirlo en Supersedure Studio.
 
 ## Abrir archivos SQLite desde la linea de comandos
 
-Tambien puedes usar tu terminal para abrir una base de datos en Beekeeper Studio siempre que tengas las asociaciones de archivos configuradas.
+Tambien puedes usar tu terminal para abrir una base de datos en Supersedure Studio siempre que tengas las asociaciones de archivos configuradas.
 
 - **MacOS** `open ./ruta/a/ejemplo.db`
 - **Linux** `xdg-open ./ruta/a/ejemplo.db`
@@ -35,7 +35,7 @@ SQLite soporta [extensiones de tiempo de ejecucion](https://www.sqlite.org/loade
 
 Hay muchas de estas extensiones, muchas de ellas son de codigo abierto. Por ejemplo [sqlean](https://github.com/nalgeon/sqlean) es una extension que proporciona una gama de nuevas funciones y caracteristicas desde funciones criptograficas hasta manejo de arrays.
 
-Beekeeper Studio proporciona la capacidad de cargar una extension SQLite cada vez que te conectas a una base de datos SQLite.
+Supersedure Studio proporciona la capacidad de cargar una extension SQLite cada vez que te conectas a una base de datos SQLite.
 
 Esta es una configuracion **global**, por lo que se aplica a todas las conexiones SQLite en la maquina.
 

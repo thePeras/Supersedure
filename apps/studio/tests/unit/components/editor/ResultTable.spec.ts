@@ -155,7 +155,7 @@ function createContext(overrides: Record<string, any> = {}) {
     },
     propogatedChangesFilters: new Map<string, any>(),
     fieldOriginalClassMap: new Map<string, string>(),
-    internalClassTrackerColumn: '__beekeeper_internal_class_tracker',
+    internalClassTrackerColumn: '__supersedure_internal_class_tracker',
     tabulator: createMockTabulator(),
     $noty: { error: jest.fn(), success: jest.fn() },
     $set(obj: any, key: string, value: any) {
@@ -504,7 +504,7 @@ describe('ResultTable - Cell Editing Methods', () => {
       // propogateChanges should have updated the duplicate row's class tracker
       expect(dupRow.update).toHaveBeenCalled()
       const updateArg = dupRow.update.mock.calls[0][0]
-      const tracker = updateArg.__beekeeper_internal_class_tracker
+      const tracker = updateArg.__supersedure_internal_class_tracker
       expect(tracker).toBeDefined()
       expect(tracker.edited).toBeInstanceOf(Set)
       expect(tracker.edited.has('field_name')).toBe(true)
@@ -537,7 +537,7 @@ describe('ResultTable - Cell Editing Methods', () => {
         editSuccess: new Set<string>(),
       }
       const dupRow = createMockRow([], {
-        __beekeeper_internal_class_tracker: existingTracker,
+        __supersedure_internal_class_tracker: existingTracker,
       })
 
       const mockTabulator = createMockTabulator([dupRow])
@@ -553,7 +553,7 @@ describe('ResultTable - Cell Editing Methods', () => {
       // which removes the field from the tracker's edited set
       expect(dupRow.update).toHaveBeenCalled()
       const updateArg = dupRow.update.mock.calls[0][0]
-      expect(updateArg.__beekeeper_internal_class_tracker.edited.has('field_name')).toBe(false)
+      expect(updateArg.__supersedure_internal_class_tracker.edited.has('field_name')).toBe(false)
     })
   })
 
@@ -867,8 +867,8 @@ describe('ResultTable - Cell Editing Methods', () => {
       expect(dupRow.update).toHaveBeenCalled()
       const updateArg = dupRow.update.mock.calls[0][0]
       expect(updateArg.field_name).toBe('Alice')
-      expect(updateArg.__beekeeper_internal_class_tracker.edited).toBeInstanceOf(Set)
-      expect(updateArg.__beekeeper_internal_class_tracker.edited.has('field_name')).toBe(true)
+      expect(updateArg.__supersedure_internal_class_tracker.edited).toBeInstanceOf(Set)
+      expect(updateArg.__supersedure_internal_class_tracker.edited.has('field_name')).toBe(true)
       expect(dupRow.reformat).toHaveBeenCalled()
       expect(mockTabulator.restoreRedraw).toHaveBeenCalled()
       expect(mockTabulator.redraw).toHaveBeenCalled()
@@ -918,7 +918,7 @@ describe('ResultTable - Cell Editing Methods', () => {
         editSuccess: new Set<string>(),
       }
       const dupRow = createMockRow([], {
-        __beekeeper_internal_class_tracker: existingTracker,
+        __supersedure_internal_class_tracker: existingTracker,
       })
 
       const mockTabulator = createMockTabulator([dupRow])
@@ -928,7 +928,7 @@ describe('ResultTable - Cell Editing Methods', () => {
 
       // The update call should have removed 'field_name' from the edited set
       const updateArg = dupRow.update.mock.calls[0][0]
-      expect(updateArg.__beekeeper_internal_class_tracker.edited.has('field_name')).toBe(false)
+      expect(updateArg.__supersedure_internal_class_tracker.edited.has('field_name')).toBe(false)
     })
 
     it('should update all matching rows and reformat each', () => {
@@ -1045,7 +1045,7 @@ describe('ResultTable - Cell Editing Methods', () => {
       methods.propogateChanges.call(ctx, [pkCell], dataCell, '1-field_name', false)
 
       const updateArg = dupRow.update.mock.calls[0][0]
-      const tracker = updateArg.__beekeeper_internal_class_tracker
+      const tracker = updateArg.__supersedure_internal_class_tracker
       expect(tracker).toBeDefined()
       expect(tracker.edited).toBeInstanceOf(Set)
       expect(tracker.editError).toBeInstanceOf(Set)

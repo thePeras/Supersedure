@@ -28,7 +28,7 @@ const fs = require('node:fs')
 const os = require('node:os')
 const path = require('node:path')
 
-const REPO = 'beekeeper-studio/beekeeper-studio'
+const REPO = 'supersedure-studio/supersedure-studio'
 
 // Run a command, streaming its output to the log.
 function run(cmd, args) {

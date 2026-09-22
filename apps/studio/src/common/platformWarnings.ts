@@ -18,21 +18,21 @@ export const platformWarnings: Record<string, PlatformWarning[]> = {
     {
       configKey: 'isSnap',
       message: 'Snap packages have limited file access. To use a database on an external drive you\'ll need to grant extra permissions.',
-      link: 'https://docs.beekeeperstudio.io/support/troubleshooting/#i-get-permission-denied-when-trying-to-access-a-database-on-an-external-drive',
+      link: 'https://docs.supersedurestudio.io/support/troubleshooting/#i-get-permission-denied-when-trying-to-access-a-database-on-an-external-drive',
       linkText: 'Learn more',
     },
     {
       configKey: 'isFlatpak',
       message: 'Flatpak apps can only access files in your home directory by default.',
-      link: 'https://docs.beekeeperstudio.io/installation/linux/#flatpak',
+      link: 'https://docs.supersedurestudio.io/installation/linux/#flatpak',
       linkText: 'Learn more',
     },
   ],
   'ssh-agent': [
     {
       configKey: 'isSnap',
-      message: 'SSH Agent Forwarding is not available in the Snap version of Beekeeper Studio due to the Snap security model.',
-      link: 'https://docs.beekeeperstudio.io/installation/linux/#ssh-key-access-for-the-snap',
+      message: 'SSH Agent Forwarding is not available in the Snap version of Supersedure Studio due to the Snap security model.',
+      link: 'https://docs.supersedurestudio.io/installation/linux/#ssh-key-access-for-the-snap',
       linkText: 'Learn more',
     },
   ],
@@ -40,8 +40,8 @@ export const platformWarnings: Record<string, PlatformWarning[]> = {
     {
       configKey: 'isSnap',
       unless: 'snapSshPlug',
-      message: 'Snap packages don\'t have access to your .ssh directory by default. You\'ll need to enable SSH access and restart Beekeeper.',
-      link: 'https://docs.beekeeperstudio.io/installation/linux/#ssh-key-access-for-the-snap',
+      message: 'Snap packages don\'t have access to your .ssh directory by default. You\'ll need to enable SSH access and restart Supersedure.',
+      link: 'https://docs.supersedurestudio.io/installation/linux/#ssh-key-access-for-the-snap',
       linkText: 'Learn more',
     },
   ],

@@ -1,7 +1,7 @@
 <template>
   <portal to="modals">
     <modal
-      class="vue-dialog beekeeper-modal driver-dep-license-modal"
+      class="vue-dialog supersedure-modal driver-dep-license-modal"
       :name="modalId"
       @before-close="beforeClose"
     >
@@ -12,7 +12,7 @@
           </div>
           <div class="driver-dep-license-body">
             <p>
-              Beekeeper Studio will download
+              Supersedure Studio will download
               <strong>{{ depName }}</strong>
               <template v-if="version">
                 v{{ version }}

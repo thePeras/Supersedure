@@ -22,7 +22,7 @@ import {
   PluginSnapshot,
 } from "../types";
 import { ExternalMenuItem, JsonValue } from "@/types";
-import { ContextOption } from "@/plugins/BeekeeperPlugin";
+import { ContextOption } from "@/plugins/SupersedurePlugin";
 import { isManifestV0, mapViewsAndMenuFromV0ToV1 } from "../utils";
 import { cssVars } from "./cssVars";
 import type { DialectData } from "@/shared/lib/dialects/models";
@@ -418,6 +418,6 @@ export default class PluginStoreService {
   }
 
   private getAppEl() {
-    return document.body.querySelector('.beekeeper-studio-wrapper');
+    return document.body.querySelector('.supersedure-studio-wrapper');
   }
 }

@@ -18,7 +18,7 @@ describe(`MongoDB`, () => {
     container = await new GenericContainer('mongo:latest')
       .withName("testmongodb")
       .withEnvironment({
-        "MONGO_INITDB_ROOT_USERNAME": "beekeeper",
+        "MONGO_INITDB_ROOT_USERNAME": "supersedure",
         "MONGO_INITDB_ROOT_PASSWORD": "test",
         "MONGO_INITDB_DATABASE": "bee"
       })
@@ -39,7 +39,7 @@ describe(`MongoDB`, () => {
     const host = container.getHost();
     const port = container.getMappedPort(27017);
 
-    const url = `mongodb://beekeeper:test@${host}:${port}/bee?authSource=admin`;
+    const url = `mongodb://supersedure:test@${host}:${port}/bee?authSource=admin`;
 
     await setupDB(url);
 

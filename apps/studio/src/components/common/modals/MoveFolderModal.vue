@@ -81,7 +81,7 @@ import { mapGetters } from "vuex";
 import BaseModal from "@/components/common/modals/BaseModal.vue";
 import { AppEvent } from "@/common/AppEvent";
 import { IFolder } from "@/common/interfaces/IQueryFolder";
-import { Tree, TreeFolder } from "@beekeeperstudio/ui-kit/vue/tree";
+import { Tree, TreeFolder } from "@supersedure-studio/ui-kit/vue/tree";
 import ContentPlaceholder from "@/components/common/loading/ContentPlaceholder.vue";
 import ContentPlaceholderText from "@/components/common/loading/ContentPlaceholderText.vue";
 import {

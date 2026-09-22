@@ -1,8 +1,8 @@
 ---
 title: MongoDB
-summary: "Conectate a MongoDB con Beekeeper Studio"
+summary: "Conectate a MongoDB con Supersedure Studio"
 icon: simple/mongodb
-description: "Usa una shell de MongoDB o editor SQL para ejecutar consultas contra MongoDB usando Beekeeper Studio"
+description: "Usa una shell de MongoDB o editor SQL para ejecutar consultas contra MongoDB usando Supersedure Studio"
 ---
 
 # Soporte de MongoDB

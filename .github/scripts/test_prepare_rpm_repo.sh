@@ -29,7 +29,7 @@ trap 'rm -rf "$WORK"' EXIT
 build_rpm() { # version
     local ver="$1"
     cat > "$WORK/spec" <<EOF
-Name: beekeeper-studio
+Name: supersedure-studio
 Version: $ver
 Release: 1
 Summary: test
@@ -68,7 +68,7 @@ chmod +x "$BIN/rpmsign" "$BIN/gpg"
 #    repodata/ metadata for the already-published 5.1.0, and NOT its .rpm file.
 # ---------------------------------------------------------------------------
 REPO="$WORK/repo"; mkdir -p "$REPO/x86_64"
-cp "$RPMDIR/beekeeper-studio-5.1.0-1.x86_64.rpm" "$REPO/x86_64/"
+cp "$RPMDIR/supersedure-studio-5.1.0-1.x86_64.rpm" "$REPO/x86_64/"
 createrepo_c "$REPO" >/dev/null 2>&1
 # Drop the old package file: after a real `aws s3 sync ... repodata/` only the
 # metadata is on disk, never the back catalogue of .rpm files.
@@ -79,7 +79,7 @@ rm -rf "$REPO/x86_64"
 # ---------------------------------------------------------------------------
 echo ">>> prepare_rpm_repo.sh: publishing 5.2.0 on top of existing 5.1.0 metadata..."
 PATH="$BIN:$PATH" GPG_KEY_ID="STUBKEY" \
-    bash "$PREPARE" "$REPO" "$RPMDIR/beekeeper-studio-5.2.0-1.x86_64.rpm" >/dev/null 2>&1
+    bash "$PREPARE" "$REPO" "$RPMDIR/supersedure-studio-5.2.0-1.x86_64.rpm" >/dev/null 2>&1
 
 # ---------------------------------------------------------------------------
 # 5. Assert the resulting metadata lists BOTH releases, each exactly once.
@@ -92,8 +92,8 @@ echo ">>> Packages in the prepared repo metadata:"
 echo "$LOCS" | sed 's/^/    /'
 
 expected=$(printf '%s\n' \
-    "x86_64/beekeeper-studio-5.1.0-1.x86_64.rpm" \
-    "x86_64/beekeeper-studio-5.2.0-1.x86_64.rpm" | sort)
+    "x86_64/supersedure-studio-5.1.0-1.x86_64.rpm" \
+    "x86_64/supersedure-studio-5.2.0-1.x86_64.rpm" | sort)
 count=$(echo "$LOCS" | grep -c .)
 
 echo

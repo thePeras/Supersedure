@@ -8,7 +8,7 @@ vi.mock("@commercial/backend/lib/connection-provider", () => ({ default: {} }))
 import { ConnHandlers } from "@commercial/backend/handlers/connHandlers"
 import { errorMessages, getDriverHandler, newState, removeState, state } from "@/handlers/handlerState"
 
-// Reproduction for https://github.com/beekeeper-studio/beekeeper-studio/issues/4739
+// Reproduction for https://github.com/thePeras/supersedure-studio/issues/4739
 // root cause 3: getDriverHandler dereferences state(sId).connection without a
 // null check and skips checkConnection. A freshly (re)started utility process
 // has connection = null for every window, so the handlers registered through it

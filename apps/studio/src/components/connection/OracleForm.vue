@@ -118,7 +118,7 @@ export default Vue.extend({
     },
     restartNotification() {
       return new Noty({
-        text: "You must restart Beekeeper Studio for this change to take effect.",
+        text: "You must restart Supersedure Studio for this change to take effect.",
         layout: 'bottomRight',
         timeout: false,
         closeWith: ['click', 'button'],

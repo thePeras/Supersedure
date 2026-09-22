@@ -26,12 +26,12 @@ jobs:
         run: yarn install --frozen-lockfile --network-timeout 100000
 
       - name: Run tests
-        run: yarn workspace @beekeeperstudio/ui-kit run test
+        run: yarn workspace @supersedure-studio/ui-kit run test
 
       - name: Build
-        run: yarn workspace @beekeeperstudio/ui-kit run build
+        run: yarn workspace @supersedure-studio/ui-kit run build
 
       - name: Publish to npm
-        run: yarn workspace @beekeeperstudio/ui-kit npm publish --access public
+        run: yarn workspace @supersedure-studio/ui-kit npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

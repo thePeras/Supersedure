@@ -107,7 +107,7 @@ export class MongoDBClient extends BasicDatabaseClient<QueryResult> {
     if (urlUsesGssapi(this.server.config.url) && !platformInfo.testMode) {
       const status = await LicenseKey.getLicenseStatus();
       if (!status.isUltimate) {
-        throw new Error("Kerberos (GSSAPI) authentication requires a Beekeeper Studio Enterprise license.");
+        throw new Error("Kerberos (GSSAPI) authentication requires a Supersedure Studio Enterprise license.");
       }
     }
 
@@ -149,7 +149,7 @@ export class MongoDBClient extends BasicDatabaseClient<QueryResult> {
     await this.conn.connect();
 
     // @ts-ignore
-    const service = new NodeDriverServiceProvider(this.conn, new EventEmitter(), { productDocsLink: '', productName: 'BeekeeperStudio' });
+    const service = new NodeDriverServiceProvider(this.conn, new EventEmitter(), { productDocsLink: '', productName: 'SupersedureStudio' });
     this.runtime = new MongoRuntime(service);
     this.runtime.evaluate(`use ${this.db}`)
 

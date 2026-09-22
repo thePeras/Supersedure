@@ -37,7 +37,7 @@ describe('FriendlyErrorHelper', () => {
       const result = FriendlyErrorHelper.getHelpText('sqlserver', error)
       expect(result).not.toBeNull()
       expect(result.help).toContain('ODBC Driver 18 for SQL Server')
-      expect(result.link).toBe('https://docs.beekeeperstudio.io/user_guide/connecting/sql-server/')
+      expect(result.link).toBe('https://docs.supersedurestudio.io/user_guide/connecting/sql-server/')
     })
 
     // Certificate failures are classified in sqlserver.ts and arrive with the remedy already
@@ -51,7 +51,7 @@ describe('FriendlyErrorHelper', () => {
       )
       const result = FriendlyErrorHelper.getHelpText('sqlserver', error)
       expect(result.help).toBeUndefined()
-      expect(result.link).toBe('https://docs.beekeeperstudio.io/user_guide/connecting/sql-server/#certificates')
+      expect(result.link).toBe('https://docs.supersedurestudio.io/user_guide/connecting/sql-server/#certificates')
     })
 
     it('returns help text and link for SQL Server login failed error', () => {

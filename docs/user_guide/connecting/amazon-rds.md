@@ -32,7 +32,7 @@ You can also use a similar policy to the below:
 
 ## Connecting to Amazon RDS
 
-Below is an example config in Beekeeper Studio once IAM permissions are setup, you will need the hostname, port, username, AWS Region and if you have multiple Amazon profiles you can specify the profile you want to use.
+Below is an example config in Supersedure Studio once IAM permissions are setup, you will need the hostname, port, username, AWS Region and if you have multiple Amazon profiles you can specify the profile you want to use.
 
 ![Image Alt Tag](../../assets/images/amazon-rds-config.png)
 

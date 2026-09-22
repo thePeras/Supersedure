@@ -1,7 +1,7 @@
 ---
 title: Table View
 summary: "View, search, and modify your database table data using our built-in table explorer."
-old_url: "https://docs.beekeeperstudio.io/docs/creating-tables"
+old_url: "https://docs.supersedurestudio.io/docs/creating-tables"
 icon: material/table
 ---
 
@@ -20,7 +20,7 @@ This view allows you to:
 
 ## Interaction
 
-The table view provides a spreadsheet-like experience for selecting, copying, and pasting data. Beekeeper supports many spreadsheet-like interaction primitives.
+The table view provides a spreadsheet-like experience for selecting, copying, and pasting data. Supersedure supports many spreadsheet-like interaction primitives.
 
 1. Select arbitrary ranges of cells using click & drag, ctrl-click, and shift-click.
 2. Clear selected cell ranges and set them to `NULL` by pressing `backspace`.
@@ -60,17 +60,17 @@ Click the little `<>` icon to the left of the filters to enter a sql filter. You
 In the table view you can easily edit any cell you like. Simply double click the cell to edit.
 
 !!! note
-    Beekeeper only supports editing tables with primary keys.
+    Supersedure only supports editing tables with primary keys.
 
 ### Editing JSON & Other Large Values
 
 Editing a JSON document in a tiny table cell isn't a great experience. Instead you can right click the cell and select `Edit in Modal`. This will provide a pop-out modal with syntax highlighting and checking.
 
-![Editing JSON values in SQL Database using Beekeeper Studio](../assets/images/table-view-modal-edit.png)
+![Editing JSON values in SQL Database using Supersedure Studio](../assets/images/table-view-modal-edit.png)
 
 ### Editing tables that don't have primary keys
 
-Beekeeper Studio doesn't typically allow you to edit a table that does not contain a primary key, but other database GUIs allow this, so what gives?
+Supersedure Studio doesn't typically allow you to edit a table that does not contain a primary key, but other database GUIs allow this, so what gives?
 
 In general, if you don't have a primary key on your table there is **no reliable way to identify a specific row**. Some GUIs support editing in this situation, but they use a *heuristic* to determine which row to update. A common technique is matching all the values of the row to perform the update, or using a secret row identifier.
 
@@ -84,18 +84,18 @@ Oracle's [ROWID](https://docs.oracle.com/en/database/oracle/oracle-database/19/s
 
 #### Good-enough isn't good enough
 
-We never want Beekeeper Studio to be the reason you update the wrong row in a production database. Ever. A solution that works 99% of the time, or even 99.9% of the time *isn't good enough* when dealing with production data.
+We never want Supersedure Studio to be the reason you update the wrong row in a production database. Ever. A solution that works 99% of the time, or even 99.9% of the time *isn't good enough* when dealing with production data.
 
 For that reason editing of table data is disabled unless your table has a primary key.
 
 #### Exceptions
 
-- SQLite always gives rows a primary key, whether specified or not. This `rowid` is used by Beekeeper Studio in SQLite to enable data editing where you haven't specified a primary key.
+- SQLite always gives rows a primary key, whether specified or not. This `rowid` is used by Supersedure Studio in SQLite to enable data editing where you haven't specified a primary key.
 
 
 ### Applying Changes
 
-Beekeeper has a unique design that 'stages' changes before applying them, so you can make multiple changes to be applied inside of a single transaction.
+Supersedure has a unique design that 'stages' changes before applying them, so you can make multiple changes to be applied inside of a single transaction.
 
 Staged change types are indicated by color:
 
@@ -114,7 +114,7 @@ You can clone, delete, and create new rows of data pretty easily.
 
 - **Delete or Clone**: Right-click a row (or multiple selected rows) to delete or clone them.
 - **Add a Single Row**: Click the `+` button at the bottom right to add a new row. New rows will be added to the end of the table, even though they appear at the top of the UI for convenience.
-- **Paste as New Rows**: Copy multi-row data from Excel, Google Sheets, or another table, then right-click any cell and choose `Paste as new rows` (or press `ctrl+shift+v` / `cmd+shift+v`). Beekeeper Studio positionally maps the clipboard values to the visible table columns and stages the new rows at the end of the table.
+- **Paste as New Rows**: Copy multi-row data from Excel, Google Sheets, or another table, then right-click any cell and choose `Paste as new rows` (or press `ctrl+shift+v` / `cmd+shift+v`). Supersedure Studio positionally maps the clipboard values to the visible table columns and stages the new rows at the end of the table.
 
 ## Copying Data
 
@@ -132,7 +132,7 @@ Alternatively, right-click any cell to copy that row (or all selected cells) in 
 
 ### Create IN Statement From Selection
 
-You can quickly generate a SQL `IN` clause from selected data in the table view. Select one or more cells in a column, then right-click and choose **Create IN Statement**. Beekeeper Studio will generate an `IN (...)` clause containing all the selected values, ready to paste into your SQL editor.
+You can quickly generate a SQL `IN` clause from selected data in the table view. Select one or more cells in a column, then right-click and choose **Create IN Statement**. Supersedure Studio will generate an `IN (...)` clause containing all the selected values, ready to paste into your SQL editor.
 
 ### Exporting the whole table
 

@@ -22,12 +22,12 @@ Puedes abrir el panel de Consultas guardadas haciendo clic en el icono de Consul
 
 ## Importar archivos SQL
 
-Para importar archivos de consulta, puedes hacer clic en el boton de importar, y luego hacer clic en `Importar archivos .sql`. O hacer clic en `Archivo > Importar archivos SQL`. Acepta multiples archivos de `.sql` o cualquier formato de archivo de texto. Ten en cuenta que esto hara una copia de tu archivo a tus Consultas guardadas. Cualquier cambio de los archivos originales no se reflejara en Beekeeper Studio.
+Para importar archivos de consulta, puedes hacer clic en el boton de importar, y luego hacer clic en `Importar archivos .sql`. O hacer clic en `Archivo > Importar archivos SQL`. Acepta multiples archivos de `.sql` o cualquier formato de archivo de texto. Ten en cuenta que esto hara una copia de tu archivo a tus Consultas guardadas. Cualquier cambio de los archivos originales no se reflejara en Supersedure Studio.
 
 ![Haciendo clic en importar desde Consultas guardadas](../../assets/images/saving-queries-3.png)
 
 ![Haciendo clic en importar desde el menu Archivo](../../assets/images/saving-queries-4.png)
 
-## Donde guarda Beekeeper Studio mis consultas SQL?
+## Donde guarda Supersedure Studio mis consultas SQL?
 
-Cuando guardas consultas SQL en Beekeeper Studio, se persisten en una base de datos SQLite en tu directorio de configuracion local. Por favor consulta [Ubicacion de almacenamiento de datos](../../support/data-location.md) para mas detalles.
+Cuando guardas consultas SQL en Supersedure Studio, se persisten en una base de datos SQLite en tu directorio de configuracion local. Por favor consulta [Ubicacion de almacenamiento de datos](../../support/data-location.md) para mas detalles.

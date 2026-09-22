@@ -1358,9 +1358,9 @@ export const itShouldGenerateSQLWithBinary = async function (util) {
       `update "public"."test_inserts" set "name" = 'beefy' where "id" = '\\xdeadbeef';` +
       `delete from "public"."test_inserts" where "id" = '\\xdeadbeef';`,
     oracle:
-      `insert into "BEEKEEPER"."test_inserts" ("id", "name") values (hextoraw('deadbeef'), 'beef');` +
-      `update "BEEKEEPER"."test_inserts" set "name" = 'beefy' where "id" = hextoraw('deadbeef');` +
-      `delete from "BEEKEEPER"."test_inserts" where "id" = hextoraw('deadbeef');`,
+      `insert into "SUPERSEDURE"."test_inserts" ("id", "name") values (hextoraw('deadbeef'), 'beef');` +
+      `update "SUPERSEDURE"."test_inserts" set "name" = 'beefy' where "id" = hextoraw('deadbeef');` +
+      `delete from "SUPERSEDURE"."test_inserts" where "id" = hextoraw('deadbeef');`,
     firebird:
       `insert into test_inserts (id, name) values (X'deadbeef', 'beef');` +
       `update test_inserts set name = 'beefy' where id = X'deadbeef';` +
@@ -1551,7 +1551,7 @@ function getManualCommitTableName(dbType) {
     case 'sqlserver':
       return '[dbo].[manual_commit_test]'
     case 'oracle':
-      return 'BEEKEEPER."manual_commit_test"'
+      return 'SUPERSEDURE."manual_commit_test"'
     default:
       return 'manual_commit_test'
   }

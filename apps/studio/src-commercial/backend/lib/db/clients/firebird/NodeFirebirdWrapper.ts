@@ -21,7 +21,7 @@ export class Pool {
   ): Promise<Result> {
     if (typeof query !== "string") {
       // Do it here cause node-firebird would throw an error that can't be caught
-      // in beekeeper.
+      // in supersedure.
       throw new Error("Invalid query. Query must be a string.");
     }
 

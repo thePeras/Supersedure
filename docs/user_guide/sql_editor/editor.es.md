@@ -1,7 +1,7 @@
 ---
 title: Editor SQL
-summary: "Una guia rapida sobre el uso del editor SQL de primera clase de Beekeeper Studio"
-old_url: "https://docs.beekeeperstudio.io/docs/using-the-sql-editor"
+summary: "Una guia rapida sobre el uso del editor SQL de primera clase de Supersedure Studio"
+old_url: "https://docs.supersedurestudio.io/docs/using-the-sql-editor"
 icon: material/code-tags
 ---
 
@@ -18,7 +18,7 @@ Las sugerencias de codigo apareceran automaticamente en las siguientes situacion
 - `tablas` seran sugeridas despues de escribir `from` o `join`
 - `columnas` seran sugeridas despues de escribir un nombre de tabla, o alias de tabla, seguido de un punto, ej `film.`
 
-En estas situaciones, Beekeeper resolvera automaticamente los nombres correctos de tabla y columna para la entidad que estas consultando.
+En estas situaciones, Supersedure resolvera automaticamente los nombres correctos de tabla y columna para la entidad que estas consultando.
 
 ### Activar autocompletado manualmente
 
@@ -30,17 +30,17 @@ La combinacion de teclas predeterminada para activar manualmente el autocompleta
 
 Si te gusta escribir scripts SQL largos con multiples consultas en el mismo panel del editor (se que a mi si), puede que quieras ejecutar solo una parte de tu script a la vez.
 
-Beekeeper te permite:
+Supersedure te permite:
 
 1. Ejecutar todo (esto es lo predeterminado)
-2. Ejecutar solo la consulta 'actual' (Beekeeper resalta esta consulta para que sepas que se ejecutara)
+2. Ejecutar solo la consulta 'actual' (Supersedure resalta esta consulta para que sepas que se ejecutara)
 3. Ejecutar solo lo que hayas seleccionado.
 
 ![Image Alt Tag](../../assets/images/using-the-sql-editor-12.gif)
 
 ## Gestion de transacciones
 
-Las transacciones ejecutadas dentro del editor de consultas seran detectadas automaticamente por Beekeeper, que luego reservara una conexion para tu pestana de consulta actual hasta que esa transaccion sea confirmada o revertida.
+Las transacciones ejecutadas dentro del editor de consultas seran detectadas automaticamente por Supersedure, que luego reservara una conexion para tu pestana de consulta actual hasta que esa transaccion sea confirmada o revertida.
 
 Tambien hay un [Modo de transaccion manual](./manual-transaction-management.md) que te permite manejar manualmente cada paso de este proceso.
 
@@ -48,7 +48,7 @@ Esta funcionalidad actualmente solo esta disponible para Postgres, CockroachDB, 
 
 ## Parametros de consulta
 
-Puedes parametrizar tus consultas y Beekeeper te pedira valores cuando la ejecutes.
+Puedes parametrizar tus consultas y Supersedure te pedira valores cuando la ejecutes.
 
 Puedes usar tres tipos de sintaxis `:variable`, `$1` o `?` dependiendo del motor de base de datos que estes consultando.
 
@@ -87,13 +87,13 @@ Si ejecutas multiples consultas SQL, puedes seleccionar diferentes conjuntos de 
 
 ### Conjuntos de resultados grandes
 
-Si ejecutas una consulta que genera un conjunto de resultados de mas de 50,000 registros, Beekeeper truncara la tabla de resultados (para conservar memoria).
+Si ejecutas una consulta que genera un conjunto de resultados de mas de 50,000 registros, Supersedure truncara la tabla de resultados (para conservar memoria).
 
-En la edicion comercial de Beekeeper Studio, tambien puedes seleccionar `Ejecutar a archivo`, esto ejecutara tu consulta SQL y enviara los resultados completos directamente a un archivo CSV.
+En la edicion comercial de Supersedure Studio, tambien puedes seleccionar `Ejecutar a archivo`, esto ejecutara tu consulta SQL y enviara los resultados completos directamente a un archivo CSV.
 
 ## Atajos de teclado
 
-Beekeeper Studio tiene una referencia de atajos de teclado integrada. Abrela desde el menu `Help` para ver todos los atajos disponibles organizados por categoria.
+Supersedure Studio tiene una referencia de atajos de teclado integrada. Abrela desde el menu `Help` para ver todos los atajos disponibles organizados por categoria.
 
 ![Modal de atajos de teclado](../../assets/images/keyboard-shortcuts-modal.png)
 
@@ -108,13 +108,13 @@ Puedes ajustar el tamano de fuente del editor SQL desde el menu `View`:
 ![Ajustar tamano de fuente del editor](../../assets/images/adjust-editor-font-size.png)
 
 ## Modo Vim
-Junto con el editor de consultas predeterminado, Beekeeper soporta el modo Vim, que te permite escribir consultas en un editor de texto tipo Vim.
+Junto con el editor de consultas predeterminado, Supersedure soporta el modo Vim, que te permite escribir consultas en un editor de texto tipo Vim.
 
 Para habilitar esto, puedes hacer clic en el engranaje en la esquina inferior derecha del editor de consultas:
 
 ![seleccion de modo de editor](../../assets/images/using-the-sql-editor-155.png)
 
-Y luego estas listo para usar un editor vim en Beekeeper!
+Y luego estas listo para usar un editor vim en Supersedure!
 
 El editor que prefieras se preservara en todas las conexiones/reinicios/etc.
 
@@ -145,17 +145,17 @@ cualquier modo.
 
 ### Ctrl+P
 
-Vim asigna `Ctrl+P` a "subir" en todos los modos. En Beekeeper Studio se
+Vim asigna `Ctrl+P` a "subir" en todos los modos. En Supersedure Studio se
 mantiene en la busqueda rapida, ya que `k` tambien sube. Para recuperarlo,
-agrega `nnoremap <C-p> k` a tu `.beekeeper.vimrc`.
+agrega `nnoremap <C-p> k` a tu `.supersedure.vimrc`.
 
 ### Personalizacion
-Tambien puedes agregar tus propios atajos de teclado y movimientos al editor vim colocando un archivo `.beekeeper.vimrc` en el `userDirectory` de Beekeeper Studio y escribiendo tus mapeos personalizados.
+Tambien puedes agregar tus propios atajos de teclado y movimientos al editor vim colocando un archivo `.supersedure.vimrc` en el `userDirectory` de Supersedure Studio y escribiendo tus mapeos personalizados.
 
 Ubicaciones de `userDirectory`:
-- Windows: `%APPDATA%\beekeeper-studio`
-- Linux: `~/.config/beekeeper-studio`
-- MacOS: `~/Library/Application Support/beekeeper-studio`
+- Windows: `%APPDATA%\supersedure-studio`
+- Linux: `~/.config/supersedure-studio`
+- MacOS: `~/Library/Application Support/supersedure-studio`
 
 Por ejemplo, si eres usuario de Helix, puedes agregar comandos `gl` y `gh` asi:
 

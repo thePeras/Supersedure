@@ -12,7 +12,7 @@
       <div class="alert alert-info">
         <i class="material-icons-outlined">info</i>
         <div>
-          Paste a CockroachDB JWT into the JWT Token field. Beekeeper will send it as the password and add the required Cockroach JWT startup option for this connection. Save Passwords is turned off by default so you can paste a fresh token next time.
+          Paste a CockroachDB JWT into the JWT Token field. Supersedure will send it as the password and add the required Cockroach JWT startup option for this connection. Save Passwords is turned off by default so you can paste a fresh token next time.
         </div>
       </div>
     </div>

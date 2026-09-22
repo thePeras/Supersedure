@@ -12,7 +12,7 @@ docker compose up -d greengage7
 
 On first start the container runs `init-and-run.sh` (install, make_cluster, pg_hba for host access). Connect after a few minutes.
 
-**Beekeeper Studio:** Host localhost, **port 5439**, user gpadmin, password password (or empty with trust), database postgres.
+**Supersedure Studio:** Host localhost, **port 5439**, user gpadmin, password password (or empty with trust), database postgres.
 
 ## Greengage 6
 

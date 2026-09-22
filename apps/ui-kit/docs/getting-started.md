@@ -1,6 +1,6 @@
 # Getting Started
 
-`@beekeeperstudio/ui-kit` library provides a set of custom elements or components that can
+`@supersedure-studio/ui-kit` library provides a set of custom elements or components that can
 be used to create interactive user interfaces for database applications.
 Currently, it includes the following components:
 
@@ -14,24 +14,24 @@ For information on customizing the appearance of these components, see the [Cust
 
 ## Installation
 
-To load the `@beekeeperstudio/ui-kit` library in your project, follow these steps:
+To load the `@supersedure-studio/ui-kit` library in your project, follow these steps:
 
 1. Install the library using npm or yarn:
 
    ```bash
-   npm install @beekeeperstudio/ui-kit
+   npm install @supersedure-studio/ui-kit
    ```
 
 2. Import the style and the components:
 
    ```js
-   import "@beekeeperstudio/ui-kit/style.css";
+   import "@supersedure-studio/ui-kit/style.css";
 
    // Import components individually
-   import "@beekeeperstudio/ui-kit/bks-table.js";
+   import "@supersedure-studio/ui-kit/bks-table.js";
 
    // Or import all components
-   import "@beekeeperstudio/ui-kit";
+   import "@supersedure-studio/ui-kit";
    ```
 
 3. Use the component in your HTML:
@@ -60,7 +60,7 @@ Attributes are set in HTML and available in JavaScript using dedicated APIs:
 sqlTextEditor.setAttribute("read-only", "true");
 ```
 
-While attributes are always `string`, `@beekeeperstudio/ui-kit` converts them to the
+While attributes are always `string`, `@supersedure-studio/ui-kit` converts them to the
 correct types based on the corresponding properties types. These types are
 `boolean` and `number`.
 
@@ -95,7 +95,7 @@ To learn more about the properties and their types, please refer to the API docu
 
 ## Reactivity
 
-`@beekeeperstudio/ui-kit` uses [Vue](https://v2.vuejs.org/) as its main framework. Therefore,
+`@supersedure-studio/ui-kit` uses [Vue](https://v2.vuejs.org/) as its main framework. Therefore,
 the custom element will be reactive to changes in html properties and attributes.
 
 ```html
@@ -144,7 +144,7 @@ table.data = data;
 
 ## Events
 
-`@beekeeperstudio/ui-kit` components emit events in the same way as native HTML elements.
+`@supersedure-studio/ui-kit` components emit events in the same way as native HTML elements.
 To listen to events, use the `addEventListener()` method. The data of the event
 is available in the `event.detail` property. For example:
 

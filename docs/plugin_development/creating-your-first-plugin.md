@@ -1,13 +1,13 @@
 ---
 title: Creating Your First Plugin
-summary: "Step-by-step guide to creating your first Beekeeper Studio plugin."
+summary: "Step-by-step guide to creating your first Supersedure Studio plugin."
 icon: material/hammer-wrench
 ---
 
 # Creating Your First Plugin
 
 !!! warning "Beta Feature"
-    The plugin system is in beta (available in Beekeeper Studio 5.3+). We'd love your feedback!
+    The plugin system is in beta (available in Supersedure Studio 5.3+). We'd love your feedback!
 
 Let's build a simple "Hello World" plugin! You'll create a new tab that shows "Hello World!" and learn how to interact with databases.
 
@@ -15,7 +15,7 @@ Let's build a simple "Hello World" plugin! You'll create a new tab that shows "H
 
 -   Basic HTML, CSS, and JavaScript knowledge
 -   Node.js and npm/yarn installed
--   Beekeeper Studio installed
+-   Supersedure Studio installed
 -   **[The plugin system enabled](../user_guide/configuration.md)**
 
 ## Quick Start (2 Options)
@@ -23,7 +23,7 @@ Let's build a simple "Hello World" plugin! You'll create a new tab that shows "H
 ### Option 1: Vite Project ⭐
 
 !!! note "Why Vite?"
-    Vite provides Hot Module Replacement (HMR) for a nice development experience. When you make changes to your plugin, you'll see updates reflected in Beekeeper Studio without needing to manually reload the plugin or restart the application. This helps streamline the development process.
+    Vite provides Hot Module Replacement (HMR) for a nice development experience. When you make changes to your plugin, you'll see updates reflected in Supersedure Studio without needing to manually reload the plugin or restart the application. This helps streamline the development process.
 
 It's quite straightforward to configure your project using vite. With a simple `vite.config.ts` and our vite plugin, you get asset bundling and production builds.
 
@@ -41,7 +41,7 @@ It's quite straightforward to configure your project using vite. With a simple `
         cd hello-world-plugin
         ```
 
-2. Install the Beekeeper Studio Vite plugin
+2. Install the Supersedure Studio Vite plugin
 
     === "npm"
         ```bash
@@ -108,22 +108,22 @@ It's quite straightforward to configure your project using vite. With a simple `
 
     === "Linux"
         ```bash
-        ln -s $(pwd) ~/.config/beekeeper-studio/plugins/hello-world-plugin
+        ln -s $(pwd) ~/.config/supersedure-studio/plugins/hello-world-plugin
         ```
 
     === "macOS"
         ```bash
-        ln -s $(pwd) "~/Library/Application Support/beekeeper-studio/plugins/hello-world-plugin"
+        ln -s $(pwd) "~/Library/Application Support/supersedure-studio/plugins/hello-world-plugin"
         ```
 
     === "Windows"
         ```cmd
-        mklink /D "%APPDATA%\beekeeper-studio\plugins\hello-world-plugin" "%CD%"
+        mklink /D "%APPDATA%\supersedure-studio\plugins\hello-world-plugin" "%CD%"
         ```
 
     === "Windows (Portable)"
         ```cmd
-        mklink /D "{beekeeper-studio-directory}\beekeeper-studio-data\plugins\hello-world-plugin" "%CD%"
+        mklink /D "{supersedure-studio-directory}\supersedure-studio-data\plugins\hello-world-plugin" "%CD%"
         ```
 
     !!! tip "Why use a symbolic link?"
@@ -142,7 +142,7 @@ It's quite straightforward to configure your project using vite. With a simple `
         yarn dev
         ```
 
-    Now you have hot reload! Changes to your code will automatically update in Beekeeper Studio.
+    Now you have hot reload! Changes to your code will automatically update in Supersedure Studio.
 
 ---
 
@@ -165,26 +165,26 @@ To build from scratch:
     cd hello-world-plugin
     ```
 
-    Then link it to Beekeeper Studio's plugins directory:
+    Then link it to Supersedure Studio's plugins directory:
 
     === "Linux"
         ```bash
-        ln -s $(pwd) ~/.config/beekeeper-studio/plugins/hello-world-plugin
+        ln -s $(pwd) ~/.config/supersedure-studio/plugins/hello-world-plugin
         ```
 
     === "macOS"
         ```bash
-        ln -s $(pwd) "~/Library/Application Support/beekeeper-studio/plugins/hello-world-plugin"
+        ln -s $(pwd) "~/Library/Application Support/supersedure-studio/plugins/hello-world-plugin"
         ```
 
     === "Windows"
         ```cmd
-        mklink /D "%APPDATA%\beekeeper-studio\plugins\hello-world-plugin" "%CD%"
+        mklink /D "%APPDATA%\supersedure-studio\plugins\hello-world-plugin" "%CD%"
         ```
 
     === "Windows (Portable)"
         ```cmd
-        mklink /D "{beekeeper-studio-directory}\beekeeper-studio-data\plugins\hello-world-plugin" "%CD%"
+        mklink /D "{supersedure-studio-directory}\supersedure-studio-data\plugins\hello-world-plugin" "%CD%"
         ```
 
     !!! tip "Why use a symbolic link?"
@@ -192,7 +192,7 @@ To build from scratch:
 
 2. Create the Manifest
 
-    Create `manifest.json` - this tells Beekeeper Studio about your plugin:
+    Create `manifest.json` - this tells Supersedure Studio about your plugin:
 
     ```json
     {
@@ -305,7 +305,7 @@ To build from scratch:
 !!! note "For Vite Users"
     If you're using Vite, make sure your dev server is running first!
 
-1. Open Beekeeper Studio
+1. Open Supersedure Studio
 2. Go to **Tools → Manage Plugins**
 3. Look for **Hello World Plugin** - if it's there, you're golden! ✨
 
@@ -379,7 +379,7 @@ Add a button and the code reference to your html:
 
 ## Theme Sync
 
-Make your plugin match Beekeeper Studio's theme:
+Make your plugin match Supersedure Studio's theme:
 
 Add a new `<style>` tag to your html:
 

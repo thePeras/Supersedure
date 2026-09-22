@@ -1,6 +1,6 @@
 # Cloud App Migrations
 
-This document tracks migrations that need to be applied to the Beekeeper Studio Cloud app (Rails).
+This document tracks migrations that need to be applied to the Supersedure Studio Cloud app (Rails).
 
 When adding new connection options or fields to `saved_connection` or `used_connection` tables, corresponding migrations must also be created in the Rails cloud app.
 

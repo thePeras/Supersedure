@@ -144,8 +144,8 @@ jobs:
 
       - name: Update repository
         env:
-          OWNER: 'beekeeper-studio'
-          REPO: 'beekeeper-studio'
+          OWNER: 'supersedure-studio'
+          REPO: 'supersedure-studio'
         uses: actions/github-script@v8
         with:
           script: |
@@ -328,7 +328,7 @@ jobs:
         with:
           script: |
             const script = require('./.github/scripts/delete_latest_yml.js')
-            const assetsUrl = 'https://api.github.com/repos/beekeeper-studio/beekeeper-studio/releases/${{ needs.create_draft_release.outputs.id }}/assets'
+            const assetsUrl = 'https://api.github.com/repos/thePeras/supersedure-studio/releases/${{ needs.create_draft_release.outputs.id }}/assets'
             const channel = '${{needs.identify_channel.outputs.channel}}'
             await script({ github, core, context }, assetsUrl, channel)
 
@@ -422,8 +422,8 @@ jobs:
 
             // Upload the asset using the release ID
             await github.rest.repos.uploadReleaseAsset({
-              owner: 'beekeeper-studio',
-              repo: 'beekeeper-studio',
+              owner: 'supersedure-studio',
+              repo: 'supersedure-studio',
               release_id: releaseId,
               name: 'latest-mac.yml',
               data: ymlContent,

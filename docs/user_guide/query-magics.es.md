@@ -1,7 +1,7 @@
 ---
 title: Query Magics
 summary: "Usa Query Magics para formatear los resultados de tu consulta SQL simplemente renombrando tus columnas."
-old_url: "https://docs.beekeeperstudio.io/docs/query-magics"
+old_url: "https://docs.supersedurestudio.io/docs/query-magics"
 icon: material/magic-staff
 ---
 
@@ -54,9 +54,9 @@ Los enums se definen en un archivo llamado `enums.json`, que se encuentra en el 
 
 Ubicaciones del directorio userData:
 
-- Windows: `%APPDATA%\beekeeper-studio`
-- Linux: `~/.config/beekeeper-studio`
-- MacOS: `~/Library/Application Support/beekeeper-studio`
+- Windows: `%APPDATA%\supersedure-studio`
+- Linux: `~/.config/supersedure-studio`
+- MacOS: `~/Library/Application Support/supersedure-studio`
 
 Crea un archivo `enums.json` en ese directorio con el formato a continuacion:
 

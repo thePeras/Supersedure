@@ -31,7 +31,7 @@
     </button>
     <portal to="modals">
       <modal
-        class="vue-dialog beekeeper-modal auto-mode-help-modal"
+        class="vue-dialog supersedure-modal auto-mode-help-modal"
         name="auto-mode-help"
         height="auto"
         :scrollable="true"
@@ -81,7 +81,7 @@
         <div class="vue-dialog-buttons">
           <a
             class="btn btn-flat"
-            href="https://docs.beekeeperstudio.io/user_guide/connecting/connecting/#automatic-authentication-default"
+            href="https://docs.supersedurestudio.io/user_guide/connecting/connecting/#automatic-authentication-default"
           >
             Learn more
           </a>
@@ -115,7 +115,7 @@ export default {
   computed: {
     ...mapGetters('settings', ['privacyMode']),
     docsUrl() {
-      return 'https://docs.beekeeperstudio.io/user_guide/connecting/connecting/#automatic-authentication-default'
+      return 'https://docs.supersedurestudio.io/user_guide/connecting/connecting/#automatic-authentication-default'
     },
     agentAvailable() {
       // On Windows ssh2 falls back to PuTTY's pageant when SSH_AUTH_SOCK

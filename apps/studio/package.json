@@ -1,13 +1,13 @@
 {
-  "name": "beekeeper-studio",
+  "name": "supersedure-studio",
   "version": "6.1.2",
   "private": true,
-  "desktopName": "beekeeper-studio.desktop",
+  "desktopName": "supersedure-studio.desktop",
   "description": "An easy-to use SQL query editor and database UI for Mac, Windows, and Linux",
   "author": {
-    "name": "Beekeeper Studio Team",
+    "name": "Supersedure Studio Team",
     "email": "matthew@rathbonelabs.com",
-    "url": "https://beekeeperstudio.io"
+    "url": "https://supersedurestudio.io"
   },
   "scripts": {
     "build:esbuild": "node ./esbuild.mjs",
@@ -246,7 +246,7 @@
     "> 1%",
     "last 2 versions"
   ],
-  "repository": "git@github.com:beekeeper-studio/beekeeper-studio.git",
+  "repository": "git@github.com:thePeras/supersedure-studio.git",
   "resolutions": {
     "cpu-features": "file:./.yarn/packages/empty-package"
   }

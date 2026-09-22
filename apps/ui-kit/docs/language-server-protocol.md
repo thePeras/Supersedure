@@ -1,10 +1,10 @@
 # Language Server Protocol Support
 
-Beekeeper Studio UI Kit supports the [Language Server Protocol (LSP)](https://microsoft.github.io/language-server-protocol/), which enables powerful features like code completion, diagnostics, hover information, and more.
+Supersedure Studio UI Kit supports the [Language Server Protocol (LSP)](https://microsoft.github.io/language-server-protocol/), which enables powerful features like code completion, diagnostics, hover information, and more.
 
 ## Overview
 
-The Language Server Protocol (LSP) defines a common protocol for communication between text editors and language servers, which provide language-specific features like intelligent code completion, error checking, and formatting. By supporting LSP, the Beekeeper Studio UI Kit allows you to connect your editors to any language server that implements the protocol.
+The Language Server Protocol (LSP) defines a common protocol for communication between text editors and language servers, which provide language-specific features like intelligent code completion, error checking, and formatting. By supporting LSP, the Supersedure Studio UI Kit allows you to connect your editors to any language server that implements the protocol.
 
 ## Setting Up LSP in the Text Editor
 
