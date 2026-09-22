@@ -4,9 +4,7 @@ import { IQueryHandlers } from "@/handlers/queryHandlers";
 import { ITempHandlers } from "@/handlers/tempHandlers";
 import { IConnectionHandlers } from "./connHandlers";
 import { IExportHandlers } from "./exportHandlers";
-import { ICliHandlers } from "./cliHandlers";
 import { IEnumHandlers } from "./enumHandlers";
-import { IAwsHandlers } from "./awsHandlers";
 import { IWorkspaceHandlers } from "@/handlers/workspaceHandlers";
 
 export interface Handlers
@@ -14,10 +12,8 @@ export interface Handlers
     IQueryHandlers,
     IGeneratorHandlers,
     IExportHandlers,
-    ICliHandlers,
     IFileHandlers,
     IEnumHandlers,
     ITempHandlers,
-    IAwsHandlers,
     IWorkspaceHandlers
     {}

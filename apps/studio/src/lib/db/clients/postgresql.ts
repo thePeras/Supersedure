@@ -10,7 +10,7 @@ import logRaw from '@bksLogger'
 
 import { DatabaseElement, IDbConnectionDatabase } from '../types'
 import { FilterOptions, OrderBy, TableFilter, TableUpdateResult, TableResult, Routine, TableChanges, TableInsert, TableUpdate, TableDelete, DatabaseFilterOptions, SchemaFilterOptions, NgQueryResult, StreamResults, ExtendedTableColumn, PrimaryKeyColumn, TableIndex, CancelableQuery, SupportedFeatures, TableColumn, TableOrView, TableProperties, TableTrigger, TablePartition, BksField, BksFieldType } from "../models";
-import { buildDatabaseFilter, buildDeleteQueries, buildInsertQueries, buildSchemaFilter, buildSelectQueriesFromUpdates, buildUpdateQueries, escapeString, refreshTokenIfNeeded, joinQueries, errorMessages } from './utils';
+import { buildDatabaseFilter, buildDeleteQueries, buildInsertQueries, buildSchemaFilter, buildSelectQueriesFromUpdates, buildUpdateQueries, escapeString, joinQueries, errorMessages } from './utils';
 import { createCancelablePromise, joinFilters } from '../../../common/utils';
 import { errors } from '../../errors';
 // FIXME (azmi): use BksConfig
@@ -26,7 +26,6 @@ import { defaultCreateScript, postgres10CreateScript } from './postgresql/script
 import BksConfig from '@/common/bksConfig';
 import { IDbConnectionServer } from '../backendTypes';
 import { GenericBinaryTranscoder } from "../serialization/transcoders";
-import {AzureAuthService} from "@/lib/db/authentication/azure";
 import { IdentifyResult } from 'sql-query-identifier/lib/defines';
 
 const PD = PostgresData
@@ -140,32 +139,6 @@ export class PostgresClient extends BasicDatabaseClient<QueryResult, PoolClient>
     };
 
     const test = await this.conn.pool.connect()
-
-    if (this.server.config.iamAuthOptions?.iamAuthenticationEnabled) {
-      this.interval = setInterval(async () => {
-        try {
-          const newPassword = await refreshTokenIfNeeded(this.server.config.iamAuthOptions, this.server, this.server.config.port || 5432);
-
-          const newPool = new pg.Pool({
-            ...dbConfig,
-            password: newPassword,
-          });
-
-          const test = await newPool.connect();
-          test.release();
-
-          if (this.conn?.pool) {
-            await this.conn.pool.end();
-          }
-          this.conn = { pool: newPool };
-
-          log.info('Token refreshed successfully and connection pool updated.');
-        } catch (err) {
-          log.error('Could not refresh token or update connection pool!', err);
-        }
-        // FIXME (azmi): use BksConfig
-      }, globals.iamRefreshTime);
-    }
 
     test.release();
 
@@ -1531,35 +1504,15 @@ export class PostgresClient extends BasicDatabaseClient<QueryResult, PoolClient>
 
   protected async configDatabase(server: IDbConnectionServer, database: { database: string}) {
 
-    let iamToken = undefined;
-    if(server.config.iamAuthOptions?.iamAuthenticationEnabled){
-      iamToken = await refreshTokenIfNeeded(server.config?.iamAuthOptions, server, server.config.port || 5432)
-    }
-
     const config: PoolConfig = {
       host: server.config.host,
       port: server.config.port || undefined,
-      password: iamToken || server.config.password || undefined,
+      password: server.config.password || undefined,
       database: database.database,
       max: BksConfig.db.postgres.maxConnections, // max idle connections per time (30 secs)
       connectionTimeoutMillis: BksConfig.db.postgres.connectionTimeout,
       idleTimeoutMillis: BksConfig.db.postgres.idleTimeout,
     };
-
-    if (server.config.azureAuthOptions?.azureAuthEnabled) {
-      const authService = new AzureAuthService();
-      config.user = server.config.user
-      return authService.configDB(server, config)
-    }
-
-    if (
-      server.config.client === "postgresql" &&
-      // fix https://github.com/thePeras/supersedure-studio/issues/2630
-      // we only need SSL for iam authentication
-      server.config?.iamAuthOptions?.iamAuthenticationEnabled
-    ){
-      server.config.ssl = true;
-    }
 
     return this.configurePool(config, server, null);
   }

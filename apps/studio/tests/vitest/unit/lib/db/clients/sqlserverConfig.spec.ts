@@ -85,14 +85,6 @@ describe('configDatabase - host and instance', () => {
     expect('port' in config).toBe(false)
   })
 
-  it('passes the instance through on the integrated-auth path', async () => {
-    // msnodesqlv8 rebuilds Server=host\instance from server + options.instanceName, and the
-    // ODBC driver runs its own browser lookup.
-    const config = await buildConfig({ host: '(local)\\SQL2022', port: 1433, windowsAuthEnabled: true })
-    expect(config.server).toBe('localhost')
-    expect(config.options.trustedConnection).toBe(true)
-    expect(config.options.instanceName).toBe('SQL2022')
-  })
 })
 
 describe('configDatabase - certificate trust', () => {

@@ -266,18 +266,6 @@ export class ElectronUtilityConnectionClient implements IBasicDatabaseClient {
     return await Vue.prototype.$util.send('conn/syncDatabase');
   }
 
-  async azureCancelAuth(): Promise<void> {
-    return await Vue.prototype.$util.send('conn/azureCancelAuth');
-  }
-
-  async azureGetAccountName(authId: string): Promise<string | null> {
-    return await Vue.prototype.$util.send('conn/azureGetAccountName', { authId });
-  }
-
-  async azureSignOut(config: IConnection): Promise<void> {
-    return await Vue.prototype.$util.send('conn/azureSignOut', { config });
-  }
-
 
 
 

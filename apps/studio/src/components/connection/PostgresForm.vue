@@ -34,8 +34,6 @@
       </label>
       <input type="text" class="form-control" v-model="config.options.cluster" :disabled="disabled">
     </div>
-    <common-iam v-show="iamAuthenticationEnabled" :auth-type="authType" :config="config" :disabled="disabled" />
-    <common-entra-id v-show="azureAuthEnabled" :auth-type="authType" :config="config" :disabled="disabled" />
     <common-advanced :config="config" :disabled="disabled" />
   </div>
 </template>
@@ -44,12 +42,7 @@
 
 import CommonServerInputs from './CommonServerInputs.vue'
 import CommonAdvanced from './CommonAdvanced.vue'
-import CommonIam from './CommonIam.vue'
-import {AppEvent} from "@/common/AppEvent";
-import {AzureAuthType, AzureAuthTypes, IamAuthTypes} from "@/lib/db/types";
-import { mapGetters } from 'vuex';
 import _ from "lodash";
-import CommonEntraId from "@/components/connection/CommonEntraId.vue";
 
 const COCKROACH_JWT = 'cockroach-jwt'
 
@@ -57,11 +50,11 @@ function initialAuthType(config) {
   if (config.connectionType === 'cockroachdb') {
     return config.options?.jwtAuthEnabled ? COCKROACH_JWT : 'default'
   }
-  return config.iamAuthOptions?.authType || config.azureAuthOptions?.azureAuthType || 'default'
+  return 'default'
 }
 
 export default {
-  components: {CommonEntraId, CommonServerInputs, CommonAdvanced, CommonIam },
+  components: { CommonServerInputs, CommonAdvanced },
   props: {
     config: Object,
     disabled: {
@@ -70,15 +63,12 @@ export default {
     }
   },
   mounted() {
-    this.azureAuthEnabled = this.config?.azureAuthOptions?.azureAuthEnabled || false
     if (!this.isCockroach && this.authType !== 'default') {
       this.showPasswordForm = false;
     }
   },
   data() {
     return {
-      azureAuthEnabled: !!this.config?.azureAuthOptions?.azureAuthEnabled,
-      iamAuthenticationEnabled: !!this.config.iamAuthOptions?.iamAuthenticationEnabled,
       authType: initialAuthType(this.config),
       signingOut: false,
       errorSigningOut: null,
@@ -88,8 +78,6 @@ export default {
   watch: {
     isCockroach() {
       if(this.isCockroach) {
-        this.iamAuthenticationEnabled = false
-        this.azureAuthEnabled = false
         this.authType = this.config.options?.jwtAuthEnabled ? COCKROACH_JWT : 'default'
       } else {
         this.authType = initialAuthType(this.config)
@@ -107,45 +95,18 @@ export default {
         return
       }
 
-      if (this.authType === 'default') {
-        this.iamAuthenticationEnabled = false
-        this.azureAuthEnabled = false
-        this.showPasswordForm = true
-      } else {
-        if (this.isCommunity) {
-          this.$root.$emit(AppEvent.upgradeModal, "Enterprise Authentication");
-          this.authType = 'default'
-        } else {
-          this.showPasswordForm = false
-          if (typeof this.authType === 'string' && this.authType.includes('iam')) {
-            this.iamAuthenticationEnabled = true;
-            this.azureAuthEnabled = false;
-            this.config.iamAuthOptions.authType = this.authType;
-          } else if (this.authType === AzureAuthType.CLI) {
-            this.azureAuthEnabled = true;
-            this.iamAuthenticationEnabled = false;
-            this.config.azureAuthOptions.azureAuthType = this.authType;
-          }
-        }
-      }
+      this.showPasswordForm = true
     },
     config() {
       this.authType = initialAuthType(this.config)
     },
-    azureAuthEnabled() {
-      this.config.azureAuthOptions.azureAuthEnabled = this.azureAuthEnabled
-    },
-    iamAuthenticationEnabled() {
-      this.config.iamAuthOptions.iamAuthenticationEnabled = this.iamAuthenticationEnabled
-    }
   },
   computed: {
-    ...mapGetters(['isCommunity']),
     isCockroach() {
       return this.config.connectionType === 'cockroachdb'
     },
     showServerInputs() {
-      return !this.azureAuthEnabled
+      return true
     },
     authTypes() {
       if (this.isCockroach) {
@@ -156,8 +117,6 @@ export default {
       }
       return [
         { name: 'Username / Password', value: 'default' },
-        ...IamAuthTypes,
-        ...AzureAuthTypes.filter(auth => auth.value === AzureAuthType.CLI),
       ]
     },
     jwtAuthEnabled() {

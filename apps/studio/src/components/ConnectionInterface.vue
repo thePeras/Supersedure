@@ -201,7 +201,6 @@
         </small>
       </div>
     </div>
-    <loading-sso-modal v-model="loadingSSOModalOpened" @cancel="loadingSSOCanceled" />
   </div>
 </template>
 
@@ -219,7 +218,6 @@ import BigQueryForm from './connection/BigQueryForm.vue'
 import RedisForm from './connection/RedisForm.vue'
 import Split from 'split.js'
 import ImportButton from './connection/ImportButton.vue'
-import LoadingSSOModal from '@/components/common/modals/LoadingSSOModal.vue'
 import _ from 'lodash'
 import ErrorAlert from './common/ErrorAlert.vue'
 import rawLog from '@bksLogger'
@@ -227,7 +225,6 @@ import { mapGetters, mapState } from 'vuex'
 import { dialectFor } from '@shared/lib/dialects/models'
 import { escapeHtml } from '@shared/lib/tabulator'
 import { findClient } from '@/lib/db/clients'
-import { AzureAuthType } from '@/lib/db/types'
 import Vue from 'vue'
 import { AppEvent } from '@/common/AppEvent'
 import { SmartLocalStorage } from '@/common/LocalStorage'
@@ -240,7 +237,7 @@ const log = rawLog.scope('ConnectionInterface')
 // import ImportUrlForm from './connection/ImportUrlForm';
 
 export default Vue.extend({
-  components: { ConnectionSidebar, MysqlForm, BedrockForm, PostgresForm, RedshiftForm, Sidebar, SqliteForm, SqlServerForm, SaveConnectionForm, ImportButton, ErrorAlert, BigQueryForm, LoadingSsoModal: LoadingSSOModal, RedisForm, ContentPlaceholderHeading, PrivacyBanner,
+  components: { ConnectionSidebar, MysqlForm, BedrockForm, PostgresForm, RedshiftForm, Sidebar, SqliteForm, SqlServerForm, SaveConnectionForm, ImportButton, ErrorAlert, BigQueryForm, RedisForm, ContentPlaceholderHeading, PrivacyBanner,
     DatabaseIcon,
   },
 
@@ -257,7 +254,6 @@ export default Vue.extend({
       url: null,
       importError: null,
       sidebarShown: true,
-      loadingSSOModalOpened: false,
       version: this.$config.appVersion,
       isConfigReady: false,
     }
@@ -468,9 +464,6 @@ export default Vue.extend({
       if (this.config?.id === config.id && this.config?.workspaceId === config.workspaceId) {
         this.config = await this.$util.send('appdb/saved/new');
       }
-      if (config.azureAuthOptions?.authId) {
-        await this.$util.send('appdb/cache/remove', { authId: config.azureAuthOptions.authId });
-      }
       await this.$store.dispatch('pinnedConnections/remove', config)
       await this.$store.dispatch('data/connections/remove', config)
       this.$noty.success(`${config.name} deleted`)
@@ -542,12 +535,6 @@ export default Vue.extend({
         if (!this.config.name) {
           throw new Error("Name is required")
         }
-        // create token cache for azure auth
-        if (this.config.azureAuthOptions?.azureAuthEnabled && !this.config.authId) {
-          const cacheId = await this.$util.send('appdb/cache/new');
-          this.config.authId = cacheId;
-        }
-
         const id = await this.$store.dispatch('data/connections/save', this.config)
 
         this.$noty.success("Connection Saved")
@@ -568,22 +555,11 @@ export default Vue.extend({
         this.errors = null
       }
     },
-    // Before running connect/test method
     beforeConnect() {
-      if (
-        this.config.connectionType === 'sqlserver' &&
-        this.config.azureAuthOptions.azureAuthEnabled &&
-        this.config.azureAuthOptions.azureAuthType === AzureAuthType.AccessToken
-      ) {
-        this.loadingSSOModalOpened = true
-      }
+      // no-op
     },
-    // After running connect/test method, success or fail
     afterConnect() {
-      this.loadingSSOModalOpened = false
-    },
-    loadingSSOCanceled() {
-      this.connection.azureCancelAuth();
+      // no-op
     },
     share() {
       this.trigger(AppEvent.openShareModal, {

@@ -7,10 +7,8 @@ import { checkConnection, errorMessages, getDriverHandler, state } from "@/handl
 import ConnectionProvider from '@/backend/lib/connection-provider';
 import { uuidv4 } from "@/lib/uuid";
 import { SqlGenerator } from "@shared/lib/sql/SqlGenerator";
-import { TokenCache } from "@/common/appdb/models/token_cache";
 import { SavedConnection } from "@/common/appdb/models/saved_connection";
 import { UsedConnection } from "@/common/appdb/models/used_connection";
-import { AzureAuthService } from "@/lib/db/authentication/azure";
 import bksConfig from "@/common/bksConfig";
 import { UserPin } from "@/common/appdb/models/UserPin";
 import { waitPromise } from "@/common/utils";
@@ -117,10 +115,7 @@ export interface IConnectionHandlers {
 
   'conn/syncDatabase': ({ sId }: { sId: string }) => Promise<void>
 
-  'conn/azureCancelAuth': ({ sId }: { sId: string }) => Promise<void>
-  'conn/azureSignOut': ({ config, sId }: { config: IConnection, sId: string }) => Promise<void>,
   /** Get account name if it's signed in, otherwise return undefined */
-  'conn/azureGetAccountName': ({ authId, sId }: { authId: number, sId: string }) => Promise<string | null>,
 
   'conn/getQueryForFilter': ({ filter, sId }: { filter: TableFilter, sId: string }) => Promise<string>,
   'conn/getFilteredDataCount': ({ table, schema, filter, sId }: { table: string, schema: string | null, filter: string, sId: string }) => Promise<string>
@@ -151,19 +146,6 @@ export const ConnHandlers: IConnectionHandlers = {
       }
       if(!await UserPin.verifyPin(auth.input)) {
         throw new Error(`Incorrect pin. Please try again.`);
-      }
-    }
-
-    if (config.azureAuthOptions?.azureAuthEnabled && !config.authId) {
-      let cache = new TokenCache();
-      cache = await cache.save();
-      config.authId = cache.id;
-      // need to single out saved connections here (this may change when used connections are fixed)
-      if (config.id) {
-        // we do this so any temp configs that the user did aren't saved, just the id
-        const conn = await SavedConnection.findOneBy({ id: config.id });
-        conn.authId = cache.id;
-        conn.save();
       }
     }
 
@@ -208,19 +190,6 @@ export const ConnHandlers: IConnectionHandlers = {
     // TODO (matthew): fix this mess.
     if (!osUser) {
       throw new Error(errorMessages.noUsername);
-    }
-
-    if (config.azureAuthOptions?.azureAuthEnabled && !config.authId) {
-      let cache = new TokenCache();
-      cache = await cache.save();
-      config.authId = cache.id;
-      // need to single out saved connections here (this may change when used connections are fixed)
-      if (config.id) {
-        // we do this so any temp configs that the user did aren't saved, just the id
-        const conn = await SavedConnection.findOneBy({ id: config.id });
-        conn.authId = cache.id;
-        conn.save();
-      }
     }
 
     const settings = await UserSetting.all();
@@ -571,31 +540,6 @@ export const ConnHandlers: IConnectionHandlers = {
     return await state(sId).connection.getInsertQuery(tableInsert, runAsUpsert)
   },
   'conn/syncDatabase': getDriverHandler('syncDatabase'),
-
-  'conn/azureCancelAuth': async function({ sId }: { sId: string }) {
-    state(sId).connectionAbortController?.abort();
-  },
-
-  'conn/azureGetAccountName': async function({ authId }: { authId: number }) {
-    if (!authId) {
-      throw new Error("authId is required");
-    }
-    const cache = await TokenCache.findOneBy({id: authId})
-    if (!cache) return null
-    return cache.name
-  },
-
-  'conn/azureSignOut': async function({ config, sId }: { config: IConnection, sId: string }) {
-    await AzureAuthService.ssoSignOut(config.authId)
-
-    // Clean up authId cause it's invalid after signing out
-    const savedConnection = await SavedConnection.findOneBy({id: config.id})
-    savedConnection.authId = null
-    await savedConnection.save()
-    if (state(sId).usedConfig) {
-      state(sId).usedConfig.authId = null
-    }
-  },
 
   'conn/getQueryForFilter': async function({ filter, sId }: { filter: TableFilter, sId: string }) {
     checkConnection(sId);

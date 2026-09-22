@@ -1,6 +1,6 @@
 // Pure helpers for normalising what a user types into the SQL Server Host field.
 // Extracted so the exact values handed to the driver can be unit-tested without a live
-// server -- see tests/vitest/unit, and sqlserverWinAuth.ts for the same pattern.
+// server -- see tests/vitest/unit.
 //
 // mssql splits `host\instance` itself and then throws the port away
 // (lib/tedious/connection-pool.js), which forces a SQL Browser lookup. Parsing here keeps
