@@ -3,16 +3,7 @@
     class="save-connection expand"
     @submit.prevent="save"
   >
-    <h3
-      class="dialog-c-title"
-      v-if="['cassandra', 'scylladb'].includes(this.connectionType)"
-    >
-      Add Keyspace
-    </h3>
-    <h3
-      class="dialog-c-title"
-      v-else
-    >
+    <h3 class="dialog-c-title">
       Add database
     </h3>
 
@@ -37,12 +28,6 @@
       class="form-group"
       v-if="charsets.length > 0"
     >
-      <label
-        for="addDatabaseCharset"
-        v-if="['cassandra', 'scylladb'].includes(this.connectionType)"
-      >
-        Select Replication Strategy
-      </label>
       <select
         v-model="selectedCharset"
         id="addDatabaseCollation"

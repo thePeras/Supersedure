@@ -11,7 +11,6 @@
       <span>{{ labelApply || 'Apply' }}</span>
     </x-button>
     <x-button
-      v-if="dialect !== 'mongodb'"
       class="btn btn-primary"
       menu
       style="margin:0"

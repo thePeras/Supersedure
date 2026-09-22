@@ -134,9 +134,7 @@ export class OpenTab extends ApplicationEntity {
 
 
   isBeta(): boolean {
-    const betaTypes = ['backup', 'import-export-database', 'restore', 'import-table'];
-
-    return betaTypes.includes(this.tabType);
+    return false;
   }
 
   duplicate(): OpenTab {
@@ -174,20 +172,8 @@ export class OpenTab extends ApplicationEntity {
         return this.tableName === other.tableName &&
           (this.schemaName || null) === (other.schemaName || null) &&
           (this.entityType || null) === (other.entityType || null)
-      case 'import-export-database':
-        // we store export state in the store, so don't want multiple open
-        // at a time.
-        return this.tabType === 'import-export-database'
       case 'query':
         return this.queryId === other.queryId
-      case 'backup':
-        return this.tabType === 'backup';
-      case 'restore':
-        return this.tabType === 'restore';
-      case 'import-table':
-        return this.tabType === 'import-table' &&
-        this.tableName === other.tableName &&
-        (this.schemaName || null) === (other.schemaName || null);
       default:
         return false
     }

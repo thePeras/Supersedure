@@ -40,25 +40,6 @@
               </li>
             </ul>
           </template>
-          <template v-if="'unknown-allow-plugin' in groupedWarnings">
-            <span>
-              Unknown plugin IDs in
-              <span style="font-weight: bold">pluginSystem.allow</span>.
-            </span>
-            <ul>
-              <li
-                v-for="warning in groupedWarnings['unknown-allow-plugin']"
-                :key="`${warning.sourceName}-${warning.path}-${warning.value}`"
-              >
-                <span style="font-weight: bold">{{ warning.value }}</span>
-                in {{ warning.sourceName }} config.
-              </li>
-            </ul>
-            <span>
-              Only bundled plugins can be allowed, such as
-              {{ bundledPluginIds }}.
-            </span>
-          </template>
           <template v-if="'deprecated-key' in groupedWarnings">
             <span>Deprecated keys</span>
             <ul>
@@ -107,7 +88,6 @@
 <script lang="ts">
 import Vue from "vue";
 import _ from "lodash";
-import globals from "@/common/globals";
 
 export default Vue.extend({
   data() {
@@ -118,9 +98,6 @@ export default Vue.extend({
   computed: {
     groupedWarnings() {
       return _.groupBy(this.$bksConfig.warnings, "type");
-    },
-    bundledPluginIds() {
-      return globals.plugins.ensureInstalled.map((p) => p.id).join(", ");
     },
   },
   async mounted() {

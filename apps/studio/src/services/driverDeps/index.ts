@@ -4,7 +4,7 @@ export { default as DriverDepRegistry } from "./DriverDepRegistry";
 export * from "./types";
 
 import DriverDepRegistry from "./DriverDepRegistry";
-import OracleInstantClientProvider from "./providers/OracleInstantClientProvider";
+import { DriverDepProvider } from "./types";
 
 /**
  * Built-in driver dependency providers.
@@ -13,9 +13,7 @@ import OracleInstantClientProvider from "./providers/OracleInstantClientProvider
  * `./providers/`, then add it to this list. See
  * `docs/development/driver-dependencies.md` for a walkthrough.
  */
-const DEFAULT_PROVIDERS = [
-  new OracleInstantClientProvider(),
-];
+const DEFAULT_PROVIDERS: DriverDepProvider[] = [];
 
 export function createDefaultRegistry(): DriverDepRegistry {
   const registry = new DriverDepRegistry();

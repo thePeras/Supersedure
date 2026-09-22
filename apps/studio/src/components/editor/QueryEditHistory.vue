@@ -10,7 +10,7 @@
       </div>
       <merge-text-editor
         v-else-if="hasPreviewContent"
-        :type="connectionType === 'surrealdb' ? 'surrealdb' : 'sql'"
+        type="sql"
         :current-version="currentText"
         :previous-version="previousText"
         :language-id="languageId"
@@ -83,12 +83,6 @@
                   Current version
                 </span>
                 <time class="title" v-text="audit.time" />
-                <span
-                  v-if="isCloud && 'name' in audit.queryAudit.user"
-                  class="editor-label"
-                >
-                  {{ audit.queryAudit.user.name }}
-                </span>
                 <span
                   v-if="
                     audit.queryAudit.action === 'update' &&
@@ -214,7 +208,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["connectionType", "tables"]),
-    ...mapGetters(["dialectData", "isCloud"]),
+    ...mapGetters(["dialectData"]),
     ...mapState("data/queries", {
       queries: "items"
     }),

@@ -7,12 +7,12 @@ const mockConnection = {
   server: { config: {} },
   database: { database: 'app' },
 }
-jest.mock('@commercial/backend/lib/connection-provider', () => ({
+jest.mock('@/backend/lib/connection-provider', () => ({
   __esModule: true,
   default: { for: () => ({ createConnection: () => mockConnection }) },
 }))
 
-import { ConnHandlers } from '@commercial/backend/handlers/connHandlers'
+import { ConnHandlers } from '@/handlers/connHandlers'
 import { newState, removeState } from '@/handlers/handlerState'
 import { TestOrmConnection } from '@tests/lib/TestOrmConnection'
 import { SavedConnection } from '@/common/appdb/models/saved_connection'

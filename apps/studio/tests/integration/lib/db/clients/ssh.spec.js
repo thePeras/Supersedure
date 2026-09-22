@@ -5,7 +5,7 @@ import * as path from 'path'
 import * as net from 'net'
 import { DockerComposeEnvironment, GenericContainer, Wait } from 'testcontainers'
 import { Server } from 'ssh2'
-import ConnectionProvider from '@commercial/backend/lib/connection-provider';
+import ConnectionProvider from '@/backend/lib/connection-provider';
 import { dbtimeout } from '../../../../lib/db'
 import { TestOrmConnection } from '@tests/lib/TestOrmConnection';
 

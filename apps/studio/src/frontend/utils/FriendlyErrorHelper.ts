@@ -57,27 +57,6 @@ const errorMappings = {
       help: "Kerberos authentication failed. Check for a valid ticket (kinit), a registered server SPN, and a client clock in sync with the KDC.",
       link: SQL_SERVER_DOCS
     }
-  ],
-  'oracle': [
-    {
-      pattern: 'thin mode',
-      help: "You likely need to enable 'thick mode' which supports all connection types. Please provide the path to the Oracle Instant client to Supersedure Studio in the box above",
-      link: "https://docs.supersedurestudio.io/user_guide/connecting/oracle-database/"
-    }
-  ],
-  'mongodb': [
-    {
-      // GSSAPI auth: the native kerberos module failed to load.
-      pattern: 'kerberos',
-      help: "Kerberos (GSSAPI) authentication needs the krb5 client libraries installed on this machine. Also check for a valid ticket (kinit), a registered server SPN (mongodb/<fqdn>), and a client clock in sync with the KDC. Connect by FQDN so the SPN matches.",
-      link: "https://docs.supersedurestudio.io/user_guide/connecting/mongodb/"
-    },
-    {
-      // GSSAPI auth: the negotiation itself failed.
-      pattern: 'gssapi',
-      help: "Kerberos (GSSAPI) authentication failed. Check for a valid ticket (kinit), a registered server SPN (mongodb/<fqdn>), and connect by FQDN so the SPN matches.",
-      link: "https://docs.supersedurestudio.io/user_guide/connecting/mongodb/"
-    }
   ]
 }
 

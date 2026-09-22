@@ -87,7 +87,7 @@ export default class WebPluginManager {
         log.warn(`Plugin "${manifest.id}" is not loadable. Skipping...`);
         continue;
       }
-      if (window.bksConfig.plugins[manifest.id]?.disabled) {
+      if (window.bksConfig.plugins?.[manifest.id]?.disabled) {
         log.info(`Plugin "${manifest.id}" is disabled. Skipping...`);
         continue;
       }

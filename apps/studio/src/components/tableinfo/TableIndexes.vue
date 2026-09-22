@@ -110,7 +110,7 @@ import Vue from 'vue'
 import _ from 'lodash'
 import NullableInputEditorVue from '@shared/components/tabulator/NullableInputEditor.vue'
 import CheckboxEditorVue from '@shared/components/tabulator/CheckboxEditor.vue'
-import { AdditionalMongoOrders, CreateIndexSpec, FormatterDialect, IndexAlterations, IndexColumn } from '@shared/lib/dialects/models'
+import { CreateIndexSpec, FormatterDialect, IndexAlterations, IndexColumn } from '@shared/lib/dialects/models'
 import rawLog from '@bksLogger'
 import { format } from 'sql-formatter'
 import { AppEvent } from '@/common/AppEvent'
@@ -163,8 +163,7 @@ export default Vue.extend({
     ...mapState(['connectionType', 'connection', 'usedConfig']),
     ...mapGetters(['dialect', 'dialectData']),
     hasSql() {
-      // FIXME (@day): no per db testing
-      return this.connectionType !== 'mongodb';
+      return true;
     },
     enabled() {
       return !this.usedConfig.readOnlyMode && !this.dialectData.disabledFeatures?.alter?.everything && !this.dialectData.disabledFeatures?.alter?.indexes;
@@ -188,16 +187,7 @@ export default Vue.extend({
       }
       const desc = this.table.columns.map((c) => `${escapeHtml(c.columnName)} DESC`)
 
-      let additional = [];
-      // FIXME (@day): no per-db testing
-      if (this.connectionType === 'mongodb') {
-        AdditionalMongoOrders.forEach((o) => {
-          const add = this.table.columns.map((c) => `${escapeHtml(c.columnName)} ${o.toUpperCase()}`);
-          additional.push(...add)
-        })
-      }
-
-      return [...normal, ...desc, ...additional]
+      return [...normal, ...desc]
     },
     editCount() {
       const result = this.newRows.length + this.removedRows.length;
@@ -226,8 +216,7 @@ export default Vue.extend({
     },
     tableColumns() {
       const editable = (cell) => this.newRows.includes(cell.getRow()) && !this.loading
-      // FIXME (@day): no per-db testing
-      const editableName = (cell) => this.newRows.includes(cell.getRow()) && !this.loading && this.dialect != 'mongodb'
+      const editableName = editable
       const result = [
         (this.dialectData?.disabledFeatures?.index?.id ? null : {title: 'Id', field: 'id', widthGrow: 0.5, contextMenu: copyCellMenu, cellDblClick: (_e, cell) => this.handleCellDoubleClick(cell)}),
         {
@@ -283,9 +272,7 @@ export default Vue.extend({
     async addRow() {
       if (this.loading || this.usedConfig.readOnlyMode) return
       const tabulator = this.tabulator as Tabulator
-      // mongo doesn't have custom names for sql, they're auto generated
-      // FIXME (@day): no per-db testing
-      const name = this.dialect == 'mongodb' ? '' : `${this.table.name}_index_${this.tabulator.getData().length + 1}`
+      const name = `${this.table.name}_index_${this.tabulator.getData().length + 1}`
       const row = await tabulator.addRow({
         name,
         unique: true
@@ -344,12 +331,8 @@ export default Vue.extend({
             if (this.dialectData.disabledFeatures?.index?.desc) {
               return { name: c } as IndexColumn
             }
-            let order = c.endsWith('DESC') ? 'DESC' : 'ASC'
-            const addOrder = AdditionalMongoOrders.find((o) => c.toLowerCase().endsWith(o.toLowerCase()));
-            if (addOrder) order = addOrder;
-
-            let name = c.replaceAll(' DESC', '')
-            name = AdditionalMongoOrders.reduce((n, o) => n.replaceAll(` ${o.toUpperCase()}`, ''), name);
+            const order = c.endsWith('DESC') ? 'DESC' : 'ASC'
+            const name = c.replaceAll(' DESC', '')
             return { name, order } as IndexColumn
           })
           const payload: CreateIndexSpec = {

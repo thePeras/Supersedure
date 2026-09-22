@@ -1,7 +1,7 @@
 import { GenericContainer, StartedTestContainer, Wait } from 'testcontainers'
 import { SignJWT, generateKeyPair, exportJWK } from 'jose'
 import { Client as PgClient } from 'pg'
-import { createServer } from '@commercial/backend/lib/db/server'
+import { createServer } from '@/lib/db/server'
 import { IDbConnectionServerConfig } from '@/lib/db/types'
 import { dbtimeout } from '@tests/lib/db'
 

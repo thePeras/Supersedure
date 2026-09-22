@@ -12,52 +12,13 @@ volumes:
   psql17:
   mariadb:
   cockroachdb:
-  oracle18:
-  cassandra:
-  scylladb:
   bigquery:
-  firebird:
-  mongodb:
-  anywhere:
   redis:
   greengage:
   greengage7:
   starrocks:
-  surreal:
 
 services:
-  anywhere:
-    image: jaschweder/sybase
-    platform: linux/amd64
-    ports:
-      - 2638:2638
-
-  mongodb:
-    image: mongo
-    platform: linux/amd64
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: supersedure
-      MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_DATABASE: sakila
-    volumes:
-      - ./dev/docker_mongodb_init:/docker-entrypoint-initdb.d
-    ports:
-      - 27017:27017
-
-  oracle18:
-    image: gvenzl/oracle-xe:18
-    platform: linux/amd64
-    environment:
-      ORACLE_PASSWORD: example
-      ORACLE_DATABASE: sakila
-      APP_USER: supersedure
-      APP_USER_PASSWORD: example
-    volumes:
-      - oracle18:/opt/oracle/oradata
-      - ./dev/docker_oracle_init:/docker-entrypoint-initdb.d
-    ports:
-      - 1521:1521
-
   psql15-load-test:
     image: postgres:15
     platform: linux/amd64
@@ -123,16 +84,6 @@ services:
       - ./dev/docker_psql_init:/docker-entrypoint-initdb.d
     ports:
       - 5433:5432
-  trino:
-    image: trinodb/trino:latest
-    platform: linux/amd64
-    ports:
-      - "8090:8080"
-    volumes:
-      - ./dev/docker_trino/catalog:/etc/trino/catalog
-    depends_on:
-      - psql
-      - mysql8
   psql:
     image: postgres:9.6
     platform: linux/amd64
@@ -247,34 +198,6 @@ services:
     ports:
       - 26257:26257
     command: start-single-node --insecure
-  cassandra:
-    image: cassandra:latest
-    platform: linux/amd64
-    entrypoint: [ "/docker-entrypoint.initdb.d/entry.sh" ]
-    ports:
-      - 9042:9042
-    volumes:
-      - cassandra:/var/lib/cassandra
-      - ./dev/docker_cassandra_init:/docker-entrypoint.initdb.d
-  # use keyspace; describe tables; # get all the tables for a specific keyspace
-  # select * from system_schema.keyspaces; # gets all keyspaces
-  # https://www.folkstalk.com/2022/09/get-all-keyspaces-in-cassandra-with-code-examples.html
-  # Create keyspace https://www.tutorialspoint.com/cassandra/cassandra_create_keyspace.htm
-  scylladb:
-    image: scylladb/scylla:2025.1.4
-    platform: linux/amd64
-    entrypoint: [ "/docker-entrypoint.initdb.d/entry.sh" ]
-    command: --reactor-backend epoll --smp 1 --memory 1G --overprovisioned 1 --api-address 0.0.0.0
-    ports:
-      - 9043:9042  # Different host port to run alongside Cassandra
-    volumes:
-      - scylladb:/var/lib/scylla
-      - ./dev/docker_scylladb_init:/docker-entrypoint.initdb.d
-    healthcheck:
-      test: ["CMD-SHELL", "cqlsh -e 'DESCRIBE KEYSPACES'"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
   bigquery:
     image: ghcr.io/goccy/bigquery-emulator:latest
     platform: linux/amd64
@@ -285,36 +208,6 @@ services:
       - 9050:9050
       - 9060:9060
     entrypoint: sh -c 'chmod +x /docker_init/data.sh; /docker_init/data.sh'
-  firebird:
-    image: jacobalberty/firebird:v4.0.1
-    platform: linux/amd64
-    volumes:
-      - ./dev/docker_firebird:/docker_init
-    ports:
-      - 3050:3050
-    environment:
-      - ISC_PASSWORD=masterkey
-      - EnableLegacyClientAuth=true
-    command: sh -c 'chmod +x /docker_init/entrypoint.sh; /docker_init/entrypoint.sh & /usr/local/firebird/docker-entrypoint.sh firebird;'
-  libsql:
-    image: ghcr.io/tursodatabase/libsql-server:latest
-    platform: linux/amd64
-    ports:
-      - 8081:8080
-      - 5001:5001
-      # environment:
-      #   - SQLD_NODE=primary
-      # volumes:
-      #   - ./dev/docker_libsql:/var/lib/sqld
-  clickhouse:
-    image: clickhouse/clickhouse-server
-    platform: linux/amd64
-    ports:
-      - 8123:8123
-    environment:
-      - CLICKHOUSE_USER=username
-      - CLICKHOUSE_PASSWORD=password
-      - CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT=1
   redis:
     image: redis:latest
     ports:
@@ -324,43 +217,6 @@ services:
       - ./dev/docker_redis:/docker_init
     command: sh -c 'redis-server & sleep 3 && /docker_init/data.sh && wait'
 
-  clickhouse25:
-    image: clickhouse/clickhouse-server:25.6.1
-    ports:
-      - 8124:8123
-    environment:
-      - CLICKHOUSE_USER=username
-      - CLICKHOUSE_PASSWORD=password
-      - CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT=1
-
-  surrealdb:
-    image: surrealdb/surrealdb:latest
-    user: "0:0"
-    command: start --log trace --user root --pass root --allow-all rocksdb:/mydata/surreal.db
-    ports:
-      - 8000:8000
-    volumes:
-      - surreal:/mydata
-
-  surrealdb-seed:
-    image: surrealdb/surrealdb:latest
-    depends_on:
-      - surrealdb
-    command: import --endpoint http://surrealdb:8000 --user root --pass root --ns test --db test /seed.surql
-    volumes:
-      - ./dev/docker_surrealdb_init/seed.surql:/seed.surql:ro
-
-  dynamodb-local:
-    image: amazon/dynamodb-local:latest
-    platform: linux/amd64
-    ports:
-      - 8001:8000
-    command: "-jar DynamoDBLocal.jar -sharedDb -inMemory"
-
-  # StarRocks (FE + BE in one container). MySQL protocol on 9030, FE http on 8030.
-  # The command layers the quick start sample data loader on top of the image's
-  # own ./entrypoint.sh; data is loaded once and persisted in the starrocks volume.
-  # See https://docs.starrocks.io/docs/quick_start/shared-nothing/
   starrocks:
     image: starrocks/allin1-ubuntu
     ports:

@@ -104,7 +104,6 @@ import ultimate from './ultimate/index'
 import UserSettingsWindowPosition from './20240303_user_settings_window_position'
 
 import rawLog from "@bksLogger";
-import { SqlAnywhereChangeBuilder } from '@/shared/lib/sql/change_builder/SqlAnywhereChangeBuilder'
 
 
 const logger = rawLog.scope('migrations');

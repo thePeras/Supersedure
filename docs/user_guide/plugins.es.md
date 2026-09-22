@@ -18,21 +18,7 @@ Cada plugin opera en su propio entorno seguro mientras tiene acceso a tus conexi
 
 ## Quien puede usar plugins?
 
-Los plugins estan disponibles para **todos los usuarios de Supersedure Studio**, incluyendo aquellos que usan la edicion Community gratuita.
-
-Sin embargo, algunos plugins individuales pueden tener sus propios requisitos de acceso. Por ejemplo, los plugins premium desarrollados por el equipo de Supersedure Studio pueden requerir una suscripcion de pago.
-
-## Plugins disponibles
-
-### AI Shell
-
-**Requiere suscripcion de pago**
-
-![AI Shell respondiendo la pregunta del usuario](../assets/images/ai-shell.png)
-
-El plugin AI Shell trae inteligencia artificial directamente a tu flujo de trabajo con bases de datos. Haz preguntas sobre tus datos en espanol simple y obtiene respuestas inteligentes impulsadas por IA.
-
-El AI Shell aparece como un nuevo tipo de pestana que puedes abrir junto a tus pestanas de consulta regulares, con un visor de resultados integrado para cualquier consulta que ejecute.
+Los plugins estan disponibles para todos los usuarios de Supersedure Studio.
 
 ## Instalar plugins
 

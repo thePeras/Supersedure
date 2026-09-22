@@ -1,6 +1,5 @@
 import { IConnection } from "@/common/interfaces/IConnection";
 import { DataState, DataStore, mutationsFor, utilActionsFor } from "@/store/modules/data/DataModuleBase";
-import { accessGrantActions, accessGrantMutations } from "@/store/modules/data/access_grant/accessGrantStore";
 import { FolderFetchModule, treeActions } from "@/store/modules/data/tree/treeStore";
 import { ItemNodeModule } from "@/store/modules/data/tree/ItemNodeModule";
 import _ from "lodash";
@@ -30,7 +29,6 @@ export const UtilConnectionModule: DataStore<IConnection, State> = {
     linkedSavedConnectionIds(state: State, conns: number[]) {
       state.linkedSavedConnectionIds = conns;
     },
-    ...accessGrantMutations(),
   }),
   modules: {
     nodes: ItemNodeModule('connectionFolderId', 'name'),
@@ -38,7 +36,6 @@ export const UtilConnectionModule: DataStore<IConnection, State> = {
   },
   actions: {
     ...utilActionsFor<IConnection>('saved', {}),
-    ...accessGrantActions('connections'),
     ...treeActions<IConnection>({ plural: 'connectionFolderIds', singular: 'connectionFolderId' }, true),
     async initialize() {
       // no-op

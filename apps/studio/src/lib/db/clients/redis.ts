@@ -306,9 +306,6 @@ export class RedisClient extends BasicDatabaseClient<RedisQueryResult> {
       properties: true,
       partitions: false,
       editPartitions: false,
-      backups: false,
-      backDirFormat: false,
-      restore: false,
       indexNullsNotDistinct: false,
       transactions: true,
       filterTypes: ['standard']
@@ -1104,33 +1101,12 @@ export class RedisClient extends BasicDatabaseClient<RedisQueryResult> {
     return;
   }
 
-  async importStepZero(): Promise<any> {
-    return null;
-  }
 
-  async importBeginCommand(): Promise<any> {
-    return null;
-  }
 
-  async importTruncateCommand(): Promise<any> {
-    return null;
-  }
 
-  async importLineReadCommand(): Promise<any> {
-    return null;
-  }
 
-  async importCommitCommand(): Promise<any> {
-    return null;
-  }
 
-  async importRollbackCommand(): Promise<any> {
-    return null;
-  }
 
-  async importFinalCommand(): Promise<any> {
-    return null;
-  }
 
   async getQueryForFilter(): Promise<string> {
     return "";

@@ -51,9 +51,6 @@ describe("Saved Connection", () => {
     { t: 'sqlite', p: '/a/b/c/database.sqlite'},
     { t: 'sqlite', p: '~/a.db'},
     { t: 'sqlite', p: 'b.sqlite3'},
-    { t: 'duckdb', p: '/a/b/c.duckdb'},
-    { t: 'duckdb', p: '/a.ddb'},
-    { t: 'duckdb', p: 'a.duckdb'},
   ]
 
   urls.forEach(({ t, p}) => {

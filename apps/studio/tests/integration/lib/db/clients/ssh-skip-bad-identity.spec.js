@@ -50,7 +50,7 @@ jest.mock('@/common/platform_info', () => {
   }
 })
 
-const ConnectionProvider = require('@commercial/backend/lib/connection-provider').default
+const ConnectionProvider = require('@/backend/lib/connection-provider').default
 
 describe('SSH Tunnel Tests (skip bad ssh-config IdentityFile, #4366)', () => {
   jest.setTimeout(dbtimeout)

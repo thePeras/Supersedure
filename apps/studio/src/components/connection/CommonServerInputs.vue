@@ -94,14 +94,7 @@
     </div>
     <slot />
     <div class="form-group expand">
-      <label
-        v-if="!['cassandra', 'scylladb'].includes(config.connectionType)"
-        for="defaultDatabase"
-      >Default {{ topLevelEntityName }}</label>
-      <label
-        v-else
-        for="defaultDatabase"
-      >Keyspace <span class="optional-text">(optional)</span></label>
+      <label for="defaultDatabase">Default {{ topLevelEntityName }}</label>
       <input
         type="text"
         class="form-control"

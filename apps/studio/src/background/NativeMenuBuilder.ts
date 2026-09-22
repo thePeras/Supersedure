@@ -158,11 +158,6 @@ export default class NativeMenuBuilder {
     if (!toolsMenu || !Array.isArray(toolsMenu.submenu)) {
       return;
     }
-    const [pinned, rest] = _.partition(
-      this.pluginMenuItems,
-      item => item.id.startsWith('bks-er-diagram')
-    );
-    toolsMenu.submenu.unshift(...pinned);
-    toolsMenu.submenu.push(...rest);
+    toolsMenu.submenu.push(...this.pluginMenuItems);
   }
 }

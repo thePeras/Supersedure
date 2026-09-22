@@ -29,16 +29,6 @@
                   <x-menuitem @click.prevent="importFromComputer">
                     <x-label>Import .sql files into Saved Queries</x-label>
                   </x-menuitem>
-                  <x-menuitem
-                    v-if="isCloud"
-                    @click.prevent="importFromLocal"
-                  >
-                    <x-label>Import from local workspace</x-label>
-                    <i
-                      v-if="$store.getters.isCommunity"
-                      class="material-icons menu-icon"
-                    >stars</i>
-                  </x-menuitem>
                 </x-menu>
               </x-button>
               <a
@@ -129,16 +119,6 @@
             <template #empty>
               <div class="empty">
                 <span class="empty-title">No Saved Queries</span>
-                <span
-                  class="empty-actions"
-                  v-if="isCloud"
-                >
-                  <a
-                    class="btn btn-flat btn-block btn-icon"
-                    @click.prevent="importFromLocal"
-                    title="Import queries from local workspace"
-                  ><i class="material-icons">save_alt</i> Import</a>
-                </span>
               </div>
             </template>
             <template #folder="{ props }">
@@ -290,7 +270,7 @@ export default {
     clearTimeout(this.commitedTimeout)
   },
   computed: {
-    ...mapGetters(['workspace', 'isCloud']),
+    ...mapGetters(['workspace']),
     ...mapGetters('data/queries', {'filteredQueries': 'filteredQueries'}),
     ...mapState('tabs', {'activeTab': 'active'}),
     ...mapState('data/queries/nodes', {'itemNodes': 'items'}),
@@ -439,13 +419,6 @@ export default {
     exportTo(query) {
       this.$root.$emit(AppEvent.promptQueryExport, query)
     },
-    importFromLocal() {
-      if (!this.isCloud) {
-        this.$root.$emit(AppEvent.upgradeModal, 'Cloud Workspaces')
-        return
-      }
-      this.$root.$emit(AppEvent.promptQueryImport)
-    },
     importFromComputer() {
       this.$root.$emit(AppEvent.promptSqlFilesImport)
     },
@@ -491,19 +464,7 @@ export default {
       this.startRootDraft("folder");
     },
     startRootDraft(type) {
-      if (!this.isCloud) {
-        this.startDrafting(type, null);
-        return;
-      }
-      const parent = this.folders.find((f) => f.personal && !f.parentId);
-      if (!parent) {
-        this.$noty.error(
-          "No personal folder found. Right-click an existing folder and choose New Subfolder to create a folder instead."
-        );
-        return;
-      }
-      this.startDrafting(type, parent.id);
-      this.expandFolder(parent.id);
+      this.startDrafting(type, null);
     },
     showRootContextMenu(event) {
       this.$bks.openMenu({
@@ -597,17 +558,8 @@ export default {
           },
         },
       ];
-      if (!this.isCloud || !isRoot) {
+      {
         options.push(...[
-          {
-            type: "divider",
-            hideIf: !this.isCloud || folder.personal,
-          },
-          {
-            name: "Share",
-            handler: ({ item }) => this.share(item),
-            hideIf: !this.isCloud || folder.personal,
-          },
           {
             type: "divider",
             hideIf: !canWrite,
@@ -688,12 +640,6 @@ export default {
         }
         this.$noty.error(errorMessage);
       }
-    },
-    share(folder) {
-      this.trigger(AppEvent.openShareModal, {
-        id: folder.id,
-        module: "data/queryFolders",
-      });
     },
     async duplicate(query) {
       const cloned = await this.$store.dispatch('data/queries/clone', query)

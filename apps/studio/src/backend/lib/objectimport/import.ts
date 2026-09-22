@@ -3,7 +3,6 @@ import { promises as fs } from 'fs';
 import { IObjectImportStats } from '@/common/interfaces/IObjectImportStats';
 import { IFolder } from '@/common/interfaces/IQueryFolder';
 import rawLog from '@bksLogger';
-import { CloudClient } from '@/lib/cloud/CloudClient';
 import _ from 'lodash';
 
 const log = rawLog.scope('ObjectImporter');
@@ -35,7 +34,7 @@ export abstract class ObjectImporter<T> {
   protected currentBatchBytes: number = 0;
   protected batchFull: boolean = false;
 
-  constructor(protected client?: CloudClient) {
+  constructor() {
 
   }
 

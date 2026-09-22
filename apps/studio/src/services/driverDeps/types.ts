@@ -3,7 +3,7 @@ export type DepArch = 'x64' | 'arm64';
 
 /**
  * Driver-deps in one paragraph: the database driver reads a filesystem path
- * from a `UserSetting` (e.g. `oracleInstantClient`). A `DriverDepProvider`
+ * from a `UserSetting`. A `DriverDepProvider`
  * supplies the files for that same setting key — it downloads, extracts, and
  * writes the resulting path back into the setting. The `settingKey` is the
  * only contract between the driver and the provider; nothing else is shared.
@@ -56,9 +56,9 @@ export interface DriverDepProviderInfo {
   licenseUrl: string;
   /** URL to official documentation / manual download page */
   documentationUrl: string;
-  /** Relative path within the extracted archive to the usable directory,
-   *  e.g. "instantclient_21_17". If omitted, the file manager will use
-   *  the first top-level directory found after extraction. */
+  /** Name of the directory inside the extracted archive that holds the
+   *  usable files. If omitted, the file manager will use the first top-level
+   *  directory found after extraction. */
   extractedDirName?: string;
   /** Whether the app must be restarted after installing this dependency */
   restartRequired: boolean;

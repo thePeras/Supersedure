@@ -21,7 +21,6 @@
               <i class="clear material-icons">cancel</i>
             </x-button>
             <x-button
-              v-if="this.dialect != 'mongodb'"
               :title="entitiesHidden ? 'Filter active' : 'No filters'"
               class="btn btn-fab btn-link action-item"
               :class="{active: entitiesHidden}"
@@ -141,19 +140,6 @@
                   {{ newTableOrCollection }}
                 </x-label>
               </x-menuitem>
-              <x-menuitem
-                :disabled="tablesLoading || createDisabled"
-                @click.prevent="newTableFromFile"
-                :title="createDisabled ? `Creating tables is not supported for ${dialect}` : ''"
-              >
-                <x-label>
-                  {{ newTableOrCollection }} from File
-                  <i
-                    v-if="$store.getters.isCommunity"
-                    class="material-icons menu-icon"
-                  >stars</i>
-                </x-label>
-              </x-menuitem>
             </x-menu>
           </x-button>
         </div>
@@ -229,9 +215,6 @@
         return !!this.dialectData.disabledFeatures.createTable
       },
       newTableOrCollection() {
-        // FIXME: shouldn't be doing dialect checks like this.
-        if (this.dialect === 'mongodb') return 'New Collection'
-
         return 'New Table'
       },
       totalEntities() {
@@ -350,9 +333,6 @@
       },
       newTable() {
         this.$root.$emit(AppEvent.createTable)
-      },
-      newTableFromFile() {
-        this.$root.$emit(AppEvent.createTableFromFile)
       },
       maybeUnselect(e) {
         if (this.selectedSidebarItem) {

@@ -1,4 +1,4 @@
-import { SupportedFeatures, FilterOptions, TableOrView, Routine, TableColumn, SchemaFilterOptions, DatabaseFilterOptions, TableChanges, OrderBy, TableFilter, TableResult, StreamResults, CancelableQuery, ExtendedTableColumn, PrimaryKeyColumn, TableProperties, TableIndex, TableTrigger, TableInsert, NgQueryResult, TablePartition, TableUpdateResult, ImportFuncOptions, DatabaseEntity, BksField, FieldDescriptor, FieldReadOnlyReason, ServerStatistics, FieldEditData } from '../models';
+import { SupportedFeatures, FilterOptions, TableOrView, Routine, TableColumn, SchemaFilterOptions, DatabaseFilterOptions, TableChanges, OrderBy, TableFilter, TableResult, StreamResults, CancelableQuery, ExtendedTableColumn, PrimaryKeyColumn, TableProperties, TableIndex, TableTrigger, TableInsert, NgQueryResult, TablePartition, TableUpdateResult, DatabaseEntity, BksField, FieldDescriptor, ServerStatistics } from '../models';
 import { AlterPartitionsSpec, AlterTableSpec, CreateTableSpec, IndexAlterations, RelationAlterations, TableKey } from '@shared/lib/dialects/models';
 import { buildInsertQueries, buildInsertQuery, errorMessages, isAllowedReadOnlyQuery, joinQueries, applyChangesSql } from './utils';
 import { Knex } from 'knex';
@@ -9,7 +9,6 @@ import rawLog from "@bksLogger";
 import connectTunnel from '../tunnel';
 import { IDbConnectionServer } from '../backendTypes';
 import platformInfo from '@/common/platform_info';
-import { LicenseKey } from '@/common/appdb/models/LicenseKey';
 import { Dialect as IdentifierDialect, IdentifyResult } from 'sql-query-identifier/lib/defines';
 import { Transcoder } from '../serialization/transcoders';
 import { ColumnReference, TableReference } from 'sql-query-identifier/lib/defines';
@@ -89,12 +88,6 @@ export abstract class BasicDatabaseClient<RawResultType extends BaseQueryResult,
     this.database = database;
     this.db = database?.database
     this.connectionType = this.server?.config.client;
-  }
-
-  async checkAllowReadOnly() {
-    if (platformInfo.testMode) return true;
-    const status = await LicenseKey.getLicenseStatus()
-    return status.isUltimate;
   }
 
   set connectionHandler(fn: (msg: string) => void) {
@@ -197,108 +190,6 @@ export abstract class BasicDatabaseClient<RawResultType extends BaseQueryResult,
 
   executeCommand(_commandText: string): Promise<NgQueryResult[]> {
     return Promise.resolve([]);
-  }
-
-  async getResultEditData(queryText: string, fields: FieldDescriptor[]): Promise<FieldEditData[]> {
-    if (!queryText) throw new Error('No query text to identify for this result')
-
-    const { queries: commands, error } = safelyIdentify(queryText, { identifyTables: true, identifyColumns: true, dialect: this.dialect });
-
-    if (error) {
-      // We can't do anything with the fallback identify result, so we panic
-      log.error(error.message);
-      throw new Error('Error identifying query, please file an issue');
-    }
-
-    if (commands.length !== 1) return [];
-
-    const command = commands[0];
-    if (command?.executionType !== 'LISTING') return [];
-
-    // Actually query the database for table information (pks, columns)
-    const tableData = await this.fetchTableMetadata(command);
-
-    const instanceCounter = new Map<string, number>(fields.map((f) => [f.name, 0]));
-
-    const columns: ColumnReference[] = this.expandWildcards(command.columns, tableData);
-
-    return fields.map((field) => {
-      const maybeColumns = columns.filter((c) =>
-        (!c.alias && c.name === field.name) ||
-        (!!c.alias && c.alias === field.name)
-      );
-      let fieldColumn: ColumnReference = null;
-      let editData: FieldEditData = {
-        id: field.id,
-        editable: false
-      };
-
-      // I know this looks annoying, but this handles duplication in the result set
-      // For instance if someone joins two tables and both have a last_updated column that
-      // ends up in the data, we will go off of position in the query (ie first grab the
-      // first instance of last_updated, then grab the second, etc)
-      if (maybeColumns && maybeColumns.length > 0) {
-        try {
-          fieldColumn = maybeColumns[instanceCounter.get(field.name)];
-          instanceCounter.set(field.name, instanceCounter.get(field.name) + 1);
-        } catch {
-          log.warn('Something has gone wrong with the weird instance counting logic');
-        }
-      }
-
-      // Couldn't match output field to column referenced in the query
-      if (!fieldColumn) {
-        editData.readOnlyReason = FieldReadOnlyReason.ImproperMapping;
-        return editData;
-      }
-
-      let table: TableMetadata;
-
-      if (fieldColumn.table) {
-        table = tableData.find((t) => this.matchesTable(fieldColumn, t))
-      } else {
-        table = tableData.find((t) => t.columns.some((c) => c.columnName === fieldColumn.name ))
-      }
-
-      if (!table) {
-        editData.readOnlyReason = FieldReadOnlyReason.NoLinkedTable;
-        return editData;
-      }
-
-      const tableColumn = table.columns.find((c) => c.columnName === fieldColumn.name);
-
-      if (!tableColumn) {
-        editData.readOnlyReason = FieldReadOnlyReason.ImproperMapping;
-        return editData;
-      }
-
-      editData = {
-        id: field.id,
-        editable: false,
-        columnName: fieldColumn.name,
-        linkedTable: table.name,
-        linkedSchema: table.schema,
-        isPK: false,
-        generated: tableColumn.generated,
-        nullable: tableColumn.nullable,
-        array: tableColumn.array,
-        dataType: tableColumn.dataType,
-        enumValues: tableColumn.enumValues,
-        bksField: tableColumn.bksField,
-      };
-
-      editData.isPK = table.pks.some((pk) => pk.columnName === fieldColumn.name);
-
-      if (!table.isEditable) {
-        // In the future we could actually say what PK we are missing?
-        editData.readOnlyReason = FieldReadOnlyReason.MissingPK;
-        return editData;
-      }
-
-      editData.editable = !editData.isPK && !tableColumn.generated;
-
-      return editData;
-    })
   }
 
   abstract query(queryText: string, tabId?: number, options?: any): Promise<CancelableQuery>;
@@ -449,89 +340,15 @@ export abstract class BasicDatabaseClient<RawResultType extends BaseQueryResult,
   abstract queryStream(query: string, chunkSize: number): Promise<StreamResults>;
   // ****************************************************************************
 
-  // For Import *****************************************************************
-  async importStepZero(_table: TableOrView, _options?: { connection: any }): Promise<any> {
-    return null
-  }
-  async importBeginCommand(_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    return null
-  }
 
-  async importTruncateCommand (_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    return null
-  }
 
-  async importLineReadCommand (_table: TableOrView, _sqlString: string|string[], _importOptions?: ImportFuncOptions): Promise<any> {
-    return null
-  }
 
-  async importCommitCommand (_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    return null
-  }
 
-  async importRollbackCommand (_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    return null
-  }
-
-  async importFinalCommand (_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    return null
-  }
 
   protected async runWithConnection<T>(_child: (c: any) => Promise<T>): Promise<T> {
     throw new Error(`runWithConnection not implemented for ${this.dialect}`);
   }
 
-  async importFile(
-    table: TableOrView,
-    importScriptOptions: ImportFuncOptions,
-    readStream: (b: {[key: string]: any}, executeOptions?: any, c?: string) => Promise<any>,
-    createTableSql?: string
-  ) {
-    const {
-      executeOptions,
-      importerOptions,
-      storeValues
-    } = importScriptOptions;
-
-    return await this.runWithConnection(async (connection) => {
-      try {
-        executeOptions.connection = connection
-        importScriptOptions.clientExtras = await this.importStepZero(table, { connection })
-        await this.importBeginCommand(table, importScriptOptions)
-        if (storeValues.createNewTable) {
-          await this.rawExecuteQuery(createTableSql, {}) as RawResultType[]
-        }
-        if (storeValues.truncateTable) {
-          await this.importTruncateCommand(table, importScriptOptions)
-        }
-
-        const readOptions = {
-          connection,
-          ...importScriptOptions.clientExtras
-        };
-        const result = await readStream(importerOptions, readOptions, storeValues.fileName)
-        if (result.aborted) {
-          throw new Error(`Import aborted: ${result.error}`);
-        }
-        await this.importCommitCommand(table, importScriptOptions)
-      } catch (err) {
-        log.error('Error importing data: ', err)
-        await this.importRollbackCommand(table, importScriptOptions)
-        throw err;
-      } finally {
-        await this.importFinalCommand(table, importScriptOptions)
-      }
-    })
-  }
-
-  async getImportSQL(importedData: any[], tableName: string, schema: string = null, runAsUpsert = false): Promise<string | string[]> {
-    const queries = []
-    const primaryKeysPromise = await this.getPrimaryKeys(tableName, schema)
-    const primaryKeys = primaryKeysPromise.map(v => v.columnName)
-    const createUpsertFunc = this.createUpsertFunc ?? null
-    queries.push(buildInsertQueries(this.knex, importedData, { runAsUpsert, primaryKeys, createUpsertFunc }).join(';'))
-    return joinQueries(queries)
-  }
   // ****************************************************************************
 
   // Duplicate Table ************************************************************
@@ -663,7 +480,7 @@ export abstract class BasicDatabaseClient<RawResultType extends BaseQueryResult,
       log.warn('Was not able to correctly identify query: ', error.message);
     }
 
-    if (await this.checkAllowReadOnly() && this.violatesReadOnly(statements, options)) {
+    if (this.violatesReadOnly(statements, options)) {
       throw new Error(errorMessages.readOnly);
     }
 
@@ -702,7 +519,7 @@ export abstract class BasicDatabaseClient<RawResultType extends BaseQueryResult,
       log.warn('Was not able to correctly identify query: ', error.message);
     }
 
-    if (await this.checkAllowReadOnly() && this.violatesReadOnly(statements, options)) {
+    if (this.violatesReadOnly(statements, options)) {
       throw new Error(errorMessages.readOnly);
     }
 

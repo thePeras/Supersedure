@@ -24,10 +24,6 @@
               id="resultSelector"
               @change="selectedResult = parseInt($event.target.value)"
               class="form-control"
-              @mouseover="showSwitch = editing && changesCount > 0"
-              @mouseleave="showSwitch = false"
-              :disabled="editing && changesCount > 0"
-              v-tooltip="{ content: 'Discard or apply your changes to switch result sets', trigger: 'manual', show: showSwitch }"
             >
               <option
                 v-for="(resultOption, index) in results"
@@ -82,63 +78,6 @@
     </template>
     <span class="expand" />
     <x-button
-      v-if="canEdit && editing && changesCount > 0"
-      class="btn btn-flat"
-      @click.prevent="discardChanges"
-    >
-      Reset
-    </x-button>
-    <x-buttons v-if="canEdit && editing && changesCount > 0" class="pending-changes">
-      <x-button
-        class="btn btn-primary btn-badge btn-icon"
-        @click.prevent="saveChanges"
-        v-tooltip="`Apply ${changesString}`"
-      >
-        <span
-          class="badge"
-        >
-          <small>{{ changesCount }}</small>
-        </span>
-        <span>Apply</span>
-      </x-button>
-      <x-button
-        class="btn btn-primary"
-        menu
-      >
-        <i class="material-icons">arrow_drop_down</i>
-        <x-menu>
-          <x-menuitem @click.prevent="saveChanges">
-            <x-label>Apply</x-label>
-            <!-- TODO (@day): Keyboard shortcut?? -->
-          </x-menuitem>
-          <x-menuitem @click.prevent="copyToSql">
-            <x-label>Copy to SQL</x-label>
-          </x-menuitem>
-        </x-menu>
-      </x-button>
-    </x-buttons>
-    <span
-      v-tooltip="editButtonTooltip"
-    >
-      <x-button
-        v-if="canEdit && !editing"
-        :disabled="results?.length === 0 || !resultEditable || usedConfig.readOnlyMode"
-        class="btn btn-flat btn-icon"
-        id="edit-data-btn"
-        @click.prevent="editResults"
-      >
-        <i class="material-icons">edit</i>
-        Edit Data
-      </x-button>
-    </span>
-    <x-button
-      v-if="canEdit && editing && changesCount <= 0"
-      class="btn btn-flat"
-      @click.prevent="stopEditing"
-    >
-      Stop Editing
-    </x-button>
-    <x-button
       class="btn btn-flat btn-icon end"
       :disabled="results?.length === 0"
       menu
@@ -157,24 +96,6 @@
         <x-menuitem @click.prevent="download('md')">
           <x-label>Download as Markdown</x-label>
         </x-menuitem>
-        <span
-          v-if="dialect !== 'mongodb'"
-          v-tooltip="{
-            content: downloadFullTooltip
-          }"
-        >
-          <x-menuitem
-            @click.prevent="$event => submitCurrentQueryToFile()"
-            :disabled="!(result && result.truncated)"
-          >
-            <x-label>Download Full Resultset</x-label>
-            <i
-              v-if="$store.getters.isCommunity"
-              class="material-icons menu-icon"
-            >stars</i>
-          </x-menuitem>
-        </span>
-        <hr>
         <x-menuitem
           title="Probably don't do this with large results (500+)"
           @click.prevent="copyToClipboard"
@@ -251,12 +172,11 @@ const shortEnglishHumanizer = humanizeDuration.humanizer({
 });
 
 export default {
-  props: ['results', 'running', 'value', 'executeTime', 'wrapText', 'active', 'elapsedTime', 'editing', 'changesCount', 'changesString', 'resultEditable'],
+  props: ['results', 'running', 'value', 'executeTime', 'wrapText', 'active', 'elapsedTime'],
   components: { Statusbar },
   data() {
     return {
       showHint: false,
-      showSwitch: false,
       selectedResult: 0
     }
   },
@@ -337,30 +257,12 @@ export default {
     elapsedTimeText() {
       return formatSeconds(this.elapsedTime);
     },
-    downloadFullTooltip() {
-      if (this.result?.truncated) {
-        return `Re - run the query and send the full result to a file${ this.result?.truncated ? ' (' + this.result.totalRowCount + ' rows)' : '' }`
-      }
-      return `Only needed for result sets that have been truncated (Supersedure will tell you if this happens)`
-    },
     keymap() {
       return this.$vHotkeyKeymap({
         'queryEditor.selectNextResult': this.changeSelectedResult.bind(this, 1),
         'queryEditor.selectPreviousResult': this.changeSelectedResult.bind(this, -1),
       })
     },
-    canEdit() {
-      return !this.dialectData?.disabledFeatures?.resultEditing;
-    },
-    editButtonTooltip() {
-      if (this.usedConfig?.readOnlyMode) {
-        return "Read Only Mode is enabled for this connection. Editing is disabled.";
-      } else if (this.resultEditable) {
-        return "Edit table data directly from query results";
-      } else {
-        return "There is not enough information in the result set to generate an update query.";
-      }
-    }
   },
   methods: {
     changeSelectedResult(direction) {
@@ -383,21 +285,6 @@ export default {
         e = d + ['', 'K', 'M', 'B', 'T'][k]; // append power
       return e;
     },
-    stopEditing() {
-      this.$emit('stopEditing');
-    },
-    editResults() {
-      this.$emit('editResults');
-    },
-    saveChanges() {
-      this.$emit('saveChanges');
-    },
-    copyToSql() {
-      this.$emit('copyToSql');
-    },
-    discardChanges() {
-      this.$emit('discardChanges');
-    },
     download(format) {
       this.$emit('download', format)
     },
@@ -409,9 +296,6 @@ export default {
     },
     copyToClipboardMarkdown() {
       this.$emit('clipboardMarkdown')
-    },
-    submitCurrentQueryToFile() {
-      this.$emit('submitCurrentQueryToFile')
     },
   }
 }

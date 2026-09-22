@@ -79,7 +79,6 @@ Algunas bases de datos proporcionan un identificador interno para filas, pero no
 
 El [ctid](https://www.postgresql.org/docs/current/ddl-system-columns.html#DDL-SYSTEM-COLUMNS-CTID) de PostgreSQL identifica la ubicacion fisica de una fila, pero puede cambiar durante un vacuum, haciendolo inadecuado como identificador de fila real en ciertas situaciones.
 
-El [ROWID](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/ROWID-Pseudocolumn.html#GUID-F6E0FBD2-983C-495D-9856-5E113A17FAF1) de Oracle es similar, pero la documentacion establece explicitamente que `No debes usar ROWID como la clave primaria de una tabla.`.
 
 #### Suficientemente bueno no es suficiente
 

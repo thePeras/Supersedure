@@ -162,7 +162,6 @@
               <span>Apply</span>
             </x-button>
             <x-button
-              v-if="dialect !== 'mongodb'"
               class="btn btn-primary"
               menu
             >
@@ -225,15 +224,6 @@
           <i class="material-icons">settings</i>
           <i class="material-icons">arrow_drop_down</i>
           <x-menu>
-            <x-menuitem
-              v-if="isCassandra"
-              @click="cassandraAllowFilter = !this.isCassandra"
-            >
-              <x-label>
-                <i class="material-icons">{{ this.isCassandra ? 'check' : 'horizontal_rule' }}</i>
-                Allow Filtering
-              </x-label>
-            </x-menuitem>
             <x-menuitem @click="exportTable" :disabled="dialectData?.disabledFeatures?.exportTable">
               <x-label>Export whole table</x-label>
             </x-menuitem>
@@ -243,15 +233,6 @@
             </x-menuitem>
             <x-menuitem @click="showColumnFilterModal">
               <x-label>Hide columns ({{ hiddenColumnCount }})</x-label>
-            </x-menuitem>
-            <x-menuitem @click="importTab" :disabled="dialectData?.disabledFeatures?.importFromFile || usedConfig.readOnlyMode">
-              <x-label>
-                Import from file
-                <i
-                  v-if="$store.getters.isCommunity"
-                  class="material-icons menu-icon"
-                >stars</i>
-              </x-label>
             </x-menuitem>
             <x-menuitem @click="openQueryTab">
               <x-label>Copy view to SQL</x-label>
@@ -341,9 +322,7 @@ import { copyRanges, pasteRange, readClipboardRows, copyActionsMenu, pasteAction
 import { tabulatorForTableData } from "@/common/tabulator";
 import { TransportTabulatorPersistence } from "@/common/transport/TransportTabulatorPersistence";
 import { getFilters, setFilters } from "@/common/transport/TransportOpenTab"
-import { ExpandablePath, parseRowDataForJsonViewer } from '@/lib/data/jsonViewer'
 import { stringToTypedArray, removeUnsortableColumnsFromSortBy } from "@/common/utils";
-import { UpdateOptions } from "@/lib/data/jsonViewer";
 
 const log = rawLog.scope('TableTable')
 
@@ -392,15 +371,10 @@ export default Vue.extend({
       initialized: false,
       internalColumnPrefix: "__supersedure_internal_",
       internalIndexColumn: "__supersedure_internal_index",
-      selectedRowIndex: null,
 
       /** This is true when we switch to minimal mode while TableTable is not active */
       enabledMinimalModeWhileInactive: false,
 
-      selectedRow: null,
-      selectedRowPosition: -1,
-      selectedRowData: {},
-      expandablePaths: [],
 
       // App.db row holding tabulator's column persistence.
       // Loaded by loadPersistence() and read synchronously by persistenceReader.
@@ -421,9 +395,6 @@ export default Vue.extend({
     },
     isEmpty() {
       return _.isEmpty(this.data);
-    },
-    isCassandra() {
-      return ['cassandra', 'scylladb'].includes(this.connectionType)
     },
     queryDialect() {
       return this.dialectData?.queryDialectOverride ?? this.dialect;
@@ -621,32 +592,6 @@ export default Vue.extend({
       return [
         { event: AppEvent.switchedTab, handler: this.handleSwitchedTab },
       ]
-    },
-    /** This tells which fields have been modified */
-    selectedRowDataSigns() {
-      const signs = {}
-      for (const pendingUpdate of this.pendingChanges.updates) {
-        if (pendingUpdate.rowIndex === this.selectedRowPosition) {
-          signs[pendingUpdate.column] = "changed"
-        }
-      }
-      return signs
-    },
-    editablePaths() {
-      if (!this.table.columns || !this.editable) return []
-
-      const paths = []
-      for (const column of this.table.columns) {
-        const isPrimaryKey = this.isPrimaryKey(column.columnName);
-        // Allow primary key editing for dialects that don't have read-only primary keys (e.g., Redis key renaming)
-        const canEditPrimaryKeys = this.dialectData.disabledFeatures?.readOnlyPrimaryKeys === true;
-
-        if((isPrimaryKey && !canEditPrimaryKeys) || this.isForeignKey(column.columnName) || this.isGeneratedColumn(column.columnName)) {
-          continue
-        }
-        paths.push(column.columnName)
-      }
-      return paths
     },
   },
 
@@ -863,7 +808,6 @@ export default Vue.extend({
             this.openEditorMenu(cell),
             this.setAsNullMenuItem(ranges),
             { separator: true },
-            this.quickFilterMenuItem(cell),
               ...copyActionsMenu({
                 ranges,
                 table: this.table.name,
@@ -1219,7 +1163,6 @@ export default Vue.extend({
           scrollPageUp: false,
           scrollPageDown: false
         },
-        onRangeChange: this.handleRangeChange,
       });
       this.tabulator.on('cellEdited', this.cellEdited)
       this.tabulator.on('dataProcessed', this.maybeScrollAndSetWidths)
@@ -1278,20 +1221,6 @@ export default Vue.extend({
           disabled: !this.editable,
         },
         { separator: true },
-        {
-          label: createMenuItem(
-            'See details',
-            this.$bksConfig.getKeybindings(
-              'context-menu',
-              'general.jsonViewerSidebar'
-            )
-          ),
-          action: () => {
-            this.trigger(AppEvent.selectSecondarySidebarTab, 'json-viewer')
-            this.trigger(AppEvent.toggleSecondarySidebar, true)
-            this.updateJsonViewer({ range: _.last(ranges) })
-          },
-        },
       ]
     },
     nullableCellsInRanges(ranges: RangeComponent[]): CellComponent[] {
@@ -1333,30 +1262,6 @@ export default Vue.extend({
 
         default:
           return clickedValue;
-      }
-    },
-    quickFilterMenuItem(cell: CellComponent) {
-      const symbols = [
-        '=', '!=', '<', '<=', '>', '>=', 'in', 'like'
-      ]
-      return {
-        label: createMenuItem("Quick Filter", "", this.$store.getters.isCommunity),
-        disabled: _.isNil(cell.getValue()),
-        menu: symbols.map((s) => {
-          return {
-            label: createMenuItem(`${cell.getField()} ${s} value`),
-            disabled: this.$store.getters.isCommunity,
-            action: async (_e, cell: CellComponent) => {
-              const newFilter = [{
-                field: cell.getField(),
-                type: s,
-                value: this.getActionValue(cell, s)
-              }]
-              this.tableFilters = newFilter
-              this.triggerFilter(this.tableFilters)
-            }
-          }
-        })
       }
     },
     openCellEditorModal(cell: CellComponent, isReadOnly: boolean) {
@@ -1522,12 +1427,6 @@ export default Vue.extend({
         return
       }
 
-      // reflect changes in the detail view
-      if (this.positionRowOf(cell.getRow()) === this.selectedRowIndex) {
-        cell.getRow().invalidateForeignCache(cell.getField())
-        this.updateJsonViewer()
-      }
-
       // Dont handle cell edit if made on a pending insert
       const pendingInsert = _.find(this.pendingChanges.inserts, { row: cell.getRow() })
       if (pendingInsert) {
@@ -1547,7 +1446,6 @@ export default Vue.extend({
       } else if (currentEdit?.oldValue == cell.getValue()) {
         this.$set(this.pendingChanges, 'updates', _.without(this.pendingChanges.updates, currentEdit))
         cell.getElement().classList.remove('edited')
-        this.updateJsonViewer()
         return
       }
 
@@ -1580,7 +1478,6 @@ export default Vue.extend({
         let pendingUpdates = _.reject(this.pendingChanges.updates, { 'key': payload.key })
         pendingUpdates.push(payload)
         this.$set(this.pendingChanges, 'updates', pendingUpdates)
-        this.updateJsonViewer()
       }
     },
     cloneSelection(range?: RangeComponent) {
@@ -1855,7 +1752,6 @@ export default Vue.extend({
 
           return
         } finally {
-          this.updateJsonViewerSidebar()
           this.running = false;
           this.tab.isRunning = false;
           this.updateTab();
@@ -1882,9 +1778,6 @@ export default Vue.extend({
       pendingUpdate.cell.setValue(pendingUpdate.oldValue)
       pendingUpdate.cell.getElement().classList.remove('edited')
       pendingUpdate.cell.getElement().classList.remove('edit-error')
-    },
-    importTab() {
-      this.trigger(AppEvent.beginImport, { table: this.table })
     },
     openQueryTab() {
       const page = this.tabulator.getPage();
@@ -1990,8 +1883,6 @@ export default Vue.extend({
             //  filters,
             //  this.table.schema,
             //  selects,
-            //  // FIXME: This should be added to all clients, not just cassandra (cassandra needs ALLOW FILTERING to do filtering because of performance)
-            //  { allowFilter: this.isCassandra }
             //);
 
             this.hasNextPage = response.result.length > this.limit
@@ -2128,46 +2019,6 @@ export default Vue.extend({
     positionRowOf(row: RowComponent) {
       return (this.limit * (this.page - 1)) + (row.getPosition() || 0)
     },
-    updateJsonViewer(options: { range?: RangeComponent } = {}) {
-      const range = options.range ?? this.tabulator.getRanges()[0]
-      const row = range.getRows()[0]
-      if (!row) {
-        this.selectedRow = null
-        this.selectedRowPosition = null
-        this.selectedRowData = {}
-        return
-      }
-      const position = this.positionRowOf(row)
-      const data = row.getData("withForeignData")
-      const cachedExpandablePaths = row.getExpandablePaths()
-      this.selectedRow = row
-
-      // Clean the data first
-      let cleanedData = this.$bks.cleanData(data, this.tableColumns)
-
-      this.selectedRowPosition = position
-      this.selectedRowIndex = this.primaryKeys?.map((key: string) => data[key]).join(',');
-      this.selectedRowData = parseRowDataForJsonViewer(cleanedData, this.tableColumns)
-      this.expandablePaths = this.rawTableKeys
-        .filter((key) => !row.hasForeignData([key.fromColumn]))
-        .map((key) => ({
-          path: [key.fromColumn],
-          tableKey: key,
-        }))
-      this.expandablePaths.push(...cachedExpandablePaths)
-      this.updateJsonViewerSidebar()
-    },
-    updateJsonViewerSidebar() {
-      const updatedData: UpdateOptions = {
-        dataId: this.selectedRowIndex,
-        value: this.selectedRowData,
-        expandablePaths: this.expandablePaths,
-        signs: this.selectedRowDataSigns,
-        editablePaths: this.editablePaths,
-      }
-
-      this.trigger(AppEvent.updateJsonViewerSidebar, updatedData)
-    },
     exportTable() {
       this.trigger(AppEvent.beginExport, { table: this.table })
     },
@@ -2224,52 +2075,6 @@ export default Vue.extend({
       setFilters(this.tab, filters)
       this.debouncedSaveTab(this.tab)
     },
-    // FIXME rename to expandForeignKeys (with s at the end), and it should be able
-    // to fetch multiple paths
-    async expandForeignKey(expandablePath: ExpandablePath) {
-      const { path, tableKey } = expandablePath
-      try {
-        const table = await this.connection.selectTop(
-          tableKey.toTable,
-          0,
-          1,
-          [],
-          [{
-            field: tableKey.toColumn,
-            type: '=',
-            value: _.get(this.selectedRowData, path),
-          }],
-          tableKey.toSchema,
-          ['*']
-        )
-
-        if (table.result.length > 0) {
-          _.set(this.selectedRowData, path, table.result[0])
-          this.selectedRow.setForeignData(path, table.result[0])
-
-          // Add new expandable paths for the new table
-          const tableKeys = await this.connection.getTableKeys(tableKey.toTable, tableKey.toSchema)
-          const expandablePaths = tableKeys.map((key: TableKey) => ({
-            path: [...path, key.fromColumn],
-            tableKey: key,
-          }))
-          this.expandablePaths.push(...expandablePaths)
-          this.selectedRow.pushExpandablePaths(...expandablePaths)
-        }
-      } catch (e) {
-        log.error(e)
-      }
-
-      // Remove the path from the list of expandable paths
-      const filteredExpandablePaths = this.expandablePaths.filter((p) => p !== expandablePath)
-      this.expandablePaths = filteredExpandablePaths
-      this.selectedRow.setExpandablePaths((expandablePaths: ExpandablePath[]) => expandablePaths.filter((p) => p !== expandablePath))
-
-      this.updateJsonViewerSidebar()
-    },
-    handleRangeChange(ranges: RangeComponent[]) {
-      this.updateJsonViewer({ range: ranges[0] })
-    },
     handleSwitchedTab(tab) {
       if (tab === this.tab) {
         this.handleTabActive()
@@ -2280,39 +2085,16 @@ export default Vue.extend({
     tabActiveBindings() {
       return [
         {
-          event: AppEvent.jsonViewerSidebarExpandPath,
-          handler: this.expandForeignKey,
-        },
-        {
-          event: AppEvent.jsonViewerSidebarValueChange,
-          handler: this.handleJsonValueChange,
-        },
-        {
           event: AppEvent.pasteAsNewRows,
           handler: this.handlePasteAsNewRows,
         },
       ]
     },
     handleTabActive() {
-      this.updateJsonViewerSidebar()
       this.registerHandlers(this.tabActiveBindings())
     },
     handleTabInactive() {
       this.unregisterHandlers(this.tabActiveBindings())
-    },
-    handleJsonValueChange({key, value}) {
-      // this is just a safeguard, we shouldn't hit it but if we do it can save us from catastrophe
-      if (!this.editable) return;
-
-      const column = this.table.columns.find((c) => c.columnName === key);
-      if (column) {
-        const isJsonColumn = String(column.dataType).toUpperCase() === 'JSON' || String(column.dataType).toUpperCase() === 'JSONB'
-
-        if (isJsonColumn && _.isObject(value)) {
-          value = JSON.stringify(value)
-        }
-      }
-      this.selectedRow?.getCell(key).setValue(value)
     },
     debouncedSaveTab: _.debounce(function(tab) {
       this.$store.dispatch('tabs/save', tab)

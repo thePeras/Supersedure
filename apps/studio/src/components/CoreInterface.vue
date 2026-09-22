@@ -117,7 +117,6 @@
       keymap() {
         const result = this.$vHotkeyKeymap({
           'general.openQuickSearch': this.showQuickSearch,
-          'general.jsonViewerSidebar': this.toggleOpenJsonViewer,
         });
         return result;
       },
@@ -351,10 +350,6 @@
         }
 
         this.setSecondarySidebarOpen(open)
-      },
-      toggleOpenJsonViewer() {
-        this.handleToggleOpenSecondarySidebar()
-        this.trigger(AppEvent.selectSecondarySidebarTab, 'json-viewer')
       },
       handleSelectGlobalSidebarItem(item) {
         if (this.globalSidebarActiveItem === item) {

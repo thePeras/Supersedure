@@ -24,7 +24,7 @@ function rawIni() {
 export const plugins = [vue(), commonjs(), rawIni()]
 
 // Path aliases come from the renderer vite config (one source of truth for @,
-// @shared, @commercial, assets) with test-only entries prepended — array form is
+// @shared, assets) with test-only entries prepended — array form is
 // first-match-wins:
 // - @supersedure-studio/ui-kit resolves to lib source, same as jest did; regex with
 //   $ anchor because an object-form key is a prefix match and would also rewrite

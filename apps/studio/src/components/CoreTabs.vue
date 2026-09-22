@@ -56,14 +56,6 @@
           </x-menu>
         </x-button>
       </span>
-      <a
-        @click.prevent="showUpgradeModal"
-        class="btn btn-brand btn-icon btn-upgrade"
-        v-tooltip="'Upgrade for: backup/restore, import from file, larger query results, and more!'"
-        v-if="$store.getters.isCommunity"
-      >
-        <i class="material-icons">stars</i> Upgrade
-      </a>
     </div>
     <x-progressbar v-if="activeTab?.isLoading" />
     <div class="tab-content">
@@ -86,12 +78,6 @@
           :tab="tab"
           :tab-id="tab.id"
           @update-tab="updateTab"
-        />
-        <Shell
-          v-if="tab.tabType === 'shell'"
-          :active="activeTab?.id === tab.id"
-          :tab="tab"
-          :tab-id="tab.id"
         />
         <PluginBase
           v-if="tab.tabType === 'plugin-base'"
@@ -138,38 +124,6 @@
           :active="activeTab?.id === tab.id"
           :tab="tab"
           :tab-id="tab.id"
-        />
-        <ImportExportDatabase
-          v-if="tab.tabType === 'import-export-database'"
-          :schema="tab.schemaName"
-          :tab="tab"
-          :active="activeTab?.id === tab.id"
-          @close="close"
-        />
-        <DatabaseBackup
-          v-if="tab.tabType === 'backup'"
-          :connection="connection"
-          :is-restore="false"
-          :active="activeTab?.id === tab.id"
-          :tab="tab"
-          @close="close"
-        />
-        <DatabaseBackup
-          v-if="tab.tabType === 'restore'"
-          :connection="connection"
-          :is-restore="true"
-          :active="activeTab?.id === tab.id"
-          :tab="tab"
-          @close="close"
-        />
-        <ImportTable
-          v-if="tab.tabType === 'import-table'"
-          :tab="tab"
-          :schema="tab.schemaName"
-          :table="tab.tableName"
-          :active="activeTab?.id === tab.id"
-          :connection="connection"
-          @close="close"
         />
       </div>
     </div>
@@ -289,7 +243,6 @@
     </confirmation-modal>
 
     <sql-files-import-modal />
-    <create-collection-modal />
   </div>
 </template>
 
@@ -303,9 +256,6 @@ import CoreTabHeader from './CoreTabHeader.vue'
 import TableTable from './tableview/TableTable.vue'
 import TableProperties from './TabTableProperties.vue'
 import TableBuilder from './TabTableBuilder.vue'
-import ImportExportDatabase from './importexportdatabase/ImportExportDatabase.vue'
-import ImportTable from './TabImportTable.vue'
-import DatabaseBackup from './TabDatabaseBackup.vue'
 import PluginShell from './TabPluginShell.vue'
 import PluginBase from './TabPluginBase.vue'
 import { AppEvent } from '../common/AppEvent'
@@ -323,9 +273,7 @@ import { DropzoneDropEvent } from '@/common/dropzone'
 import { readWebFile } from '@/common/utils'
 import Noty from 'noty'
 import ConfirmationModal from './common/modals/ConfirmationModal.vue'
-import CreateCollectionModal from './common/modals/CreateCollectionModal.vue'
 import SqlFilesImportModal from '@/components/common/modals/SqlFilesImportModal.vue'
-import Shell from './TabShell.vue'
 
 import { safeSqlFormat as safeFormat } from '@/common/utils';
 import { TabTypeConfig, TransportOpenTab, TransportPluginTab, setFilters, matches, duplicate } from '@/common/transport/TransportOpenTab'
@@ -339,19 +287,14 @@ export default Vue.extend({
     CoreTabHeader,
     TableTable,
     TableProperties,
-    ImportExportDatabase,
-    ImportTable,
     Draggable,
     ShortcutHints,
     TableBuilder,
     TabWithTable,
     TabIcon,
-    DatabaseBackup,
     PendingChangesButton,
     ConfirmationModal,
     SqlFilesImportModal,
-    CreateCollectionModal,
-    Shell,
     PluginShell,
     PluginBase,
   },
@@ -387,7 +330,6 @@ export default Vue.extend({
         if (!this.tabItems?.length) {
           await this.createQuery()
         }
-        wait(800).then(() => this.$tour.start("connectedScreen"));
       }
     }
   },
@@ -440,7 +382,6 @@ export default Vue.extend({
         { event: AppEvent.newTab, handler: this.createQuery },
         { event: AppEvent.newCustomTab, handler: this.addTab },
         { event: AppEvent.createTable, handler: this.openTableBuilder },
-        { event: AppEvent.createTableFromFile, handler: this.beginImport },
         { event: 'historyClick', handler: this.createQueryFromItem },
         { event: AppEvent.loadTable, handler: this.openTable },
         { event: AppEvent.openTableProperties, handler: this.openTableProperties },
@@ -457,10 +398,6 @@ export default Vue.extend({
         { event: AppEvent.duplicateDatabaseTable, handler: this.duplicateDatabaseTable },
         { event: AppEvent.dropzoneDrop, handler: this.handleDropzoneDrop },
         { event: AppEvent.promptQueryExport, handler: this.handlePromptQueryExport },
-        { event: AppEvent.exportTables, handler: this.importExportTables },
-        { event: AppEvent.backupDatabase, handler: this.backupDatabase },
-        { event: AppEvent.beginImport, handler: this.beginImport },
-        { event: AppEvent.restoreDatabase, handler: this.restoreDatabase },
         { event: AppEvent.switchUserKeymap, handler: this.switchUserKeymap },
         { event: AppEvent.pasteAsNewRows, handler: this.pasteAsNewRowsWrongTabCheck },
       ]
@@ -505,9 +442,6 @@ export default Vue.extend({
     async updateTab(tab: TransportOpenTab) {
       const newTab = Object.assign({}, tab);
       await this.$store.commit('tabs/replaceTab', newTab);
-    },
-    showUpgradeModal() {
-      this.$root.$emit(AppEvent.upgradeModal)
     },
     completeDeleteAction() {
       const { schema, name: dbName, entityType } = this.dbDeleteElementParams
@@ -692,8 +626,6 @@ export default Vue.extend({
     async createTab(config: TabTypeConfig.Config) {
       if (config.type === "query") {
         this.createQuery()
-      } else if (config.type === "shell") {
-        this.createShell()
       } else if (config.type === "plugin-shell" || config.type === "plugin-base") {
         let tNum = 0;
         let title = config.name;
@@ -715,20 +647,6 @@ export default Vue.extend({
         } as TransportPluginTab;
         await this.addTab(tab)
       }
-    },
-    async createShell() {
-      let sNum = 0;
-      let tabName = "Shell";
-      do {
-        sNum = sNum + 1;
-        tabName = `Shell #${sNum}`;
-      } while (this.tabItems.filter((t) => t.title === tabName).length > 0);
-
-      const result = {} as TransportOpenTab;
-      result.tabType = 'shell';
-      result.title = tabName;
-      result.unsavedChanges = false;
-      await this.addTab(result);
     },
     getNextQueryTitle(queryTitle?) {
       let qNum = 0;
@@ -791,52 +709,6 @@ export default Vue.extend({
       this.dbDeleteElementParams = dbActionParams
 
       this.$modal.show(this.modalName)
-    },
-    importExportTables() {
-      // we want this to open a tab with the schema and tables open
-      const t = { tabType: 'import-export-database' }
-      t.title = `Data Export`
-      t.unsavedChanges = false
-      const existing = this.tabItems.find((tab) => matches(tab, t))
-      if (existing) return this.$store.dispatch('tabs/setActive', existing)
-      this.addTab(t)
-    },
-    backupDatabase() {
-      const t = { tabType: 'backup' }
-      t.title = 'Backup';
-      t.unsavedChanges = false;
-      const existing = this.tabItems.find((tab) => matches(tab, t));
-      if (existing) return this.$store.dispatch('tabs/setActive', existing);
-      this.addTab(t);
-    },
-    beginImport(data = {}) {
-      const { table } = data
-      if (table && table.entityType !== 'table') {
-        this.$noty.error("You can only import data into a table")
-        return;
-      }
-      if (this.$store.getters.isCommunity) {
-        this.$root.$emit(AppEvent.upgradeModal, 'Import From File')
-        return;
-      }
-      const t = { tabType: 'import-table' }
-      t.title = table ? `Import Table: ${table.name}` : 'Create Table and Import Data'
-      t.unsavedChanges = false
-      if (table) {
-        t.schemaName = table.schema
-        t.tableName = table.name
-      }
-      const existing = this.tabItems.find(tab => matches(tab, t))
-      if (existing) return this.$store.dispatch('tabs/setActive', existing)
-      this.addTab(t)
-    },
-    restoreDatabase() {
-      const t = { tabType: 'restore' };
-      t.title = 'Restore';
-      t.unsavedChanges = false;
-      const existing = this.tabItems.find((tab) => matches(tab, t));
-      if (existing) return this.$store.dispatch('tabs/setActive', existing);
-      this.addTab(t);
     },
     duplicateDatabaseTable({ item: dbActionParams, action: dbAction }) {
       this.dbElement = dbActionParams.name
@@ -970,10 +842,6 @@ export default Vue.extend({
       }
     },
     openTableBuilder() {
-      if (this.connectionType === 'mongodb') {
-        this.$root.$emit(AppEvent.openCreateCollectionModal);
-        return;
-      }
       const tab = {} as TransportOpenTab;
       tab.tabType = 'table-builder';
       tab.title = "New Table"
@@ -1075,9 +943,6 @@ export default Vue.extend({
       // ensure the tab is active
       this.$store.dispatch('tabs/setActive', tab);
       switch (tab.tabType) {
-        case 'backup':
-        case 'restore':
-          break;
         case 'query':
           return this.close(tab, { ignoreUnsavedChanges: true });
         default:

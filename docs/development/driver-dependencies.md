@@ -6,7 +6,7 @@ summary: How to register an external file dependency that a database driver need
 # Adding a Driver Dependency
 
 Some database drivers depend on binary files that can't ship inside the
-app (e.g. Oracle Instant Client). The driver-deps framework
+app. The driver-deps framework
 auto-downloads those files on demand, shows the user a license + details
 modal, and writes the install path back into a user setting so the
 existing driver flow picks it up.
@@ -15,8 +15,8 @@ existing driver flow picks it up.
 
 The integration is a single shared `UserSetting` key:
 
-- The **driver** reads a filesystem path from a user setting (e.g.
-  `oracleInstantClient`) at connect time.
+- The **driver** reads a filesystem path from a user setting at connect
+  time.
 - A **provider** supplies the files for that same setting key —
   downloads, extracts, and writes the resulting path back into the
   setting.
@@ -40,8 +40,7 @@ apps/studio/src/services/driverDeps/
 ├── DriverDepManager.ts          # orchestrates installs / lookups
 ├── DriverDepRegistry.ts         # in-memory registry of providers
 ├── index.ts                     # default registry (add your provider here)
-├── providers/
-│   └── OracleInstantClientProvider.ts
+├── providers/                   # one file per provider
 └── types.ts                     # DriverDepProvider, DriverRequirement, ...
 ```
 
@@ -130,8 +129,7 @@ of your provider to `DEFAULT_PROVIDERS`:
 ```ts
 import MyDriverProvider from "./providers/MyDriverProvider";
 
-const DEFAULT_PROVIDERS = [
-  new OracleInstantClientProvider(),
+const DEFAULT_PROVIDERS: DriverDepProvider[] = [
   new MyDriverProvider(),
 ];
 ```

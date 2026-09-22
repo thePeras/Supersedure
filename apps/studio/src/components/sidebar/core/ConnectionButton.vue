@@ -34,15 +34,6 @@
             <i class="material-icons">save</i>Save Connection
           </x-label>
         </x-menuitem>
-        <!-- FIXME: Let's not use connection.connectionType -->
-        <x-menuitem
-          v-if="connection.connectionType === 'libsql' && connection.server.config.libsqlOptions.syncUrl"
-          @click.prevent="syncDatabase"
-        >
-          <x-label>
-            <i class="material-icons">sync</i>Sync Database
-          </x-label>
-        </x-menuitem>
         <x-menuitem @click.stop.prevent="showQuickSwitcher">
           <x-label class="flex items-center justify-between">
             <span class="flex items-center">
@@ -175,7 +166,6 @@
 </template>
 <script>
 import { mapState, mapGetters } from 'vuex'
-import { isUltimateType } from '@/common/interfaces/IConnection'
 import SaveConnectionForm from '../../connection/SaveConnectionForm.vue'
 import rawLog from '@bksLogger'
 
@@ -205,7 +195,6 @@ export default {
       workspace: 'workspace',
       connectionColor: 'connectionColor',
       savedConnections: 'data/connections/filteredConnections',
-      isUltimate: 'isUltimate',
       privacyMode: 'settings/privacyMode'
     }),
     connectionName() {
@@ -264,15 +253,6 @@ export default {
         this.$store.dispatch('disconnect')
       }
     },
-    async syncDatabase() {
-      try {
-        await this.$store.dispatch('syncDatabase')
-        this.$noty.success("Database Synced")
-      } catch (error) {
-        log.error(error)
-        this.$noty.error(error.message)
-      }
-    },
     showQuickSwitcher() {
       this.isQuickSwitcherVisible = !this.isQuickSwitcherVisible;
       if (this.isQuickSwitcherVisible) {
@@ -280,11 +260,6 @@ export default {
       }
     },
     async selectConnection(config) {
-      if (!this.isUltimate && isUltimateType(config?.connectionType)) {
-        this.$noty.error('Cannot switch to Ultimate only connection.')
-        return;
-      }
-
       try {
         await this.$store.dispatch('disconnect')
         const { auth, cancelled } = await this.$bks.unlock();

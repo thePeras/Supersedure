@@ -414,34 +414,10 @@ initialSort = false
         mariadb: {
           initialSort: false
         },
-        cassandra: {
-          initialSort: false
-        },
-        oracle: {
-          initialSort: false
-        },
         bigquery: {
           initialSort: false
         },
-        firebird: {
-          initialSort: false
-        },
         tidb: {
-          initialSort: false
-        },
-        libsql: {
-          initialSort: false
-        },
-        clickhouse: {
-          initialSort: false
-        },
-        duckdb: {
-          initialSort: false
-        },
-        mongodb: {
-          initialSort: false
-        },
-        sqlanywhere: {
           initialSort: false
         },
       }
@@ -537,22 +513,6 @@ quoted[] = '@'
             quoted: [],
           }
         },
-        cassandra: {
-          paramTypes: {
-            positional: true,
-            named: [],
-            numbered: [],
-            quoted: [],
-          }
-        },
-        oracle: {
-          paramTypes: {
-            positional: true,
-            named: [],
-            numbered: [],
-            quoted: [],
-          }
-        },
         bigquery: {
           paramTypes: {
             positional: true,
@@ -561,55 +521,7 @@ quoted[] = '@'
             quoted: [ '@' ],
           }
         },
-        firebird: {
-          paramTypes: {
-            positional: true,
-            named: [],
-            numbered: [],
-            quoted: [],
-          }
-        },
         tidb: {
-          paramTypes: {
-            positional: true,
-            named: [],
-            numbered: [],
-            quoted: [],
-          }
-        },
-        libsql: {
-          paramTypes: {
-            positional: true,
-            named: [],
-            numbered: [],
-            quoted: [],
-          }
-        },
-        clickhouse: {
-          paramTypes: {
-            positional: true,
-            named: [],
-            numbered: [],
-            quoted: [],
-          }
-        },
-        duckdb: {
-          paramTypes: {
-            positional: true,
-            named: [],
-            numbered: [],
-            quoted: [],
-          }
-        },
-        mongodb: {
-          paramTypes: {
-            positional: true,
-            named: [],
-            numbered: [],
-            quoted: [],
-          }
-        },
-        sqlanywhere: {
           paramTypes: {
             positional: true,
             named: [],

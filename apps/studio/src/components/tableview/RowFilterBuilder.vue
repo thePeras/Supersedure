@@ -146,6 +146,7 @@
                   class="btn btn-flat btn-fab"
                   type="button"
                   title="Add filter"
+                  :disabled="filters.length >= maxFilters"
                   @click="addFilter"
                 >
                   <i class="material-icons">add</i>
@@ -193,12 +194,12 @@ import Vue from "vue";
 import { TableFilter } from "@/lib/db/models";
 import { joinFilters, normalizeFilters, createTableFilter, checkEmptyFilters } from "@/common/utils";
 import { mapGetters, mapState } from "vuex";
-import { AppEvent } from "@/common/AppEvent";
 import _ from 'lodash';
 import BuilderFilter from "./filter/BuilderFilter.vue";
 
 const BUILDER = "builder";
 const RAW = "raw";
+const MAX_FILTERS = 2;
 const isEmpty = (s) => _.isEmpty(_.trim(s))
 
 export default Vue.extend({
@@ -213,13 +214,11 @@ export default Vue.extend({
       submittedWithEmptyValue: false,
       RAW,
       BUILDER,
+      maxFilters: MAX_FILTERS,
     };
   },
   computed: {
     ...mapGetters(["dialectData", "minimalMode"]),
-    ...mapGetters({
-      isCommunity: "licenses/isCommunity",
-    }),
     ...mapState(['connection']),
     additionalFilters() {
       const [_, ...additional] = this.filters;
@@ -269,12 +268,7 @@ export default Vue.extend({
       this.$nextTick(this.focusOnInput);
     },
     addFilter() {
-      if (this.isCommunity) {
-        if (this.filters.length >= 2) {
-          this.$root.$emit(AppEvent.upgradeModal, "Advanced Filters")
-          return;
-        }
-      }
+      if (this.filters.length >= this.maxFilters) return;
       const lastFilter = this.filters[this.filters.length - 1];
       const cloned = _.clone(lastFilter)
       if (!cloned.op) cloned.op = "AND"
@@ -334,11 +328,7 @@ export default Vue.extend({
     },
     externalFilters() {
       this.hideInMinimalMode = checkEmptyFilters(this.externalFilters)
-      if (this.isCommunity) {
-        this.filters = this.externalFilters?.slice(0, 2) || [];
-      } else {
-        this.filters = this.externalFilters || [];
-      }
+      this.filters = this.externalFilters?.slice(0, this.maxFilters) || [];
       this.submittedWithEmptyValue = false
     },
   },

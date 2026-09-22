@@ -105,7 +105,7 @@
         v-if="!importing"
         class="btn btn-primary"
         type="submit"
-        :disabled="files.length === 0 || (isCloud && parentId === null)"
+        :disabled="files.length === 0"
       >
         Import
       </button>
@@ -146,7 +146,6 @@ export default {
   },
   computed: {
     ...mapState('data/connectionFolders', {'folders': 'items'}),
-    ...mapGetters(["isCloud"]),
     modalName() {
       return this.name || "connection-files-import";
     },

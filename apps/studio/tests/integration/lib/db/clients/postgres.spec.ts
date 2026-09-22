@@ -6,7 +6,7 @@ import { errorMessages } from '../../../../../src/lib/db/clients/utils'
 import { PostgresClient, STQOptions } from '../../../../../src/lib/db/clients/postgresql'
 import { safeSqlFormat } from '@/common/utils';
 import _ from 'lodash';
-import { createServer } from '@commercial/backend/lib/db/server'
+import { createServer } from '@/lib/db/server'
 import { PostgresTestDriver } from './postgres/container'
 import fs from 'fs';
 import path from 'path';

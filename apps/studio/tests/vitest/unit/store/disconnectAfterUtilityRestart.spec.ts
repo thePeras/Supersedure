@@ -5,10 +5,10 @@ import { mount } from "@vue/test-utils"
 // connHandlers pulls in every db client through the connection provider, and
 // loading those under jsdom fails on AbortSignal.timeout. None of it is needed
 // here: the driver is a stub placed straight into the handler state.
-vi.mock("@commercial/backend/lib/connection-provider", () => ({ default: {} }))
+vi.mock("@/backend/lib/connection-provider", () => ({ default: {} }))
 
 import { UtilityConnection } from "@/lib/utility/UtilityConnection"
-import { ConnHandlers } from "@commercial/backend/handlers/connHandlers"
+import { ConnHandlers } from "@/handlers/connHandlers"
 import { removeState, state } from "@/handlers/handlerState"
 import store from "@/store"
 import UtilDiedModal from "@/components/UtilDiedModal.vue"

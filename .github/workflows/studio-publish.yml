@@ -238,8 +238,7 @@
 #       # requirements match this runner's OS. A cache seeded by a newer-OS job
 #       # once shipped binaries that could not load on Ubuntu 22.04/Debian 12 (#4627).
 #       # FIXME (matthew) Windows needs retries. It sometimes fails to build
-#       # the native oracledb package.
-#       # But only sometimes. I cannot figure out why.
+#       # native packages. But only sometimes. I cannot figure out why.
 #       # Someone should at some point.
 #       - name: yarn install (with retry)
 #         uses: nick-fields/retry@v4

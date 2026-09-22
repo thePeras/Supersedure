@@ -1,4 +1,4 @@
-import { CancelableQuery, DatabaseFilterOptions, ExtendedTableColumn, FieldDescriptor, FieldEditData, FilterOptions, ImportFuncOptions, NgQueryResult, OrderBy, PrimaryKeyColumn, Routine, SchemaFilterOptions, ServerStatistics, StreamResults, SupportedFeatures, TableChanges, TableColumn, TableFilter, TableIndex, TableInsert, TableOrView, TablePartition, TableProperties, TableResult, TableTrigger, TableUpdateResult } from './models';
+import { CancelableQuery, DatabaseFilterOptions, ExtendedTableColumn, FieldDescriptor, FilterOptions, NgQueryResult, OrderBy, PrimaryKeyColumn, Routine, SchemaFilterOptions, ServerStatistics, StreamResults, SupportedFeatures, TableChanges, TableColumn, TableFilter, TableIndex, TableInsert, TableOrView, TablePartition, TableProperties, TableResult, TableTrigger, TableUpdateResult } from './models';
 import { AlterPartitionsSpec, AlterTableSpec, CreateTableSpec, IndexAlterations, RelationAlterations, TableKey } from '@shared/lib/dialects/models';
 import type { SshMode } from '@/common/interfaces/IConnection';
 
@@ -10,25 +10,12 @@ export const DatabaseTypes = [
   'mysql',
   'postgresql',
   'mariadb',
-  'cassandra',
-  'scylladb',
-  'oracle',
   'bigquery',
-  'firebird',
   'tidb',
   'starrocks',
-  'libsql',
-  'clickhouse',
-  'duckdb',
   'greengage',
-  'mongodb',
-  'sqlanywhere',
-  'surrealdb',
   'redis',
-  'trino',
   'bedrock',
-  'dynamodb',
-  'snowflake'
 ] as const
 
 export type ConnectionType = typeof DatabaseTypes[number]
@@ -40,26 +27,13 @@ export const ConnectionTypes = [
   { name: 'MariaDB', value: 'mariadb' },
   { name: 'Postgres', value: 'postgresql' },
   { name: 'SQLite', value: 'sqlite' },
-  { name: 'LibSQL', value: 'libsql' },
   { name: 'SQL Server', value: 'sqlserver' },
   { name: 'Amazon Redshift', value: 'redshift' },
   { name: 'CockroachDB', value: 'cockroachdb' },
   { name: 'GreengageDB', value: 'greengage' },
-  { name: 'Oracle', value: 'oracle' },
-  { name: 'Cassandra', value: 'cassandra' },
-  { name: 'ScyllaDB', value: 'scylladb' },
   { name: 'BigQuery', value: 'bigquery' },
-  { name: 'Firebird', value: 'firebird'},
-  { name: 'DuckDB', value: 'duckdb' },
-  { name: 'ClickHouse', value: 'clickhouse' },
-  { name: 'MongoDB', value: 'mongodb' },
-  { name: 'SqlAnywhere', value: 'sqlanywhere' },
-  { name: 'Trino', value: 'trino' },
-  { name: 'SurrealDB', value: 'surrealdb' },
   { name: 'Redis', value: 'redis' },
   { name: 'Bedrock', value: 'bedrock' },
-  { name: 'DynamoDB', value: 'dynamodb' },
-  { name: 'Snowflake', value: 'snowflake' }
 ] as const satisfies { name: string; value: ConnectionType }[]
 
 /** `value` should be recognized by codemirror */
@@ -298,8 +272,6 @@ export interface IDbConnectionServerConfig {
   // SQL Server integrated auth only. Encryption mode, optional pinned server certificate,
   // and optional SPN override -- consumed by connectWindowsAuth() / the ODBC conn string.
   sqlServerOptions?: SqlServerOptions
-  instantClientLocation?: string
-  oracleConfigLocation?: string
   options?: any
   redshiftOptions?: RedshiftOptions
   iamAuthOptions?: IamAuthOptions
@@ -344,7 +316,6 @@ export interface IBasicDatabaseClient {
   listTablePartitions(table: string, schema?: string): Promise<TablePartition[]>,
   executeCommand(commandText: string): Promise<NgQueryResult[]>,
   query(queryText: string, tabId: number, options?: any): Promise<CancelableQuery>,
-  getResultEditData(queryText: string, fields: FieldDescriptor[]): Promise<FieldEditData[]>
   executeQuery(queryText: string, options?: any): Promise<NgQueryResult[]>,
   listDatabases(filter?: DatabaseFilterOptions): Promise<string[]>,
   getTableProperties(table: string, schema?: string): Promise<TableProperties | null>,
@@ -395,14 +366,6 @@ export interface IBasicDatabaseClient {
   syncDatabase(): Promise<void>
 
   getServerStatistics(): Promise<ServerStatistics | null>
-
-  importStepZero(table: TableOrView): Promise<any>
-  importBeginCommand(table: TableOrView, importOptions?: ImportFuncOptions): Promise<any>
-  importTruncateCommand (table: TableOrView, importOptions?: ImportFuncOptions): Promise<any>
-  importLineReadCommand (table: TableOrView, sqlString: string|string[], importOptions?: ImportFuncOptions): Promise<any>
-  importCommitCommand (table: TableOrView, importOptions?: ImportFuncOptions): Promise<any>
-  importRollbackCommand (table: TableOrView, importOptions?: ImportFuncOptions): Promise<any>
-  importFinalCommand (table: TableOrView, importOptions?: ImportFuncOptions): Promise<any>
 
   /** Returns a query for the given filter */
   getQueryForFilter(filter: TableFilter): Promise<string>

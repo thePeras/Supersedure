@@ -4,7 +4,6 @@ import { BasicDatabaseClient } from "@/lib/db/clients/BasicDatabaseClient";
 import { CancelableQuery } from "@/lib/db/models";
 import { IDbConnectionPublicServer } from "@/lib/db/serverTypes";
 import { Export } from "@/lib/export";
-import ImportClass from "@/lib/import"
 import { SqlGenerator } from "@shared/lib/sql/SqlGenerator";
 import { ChildProcessWithoutNullStreams } from "child_process";
 import { MessagePortMain } from "electron";
@@ -28,7 +27,6 @@ class State {
   queries: Map<string, CancelableQuery> = new Map();
   generator: SqlGenerator = null;
   exports: Map<string, Export> = new Map();
-  imports: Map<string, ImportClass> = new Map();
   backupProc: ChildProcessWithoutNullStreams = null;
 
   cloudClient: CloudClient = null;

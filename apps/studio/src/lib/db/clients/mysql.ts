@@ -17,7 +17,7 @@ import {
   buildInsertQuery,
   buildSelectTopQuery,
   escapeString,
-  ClientError, refreshTokenIfNeeded,
+  ClientError,
   errorMessages
 } from "./utils";
 import { parseQuotedEnumValues } from "./enumParsers";
@@ -37,7 +37,6 @@ import {
   DatabaseFilterOptions,
   ExtendedTableColumn,
   FilterOptions,
-  ImportFuncOptions,
   NgQueryResult,
   OrderBy,
   PrimaryKeyColumn,
@@ -68,7 +67,6 @@ import { IDbConnectionServer } from "../backendTypes";
 import { GenericBinaryTranscoder } from "../serialization/transcoders";
 import { Version, isVersionLessThanOrEqual, parseVersion } from "@/common/version";
 import globals from '../../../common/globals';
-import {AzureAuthService} from "@/lib/db/authentication/azure";
 import { IdentifyResult } from "sql-query-identifier/lib/defines";
 
 type ResultType = {
@@ -138,11 +136,6 @@ async function configDatabase(
   database: IDbConnectionDatabase
 ): Promise<mysql.PoolOptions> {
 
-  let iamToken = undefined;
-  if(server.config.iamAuthOptions?.iamAuthenticationEnabled){
-      iamToken = await refreshTokenIfNeeded(server.config?.iamAuthOptions, server, server.config.port || 5432)
-  }
-
   const config: mysql.PoolOptions = {
     authPlugins: {
       'client_ed25519': ed25519AuthPlugin(),
@@ -150,7 +143,7 @@ async function configDatabase(
     host: server.config.host,
     port: server.config.port,
     user: server.config.user,
-    password: iamToken || server.config.password || undefined,
+    password: server.config.password || undefined,
     database: database.database,
     multipleStatements: true,
     dateStrings: true,
@@ -159,11 +152,6 @@ async function configDatabase(
     connectionLimit: BksConfig.db.mysql.maxConnections,
     connectTimeout: BksConfig.db.mysql.connectTimeout,
   };
-
-  if (server.config.azureAuthOptions?.azureAuthEnabled) {
-    const authService = new AzureAuthService();
-    return authService.configDB(server, config)
-  }
 
   if (server.config.socketPathEnabled) {
     config.socketPath = server.config.socketPath;
@@ -175,12 +163,6 @@ async function configDatabase(
   if (server.sshTunnel) {
     config.host = server.config.localHost;
     config.port = server.config.localPort;
-  }
-
-  if (
-    server.config.iamAuthOptions?.iamAuthenticationEnabled
-  ){
-    server.config.ssl = true
   }
 
   if (server.config.ssl) {
@@ -321,21 +303,6 @@ export class MysqlClient extends BasicDatabaseClient<ResultType, mysql.PoolConne
     this.conn = {
       pool: mysql.createPool(dbConfig),
     };
-
-    if(this.server.config.iamAuthOptions?.iamAuthenticationEnabled){
-      this.interval = setInterval(async () => {
-        try {
-          this.conn.pool.getConnection(async (err, connection) => {
-            if(err) throw err;
-            connection.config.password = await refreshTokenIfNeeded(this.server.config.iamAuthOptions, this.server, this.server.config.port || 3306)
-            connection.release();
-            log.info('Token refreshed successfully.')
-          });
-        } catch (err) {
-          log.error('Could not refresh token!')
-        }
-      }, globals.iamRefreshTime);
-    }
 
     this.conn.pool.on('acquire', (connection) => {
       log.debug('Pool connection %d acquired on %s', connection.threadId, this.clientId);
@@ -1306,9 +1273,6 @@ export class MysqlClient extends BasicDatabaseClient<ResultType, mysql.PoolConne
       properties: true,
       partitions: false,
       editPartitions: false,
-      backups: true,
-      backDirFormat: false,
-      restore: true,
       indexNullsNotDistinct: false,
       transactions: true,
       filterTypes: ['standard']
@@ -1499,26 +1463,10 @@ export class MysqlClient extends BasicDatabaseClient<ResultType, mysql.PoolConne
     return defaultValue;
   }
 
-  async importBeginCommand(_table: TableOrView, { executeOptions }: ImportFuncOptions): Promise<any> {
-    return this.rawExecuteQuery('START TRANSACTION;', executeOptions)
-  }
 
-  async importTruncateCommand (table: TableOrView, { executeOptions }: ImportFuncOptions): Promise<any> {
-    const { name } = table
-    return this.rawExecuteQuery(`TRUNCATE TABLE ${this.wrapIdentifier(name)};`, executeOptions)
-  }
 
-  async importLineReadCommand (_table: TableOrView, sqlString: string, { executeOptions }: ImportFuncOptions): Promise<any> {
-    return this.rawExecuteQuery(sqlString, executeOptions)
-  }
 
-  async importCommitCommand (_table: TableOrView, { executeOptions }: ImportFuncOptions): Promise<any> {
-    return this.rawExecuteQuery('COMMIT;', executeOptions)
-  }
 
-  async importRollbackCommand (_table: TableOrView, { executeOptions }: ImportFuncOptions): Promise<any> {
-    return this.rawExecuteQuery('ROLLBACK;', executeOptions)
-  }
 
   async reserveConnection(tabId: number): Promise<void> {
     this.throwIfHasConnection(tabId);

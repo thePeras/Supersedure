@@ -1,7 +1,7 @@
 import { dbtimeout } from "@tests/lib/db";
 import { StartedTestContainer } from "testcontainers";
 import { BasicDatabaseClient } from "@/lib/db/clients/BasicDatabaseClient";
-import { createServer } from "@commercial/backend/lib/db/server";
+import { createServer } from "@/lib/db/server";
 import { RedisTestDriver } from "./redis/container";
 
 describe('Redis', () => {

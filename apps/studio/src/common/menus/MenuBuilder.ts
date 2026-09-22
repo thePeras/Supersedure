@@ -45,7 +45,6 @@ export default class extends DefaultMenu {
       submenu: [
         this.menuItems.reload,
         this.menuItems.simulatePlatform,
-        this.menuItems.licenseState,
       ],
     }
   }
@@ -69,7 +68,6 @@ export default class extends DefaultMenu {
         { type: 'separator' },
         // Moved to Supersedure Studio menu for mac
         ...(!this.platformInfo.isMac ? [this.menuItems.about] : []),
-        this.menuItems.enterLicense,
       ]
     };
 
@@ -150,9 +148,6 @@ export default class extends DefaultMenu {
         id: "tools",
         label: "Tools",
         submenu: [
-          this.menuItems.backupDatabase,
-          this.menuItems.restoreDatabase,
-          this.menuItems.exportTables,
           ...(this.bksConfig.security.lockMode === "pin" ? [this.menuItems.updatePin] : []),
           { type: 'separator' },
           this.menuItems.managePlugins,

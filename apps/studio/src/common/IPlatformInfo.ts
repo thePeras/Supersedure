@@ -1,4 +1,4 @@
-import type { BksVersion } from '@/lib/license';
+import type { BksVersion } from '@/common/version';
 import type { Platform } from '@/types';
 
 export interface IPlatformInfo {

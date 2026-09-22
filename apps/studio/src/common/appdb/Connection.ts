@@ -6,13 +6,10 @@ import { FavoriteQuery } from './models/favorite_query'
 import { UserSetting } from './models/user_setting'
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions'
 import { PinnedEntity } from "./models/PinnedEntity"
-import { CloudCredential } from "./models/CloudCredential"
 import { OpenTab } from "./models/OpenTab"
-import { LicenseKey } from "./models/LicenseKey"
 import { HiddenEntity } from "./models/HiddenEntity"
 import { HiddenSchema } from "./models/HiddenSchema"
 import { PinnedConnection } from "./models/PinnedConnection"
-import { TokenCache } from "./models/token_cache"
 import { InstallationId } from "./models/installation_id"
 import { UserPin } from "./models/UserPin"
 import { PluginData } from "./models/PluginData";
@@ -30,13 +27,10 @@ const models = [
   FavoriteQuery,
   UserSetting,
   PinnedEntity,
-  CloudCredential,
   OpenTab,
-  LicenseKey,
   HiddenEntity,
   HiddenSchema,
   PinnedConnection,
-  TokenCache,
   InstallationId,
   UserPin,
   PluginData,

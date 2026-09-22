@@ -20,14 +20,7 @@
     </div>
     <div class="sidebar-body" ref="body">
       <template v-for="tab in tabs">
-        <template v-if="tab.id === 'json-viewer'">
-          <json-viewer-sidebar
-            v-show="secondaryActiveTabId === 'json-viewer'"
-            :key="tab.id"
-          />
-        </template>
         <isolated-plugin-view
-          v-else
           :visible="secondaryActiveTabId === tab.id"
           :key="tab.id"
           :plugin-id="tab.id"
@@ -42,7 +35,6 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
-import JsonViewerSidebar from "./JsonViewerSidebar.vue";
 import { AppEvent } from "@/common/AppEvent";
 import IsolatedPluginView from "@/components/plugins/IsolatedPluginView.vue";
 
@@ -54,7 +46,7 @@ interface SidebarTab {
 
 export default Vue.extend({
   name: "SecondarySidebar",
-  components: { JsonViewerSidebar, IsolatedPluginView },
+  components: { IsolatedPluginView },
   data() {
     return {
       reloaders: {},

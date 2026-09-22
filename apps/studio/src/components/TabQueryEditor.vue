@@ -1,7 +1,6 @@
 <template>
   <div
     class="query-editor"
-    :class="{ 'editing-result': editingResult }"
     ref="container"
     v-hotkey="keymap"
   >
@@ -39,21 +38,6 @@
         @change="onChange"
         @mergeAccepted="originalText = query.text"
       />
-      <div
-        class="no-content"
-        v-if="remoteDeleted"
-      >
-        <div class="alert alert-danger">
-          <i class="material-icons">error_outline</i>
-          <div class="alert-body">
-            This query was deleted by someone else. It is no longer editable.
-          </div>
-          <a
-            @click.prevent="close"
-            class="btn btn-flat"
-          >Close Tab</a>
-        </div>
-      </div>
       <component
         :is="editorComponent"
         :value="unsavedText"
@@ -196,23 +180,6 @@
 
         <div class="actions primary-actions btn-group">
           <x-button
-            v-if="showDryRun"
-            class="btn btn-flat btn-small dry-run-btn"
-            :disabled="isCommunity"
-            @click="dryRun = !dryRun"
-          >
-            <x-label>Dry Run</x-label>
-            <i
-              v-if="isCommunity"
-              class="material-icons menu-icon"
-            >stars</i>
-            <input
-              v-else
-              type="checkbox"
-              v-model="dryRun"
-            >
-          </x-button>
-          <x-button
             v-if="queryId"
             @click.prevent="viewEditHistory"
             class="btn btn-flat btn-small history-btn"
@@ -220,14 +187,6 @@
           >
             <i class="material-icons">history</i>
           </x-button>
-          <x-button
-            v-if="aiShellAvailable"
-            @click.prevent="askAi"
-            class="btn btn-flat btn-small ask-ai"
-          >
-            <i class="material-icons">auto_awesome</i> Ask AI
-          </x-button>
-
           <x-button
             @click.prevent="triggerSave"
             class="btn btn-flat btn-small"
@@ -266,33 +225,6 @@
                   <x-label>{{ runSecondaryText() }}</x-label>
                   <x-shortcut :value="displayShortcut('queryEditor.secondaryQueryAction')" />
                 </x-menuitem>
-                <hr>
-                <x-menuitem
-                  @click.prevent="queryFunctions.primaryWrite"
-                  :disabled="disableRunToFile || (primaryIsCurrent && runCurrentDisabled)"
-                >
-                  <x-label>{{ runPrimaryText(true) }}</x-label>
-                  <x-shortcut :value="displayShortcut('queryEditor.primaryQueryToFileAction')" />
-                  <i
-                    v-if="isCommunity"
-                    class="material-icons menu-icon "
-                  >
-                    stars
-                  </i>
-                </x-menuitem>
-                <x-menuitem
-                  @click.prevent="queryFunctions.secondaryWrite"
-                  :disabled="disableRunToFile || (primaryIsTab && runCurrentDisabled)"
-                >
-                  <x-label>{{ runSecondaryText(true) }}</x-label>
-                  <x-shortcut :value="displayShortcut('queryEditor.secondaryQueryToFileAction')" />
-                  <i
-                    v-if="isCommunity"
-                    class="material-icons menu-icon"
-                  >
-                    stars
-                  </i>
-                </x-menuitem>
               </x-menu>
             </x-button>
           </x-buttons>
@@ -320,8 +252,6 @@
       <result-table
         ref="table"
         v-else-if="showResultTable"
-        :edit-data="resultEditData"
-        :editing-data="editingResult"
         :focus="focusingElement === 'table'"
         :active="active"
         :table-height="tableHeight"
@@ -368,20 +298,10 @@
         v-model="selectedResult"
         :results="results"
         :running="running"
-        :editing="editingResult"
-        :changes-count="$refs.table?.pendingChangesCount"
-        :changes-string="$refs.table?.pendingChangesString"
-        :result-editable="resultEditable"
-        @editResults="editResults"
-        @stopEditing="stopEditing"
-        @saveChanges="saveChanges"
-        @copyToSql="copyToSql"
-        @discardChanges="discardChanges"
         @download="download"
         @clipboard="clipboard"
         @clipboardJson="clipboardJson"
         @clipboardMarkdown="clipboardMarkdown"
-        @submitCurrentQueryToFile="submitCurrentQueryToFile"
         @wrap-text="wrapText = !wrapText"
         :execute-time="executeTime"
         :elapsed-time="elapsedTime"
@@ -585,7 +505,6 @@
   import ShortcutHints from './editor/ShortcutHints.vue'
   import SqlTextEditor from "@supersedure-studio/ui-kit/vue/sql-text-editor"
   import BksSuperFormatter from "@supersedure-studio/ui-kit/vue/super-formatter"
-  import SurrealTextEditor from "@supersedure-studio/ui-kit/vue/surreal-text-editor"
   import InAppFolderPicker from "@/components/common/form/InAppFolderPicker.vue"
   import { divider, type Entity } from "@supersedure-studio/ui-kit";
 
@@ -598,7 +517,7 @@
   import { PropType } from 'vue'
   import { TransportOpenTab, resolveEditorText } from '@/common/transport/TransportOpenTab'
   import { blankFavoriteQuery } from '@/common/transport'
-  import { FieldEditData, TableOrView } from "@/lib/db/models";
+  import { TableOrView } from "@/lib/db/models";
   import { FormatterDialect, dialectFor, formatOptionsFor } from "@shared/lib/dialects/models"
   import { findSqlQueryIdentifierDialect } from "@/lib/editor/CodeMirrorPlugins";
   import { queryMagicExtension } from "@/lib/editor/extensions/queryMagicExtension";
@@ -617,7 +536,7 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
 
   export default {
     // this.queryText holds the current editor value, always
-    components: { ResultTable, ProgressBar, ShortcutHints, QueryEditorStatusBar, ErrorAlert, MergeManager, SqlTextEditor, SurrealTextEditor, BksSuperFormatter, QueryEditHistory, InAppFolderPicker },
+    components: { ResultTable, ProgressBar, ShortcutHints, QueryEditorStatusBar, ErrorAlert, MergeManager, SqlTextEditor, BksSuperFormatter, QueryEditHistory, InAppFolderPicker },
     props: {
       tab: Object as PropType<TransportOpenTab>,
       active: Boolean
@@ -656,7 +575,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         initialized: false,
         blankQuery: blankFavoriteQuery(),
         fullQuery: null,
-        dryRun: false,
         containerResizeObserver: null,
         onTextEditorBlur: null,
         wrapText: false,
@@ -691,20 +609,12 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         queryFunctions: {} as {
           primaryRead: () => Promise<void>,
           secondaryRead: () => Promise<void>,
-          primaryWrite: () => Promise<void>,
-          secondaryWrite: () => Promise<void>,
         },
-        editingResult: false,
-        resultsEditData: [],
-        resultEditableMap: [],
-        pollInterval: null,
-        queryDeleted: false
       }
     },
     computed: {
-      ...mapGetters(['dialect', 'dialectData', 'defaultSchema', 'isCloud', 'aiShellAvailable']),
+      ...mapGetters(['dialect', 'dialectData', 'defaultSchema']),
       ...mapGetters({
-        'isCommunity': 'licenses/isCommunity',
         'userKeymap': 'settings/userKeymap',
       }),
       ...mapState(['usedConfig', 'connectionType', 'database', 'tables', 'storeInitialized', 'connection']),
@@ -719,9 +629,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           { event: AppEvent.vimWrite, handler: this.handleVimWrite },
           { event: AppEvent.vimWriteQuit, handler: this.handleVimWriteQuit },
         ];
-      },
-      updatedByName() {
-        return this.latestAudit?.user?.name;
       },
       updatedAt() {
         if (!this.latestAudit) {
@@ -742,20 +649,10 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
 
         const time = dateFormat(this.updatedAt, "d mmm yyyy HH:MM:ss");
 
-        if (this.isCloud && this.updatedByName) {
-          return `Updated by ${this.updatedByName} at ${time}`;
-        }
-
         return `Updated at ${time}`;
       },
       readOnly() {
         if (this.tab.isLoading) {
-          return true;
-        }
-        if (this.remoteDeleted) {
-          return true;
-        }
-        if (this.isCloud && this.query.id && !this.query.canWrite) {
           return true;
         }
         return false;
@@ -771,22 +668,16 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         return !this.dialectData?.disabledFeatures?.manualCommit;
       },
       editorComponent() {
-        return this.connectionType === 'surrealdb' ? SurrealTextEditor : SqlTextEditor;
+        return SqlTextEditor;
       },
       enabled() {
         return !this.dialectData?.disabledFeatures?.queryEditor;
-      },
-      disableRunToFile() {
-        return this.dialectData?.disabledFeatures?.export?.stream
       },
       superFormatterId() {
         return `super-formatter-${this.tab.id}`
       },
       shouldInitialize() {
         return this.storeInitialized && this.active && !this.initialized
-      },
-      remoteDeleted() {
-        return this.storeInitialized && this.tab.queryId && this.queryDeleted
       },
       query() {
         return this.fullQuery || this.savedQueries.find((q) => q.id === this.tab.queryId) || this.blankQuery
@@ -801,9 +692,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
       pendingRemoteChanges() {
         return this.query.text !== this.originalText
       },
-      showDryRun() {
-        return this.dialect == 'bigquery'
-      },
       identifyDialect() {
         // dialect for sql-query-identifier
         const mappings = {
@@ -814,8 +702,7 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           'mysql': 'mysql',
           'mariadb': 'mysql',
           'tidb': 'mysql',
-          'redshift': 'psql',
-          'mongodb': 'psql'
+          'redshift': 'psql'
         }
         return mappings[this.connectionType] || 'generic'
       },
@@ -849,33 +736,17 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
       runButtonTooltip() {
         if (this.tab.isRunning || this.running) {
           return "Query is already running."
-        } else if (this.editingResult && this.changesCount > 0) {
-          return "Discard or apply your changes to run queries";
         } else {
           return null
         }
       },
       runButtonDisabled() {
-        return this.tab.isRunning ||
-          this.running ||
-          (this.editingResult && this.changesCount > 0);
+        return this.tab.isRunning || this.running;
       },
       runCurrentDisabled() {
         // When the sql parser failed to detect multiple queries,
         // "run current" becomes useless.
         return !!this.querySelectionError && !this.hasSelectedText;
-      },
-      changesCount() {
-        return this.$refs.table?.pendingChangesCount;
-      },
-      pendingChangesString() {
-        return this.$refs.table?.pendingChangesString;
-      },
-      resultEditData() {
-        return this.resultsEditData[this.selectedResult]
-      },
-      resultEditable() {
-        return this.resultEditableMap[this.selectedResult]
       },
       result() {
         return this.results[this.selectedResult]
@@ -900,8 +771,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         return this.$vHotkeyKeymap({
           'queryEditor.switchPaneFocus': this.switchPaneFocus,
           'queryEditor.selectEditor': this.selectEditor,
-          'queryEditor.primaryQueryToFileAction': this.queryFunctions.primaryWrite,
-          'queryEditor.secondaryQueryToFileAction': this.queryFunctions.secondaryWrite,
           'queryEditor.manualCommit': this.manualCommit,
           'queryEditor.manualRollback': this.manualRollback,
         })
@@ -996,9 +865,9 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         return FormatterDialect(dialectFor(this.queryDialect))
       },
       formatterDialectOptions() {
-        // Only populated for dialects sql-formatter doesn't ship natively
-        // (currently just DynamoDB PartiQL). When null, the formatter falls
-        // back to the string `formatterDialect` prop above.
+        // Only populated for dialects sql-formatter doesn't ship natively.
+        // When null, the formatter falls back to the string
+        // `formatterDialect` prop above.
         const opts = formatOptionsFor(dialectFor(this.queryDialect))
         return 'dialect' in opts ? opts.dialect : null
       },
@@ -1074,7 +943,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         },
       },
       selectedResult() {
-        this.editingResult = false
       },
       error() {
         this.errorMarker = null
@@ -1101,12 +969,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         this.tab.unsavedQueryText = this.unsavedText
         this.saveTab()
       },
-      remoteDeleted() {
-        if (this.remoteDeleted) {
-          this.tab.unsavedChanges = false
-          this.tab.alert = true
-        }
-      },
       unsavedChanges() {
         this.tab.unsavedChanges = this.unsavedChanges
       },
@@ -1122,18 +984,11 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         if (this.active) {
           setTimeout(this.selectEditor, 0)
 
-          this.maybePollOriginalText();
         }
 
         if (!this.active) {
           this.focusElement = 'none'
           this.$modal.hide(`save-modal-${this.tab.id}`)
-
-
-          if (!_.isNil(this.pollInterval)) {
-            clearInterval(this.pollInterval)
-            this.pollInterval = null;
-          }
         }
       },
       async focusElement(element, oldElement) {
@@ -1181,50 +1036,26 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           this.$modal.hide(this.superFormatterId)
         }
       },
-      runPrimaryText(isWrite = false) {
-        const writeText = isWrite ? ' to File' : '';
-
-        let runText: string;
-        if (this.hasSelectedText) {
-          runText = 'Run Selection';
-        } else if (this.primaryIsTab) {
-          runText = 'Run All';
-        } else {
-          runText = 'Run Current';
-        }
-
-        return `${runText}${writeText}`
+      runPrimaryText() {
+        if (this.hasSelectedText) return 'Run Selection';
+        if (this.primaryIsTab) return 'Run All';
+        return 'Run Current';
       },
-      runSecondaryText(isWrite = false) {
-        const writeText = isWrite ? ' to File' : '';
-
-        let runText: string;
-        if (this.primaryIsCurrent) {
-          runText = 'Run All';
-        } else {
-          runText = 'Run Current';
-        }
-
-        return `${runText}${writeText}`
+      runSecondaryText() {
+        return this.primaryIsCurrent ? 'Run All' : 'Run Current';
       },
       getQueryActions() {
         let primaryFunc = this.submitCurrentQuery
         let secondaryFunc = this.submitTabQuery
-        let primaryWriteFunction = this.submitCurrentQueryToFile
-        let secondaryWriteFunc = this.submitQueryToFile
 
         if (this.primaryIsTab) {
           primaryFunc = this.submitTabQuery
           secondaryFunc = this.submitCurrentQuery
-          primaryWriteFunction = this.submitQueryToFile
-          secondaryWriteFunc = this.submitCurrentQueryToFile
         }
 
         return {
           primaryFunc,
           secondaryFunc,
-          primaryWriteFunction,
-          secondaryWriteFunc
         }
       },
       getPresets(presetId) {
@@ -1413,53 +1244,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           this.runningQuery = null;
         }
       },
-      stopEditing() {
-        this.editingResult = false;
-      },
-      async editResults() {
-        if (this.isCommunity) {
-          this.$root.$emit(AppEvent.upgradeModal, "Editable Query Results")
-          return;
-        }
-        if (!this.resultsEditData[this.selectedResult]) {
-          const resultEditData: FieldEditData[] = await this.connection.getResultEditData(this.result?.text, this.result.fields);
-
-
-          const mapped = new Map(resultEditData.map((e) => [e.id, e]));
-          this.$set(this.resultsEditData, this.selectedResult, mapped)
-          await this.$nextTick();
-          this.$refs.table.rebuildColumns()
-
-          if (!resultEditData.some((e) => e.editable)) {
-            this.$noty.warning("Editing results cannot be enabled because no primary keys are included in the query", {
-              buttons: [
-                Noty.button('Learn More', 'btn btn-primary', () => {
-                  window.main.openExternally('https://supersedurestudio.io/user_guide_sql_editor/editing-data.md')
-                })
-              ]
-            })
-            this.$set(this.resultEditableMap, this.selectedResult, false)
-            await this.$nextTick();
-            return;
-          }
-        }
-        this.editingResult = true;
-        wait(800).then(() => this.$tour.start("startedEditingResult"));
-      },
-      async saveChanges() {
-        // This covers the instance where someone runs a query, toggles manual commit on, and then makes edits and tries to save them. This ensures it will then be inside a transaction
-        if (this.canManageTransactions && this.isManualCommit && !this.hasActiveTransaction) {
-          await this.manualBegin();
-        }
-
-        await this.$refs.table.saveChanges();
-      },
-      copyToSql() {
-        this.$refs.table.copyToSql();
-      },
-      discardChanges() {
-        this.$refs.table.discardChanges();
-      },
       download(format) {
         this.$refs.table.download(format)
       },
@@ -1523,7 +1307,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         }
       },
       async saveQuery() {
-        if (this.remoteDeleted) return
         if (!this.hasTitle || !this.hasText) {
           this.saveError = new Error("You need both a title, and some query text.")
           return
@@ -1566,14 +1349,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
       onChange(text) {
         this.unsavedText = text
       },
-      askAi() {
-        const sql = this.hasSelectedText
-          ? this.editor.selection
-          : this.unsavedText;
-        this.$bksPlugin.execute('bks-ai-shell', 'new-tab-dropdown-item', {
-          message: "```sql\n" + sql + "\n```\nHelp me with the above query" ,
-        });
-      },
       escapeRegExp(string) {
         return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
       },
@@ -1605,41 +1380,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
       removeTransactionTimeoutListener() {
         this.$util.removeListener(this.transactionTimeoutWarningListenerId);
         this.$util.removeListener(this.transactionTimeoutListenerId);
-      },
-      async submitQueryToFile() {
-        if (this.isCommunity) {
-          this.$root.$emit(AppEvent.upgradeModal, 'Query to File')
-          return;
-        }
-
-        // run the currently highlighted text (if any) to a file, else all sql
-        const query_sql = this.hasSelectedText && this.primaryIsTab ? this.editor.selection : this.unsavedText;
-        if (this.runButtonDisabled) return;
-        const saved_name = this.hasTitle ? this.query.title : null
-        const tab_title = this.tab.title // e.g. "Query #1"
-        const queryName = saved_name || tab_title
-        this.trigger( AppEvent.beginExport, { query: query_sql, queryName: queryName });
-      },
-      async submitCurrentQueryToFile() {
-        if (this.isCommunity) {
-          this.$root.$emit(AppEvent.upgradeModal, 'Query to File')
-          return;
-        }
-        if (this.runButtonDisabled) return;
-        // run the currently selected query or highlighted (if there are multiple) to a file, else all sql
-        let query_sql = ''
-
-        if ( this.hasSelectedText && this.primaryIsCurrent) {
-          query_sql = this.editor.selection
-        } else if (this.currentlySelectedQuery) {
-          query_sql = this.currentlySelectedQuery.text
-        } else {
-          query_sql = this.unsavedText
-        }
-        const saved_name = this.hasTitle ? this.query.title : null
-        const tab_title = this.tab.title // e.g. "Query #1"
-        const queryName = saved_name || tab_title
-        this.trigger( AppEvent.beginExport, { query: query_sql, queryName: queryName });
       },
       async submitCurrentQuery() {
         if (this.runButtonDisabled) return;
@@ -1703,8 +1443,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         }
       },
       async submitQuery(rawQuery, fromModal = false) {
-        if (this.remoteDeleted) return;
-
         //Cancel existing query before starting a new one
         if(this.running && this.runningQuery){
           await this.cancelQuery();
@@ -1719,9 +1457,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         this.error = null
         this.queryForExecution = rawQuery
         this.results = []
-        this.resultsEditData = []
-        this.resultEditableMap = []
-        this.editingResult = false
         this.selectedResult = 0
         let shouldToggle = false;
         const { queries: identification, error } = safelyIdentify(rawQuery, { dialect: this.identifyDialect, identifyTables: true, identifyColumns: true });
@@ -1766,8 +1501,7 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           const query = this.deparameterizedQuery
           this.$modal.hide(`parameters-modal-${this.tab.id}`)
           this.runningCount = identification.length || 1
-          // Dry run is for bigquery, allows query cost estimations
-          this.runningQuery = await this.connection.query(query, this.tab.id, { dryRun: this.dryRun }, this.hasActiveTransaction);
+          this.runningQuery = await this.connection.query(query, this.tab.id, {}, this.hasActiveTransaction);
           const queryStartTime = new Date()
           const results = await this.runningQuery.execute();
           const queryEndTime = new Date()
@@ -1803,8 +1537,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
             }
           })
           this.results = Object.freeze(results);
-          this.resultsEditData = this.results.map(() => null)
-          this.resultEditableMap = this.results.map(() => true)
 
           // const defaultResult = Math.max(results.length - 1, 0)
 
@@ -1837,7 +1569,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           if (found) {
             this.$store.dispatch('updateTables')
           }
-          wait(1200).then(() => this.$tour.start("ranQuerySuccessfully"));
         } catch (ex) {
           log.error(ex)
           if(this.running) {
@@ -1861,9 +1592,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           this.originalText = originalText
           this.unsavedText = editorText
         }
-      },
-      fakeRemoteChange() {
-        this.query.text = "select * from foo"
       },
       // Right click menu handlers
       writeQuit() {
@@ -2035,15 +1763,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         }
         return [
           ...items,
-          ...(this.aiShellAvailable
-            ? [
-                {
-                  label: "Ask AI",
-                  id: "ask-ai",
-                  handler: this.askAi,
-                },
-              ]
-            : []),
           {
             label: "Open Query Formatter",
             id: "formatter",
@@ -2056,16 +1775,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
                   label: "View Edit History",
                   id: "view-edit-history",
                   handler: this.viewEditHistory,
-                },
-              ]
-            : []),
-          ...(window.platformInfo.isDevelopment && this.isCloud && this.query?.id
-            ? [
-                divider,
-                {
-                  label: "[DEV] Make Fake Remote Change",
-                  id: "fake-remote-change",
-                  handler: this.fakeRemoteChange,
                 },
               ]
             : []),
@@ -2139,72 +1848,16 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           }
         };
       },
-      maybePollOriginalText() {
-        if (this.active && this.tab.queryId && this.isCloud && _.isNil(this.pollInterval)) {
-          this.pollInterval = setInterval(async () => {
-            let query: ISavedQuery;
-            try {
-              query = await this.$store.dispatch('data/queries/findOne', this.tab.queryId);
-            } catch (e) {
-              if (e?.status === 404) {
-                this.handleQueryDeleted();
-                return;
-              }
-
-              log.error('Error polling saved query', e);
-              return;
-            }
-
-            if (!query) return;
-
-            this.fullQuery = query;
-
-            if (this.tab.title !== query.title) {
-              this.tab.title = query.title;
-              this.updateTab();
-            }
-
-            if (_.trim(this.originalText) !== _.trim(query.text)) {
-              if (!this.unsavedChanges) {
-                this.originalText = query.text;
-                this.unsavedText = query.text;
-
-                if (this.hasTitle) {
-                  this.$noty.info(`${this.query.title} updated from cloud`);
-                }
-              }
-              this.query.text = query.text;
-            }
-          }, this.$bksConfig.general.workspaceSyncInterval)
-        }
-      },
-      handleQueryDeleted() {
-        this.queryDeleted = true;
-        this.fullQuery = null;
-        this.originalText = "";
-        this.unsavedText = "";
-        if (!_.isNil(this.pollInterval)) {
-          clearInterval(this.pollInterval);
-          this.pollInterval = null;
-        }
-      }
     },
     created() {
       this.registerHandlers(this.rootBindings)
     },
     async mounted() {
-      const {
-        primaryFunc,
-        secondaryFunc,
-        primaryWriteFunction,
-        secondaryWriteFunc
-      } = this.getQueryActions()
+      const { primaryFunc, secondaryFunc } = this.getQueryActions()
 
       this.queryFunctions = {
         primaryRead: primaryFunc,
         secondaryRead: secondaryFunc,
-        primaryWrite: primaryWriteFunction,
-        secondaryWrite: secondaryWriteFunc
       }
 
       try {
@@ -2213,7 +1866,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         if (this.tab.queryId) {
           this.fullQuery = await this.$store.dispatch('data/queries/findOne', this.tab.queryId);
 
-          this.maybePollOriginalText();
         } else if (this.tab.usedQueryId) {
           this.fullQuery = await this.$store.dispatch('data/usedQueries/findOne', this.tab.usedQueryId);
         }
@@ -2255,9 +1907,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
       this.connection.releaseConnection(this.tab.id)
       this.containerResizeObserver.disconnect()
       this.removeTransactionTimeoutListener();
-      if (!_.isNil(this.pollInterval)) {
-        clearInterval(this.pollInterval);
-      }
     },
   }
 </script>

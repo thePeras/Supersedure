@@ -46,7 +46,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["isCommunity"]),
     tableMenuOptions() {
       const dialect: DialectData = this.$store.getters.dialectData;
       const dialectName: string = this.$store.getters.dialect;
@@ -73,16 +72,6 @@ export default {
           title: disabledTitle(dialectName, 'Export', !!dialect.disabledFeatures?.exportTable, false),
           handler: ({ item }) => {
             this.trigger(AppEvent.beginExport, { table: item })
-          }
-        },
-        {
-          name: "Import from File",
-          class: disabled(dialect.disabledFeatures?.importFromFile, usedConfig.readOnlyMode),
-          title: disabledTitle(dialectName, 'Import', !!dialect.disabledFeatures?.importFromFile, usedConfig.readOnlyMode),
-          slug: 'import',
-          icon: this.isCommunity ? 'stars' : undefined,
-          handler: ({ item }) => {
-            this.trigger(AppEvent.beginImport, { table: item })
           }
         },
         divider,

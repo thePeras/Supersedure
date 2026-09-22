@@ -57,19 +57,6 @@ Desde aqui, simplemente haz clic en ejecutar para iniciar el proceso y generar t
 
 Exportar una tabla grande puede tomar mucho tiempo. Veras una notificacion en la parte inferior derecha de la aplicacion para indicar el progreso mientras se ejecuta.
 
-### Exportacion de multiples tablas
-
-Selecciona `Exportar multiples tablas` en el modal de exportacion o ve a traves de la barra de herramientas de la aplicacion (herramientas -> exportar).
-
-![Exportacion de multiples tablas](../assets/images/data-export-156.gif)
-
-Todas las tablas en la base de datos se mostraran agrupadas por esquemas (si la base de datos los soporta) y tienes la capacidad de seleccionar todas las tablas en un esquema (o todas realmente) con un simple clic o elegir lo que quieras.
-
-Cada tabla se almacena como un archivo separado con un formato determinado de `nombretabla.{sql,csv,json}`.
-
-!!! note
-    El proceso de exportacion puede tomar mucho tiempo dependiendo del tamano de la tabla y el numero de tablas que se exportan.
-
 ### Formatos de exportacion de tablas
 
 - CSV

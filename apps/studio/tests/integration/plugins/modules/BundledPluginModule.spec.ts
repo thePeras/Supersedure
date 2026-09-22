@@ -15,7 +15,7 @@ import path from "path";
 import {
   BundledPlugin,
   BundledPluginModule,
-} from "@commercial/backend/plugin-system/modules/BundledPluginModule";
+} from "@/backend/plugin-system/modules/BundledPluginModule";
 
 function readJson(...paths: string[]) {
   const content = fs.readFileSync(path.join(...paths), { encoding: "utf-8" });

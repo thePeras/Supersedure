@@ -14,23 +14,6 @@ export interface TransportTempFile {
   name: string
 }
 
-export interface TransportCloudCredential extends Transport {
-  appId: string | null,
-  email: string | null,
-  token: string | null
-}
-
-export interface TransportLicenseKey extends Transport {
-  email: string,
-  key: string,
-  validUntil: Date,
-  supportUntil: Date,
-  licenseType: 'TrialLicense' | 'PersonalLicense' | 'BusinessLicense',
-  active: boolean
-  maxAllowedAppRelease: { tagName: string } | null
-  invalidatedAt: Date | null
-}
-
 export interface TransportPinnedConn extends Transport {
   position: number;
   connectionId: number;

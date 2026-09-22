@@ -5,7 +5,7 @@
   },
   "compilerOptions": {
     "rootDirs": [
-      "src", "src-commercial", "tests"
+      "src", "tests"
     ],
     "target": "es2018",
     "module": "esnext",
@@ -17,7 +17,6 @@
     "paths": {
       "@/*": ["./src/*"],
       "@shared/*": ["./src/shared/*"],
-      "@commercial/*": ["./src-commercial/*"],
       "@tests/*": ["./tests/*"],
       "@supersedure-studio/ui-kit": ["../ui-kit/dist"],
       "@supersedure-studio/ui-kit/*": ["../ui-kit/dist/*"]

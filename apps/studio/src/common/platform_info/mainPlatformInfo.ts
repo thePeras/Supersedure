@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { existsSync } from 'fs'
 import { resolve, join } from 'path'
 import { IPlatformInfo } from '../IPlatformInfo'
-import { BksVersion } from '@/lib/license'
+import { BksVersion } from '@/common/version'
 
 
 // TODO: Automatically enable wayland without flags once

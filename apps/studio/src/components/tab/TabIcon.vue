@@ -13,11 +13,6 @@
     class="material-icons item-icon query"
   >code</i>
   <i
-    v-else-if="tab.tabType === 'import-table'"
-    class="material-icons-outlined item-icon table-properties"
-    :class="iconClass"
-  >import_export</i>
-  <i
     v-else-if="tab.tabType === 'table-properties'"
     class="material-icons-outlined item-icon icon-table-properties"
     :class="iconClass"
@@ -30,22 +25,6 @@
     v-else-if="tab.tabType === 'table-builder'"
     class="material-icons item-icon table-builder-icon"
   >add</i>
-  <i
-    v-else-if="tab.tabType === 'backup'"
-    class="bk-backup item-icon"
-  />
-  <i
-    v-else-if="tab.tabType === 'restore'"
-    class="material-icons item-icon"
-  >settings_backup_restore</i>
-  <i
-    v-else-if="tab.tabType === 'import-export-database'"
-    class="material-icons item-icon"
-  >import_export</i>
-  <i
-    v-else-if="tab.tabType === 'shell'"
-    class="material-icons item-icon query"
-  >terminal</i>
   <i
     v-else
     class="material-icons item-icon"
