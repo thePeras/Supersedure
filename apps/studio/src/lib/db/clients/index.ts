@@ -123,43 +123,6 @@ export const CLIENTS: ClientConfig[] = [
     ],
   },
   {
-    key: 'cassandra',
-    name: 'Cassandra',
-    defaultPort: 9042,
-    disabledFeatures: [
-      'server:ssl',
-      'server:socketPath',
-      'server:schema',
-      'server:domain',
-      'scriptCreateTable',
-      'cancelQuery',
-      'server:socketPathWithCustomPort',
-    ],
-  },
-  {
-    key: 'scylladb',
-    name: 'ScyllaDB',
-    defaultPort: 9042,
-    disabledFeatures: [
-      'server:ssl',
-      'server:socketPath',
-      'server:schema',
-      'server:domain',
-      'scriptCreateTable',
-      'cancelQuery',
-      'server:socketPathWithCustomPort',
-    ],
-  },
-  {
-    key: 'oracle',
-    name: 'Oracle',
-    defaultPort: 1521,
-    disabledFeatures: [
-      'server:socketPath',
-      'server:socketPathWithCustomPort',
-    ]
-  },
-  {
     key: 'bigquery',
     name: 'BigQuery',
     defaultPort: 443,
@@ -173,16 +136,6 @@ export const CLIENTS: ClientConfig[] = [
       'server:domain',
       'server:ssh',
       'scriptCreateTable',
-    ],
-  },
-  {
-    key: 'firebird',
-    name: 'Firebird',
-    defaultPort: 3050,
-    disabledFeatures: [
-      'server:schema',
-      'server:socketPath',
-      'server:socketPathWithCustomPort',
     ],
   },
   {
@@ -204,84 +157,6 @@ export const CLIENTS: ClientConfig[] = [
       'server:domain',
       'server:socketPathWithCustomPort',
     ],
-  },
-  {
-    key: 'libsql',
-    name: 'LibSQL',
-    defaultPort: 8080,
-    defaultDatabase: ':memory:',
-    disabledFeatures: [
-      'server:ssl',
-      'server:host',
-      'server:port',
-      'server:socketPath',
-      'server:socketPathWithCustomPort',
-      'server:user',
-      'server:password',
-      'server:schema',
-      'server:domain',
-      'server:ssh',
-      'scriptCreateTable',
-      'cancelQuery',
-    ],
-  },
-  {
-    key: 'duckdb',
-    name: 'DuckDB',
-    defaultDatabase: ':memory:',
-    disabledFeatures: [
-      'server:ssl',
-      'server:host',
-      'server:port',
-      'server:socketPath',
-      'server:user',
-      'server:password',
-      'server:schema',
-      'server:domain',
-      'server:ssh',
-      'cancelQuery', // TODO how to do this?
-    ],
-  },
-  {
-    key: 'trino',
-    name: 'Trino',
-    topLevelEntity: 'Catalog',
-    defaultPort: 8080,
-    disabledFeatures: [
-      'server:socketPath',
-      'cancelQuery', // TODO how to do this?
-    ],
-  },
-  {
-    key: 'clickhouse',
-    name: 'ClickHouse',
-    defaultPort: 8123,
-    disabledFeatures: [
-      'server:socketPath',
-    ],
-  },
-  {
-    key: 'mongodb',
-    name: 'MongoDB'
-  },
-  {
-    key: 'sqlanywhere',
-    name: 'SqlAnywhere',
-    defaultPort: 2638,
-    disabledFeatures: [
-      'server:ssl',
-      'server:socketPath'
-    ]
-  },
-  {
-    key: 'surrealdb',
-    name: 'SurrealDB',
-    defaultPort: 8000,
-    disabledFeatures: [
-      'server:socketPath',
-      'server:socketPathWithCustomPort',
-      'server:ssl'
-    ]
   },
   {
     key: 'redis',
@@ -309,30 +184,4 @@ export const CLIENTS: ClientConfig[] = [
       'server:socketPathWithCustomPort',
     ]
   },
-  {
-    key: 'dynamodb',
-    name: 'DynamoDB',
-    defaultPort: 8000,
-    disabledFeatures: [
-      'server:host',
-      'server:port',
-      'server:user',
-      'server:password',
-      'server:domain',
-      'server:schema',
-      'server:ssl',
-      'server:ssh',
-      'server:socketPath',
-      'server:socketPathWithCustomPort',
-      'scriptCreateTable',
-      'cancelQuery',
-    ],
-  },
-  {
-    key: 'snowflake',
-    name: 'Snowflake',
-    disabledFeatures: [
-
-    ]
-  }
 ];

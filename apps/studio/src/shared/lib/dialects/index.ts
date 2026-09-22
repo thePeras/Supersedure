@@ -1,23 +1,12 @@
 import { RedshiftData } from "@shared/lib/dialects/redshift";
 import { BigQueryData } from "./bigquery";
-import { FirebirdData } from "./firebird";
 import { Dialect, DialectData } from "./models";
 import { MysqlData } from "./mysql";
-import { OracleData } from "./oracle";
 import { PostgresData } from "./postgresql";
 import { GreengageData } from "./greengage";
 import { SqliteData } from "./sqlite";
 import { SqlServerData } from "./sqlserver";
-import { CassandraData } from './cassandra'
-import { DuckDBData } from "./duckdb";
-import { ClickHouseData } from "./clickhouse";
-import { MongoDBData } from "./mongodb";
-import { SqlAnywhereData } from "./anywhere";
-import { TrinoData } from "./trino";
-import { SurrealDBData } from "./surrealdb";
 import { RedisData } from "@shared/lib/dialects/redis";
-import { DynamoDBData } from "./dynamodb";
-import { SnowflakeData } from "./snowflake";
 import { StarRocksData } from "./starrocks";
 
 export function getDialectData(dialect: Dialect): DialectData  {
@@ -34,32 +23,10 @@ export function getDialectData(dialect: Dialect): DialectData  {
       return SqliteData
     case 'redshift':
       return RedshiftData
-    case 'oracle':
-      return OracleData
-    case 'cassandra':
-      return CassandraData
     case 'bigquery':
       return BigQueryData
-    case 'firebird':
-      return FirebirdData
-    case 'duckdb':
-      return DuckDBData
-    case 'clickhouse':
-      return ClickHouseData
-    case 'mongodb':
-      return MongoDBData
-    case 'sqlanywhere':
-      return SqlAnywhereData
-    case 'trino':
-      return TrinoData
-    case 'surrealdb':
-      return SurrealDBData
     case 'redis':
       return RedisData
-    case 'dynamodb':
-      return DynamoDBData
-    case 'snowflake':
-      return SnowflakeData
     case 'starrocks':
       return StarRocksData
     default:

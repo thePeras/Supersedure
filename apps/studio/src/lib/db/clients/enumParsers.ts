@@ -6,9 +6,8 @@
 
 /**
  * Parse a quoted, comma-separated enum definition where single quotes inside a
- * value are escaped by doubling (`''`). Covers MySQL/MariaDB (`enum('a','b')`)
- * and DuckDB (`ENUM('a', 'b', 'c')`). Returns undefined for non-enum types
- * (including MySQL's `set(...)`).
+ * value are escaped by doubling (`''`). Covers MySQL/MariaDB (`enum('a','b')`).
+ * Returns undefined for non-enum types (including MySQL's `set(...)`).
  */
 export function parseQuotedEnumValues(columnType?: string | null): string[] | undefined {
   if (!columnType) return undefined;
@@ -45,48 +44,4 @@ export function parseQuotedEnumValues(columnType?: string | null): string[] | un
   values.push(current);
 
   return values;
-}
-
-/**
- * Parse a ClickHouse enum definition, e.g. `Enum8('a' = 1, 'b' = 2)` or
- * `Enum16(...)`, optionally wrapped in `Nullable(...)` / `LowCardinality(...)`.
- * The labels are single-quoted string literals with backslash escaping; the
- * integer mappings are unquoted and ignored. Returns undefined for non-enum types.
- */
-export function parseClickHouseEnumValues(columnType?: string | null): string[] | undefined {
-  if (!columnType) return undefined;
-  const open = /Enum(?:8|16)\(/i.exec(columnType);
-  if (!open) return undefined;
-
-  const values: string[] = [];
-  let current = "";
-  let inQuote = false;
-  let depth = 1;
-
-  for (let i = open.index + open[0].length; i < columnType.length && depth > 0; i++) {
-    const char = columnType[i];
-    if (inQuote) {
-      if (char === "\\") {
-        // backslash escape -> take the next char literally
-        current += columnType[i + 1] ?? "";
-        i++;
-      } else if (char === "'") {
-        inQuote = false;
-        values.push(current);
-        current = "";
-      } else {
-        current += char;
-      }
-    } else if (char === "'") {
-      inQuote = true;
-      current = "";
-    } else if (char === "(") {
-      depth++;
-    } else if (char === ")") {
-      depth--;
-    }
-    // unquoted integer mappings, '=', commas and spaces are ignored
-  }
-
-  return values.length ? values : undefined;
 }

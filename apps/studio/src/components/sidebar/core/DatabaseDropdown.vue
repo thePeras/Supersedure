@@ -45,36 +45,6 @@
       >
         <!-- TODO: Make sure one of the elements in this modal is focused so that the keyboard trap works -->
         <div
-          v-if="this.connectionType === 'oracle'"
-          class="dialog-content"
-          v-kbd-trap="true"
-        >
-          <p>
-            Oracle has a lot of <a
-              class="external-link"
-              href="https://docs.oracle.com/cd/B19306_01/server.102/b14231/create.htm#i1008760"
-            >configuration requirements to create a new database</a> which makes it difficult for Supersedure to do automatically.
-          </p>
-          <p>Supersedure can generate you some boilerplate code to get you started if you like.</p>
-          <div class="vue-dialog-buttons">
-            <button
-              class="btn btn-flat"
-              type="button"
-              @click.prevent="$modal.hide('config-add-database')"
-            >
-              Cancel
-            </button>
-            <button
-              class="btn btn-primary"
-              type="button"
-              @click.prevent="createDatabaseSQL"
-            >
-              Generate Create Database Boilerplate
-            </button>
-          </div>
-        </div>
-        <div
-          v-else
           class="dialog-content"
           v-kbd-trap="true"
         >
@@ -134,10 +104,6 @@
         await this.refreshDatabases()
         this.selectedDatabase = db
       },
-      createDatabaseSQL() {
-        this.$root.$emit(AppEvent.newTab, this.connection.createDatabaseSQL())
-        this.$modal.hide('config-add-database')
-      }
     },
     async mounted() {
       this.selectedDatabase = this.currentDatabase
@@ -162,8 +128,7 @@
         }
       },
       selectedDatabase() {
-        // mongodb doesn't actually create the db until a collection has been added
-        if (this.selectedDatabase != this.currentDatabase && (this.dbs.includes(this.selectedDatabase) || this.connectionType === 'mongodb')) {
+        if (this.selectedDatabase != this.currentDatabase && this.dbs.includes(this.selectedDatabase)) {
           this.$emit('databaseSelected', this.selectedDatabase)
         }
       }

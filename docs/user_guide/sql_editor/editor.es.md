@@ -44,7 +44,7 @@ Las transacciones ejecutadas dentro del editor de consultas seran detectadas aut
 
 Tambien hay un [Modo de transaccion manual](./manual-transaction-management.md) que te permite manejar manualmente cada paso de este proceso.
 
-Esta funcionalidad actualmente solo esta disponible para Postgres, CockroachDB, Redshift, MySQL, MariaDB, SQLServer, Firebird y Oracle.
+Esta funcionalidad actualmente solo esta disponible para Postgres, CockroachDB, Redshift, MySQL, MariaDB y SQLServer.
 
 ## Parametros de consulta
 

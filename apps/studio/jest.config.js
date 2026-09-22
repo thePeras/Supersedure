@@ -36,7 +36,6 @@ module.exports = {
       '<rootDir>/tests/__mocks__/supersedure-studio-ui-kit.js',
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@shared(.*)$': '<rootDir>/src/shared/$1',
-    '^@commercial(.*)$': '<rootDir>/src-commercial/$1',
     '^@bksLogger$': '<rootDir>/src/lib/log/mainLogger.ts',
     '^@tests(.*)$': '<rootDir>/tests/$1',
     '^@supersedure-studio/ui-kit$': resolve(__dirname, '../ui-kit/lib/index.ts'),

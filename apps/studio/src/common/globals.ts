@@ -23,14 +23,11 @@ export default {
   iamRefreshBeforeTime: 2 * 60 * 1000, // 2 minutes
   azureCloudTokenUrl: 'https://app.supersedurestudio.io/api/cloud_tokens',
   azureCloudScopes: ['https://database.windows.net/.default', 'offline_access'],
-  firebird: {
-    poolSize: 5,
-  },
   plugins: {
     /**
      * Ensure these packages are bundled and installed for first time users.
      *
-     * @see `BundledPluginModule` in src-commercial/backend/plugin-system/modules/BundledPluginModule.ts
+     * @see `BundledPluginModule` in src/backend/plugin-system/modules/BundledPluginModule.ts
      **/
     ensureInstalled: [
       { id: "bks-ai-shell", pkg: "@beekeeperstudio/bks-ai-shell" },

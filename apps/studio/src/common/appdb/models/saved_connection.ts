@@ -96,27 +96,8 @@ export class DbConnectionBase extends ApplicationEntity {
       case 'redshift':
         port = 5432
         break
-      case 'oracle':
-        port = 1521
-        break
-      case 'cassandra':
-      case 'scylladb':
-        port = 9042
-        break
       case 'bigquery':
         port = 443
-        break
-      case 'firebird':
-        port = 3050
-        break
-      case 'sqlanywhere':
-        port = 2638
-        break
-      case 'trino':
-        port = 8080
-        break
-      case 'clickhouse':
-        port = 8123
         break
       case 'redis':
         port = 6379
@@ -388,10 +369,7 @@ export class SavedConnection extends DbConnectionBase implements IConnection {
     try {
       const endings = [
         { connectionType: 'sqlite', options: ['.db', '.sqlite', '.sqlite3']},
-        { connectionType: 'duckdb', options: ['.duckdb', '.ddb']}
       ]
-      // const goodEndings = ['.db', '.sqlite', '.sqlite3']
-      // const duckDbEndings = ['.duckdb', '.ddb']
       if (!this.smellsLikeUrl(url)) {
         // it's a sqlite file
         for (let i = 0; i < endings.length; i++) {

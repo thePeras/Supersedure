@@ -32,7 +32,7 @@ import MultiTableExportStoreModule from './modules/exports/MultiTableExportModul
 import ImportStoreModule from './modules/imports/ImportStoreModule'
 import { BackupModule } from './modules/backup/BackupModule'
 import { CloudClient } from '@/lib/cloud/CloudClient'
-import { ConnectionTypes, SnowflakeAuthType, SurrealAuthType } from '@/lib/db/types'
+import { ConnectionTypes } from '@/lib/db/types'
 import { SidebarModule, State as SidebarState } from './modules/SidebarModule'
 import { isVersionLessThanOrEqual, parseVersion } from '@/common/version'
 import { PopupMenuModule } from './modules/PopupMenuModule'
@@ -57,11 +57,6 @@ function shouldPromptCockroachJwt(config: Nullable<IConnection>) {
     !config?.password;
 }
 
-function shouldPromptSnowflakeMFA(config: Nullable<IConnection>) {
-  return config?.connectionType === 'snowflake' &&
-    config?.snowflakeOptions.authType === SnowflakeAuthType.MFACode;
-}
-
 async function resolveEphemeralValues(config: IConnection): Promise<IConnection | null> {
   if (shouldPromptCockroachJwt(config)) {
     const { token, cancelled } = await SupersedurePlugin.promptJwtToken(
@@ -73,15 +68,6 @@ async function resolveEphemeralValues(config: IConnection): Promise<IConnection 
     const resolvedConfig = _.cloneDeep(config);
 
     resolvedConfig.password = token;
-    return resolvedConfig;
-  } else if (shouldPromptSnowflakeMFA(config)) {
-    const { passcode, cancelled } = await SupersedurePlugin.promptSnowflakeMFAPasscode();
-
-    if (cancelled) return null;
-
-    const resolvedConfig = _.cloneDeep(config);
-
-    resolvedConfig.snowflakeOptions.passcode = passcode;
     return resolvedConfig;
   }
 
@@ -115,10 +101,6 @@ export interface State {
   versionString: string,
   connError: string
   expandFKDetailsByDefault: boolean,
-
-  // SurrealDB only
-  namespace: Nullable<string>,
-  namespaceList: string[],
 
   pluginManagerStatus: WebPluginManagerStatus,
 
@@ -191,8 +173,6 @@ const store = new Vuex.Store<State>({
     versionString: null,
     connError: null,
     expandFKDetailsByDefault: SmartLocalStorage.getBool('expandFKDetailsByDefault'),
-    namespace: null,
-    namespaceList: [],
     pluginManagerStatus: "initializing",
   },
 
@@ -376,7 +356,6 @@ const store = new Vuex.Store<State>({
     newConnection(state, config: Nullable<IConnection>) {
       state.usedConfig = config
       state.database = config?.defaultDatabase
-      state.namespace = config?.surrealDbOptions?.namespace;
     },
     // this shouldn't be used at all
     clearConnection(state) {
@@ -389,8 +368,6 @@ const store = new Vuex.Store<State>({
       state.defaultSchema = null
       state.versionString = null
       state.databaseList = []
-      state.namespace = null
-      state.namespaceList = []
       state.tables = []
       state.routines = []
       state.entityFilter = {
@@ -406,12 +383,6 @@ const store = new Vuex.Store<State>({
     },
     databaseList(state, dbs: string[]) {
       state.databaseList = dbs
-    },
-    namespaceList(state, nss: string[]) {
-      state.namespaceList = nss;
-    },
-    namespace(state, namespace: string) {
-      state.namespace = namespace;
     },
     unloadTables(state) {
       state.tables = []
@@ -591,10 +562,6 @@ const store = new Vuex.Store<State>({
             context.dispatch('backups/setConnectionConfigs', { config: resolvedConfig, supportedFeatures, serverConfig });
           }
 
-          if (resolvedConfig.connectionType === 'surrealdb' &&
-            resolvedConfig.surrealDbOptions?.authType === SurrealAuthType.Root) {
-            await context.dispatch('updateNamespaceList');
-          }
           await context.dispatch('updateDatabaseList')
           await context.dispatch('updateTables')
           await context.dispatch('updateRoutines')
@@ -693,30 +660,12 @@ const store = new Vuex.Store<State>({
     async changeDatabase(context, newDatabase: string) {
       log.info("Pool changing database to", newDatabase)
 
-      let databaseForServer = newDatabase;
-      if (context.state.connectionType === 'surrealdb') {
-        databaseForServer = `${context.state.namespace}::${newDatabase || ''}`;
-      }
-
-      await Vue.prototype.$util.send('conn/changeDatabase', { newDatabase: databaseForServer });
+      await Vue.prototype.$util.send('conn/changeDatabase', { newDatabase });
       context.commit('database', newDatabase)
       await context.dispatch('updateTables')
       await context.dispatch('updateDatabaseList')
       await context.dispatch('updateRoutines')
     },
-    async changeNamespace(context, newNamespace: string) {
-      if (newNamespace === context.state.namespace) return;
-      log.info("Pool changing namespace to ", newNamespace);
-
-      const dbs = await context.state.connection.listDatabases({ namespace: newNamespace });
-      log.info("DatabaseList:::", dbs)
-      context.commit('databaseList', dbs);
-      context.commit('namespace', newNamespace);
-      context.commit('database', null);
-      context.commit('tables', []);
-      context.commit('routines', []);
-    },
-
     async updateTableColumns(context, table: TableOrView) {
       log.debug('actions/updateTableColumns', table.name)
       try {
@@ -741,12 +690,6 @@ const store = new Vuex.Store<State>({
       const databaseList = await context.state.connection.listDatabases();
       log.info("databaseList: ", databaseList)
       context.commit('databaseList', databaseList)
-    },
-    async updateNamespaceList(context) {
-      // Just reuse listSchemas cause we don't use it and it's kinda comparable, may be a not great idea
-      const namespaceList = await context.state.connection.listSchemas();
-      log.info("namespaceList: ", namespaceList);
-      context.commit("namespaceList", namespaceList);
     },
     async updateTables(context) {
       // FIXME: We should only load tables for the active/default schema

@@ -38,5 +38,5 @@ autoRollbackWarningWindow = 60000 ; 1 Minute
 maxReservedConnections = 4 ; Allow 4 active transactions at a time (only for postgres)
 ```
 
-This functionality is currently only available for Postgres, CockroachDB, Redshift, MySQL, MariaDB, SQLServer, Firebird, and Oracle.
+This functionality is currently only available for Postgres, CockroachDB, Redshift, MySQL, MariaDB, and SQLServer.
 

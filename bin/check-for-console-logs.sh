@@ -12,7 +12,7 @@
 set -euo pipefail
 
 ALLOWLIST=bin/allowed-console-logs.txt
-SEARCH_PATHS=(apps/studio/src apps/studio/src-commercial)
+SEARCH_PATHS=(apps/studio/src)
 
 current=$(git grep -nE 'console\.log\(' "${SEARCH_PATHS[@]}" \
   | awk -F: '

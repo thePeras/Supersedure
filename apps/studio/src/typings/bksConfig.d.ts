@@ -33,34 +33,6 @@ declare interface IBksConfig {
                 quoted: string[];
             };
         };
-        cassandra: {
-            allowSkipToLastPage: boolean;
-            autoRollbackWarningWindow: number;
-            autocompleteQuoteCharacter: number;
-            manualTransactionTimeout: number;
-            maxConnections: number;
-            maxReservedConnections: number;
-            paramTypes: {
-                named: any[];
-                numbered: any[];
-                positional: boolean;
-                quoted: any[];
-            };
-        };
-        clickhouse: {
-            allowSkipToLastPage: boolean;
-            autoRollbackWarningWindow: number;
-            autocompleteQuoteCharacter: number;
-            manualTransactionTimeout: number;
-            maxConnections: number;
-            maxReservedConnections: number;
-            paramTypes: {
-                named: any[];
-                numbered: any[];
-                positional: boolean;
-                quoted: any[];
-            };
-        };
         cockroachdb: {
             allowSkipToLastPage: boolean;
             autoRollbackWarningWindow: number;
@@ -91,50 +63,6 @@ declare interface IBksConfig {
                 quoted: any[];
             };
         };
-        duckdb: {
-            allowSkipToLastPage: boolean;
-            autoRollbackWarningWindow: number;
-            autocompleteQuoteCharacter: number;
-            manualTransactionTimeout: number;
-            maxConnections: number;
-            maxReservedConnections: number;
-            paramTypes: {
-                named: any[];
-                numbered: any[];
-                positional: boolean;
-                quoted: any[];
-            };
-        };
-        dynamodb: {
-            allowSkipToLastPage: boolean;
-            autoRollbackWarningWindow: number;
-            autocompleteQuoteCharacter: number;
-            columnSampleSize: number;
-            cursorFetchTimeout: number;
-            manualTransactionTimeout: number;
-            maxConnections: number;
-            maxReservedConnections: number;
-            paramTypes: {
-                named: any[];
-                numbered: any[];
-                positional: boolean;
-                quoted: any[];
-            };
-        };
-        firebird: {
-            allowSkipToLastPage: boolean;
-            autoRollbackWarningWindow: number;
-            autocompleteQuoteCharacter: number;
-            manualTransactionTimeout: number;
-            maxConnections: number;
-            maxReservedConnections: number;
-            paramTypes: {
-                named: any[];
-                numbered: any[];
-                positional: boolean;
-                quoted: any[];
-            };
-        };
         greengage: {
             allowSkipToLastPage: boolean;
             autoRollbackWarningWindow: number;
@@ -147,20 +75,6 @@ declare interface IBksConfig {
             paramTypes: {
                 named: any[];
                 numbered: string[];
-                positional: boolean;
-                quoted: any[];
-            };
-        };
-        libsql: {
-            allowSkipToLastPage: boolean;
-            autoRollbackWarningWindow: number;
-            autocompleteQuoteCharacter: number;
-            manualTransactionTimeout: number;
-            maxConnections: number;
-            maxReservedConnections: number;
-            paramTypes: {
-                named: any[];
-                numbered: any[];
                 positional: boolean;
                 quoted: any[];
             };
@@ -180,39 +94,11 @@ declare interface IBksConfig {
                 quoted: any[];
             };
         };
-        mongodb: {
-            allowSkipToLastPage: boolean;
-            autoRollbackWarningWindow: number;
-            autocompleteQuoteCharacter: number;
-            manualTransactionTimeout: number;
-            maxConnections: number;
-            maxReservedConnections: number;
-            paramTypes: {
-                named: any[];
-                numbered: any[];
-                positional: boolean;
-                quoted: any[];
-            };
-        };
         mysql: {
             allowSkipToLastPage: boolean;
             autoRollbackWarningWindow: number;
             autocompleteQuoteCharacter: number;
             connectTimeout: number;
-            manualTransactionTimeout: number;
-            maxConnections: number;
-            maxReservedConnections: number;
-            paramTypes: {
-                named: any[];
-                numbered: any[];
-                positional: boolean;
-                quoted: any[];
-            };
-        };
-        oracle: {
-            allowSkipToLastPage: boolean;
-            autoRollbackWarningWindow: number;
-            autocompleteQuoteCharacter: number;
             manualTransactionTimeout: number;
             maxConnections: number;
             maxReservedConnections: number;
@@ -269,50 +155,6 @@ declare interface IBksConfig {
                 quoted: any[];
             };
         };
-        scylladb: {
-            allowSkipToLastPage: boolean;
-            autoRollbackWarningWindow: number;
-            autocompleteQuoteCharacter: number;
-            manualTransactionTimeout: number;
-            maxConnections: number;
-            maxReservedConnections: number;
-            paramTypes: {
-                named: any[];
-                numbered: any[];
-                positional: boolean;
-                quoted: any[];
-            };
-        };
-        snowflake: {
-            allowSkipToLastPage: boolean;
-            autoRollbackWarningWindow: number;
-            autocompleteQuoteCharacter: number;
-            connectionTimeout: number;
-            idleTimeout: number;
-            manualTransactionTimeout: number;
-            maxConnections: number;
-            maxReservedConnections: number;
-            paramTypes: {
-                named: any[];
-                numbered: any[];
-                positional: boolean;
-                quoted: any[];
-            };
-        };
-        sqlanywhere: {
-            allowSkipToLastPage: boolean;
-            autoRollbackWarningWindow: number;
-            autocompleteQuoteCharacter: number;
-            manualTransactionTimeout: number;
-            maxConnections: number;
-            maxReservedConnections: number;
-            paramTypes: {
-                named: any[];
-                numbered: any[];
-                positional: boolean;
-                quoted: any[];
-            };
-        };
         sqlite: {
             allowSkipToLastPage: boolean;
             autoRollbackWarningWindow: number;
@@ -355,36 +197,7 @@ declare interface IBksConfig {
                 quoted: any[];
             };
         };
-        surrealdb: {
-            allowSkipToLastPage: boolean;
-            autoRollbackWarningWindow: number;
-            autocompleteQuoteCharacter: number;
-            connectionTimeout: number;
-            manualTransactionTimeout: number;
-            maxConnections: number;
-            maxReservedConnections: number;
-            paramTypes: {
-                named: any[];
-                numbered: any[];
-                positional: boolean;
-                quoted: any[];
-            };
-        };
         tidb: {
-            allowSkipToLastPage: boolean;
-            autoRollbackWarningWindow: number;
-            autocompleteQuoteCharacter: number;
-            manualTransactionTimeout: number;
-            maxConnections: number;
-            maxReservedConnections: number;
-            paramTypes: {
-                named: any[];
-                numbered: any[];
-                positional: boolean;
-                quoted: any[];
-            };
-        };
-        trino: {
             allowSkipToLastPage: boolean;
             autoRollbackWarningWindow: number;
             autocompleteQuoteCharacter: number;

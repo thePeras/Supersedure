@@ -32,10 +32,10 @@ const Handlers = { ...AppDbHandlers, ...TabHistoryHandlers }
 
 function buildSavedConnection(overrides: Partial<SavedConnection> = {}): SavedConnection {
   const c = new SavedConnection()
-  c.connectionType = 'clickhouse'
-  c.name = 'ClickHouse Prod'
-  c.host = 'clickhouse.example.com'
-  c.port = 8123
+  c.connectionType = 'postgresql'
+  c.name = 'Postgres Prod'
+  c.host = 'postgres.example.com'
+  c.port = 5432
   c.username = 'user'
   c.defaultDatabase = 'analytics'
   Object.assign(c, overrides)
@@ -45,16 +45,16 @@ function buildSavedConnection(overrides: Partial<SavedConnection> = {}): SavedCo
 // What the connection form hands to `connect` when the user fills in a brand
 // new connection and hits Connect without saving: a fresh config (built the
 // same way the connection screen builds one, via appdb/saved/new) with no id.
-async function unsavedSnowflakeConfig() {
+async function unsavedMysqlConfig() {
   const fresh = await AppDbHandlers['appdb/saved/new']({ init: null })
   return {
     ...fresh,
     id: null,
     workspaceId: WORKSPACE_ID,
-    connectionType: 'snowflake',
+    connectionType: 'mysql',
     name: null,
-    host: 'account.snowflakecomputing.com',
-    port: 443,
+    host: 'mysql.example.com',
+    port: 3306,
     username: 'app',
     defaultDatabase: 'ANALYTICS',
   }
@@ -145,18 +145,18 @@ describe('connecting without saving (phantom tabs)', () => {
   }
 
   async function connectUnsaved() {
-    return await connectWith(await unsavedSnowflakeConfig())
+    return await connectWith(await unsavedMysqlConfig())
   }
 
   it('does not surface a saved connection\'s tabs in an unsaved-connection session', async () => {
-    // The user's saved ClickHouse connection, with open tabs.
+    // The user's saved Postgres connection, with open tabs.
     const saved = buildSavedConnection()
     await saved.save()
-    await openTabFor(saved.id, 'clickhouse query 1')
-    await openTabFor(saved.id, 'clickhouse query 2')
+    await openTabFor(saved.id, 'postgres query 1')
+    await openTabFor(saved.id, 'postgres query 2')
 
-    // New Snowflake connection, connected without saving. Its used_connection
-    // row is the first one, so its PK equals the ClickHouse saved_connection
+    // New MySQL connection, connected without saving. Its used_connection
+    // row is the first one, so its PK equals the Postgres saved_connection
     // id - the collision that used to leak the tabs.
     const usedConfig = await connectUnsaved()
 
@@ -177,28 +177,28 @@ describe('connecting without saving (phantom tabs)', () => {
 
     await connectUnsaved()
 
-    // User opens a tab while connected to the unsaved Snowflake connection.
+    // User opens a tab while connected to the unsaved MySQL connection.
     await store.dispatch('tabs/add', {
-      item: { tabType: 'query', title: 'snowflake scratch', position: 1 }
+      item: { tabType: 'query', title: 'mysql scratch', position: 1 }
     })
 
-    // Later: connect to the saved ClickHouse connection.
+    // Later: connect to the saved Postgres connection.
     const config = await connectWith(await asConfig(saved))
     expect(config.id).toBe(saved.id)
 
-    // The Snowflake tab does not leak into this session.
+    // The MySQL tab does not leak into this session.
     const titles = (store.state as any).tabs.tabs.map((t: any) => t.title)
-    expect(titles).not.toContain('snowflake scratch')
+    expect(titles).not.toContain('mysql scratch')
   })
 
   it('does not purge a saved connection\'s closed-tab history on unsaved connect', async () => {
     const saved = buildSavedConnection()
     await saved.save()
 
-    // A ClickHouse tab closed 30 days ago (still restorable via
+    // A Postgres tab closed 30 days ago (still restorable via
     // "reopen last closed tab" until clearOldDeletedTabs runs for that
     // connection).
-    const tab = await openTabFor(saved.id, 'closed clickhouse tab')
+    const tab = await openTabFor(saved.id, 'closed postgres tab')
     const thirtyDaysAgo = new Date()
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
     await OpenTab.getRepository()
@@ -220,13 +220,13 @@ describe('connecting without saving (phantom tabs)', () => {
   it('reconnecting from the recent list to a never-saved connection stays unkeyed', async () => {
     const saved = buildSavedConnection()
     await saved.save()
-    await openTabFor(saved.id, 'clickhouse query')
+    await openTabFor(saved.id, 'postgres query')
 
     await connectUnsaved()
     await store.dispatch('data/usedconnections/load')
 
     // The recent-connections list row for a connection that was never saved.
-    // Its PK equals the ClickHouse saved id here - the collision that used to
+    // Its PK equals the Postgres saved id here - the collision that used to
     // leak the tabs.
     const recent = (store.state as any)['data/usedconnections'].items[0]
     expect(recent.connectionId).toBeNull()
@@ -271,14 +271,14 @@ describe('connecting without saving (phantom tabs)', () => {
     await store.dispatch('data/usedconnections/load')
     await connectWith(await asConfig(saved))
 
-    // The saved connection gets its own used_connection row; the Snowflake
-    // row is not overwritten with ClickHouse details or linked to the saved
+    // The saved connection gets its own used_connection row; the MySQL
+    // row is not overwritten with Postgres details or linked to the saved
     // connection just because the ids coincide.
     const used = await UsedConnection.find({ order: { id: 'ASC' } })
     expect(used).toHaveLength(2)
     expect(used[0].connectionId).toBeNull()
-    expect(used[0].connectionType).toBe('snowflake')
+    expect(used[0].connectionType).toBe('mysql')
     expect(used[1].connectionId).toBe(saved.id)
-    expect(used[1].connectionType).toBe('clickhouse')
+    expect(used[1].connectionType).toBe('postgresql')
   })
 })

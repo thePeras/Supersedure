@@ -585,7 +585,6 @@
   import ShortcutHints from './editor/ShortcutHints.vue'
   import SqlTextEditor from "@supersedure-studio/ui-kit/vue/sql-text-editor"
   import BksSuperFormatter from "@supersedure-studio/ui-kit/vue/super-formatter"
-  import SurrealTextEditor from "@supersedure-studio/ui-kit/vue/surreal-text-editor"
   import InAppFolderPicker from "@/components/common/form/InAppFolderPicker.vue"
   import { divider, type Entity } from "@supersedure-studio/ui-kit";
 
@@ -617,7 +616,7 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
 
   export default {
     // this.queryText holds the current editor value, always
-    components: { ResultTable, ProgressBar, ShortcutHints, QueryEditorStatusBar, ErrorAlert, MergeManager, SqlTextEditor, SurrealTextEditor, BksSuperFormatter, QueryEditHistory, InAppFolderPicker },
+    components: { ResultTable, ProgressBar, ShortcutHints, QueryEditorStatusBar, ErrorAlert, MergeManager, SqlTextEditor, BksSuperFormatter, QueryEditHistory, InAppFolderPicker },
     props: {
       tab: Object as PropType<TransportOpenTab>,
       active: Boolean
@@ -771,7 +770,7 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         return !this.dialectData?.disabledFeatures?.manualCommit;
       },
       editorComponent() {
-        return this.connectionType === 'surrealdb' ? SurrealTextEditor : SqlTextEditor;
+        return SqlTextEditor;
       },
       enabled() {
         return !this.dialectData?.disabledFeatures?.queryEditor;
@@ -814,8 +813,7 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           'mysql': 'mysql',
           'mariadb': 'mysql',
           'tidb': 'mysql',
-          'redshift': 'psql',
-          'mongodb': 'psql'
+          'redshift': 'psql'
         }
         return mappings[this.connectionType] || 'generic'
       },
@@ -996,9 +994,9 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         return FormatterDialect(dialectFor(this.queryDialect))
       },
       formatterDialectOptions() {
-        // Only populated for dialects sql-formatter doesn't ship natively
-        // (currently just DynamoDB PartiQL). When null, the formatter falls
-        // back to the string `formatterDialect` prop above.
+        // Only populated for dialects sql-formatter doesn't ship natively.
+        // When null, the formatter falls back to the string
+        // `formatterDialect` prop above.
         const opts = formatOptionsFor(dialectFor(this.queryDialect))
         return 'dialect' in opts ? opts.dialect : null
       },

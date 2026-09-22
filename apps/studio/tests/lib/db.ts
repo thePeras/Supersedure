@@ -12,28 +12,23 @@ import '../../src/common/initializers/big_int_initializer.ts'
 import { safeSqlFormat } from '@/common/utils'
 import { BasicDatabaseClient } from '@/lib/db/clients/BasicDatabaseClient'
 import { SqlGenerator } from '@shared/lib/sql/SqlGenerator'
-import { Client_DuckDB } from '@shared/lib/knex-duckdb'
 import { IDbConnectionPublicServer } from './db/serverTypes'
 // TODO (@day): this may need to be moved uggh
-import { createServer } from '@commercial/backend/lib/db/server'
+import { createServer } from '@/lib/db/server'
 import fs from 'fs'
 import path from 'path'
 import Papa from 'papaparse'
-import { FirebirdData } from '@/shared/lib/dialects/firebird'
 import { LicenseKey } from '@/common/appdb/models/LicenseKey'
 import { TestOrmConnection } from './TestOrmConnection'
 import { buffer as b, uint8 as u } from '@tests/utils'
-import Client_Oracledb from '@shared/lib/knex-oracledb'
-import Client_Firebird from '@shared/lib/knex-firebird'
 import Client_StarRocks from '@shared/lib/knex-starrocks'
-import { DuckDBBlobValue } from '@duckdb/node-api'
 import { parseVersion } from '@/common/version'
 import { convertParamsForReplacement, deparameterizeQuery } from '@/lib/db/sql_tools'
 
 type ConnectionTypeQueries = Partial<Record<ConnectionType, string>>
 type DialectQueries = Record<Dialect, string>
 type Queries = ConnectionTypeQueries & DialectQueries
-type ExpectedQueries = Omit<Queries, 'redshift' | 'cassandra' | 'bigquery' | 'mongodb' | 'sqlanywhere' | 'surrealdb' | 'redis' | 'trino' | 'dynamodb' | 'bedrock'>
+type ExpectedQueries = Omit<Queries, 'redshift' | 'bigquery' | 'redis' | 'bedrock'>
 
 /*
  * Make all properties lowercased. This is useful to even out column names
@@ -85,11 +80,6 @@ const KnexTypes: any = {
   "sqlite": "better-sqlite3",
   "sqlserver": "mssql",
   "cockroachdb": "pg",
-  "firebird": Client_Firebird,
-  "oracle": Client_Oracledb,
-  "duckdb": Client_DuckDB,
-  "cassandra": "cassandra-knex",
-  "scylladb": "cassandra-knex",
 }
 
 export interface Options {
@@ -157,23 +147,11 @@ export class DBTestUtil {
 
     if (options.knex) {
       this.knex = options.knex
-    } else if (config.client === 'trino' || config.client === 'cassandra' || config.client === 'scylladb') {
-      this.knex = null
-    } else if (config.client === 'sqlite' || config.client === 'duckdb') {
+    } else if (config.client === 'sqlite') {
       this.knex = knex({
         client: KnexTypes[config.client],
         connection: {
           filename: database
-        }
-      })
-    } else if (config.client === 'oracle') {
-      this.knex = knex({
-        client: Client_Oracledb,
-        connection: {
-          user: config.user,
-          password: config.password,
-          connectString: `${config.host}:${config.port}/${config.serviceName}`,
-          requestTimeout: 1000
         }
       })
     } else {
@@ -1513,14 +1491,7 @@ export class DBTestUtil {
       const execBatch = async (batch: Record<string, any>[]) => {
         if (pumpError) return
         try {
-          if (this.dbType === 'firebird') {
-            const inserts = batch.reduce((str, row) => `${str}INSERT INTO organizations (${Object.keys(row).join(',')}) VALUES (${Object.values(row).map(FirebirdData.wrapLiteral).join(',')});\n`, '')
-            await this.knex.schema.raw(`
-              EXECUTE BLOCK AS BEGIN
-                ${inserts}
-              END
-            `)
-          } else if (this.dbType === 'sqlserver') {
+          if (this.dbType === 'sqlserver') {
             const { bindings, sql } = this.knex('organizations').insert(batch).toSQL()
             await this.knex.raw(`
               SET IDENTITY_INSERT organizations ON;
@@ -2006,8 +1977,7 @@ export class DBTestUtil {
     })
 
     const rows = await this.knex('contains_binary').select('bin').offset(3).limit(2).orderBy(ID)
-    const sanitize = (b) => b instanceof DuckDBBlobValue ? b.bytes : b
-    expect(rows.map((r) => Buffer.from(sanitize(r.bin)))).toEqual([
+    expect(rows.map((r) => Buffer.from(r.bin))).toEqual([
       b`eeffeeff`,
       b`beefdeed`,
     ])

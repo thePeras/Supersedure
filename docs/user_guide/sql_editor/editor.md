@@ -80,7 +80,7 @@ Transactions run within the query editor will be automatically detected by Super
 
 There is also a [Manual Transaction Mode](./manual-transaction-management.md) that allows you to manually handle every step of this process.
 
-This functionality is currently only available for Postgres, CockroachDB, Redshift, MySQL, MariaDB, SQLServer, Firebird, and Oracle.
+This functionality is currently only available for Postgres, CockroachDB, Redshift, MySQL, MariaDB, and SQLServer.
 
 ## Editing Query Results
 

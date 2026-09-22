@@ -1,4 +1,4 @@
-import CsvImporter from '@commercial/backend/lib/import/formats/csv'
+import CsvImporter from '@/backend/lib/import/formats/csv'
 import Papa from 'papaparse'
 
 jest.mock('fs', () => ({

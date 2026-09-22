@@ -18,7 +18,7 @@
         <div v-else>
           <div class="alert alert-info">
             <i class="material-icons-outlined">info</i>
-            <span>Entering a license will unlock premium features such as Oracle, DuckDB, and ClickHouse connections,
+            <span>Entering a license will unlock premium features such as the
               JSON view, multi-table features, and more. <a
                 href="https://docs.supersedurestudio.io/support/upgrading-from-the-community-edition/"
               >Learn

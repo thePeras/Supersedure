@@ -3,10 +3,7 @@ import CodeMirror from 'codemirror'
 import { Version } from '@/common/version'
 import { ExtendedTableColumn } from '@/lib/db/models'
 
-const communityDialects = ['postgresql', 'greengage', 'sqlite', 'sqlserver', 'mysql', 'starrocks', 'redshift', 'bigquery', 'bedrock', 'redis'] as const
-const ultimateDialects = ['oracle', 'cassandra', 'firebird', 'clickhouse', 'mongodb', 'duckdb', 'sqlanywhere', 'surrealdb', 'trino', 'dynamodb', 'snowflake'] as const
-
-export const Dialects = [...communityDialects, ...ultimateDialects] as const
+export const Dialects = ['postgresql', 'greengage', 'sqlite', 'sqlserver', 'mysql', 'starrocks', 'redshift', 'bigquery', 'bedrock', 'redis'] as const
 
 interface ImportDefaultDataTypes {
   stringType?: string
@@ -21,9 +18,6 @@ interface ImportDefaultDataTypes {
 export const SpecialTypes = ['autoincrement']
 export type Dialect = typeof Dialects[number]
 
-export function isUltimateDialect(d: any) {
-  return ultimateDialects.includes(d)
-}
 export function dialectFor(s: string): Dialect | null {
   switch (s) {
     case 'cockroachdb':
@@ -35,12 +29,8 @@ export function dialectFor(s: string): Dialect | null {
       return 'mysql'
     case 'starrocks':
       return 'starrocks';
-    case 'libsql':
-      return 'sqlite'
     case 'mssql':
       return 'sqlserver'
-    case 'scylladb':
-      return 'cassandra'
     case 'bedrock':
       return 'sqlite'
     default:
@@ -57,67 +47,41 @@ export const DialectTitles: {[K in Dialect]: string} = {
   sqlserver: "SQL Server",
   redshift: "Amazon Redshift",
   sqlite: "SQLite",
-  cassandra: "Apache Cassandra",
   bigquery: "BigQuery",
-  firebird: "Firebird",
-  oracle: "Oracle Database",
-  duckdb: "DuckDB",
-  clickhouse: "ClickHouse",
-  mongodb: "MongoDB",
-  sqlanywhere: 'SqlAnywhere',
-  trino: 'Trino',
-  surrealdb: 'SurrealDB',
   bedrock: 'Bedrock',
   redis: 'Redis',
-  dynamodb: 'Amazon DynamoDB',
-  snowflake: 'Snowflake'
 }
 
-export const KnexDialects = ['postgres', 'sqlite3', 'mssql', 'redshift', 'mysql', 'oracledb', 'firebird', 'cassandra-knex']
+export const KnexDialects = ['postgres', 'sqlite3', 'mssql', 'redshift', 'mysql']
 export type KnexDialect = typeof KnexDialects[number]
 
 export function KnexDialect(d: Dialect): KnexDialect {
   if (d === 'sqlserver') return 'mssql'
-  if (d === 'sqlanywhere') return 'mssql';
   if (d === 'sqlite') return 'sqlite3'
-  if (d === 'oracle') return 'oracledb'
-  if (d === 'cassandra') return 'cassandra-knex'
   if (d === 'greengage') return 'postgres'
   return d as KnexDialect
 }
 // REF: https://github.com/sql-formatter-org/sql-formatter/blob/master/docs/language.md#options
-export type FormatterDialect = 'postgresql' | 'mysql' | 'mariadb' | 'sql' | 'tsql' | 'redshift' | 'plsql' | 'db2' | 'sqlite' | 'trino' | 'snowflake'
+export type FormatterDialect = 'postgresql' | 'mysql' | 'mariadb' | 'sql' | 'tsql' | 'redshift' | 'db2' | 'sqlite'
 export function FormatterDialect(d: Dialect): FormatterDialect {
   if (!d) return 'mysql'
   if (d === 'sqlserver') return 'tsql'
   if (d === 'sqlite') return 'sqlite'
-  if (d === 'oracle') return 'plsql'
   if (d === 'postgresql') return 'postgresql'
   if (d === 'greengage') return 'postgresql'
   if (d === 'redshift') return 'redshift'
-  if (d === 'cassandra') return 'sql'
-  if (d === 'duckdb') return 'sql'
-  if (d === 'trino') return 'trino'
-  if (d === 'surrealdb') return 'sql'
-  if (d === 'snowflake') return 'snowflake'
   return 'mysql' // we want this as the default
 }
 
-// formatOptionsFor — returns sql-formatter config. For dialects sql-formatter
-// knows, returns `{ language }`; for custom dialects (PartiQL) returns
-// `{ dialect: <DialectOptions> }`. Consume via `safeSqlFormat`, which dispatches
-// to either `format` or `formatDialect`.
+// formatOptionsFor — returns sql-formatter config. Consume via `safeSqlFormat`,
+// which dispatches to `format`.
 import type { DialectOptions } from 'sql-formatter'
-import { partiqlDialect } from './partiqlFormatter'
 
 export type FormatterOptions =
   | { language: FormatterDialect }
   | { dialect: DialectOptions }
 
 export function formatOptionsFor(d: Dialect): FormatterOptions {
-  if (d === 'dynamodb') {
-    return { dialect: partiqlDialect }
-  }
   return { language: FormatterDialect(d) }
 }
 
@@ -336,7 +300,6 @@ export interface AlterPartitionsSpec {
   detaches?: string[]
 }
 
-export const AdditionalMongoOrders = [ '2d', '2dsphere', 'text', 'geoHaystack', 'hashed' ];
 
 export interface IndexColumn {
   name: string

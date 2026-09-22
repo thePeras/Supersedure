@@ -10,7 +10,7 @@
       </div>
       <merge-text-editor
         v-else-if="hasPreviewContent"
-        :type="connectionType === 'surrealdb' ? 'surrealdb' : 'sql'"
+        type="sql"
         :current-version="currentText"
         :previous-version="previousText"
         :language-id="languageId"

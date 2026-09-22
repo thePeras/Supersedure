@@ -87,12 +87,6 @@
           :tab-id="tab.id"
           @update-tab="updateTab"
         />
-        <Shell
-          v-if="tab.tabType === 'shell'"
-          :active="activeTab?.id === tab.id"
-          :tab="tab"
-          :tab-id="tab.id"
-        />
         <PluginBase
           v-if="tab.tabType === 'plugin-base'"
           :tab="tab"
@@ -289,7 +283,6 @@
     </confirmation-modal>
 
     <sql-files-import-modal />
-    <create-collection-modal />
   </div>
 </template>
 
@@ -323,9 +316,7 @@ import { DropzoneDropEvent } from '@/common/dropzone'
 import { readWebFile } from '@/common/utils'
 import Noty from 'noty'
 import ConfirmationModal from './common/modals/ConfirmationModal.vue'
-import CreateCollectionModal from './common/modals/CreateCollectionModal.vue'
 import SqlFilesImportModal from '@/components/common/modals/SqlFilesImportModal.vue'
-import Shell from './TabShell.vue'
 
 import { safeSqlFormat as safeFormat } from '@/common/utils';
 import { TabTypeConfig, TransportOpenTab, TransportPluginTab, setFilters, matches, duplicate } from '@/common/transport/TransportOpenTab'
@@ -350,8 +341,6 @@ export default Vue.extend({
     PendingChangesButton,
     ConfirmationModal,
     SqlFilesImportModal,
-    CreateCollectionModal,
-    Shell,
     PluginShell,
     PluginBase,
   },
@@ -692,8 +681,6 @@ export default Vue.extend({
     async createTab(config: TabTypeConfig.Config) {
       if (config.type === "query") {
         this.createQuery()
-      } else if (config.type === "shell") {
-        this.createShell()
       } else if (config.type === "plugin-shell" || config.type === "plugin-base") {
         let tNum = 0;
         let title = config.name;
@@ -715,20 +702,6 @@ export default Vue.extend({
         } as TransportPluginTab;
         await this.addTab(tab)
       }
-    },
-    async createShell() {
-      let sNum = 0;
-      let tabName = "Shell";
-      do {
-        sNum = sNum + 1;
-        tabName = `Shell #${sNum}`;
-      } while (this.tabItems.filter((t) => t.title === tabName).length > 0);
-
-      const result = {} as TransportOpenTab;
-      result.tabType = 'shell';
-      result.title = tabName;
-      result.unsavedChanges = false;
-      await this.addTab(result);
     },
     getNextQueryTitle(queryTitle?) {
       let qNum = 0;
@@ -970,10 +943,6 @@ export default Vue.extend({
       }
     },
     openTableBuilder() {
-      if (this.connectionType === 'mongodb') {
-        this.$root.$emit(AppEvent.openCreateCollectionModal);
-        return;
-      }
       const tab = {} as TransportOpenTab;
       tab.tabType = 'table-builder';
       tab.title = "New Table"

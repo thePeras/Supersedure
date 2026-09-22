@@ -80,7 +80,6 @@ Some databases provide an internal identifier for rows, but they're not always s
 
 The PostgreSQL [ctid](https://www.postgresql.org/docs/current/ddl-system-columns.html#DDL-SYSTEM-COLUMNS-CTID) identifies the physical location of a row, but can change during a vaccum, making it unsuitable as a real row identifier in certain situations.
 
-Oracle's [ROWID](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/ROWID-Pseudocolumn.html#GUID-F6E0FBD2-983C-495D-9856-5E113A17FAF1) is similar, but the docs explicitly state that `You should not use ROWID as the primary key of a table.`.
 
 #### Good-enough isn't good enough
 

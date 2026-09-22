@@ -1,9 +1,9 @@
 // connHandlers pulls in every db client through the connection provider, and
 // loading those under jsdom fails on AbortSignal.timeout. None of it is needed
 // to exercise the transaction timeout bookkeeping.
-jest.mock('@commercial/backend/lib/connection-provider', () => ({ default: {} }))
+jest.mock('@/backend/lib/connection-provider', () => ({ default: {} }))
 
-import { ConnHandlers } from '@commercial/backend/handlers/connHandlers'
+import { ConnHandlers } from '@/handlers/connHandlers'
 import { newState, removeState, state } from '@/handlers/handlerState'
 
 const SID = 'transaction-timeout-test'

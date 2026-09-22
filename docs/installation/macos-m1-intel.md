@@ -14,9 +14,6 @@ Note that by default MacOS will prevent you from installing third-party distribu
 
 Supersedure Studio installers are available for both Intel and Apple silicon Macs. You can choose your preferred installer type when downloading from the website.
 
-!!! warning "Oracle Database Libraries Do Not Support Apple Silicon"
-    Oracle Database libraries and packages are **not** available yet for Apple Silicon. So if you want to connect Supersedure Studio to your Oracle Database you must install the Intel version of Supersedure Studio and [run it in Rosetta 2](https://support.apple.com/en-us/HT211861)
-
 
 ### Choose Your Architecture
 When downloading Supersedure Studio, be sure to choose the version that matches your MacOS architecture.

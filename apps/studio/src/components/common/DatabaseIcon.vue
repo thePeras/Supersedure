@@ -17,27 +17,16 @@
 <script lang="ts">
 import Vue, { PropType } from "vue";
 import {
-  siApachecassandra,
-  siClickhouse,
   siCockroachlabs,
-  siDuckdb,
   siGooglebigquery,
   siMariadb,
-  siMongodb,
   type SimpleIcon,
   siMysql,
   siPostgresql,
   siRedis,
-  siScylladb,
-  siSnowflake,
   siSqlite,
-  siSurrealdb,
   siTidb,
-  siTrino,
 } from "simple-icons";
-import dynamodb from "devicon/icons/dynamodb/dynamodb-original.svg";
-import firebird from "devicon/icons/firebird/firebird-original.svg";
-import oracle from "devicon/icons/oracle/oracle-original.svg";
 import sqlserver from "devicon/icons/microsoftsqlserver/microsoftsqlserver-original.svg";
 import { ConnectionType } from "@/lib/db/types";
 
@@ -45,30 +34,17 @@ type DevIcon = string;
 
 const icons: Record<ConnectionType, SimpleIcon | DevIcon | null> = {
   bigquery: siGooglebigquery,
-  cassandra: siApachecassandra,
-  clickhouse: siClickhouse,
   cockroachdb: siCockroachlabs,
-  duckdb: siDuckdb,
   mariadb: siMariadb,
-  mongodb: siMongodb,
   mysql: siMysql,
   postgresql: siPostgresql,
   redis: siRedis,
-  scylladb: siScylladb,
-  snowflake: siSnowflake,
   sqlite: siSqlite,
-  surrealdb: siSurrealdb,
   tidb: siTidb,
-  trino: siTrino,
-  dynamodb,
-  firebird,
-  oracle,
   sqlserver,
   bedrock: null,
   greengage: null,
-  libsql: null,
   redshift: null,
-  sqlanywhere: null,
   starrocks: null,
 };
 

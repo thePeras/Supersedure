@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest"
-import { parseQuotedEnumValues, parseClickHouseEnumValues } from "@/lib/db/clients/enumParsers"
+import { parseQuotedEnumValues } from "@/lib/db/clients/enumParsers"
 
-describe("parseQuotedEnumValues (MySQL / MariaDB / DuckDB)", () => {
+describe("parseQuotedEnumValues (MySQL / MariaDB)", () => {
   it("parses a simple enum definition", () => {
     expect(parseQuotedEnumValues("enum('a','b','c')")).toEqual(['a', 'b', 'c'])
   })
@@ -28,39 +28,5 @@ describe("parseQuotedEnumValues (MySQL / MariaDB / DuckDB)", () => {
     expect(parseQuotedEnumValues("set('x','y')")).toBeUndefined()
     expect(parseQuotedEnumValues(undefined)).toBeUndefined()
     expect(parseQuotedEnumValues(null)).toBeUndefined()
-  })
-})
-
-describe("parseClickHouseEnumValues", () => {
-  it("parses Enum8 with integer mappings", () => {
-    expect(parseClickHouseEnumValues("Enum8('a' = 1, 'b' = 2)")).toEqual(['a', 'b'])
-  })
-
-  it("parses Enum16", () => {
-    expect(parseClickHouseEnumValues("Enum16('x' = 1)")).toEqual(['x'])
-  })
-
-  it("ignores negative integer mappings", () => {
-    expect(parseClickHouseEnumValues("Enum8('a' = -1, 'b' = 1)")).toEqual(['a', 'b'])
-  })
-
-  it("unwraps Nullable()", () => {
-    expect(parseClickHouseEnumValues("Nullable(Enum8('a' = 1, 'b' = 2))")).toEqual(['a', 'b'])
-  })
-
-  it("unwraps LowCardinality()", () => {
-    expect(parseClickHouseEnumValues("LowCardinality(Enum8('a' = 1))")).toEqual(['a'])
-  })
-
-  it("unescapes backslash-escaped quotes", () => {
-    expect(parseClickHouseEnumValues("Enum8('a\\'b' = 1)")).toEqual(["a'b"])
-  })
-
-  it("returns undefined for non-enum types", () => {
-    expect(parseClickHouseEnumValues("String")).toBeUndefined()
-    expect(parseClickHouseEnumValues("Int32")).toBeUndefined()
-    expect(parseClickHouseEnumValues("Nullable(String)")).toBeUndefined()
-    expect(parseClickHouseEnumValues(undefined)).toBeUndefined()
-    expect(parseClickHouseEnumValues(null)).toBeUndefined()
   })
 })

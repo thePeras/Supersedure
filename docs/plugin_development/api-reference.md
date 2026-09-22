@@ -339,7 +339,7 @@ async function getConnectionInfo(): Promise<{
   id: number;
   workspaceId: number;
   connectionName: string;
-  databaseType: 'postgresql' | 'mysql' | 'mariadb' | 'sqlite' | 'sqlserver' | 'oracle' | 'mongodb' | 'cassandra' | 'clickhouse' | 'firebird' | 'bigquery' | 'redshift' | 'duckdb' | 'libsql' | 'redis' | 'surrealdb' | 'trino';
+  databaseType: 'postgresql' | 'greengage' | 'mysql' | 'mariadb' | 'tidb' | 'starrocks' | 'sqlite' | 'sqlserver' | 'cockroachdb' | 'bigquery' | 'redshift' | 'redis' | 'bedrock';
   databaseName: string;
   defaultSchema?: string;
   readOnlyMode: boolean;
@@ -351,22 +351,18 @@ async function getConnectionInfo(): Promise<{
 | Value | Database |
 |-------|----------|
 | `postgresql` | PostgreSQL |
+| `greengage` | GreengageDB |
 | `mysql` | MySQL |
 | `mariadb` | MariaDB |
+| `tidb` | TiDB |
+| `starrocks` | StarRocks |
 | `sqlite` | SQLite |
 | `sqlserver` | SQL Server |
-| `oracle` | Oracle Database |
-| `mongodb` | MongoDB |
-| `cassandra` | Apache Cassandra |
-| `clickhouse` | ClickHouse |
-| `firebird` | Firebird |
+| `cockroachdb` | CockroachDB |
 | `bigquery` | Google BigQuery |
 | `redshift` | Amazon Redshift |
-| `duckdb` | DuckDB |
-| `libsql` | LibSQL |
 | `redis` | Redis |
-| `surrealdb` | SurrealDB |
-| `trino` | Trino |
+| `bedrock` | Bedrock |
 
 ### setTabTitle
 
@@ -1261,7 +1257,7 @@ Represents the currently selected range in a data table.
 
 Union of supported database types:
 
-`'postgresql' | 'mysql' | 'mariadb' | 'sqlite' | 'sqlserver' | 'oracle' | 'mongodb' | 'cassandra' | 'clickhouse' | 'firebird' | 'bigquery' | 'redshift' | 'duckdb' | 'libsql' | 'redis' | 'surrealdb' | 'trino'`
+`'postgresql' | 'greengage' | 'mysql' | 'mariadb' | 'tidb' | 'starrocks' | 'sqlite' | 'sqlserver' | 'cockroachdb' | 'bigquery' | 'redshift' | 'redis' | 'bedrock'`
 
 ### ThemeType
 

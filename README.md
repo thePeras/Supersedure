@@ -35,7 +35,7 @@ from starter repository
 - [Google BigQuery](https://cloud.google.com/bigquery)
 - [Redis](https://redis.io/)
 - [GreengageDB](https://greengagedb.org/)
-- [ScyllaDB](https://www.scylladb.com/)
+- [StarRocks](https://www.starrocks.io/)
 
 ## Documentation
 

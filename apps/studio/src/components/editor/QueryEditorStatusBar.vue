@@ -158,7 +158,6 @@
           <x-label>Download as Markdown</x-label>
         </x-menuitem>
         <span
-          v-if="dialect !== 'mongodb'"
           v-tooltip="{
             content: downloadFullTooltip
           }"

@@ -73,11 +73,8 @@ ownership obvious, and tsconfig still has `"types": ["jest"]`, so an ambient
 DB specs need no extra CI wiring. The per-database matrix collects specs from
 both trees (`bin/get-db-files-as-json.sh`), and `bin/integration-tests.sh`
 routes each chunk by path: `tests/vitest/**` goes to `yarn
-vitest:integration`, everything else to jest. Two caveats:
+vitest:integration`, everything else to jest. One caveat:
 
-- The vitest branch of that dispatch skips the oracle instant-client setup.
-  When `oracle.spec.js` migrates, move the dispatch below that setup or gate
-  it.
 - The `sqlserver-winauth` and kerberos flows call `internal:integration`
   directly and bypass the dispatch. Migrating those specs means updating
   `windows-login-tests.yaml` / `dev/docker_*_kerberos/tests/entrypoint.sh` in
@@ -112,7 +109,7 @@ vitest:integration`, everything else to jest. Two caveats:
   when paired with `vi.resetModules()`. Files affected today:
   security.spec.ts, saved_connection.spec.js, sqlite.exploit.spec.ts,
   webPluginLoader.exploit.spec.ts, protocolBuilder.exploit.spec.ts,
-  node-ssh-forward.spec.ts, oracle.spec.js, clearLogFilesMigration.spec.ts,
+  node-ssh-forward.spec.ts, clearLogFilesMigration.spec.ts,
   ssh-agent*.spec.js, ssh-skip-bad-identity.spec.js. Stray `require()` in
   **src** is fine — the `commonjs()` plugin handles it, same as the renderer
   build.

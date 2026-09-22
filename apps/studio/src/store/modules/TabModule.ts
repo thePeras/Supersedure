@@ -28,19 +28,11 @@ export const TabModule: Module<State, RootState> = {
         name: "Query",
         menuItem: { label: 'Add Query', shortcut: 'Control+T' },
       },
-      {
-        type: 'shell',
-        name: "Shell",
-        menuItem: { label: 'Add Shell' },
-      },
     ],
   }),
   getters: {
     tabTypeConfigs(state, _getters, _rootState, rootGetters) {
       return state.allTabTypeConfigs.filter((tab) => {
-        if (tab.type === "shell" && rootGetters.dialectData?.disabledFeatures?.shell) {
-          return false;
-        }
         if (tab.type === "plugin-shell" || tab.type === "plugin-base") {
           return !window.bksConfig.get(`plugins.${tab.pluginId}.disabled`);
         }

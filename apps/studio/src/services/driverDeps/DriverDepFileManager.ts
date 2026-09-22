@@ -193,18 +193,6 @@ export default class DriverDepFileManager {
     const entries = fs.readdirSync(extractRoot);
     for (const entry of entries) {
       const fullPath = path.join(extractRoot, entry);
-      if (
-        fs.statSync(fullPath).isDirectory() &&
-        entry.startsWith("instantclient")
-      ) {
-        log.debug(`Auto-detected extracted directory: "${entry}"`);
-        return fullPath;
-      }
-    }
-
-    // Fallback: first directory
-    for (const entry of entries) {
-      const fullPath = path.join(extractRoot, entry);
       if (fs.statSync(fullPath).isDirectory()) {
         log.debug(`Using first directory as fallback: "${entry}"`);
         return fullPath;

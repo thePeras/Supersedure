@@ -1,5 +1,5 @@
 import os from 'os'
-import { createServer } from '@commercial/backend/lib/db/server'
+import { createServer } from '@/lib/db/server'
 import { IDbConnectionServerConfig } from '@/lib/db/types'
 
 // Exercises the SQL Server integrated-authentication path (windowsAuthEnabled +

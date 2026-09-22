@@ -77,7 +77,6 @@
 <script>
 import TimeAgo from 'javascript-time-ago'
 import { mapGetters, mapState } from 'vuex'
-import { isUltimateType } from '@/common/interfaces/IConnection'
 import EditableText from '@/components/common/EditableText.vue'
 import { AppEvent } from '@/common/AppEvent';
 
@@ -116,16 +115,14 @@ export default {
     label() {
       if (this.savedConnection && this.savedConnection.name && this.savedConnection.name.trim()) {
         return this.savedConnection.name
-      } else if ((this.displayConfig.connectionType === 'sqlite' || this.displayConfig.connectionType === 'libsql') && this.displayConfig.defaultDatabase) {
+      } else if (this.displayConfig.connectionType === 'sqlite' && this.displayConfig.defaultDatabase) {
         return window.main.basename(this.displayConfig.defaultDatabase)
-      } else if (this.displayConfig.connectionType === 'sqlanywhere' && this.displayConfig.sqlAnywhereOptions?.mode === 'file' && this.displayConfig.sqlAnywhereOptions?.databaseFile) {
-        return window.main.basename(this.displayConfig.sqlAnywhereOptions.databaseFile);
       }
 
       return this.$bks.simpleConnectionString(this.displayConfig)
     },
     connectionType() {
-      if (this.displayConfig.connectionType === 'sqlite' || this.displayConfig.connectionType === 'libsql') {
+      if (this.displayConfig.connectionType === 'sqlite') {
         return 'path'
       }
 
@@ -194,9 +191,7 @@ export default {
 
       event.stopPropagation();
 
-      const canConnect = this.$store.getters.isUltimate
-        ? true
-        : !isUltimateType(this.displayConfig.connectionType)
+      const canConnect = true
       const canWrite = this.config.canWrite ?? true;
 
       const options = [

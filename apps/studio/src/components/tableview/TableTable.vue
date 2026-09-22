@@ -162,7 +162,6 @@
               <span>Apply</span>
             </x-button>
             <x-button
-              v-if="dialect !== 'mongodb'"
               class="btn btn-primary"
               menu
             >
@@ -225,15 +224,6 @@
           <i class="material-icons">settings</i>
           <i class="material-icons">arrow_drop_down</i>
           <x-menu>
-            <x-menuitem
-              v-if="isCassandra"
-              @click="cassandraAllowFilter = !this.isCassandra"
-            >
-              <x-label>
-                <i class="material-icons">{{ this.isCassandra ? 'check' : 'horizontal_rule' }}</i>
-                Allow Filtering
-              </x-label>
-            </x-menuitem>
             <x-menuitem @click="exportTable" :disabled="dialectData?.disabledFeatures?.exportTable">
               <x-label>Export whole table</x-label>
             </x-menuitem>
@@ -421,9 +411,6 @@ export default Vue.extend({
     },
     isEmpty() {
       return _.isEmpty(this.data);
-    },
-    isCassandra() {
-      return ['cassandra', 'scylladb'].includes(this.connectionType)
     },
     queryDialect() {
       return this.dialectData?.queryDialectOverride ?? this.dialect;
@@ -1990,8 +1977,6 @@ export default Vue.extend({
             //  filters,
             //  this.table.schema,
             //  selects,
-            //  // FIXME: This should be added to all clients, not just cassandra (cassandra needs ALLOW FILTERING to do filtering because of performance)
-            //  { allowFilter: this.isCassandra }
             //);
 
             this.hasNextPage = response.result.length > this.limit

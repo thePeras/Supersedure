@@ -3,7 +3,7 @@ import os from "os";
 import path from "path";
 import tmp from "tmp";
 
-jest.mock("@commercial/backend/lib/db/server", () => ({
+jest.mock("@/lib/db/server", () => ({
   createServer: jest.fn(),
 }));
 
@@ -12,7 +12,7 @@ jest.mock("@/common/bksConfig", () => ({
   default: { security: { disableSshConfigMatchExec: false } },
 }));
 
-import connectionProvider from "@commercial/backend/lib/connection-provider";
+import connectionProvider from "@/backend/lib/connection-provider";
 
 function makeConfig(overrides: Record<string, unknown> = {}) {
   return {

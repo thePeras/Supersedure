@@ -3,9 +3,9 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 // connHandlers pulls in every db client through the connection provider, and
 // loading those under jsdom fails on AbortSignal.timeout. None of it is needed
 // to exercise the handler plumbing.
-vi.mock("@commercial/backend/lib/connection-provider", () => ({ default: {} }))
+vi.mock("@/backend/lib/connection-provider", () => ({ default: {} }))
 
-import { ConnHandlers } from "@commercial/backend/handlers/connHandlers"
+import { ConnHandlers } from "@/handlers/connHandlers"
 import { errorMessages, getDriverHandler, newState, removeState, state } from "@/handlers/handlerState"
 
 // Reproduction for https://github.com/thePeras/supersedure-studio/issues/4739

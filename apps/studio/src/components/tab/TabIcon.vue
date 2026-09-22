@@ -43,10 +43,6 @@
     class="material-icons item-icon"
   >import_export</i>
   <i
-    v-else-if="tab.tabType === 'shell'"
-    class="material-icons item-icon query"
-  >terminal</i>
-  <i
     v-else
     class="material-icons item-icon"
   >{{ tabTypeConfig?.icon || 'new_releases' }}</i>

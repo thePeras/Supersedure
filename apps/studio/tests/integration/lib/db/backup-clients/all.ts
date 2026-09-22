@@ -1,5 +1,5 @@
 import { BaseCommandClient } from "@/lib/db/BaseCommandClient";
-import { errorMessages } from "@commercial/backend/handlers/backupHandlers";
+import { errorMessages } from "@/handlers/backupHandlers";
 import { Command } from "@/lib/db/models";
 import { BackupConfig } from "@/lib/db/models/BackupConfig";
 import fs from 'fs'

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Supersedure Studio is a cross-platform SQL editor and database manager built with Electron, Vue.js 2, and TypeScript. It supports 15+ databases and offers both community (GPLv3) and paid editions.
+Supersedure Studio is a cross-platform SQL editor and database manager built with Electron, Vue.js 2, and TypeScript. It is GPLv3 throughout — the commercial-licensed code and the databases it supported were removed from this fork.
 
 ## Architecture
 
@@ -21,11 +21,11 @@ Supersedure Studio is a cross-platform SQL editor and database manager built wit
 - **Styling**: SCSS with multiple themes
 
 ### Key Entry Points
-All entrypoints are listed under src-commercial/entrypoints
-- **Main Process**: `src-commercial/entrypoints/main.ts` (Electron main)
-- **Renderer Process**: `src-commercial/entrypoints/renderer.ts` & `src/App.vue` (Vue application)
-- **Preload Script**: `src-commercial/entrypoints/preload.ts`
-- **Utility Process*: `src-commercial/entrypoints/utility.ts`
+All entrypoints are listed under src/entrypoints
+- **Main Process**: `src/entrypoints/main.ts` (Electron main)
+- **Renderer Process**: `src/entrypoints/renderer.ts` & `src/App.vue` (Vue application)
+- **Preload Script**: `src/entrypoints/preload.ts`
+- **Utility Process**: `src/entrypoints/utility.ts`
 
 ### Core Interfaces
 - **ConnectionInterface** - Database connection screen
@@ -111,15 +111,13 @@ assets/            # Styles, fonts, images
 ```
 
 ### Database Client Architecture
-- Supports 15+ database types through unified client interface
+- Supports the community database types through a unified client interface
 - Database-specific clients in `src/lib/db/`
 - Connection pooling and SSH tunneling support
 - TypeORM used for app's internal SQLite database
 
 ### License Model
-- Community features: GPLv3 license
-- Paid features: Commercial EULA (code in `src-commercial/`)
-- Both editions share the same codebase
+- Everything in this repository is GPLv3. See [LICENSE.md](./LICENSE.md).
 
 ### Plugin System
 - Extensible architecture for third-party plugins
@@ -177,7 +175,6 @@ Examples:
 
 ```typescript
 "@" -> "./src"
-"@commercial" -> "./src-commercial"
 "@shared" -> "./src/shared"
 "assets" -> "./src/assets"
 "@bksLogger" -> resolved per-build:
@@ -190,7 +187,7 @@ Examples:
 
 ## Database Support
 
-The app supports 15+ databases including PostgreSQL, MySQL, SQLite, SQL Server, Oracle, BigQuery, MongoDB, and more. Database-specific connection logic is in `src/components/connection/` with corresponding client implementations in `src/lib/db/`.
+The app supports PostgreSQL, GreengageDB, MySQL, MariaDB, TiDB, StarRocks, SQLite, SQL Server, Amazon Redshift, CockroachDB, BigQuery, Redis, and Bedrock. Database-specific connection logic is in `src/components/connection/` with corresponding client implementations in `src/lib/db/`.
 
 ## Documentation Translation Guidelines
 

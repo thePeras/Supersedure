@@ -31,11 +31,14 @@ try {
 
 const externals = ['better-sqlite3', 'sqlite3',
         'sequelize', 'reflect-metadata',
-        'cassandra-driver', 'mysql2', 'ssh2', 'mysql',
-        'oracledb', '@electron/remote', "@google-cloud/bigquery",
-        'pg-query-stream', 'electron', '@duckdb/node-api',
-        '@mongosh/browser-runtime-electron', '@mongosh/service-provider-node-driver',
-        'mongodb-client-encryption', 'sqlanywhere', 'ws', 'kerberos', 'msnodesqlv8',
+        'mysql2', 'ssh2', 'mysql',
+        '@electron/remote', "@google-cloud/bigquery",
+        'pg-query-stream', 'electron',
+        'ws', 'kerberos', 'msnodesqlv8',
+        // knex statically requires its oracledb dialect. The driver isn't
+        // installed and the app never selects that dialect, so leave the
+        // require unresolved rather than failing the bundle.
+        'oracledb',
         ...ensureInstalled,
       ]
 
@@ -114,14 +117,14 @@ const aliasFor = (loggerFile) => ({
 
 const mainArgs = {
   ...commonArgs,
-  entryPoints: ['src-commercial/entrypoints/main.ts', 'src-commercial/entrypoints/preload.ts'],
+  entryPoints: ['src/entrypoints/main.ts', 'src/entrypoints/preload.ts'],
   alias: aliasFor('mainLogger.ts'),
   plugins: [getElectronPlugin("Main")]
 }
 
 const utilityArgs = {
   ...commonArgs,
-  entryPoints: ['src-commercial/entrypoints/utility.ts'],
+  entryPoints: ['src/entrypoints/utility.ts'],
   alias: aliasFor('utilityLogger.ts'),
   plugins: [getElectronPlugin("Utility")]
 }

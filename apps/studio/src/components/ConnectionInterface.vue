@@ -65,7 +65,7 @@
                   {{ friendlyConnectionType }}
                 </button>
               </div>
-              <div v-if="config.connectionType && !shouldUpsell">
+              <div v-if="config.connectionType">
                 <!-- INDIVIDUAL DB CONFIGS -->
                 <postgres-form
                   v-if="config.connectionType === 'cockroachdb'"
@@ -116,87 +116,15 @@
                   :testing="testing"
                   :disabled="editingDisabled"
                 />
-                <firebird-form
-                  v-else-if="config.connectionType === 'firebird' && isUltimate"
-                  :config="config"
-                  :testing="testing"
-                  :disabled="editingDisabled"
-                />
-                <oracle-form
-                  v-if="config.connectionType === 'oracle' && isUltimate"
-                  :config="config"
-                  :testing="testing"
-                  :disabled="editingDisabled"
-                />
-                <cassandra-form
-                  v-if="['cassandra', 'scylladb'].includes(config.connectionType) && isUltimate"
-                  :config="config"
-                  :testing="testing"
-                  :disabled="editingDisabled"
-                />
-                <click-house-form
-                  v-else-if="config.connectionType === 'clickhouse' && isUltimate"
-                  :config="config"
-                  :testing="testing"
-                  :disabled="editingDisabled"
-                />
-                <trino-form
-                  v-else-if="config.connectionType === 'trino' && isUltimate"
-                  :config="config"
-                  :testing="testing"
-                  :disabled="editingDisabled"
-                />
-                <lib-sql-form
-                  v-else-if="config.connectionType === 'libsql' && isUltimate"
-                  :config="config"
-                  :testing="testing"
-                  :disabled="editingDisabled"
-                />
-                <mongo-db-form
-                  v-else-if="config.connectionType === 'mongodb' && isUltimate"
-                  :config="config"
-                  :testing="testing"
-                  :disabled="editingDisabled"
-                />
-                <duck-db-form
-                  v-else-if="config.connectionType === 'duckdb' && isUltimate"
-                  :config="config"
-                  :testing="testing"
-                  :disabled="editingDisabled"
-                />
-                <sql-anywhere-form
-                  v-else-if="config.connectionType === 'sqlanywhere' && isUltimate"
-                  :config="config"
-                  :testing="testing"
-                  :disabled="editingDisabled"
-                />
-                <surreal-db-form
-                  v-else-if="config.connectionType === 'surrealdb' && isUltimate"
-                  :config="config"
-                  :testing="testing"
-                  :disabled="editingDisabled"
-                />
                 <redis-form
                   v-else-if="config.connectionType === 'redis'"
                   :config="config"
                   :testing="testing"
                   :disabled="editingDisabled"
                 />
-                <dynamo-db-form
-                  v-else-if="config.connectionType === 'dynamodb' && isUltimate"
-                  :config="config"
-                  :testing="testing"
-                  :disabled="editingDisabled"
-                />
-                <snowflake-form
-                  v-else-if="config.connectionType === 'snowflake' && isUltimate"
-                  :config="config"
-                  :testing="testing"
-                  :disabled="editingDisabled"
-                />
 
                 <!-- Set the database up in read only mode (or not, your choice) -->
-                <div class="form-group" v-if="!shouldUpsell">
+                <div class="form-group">
                   <label class="checkbox-group" for="readOnlyMode">
                     <input
                       :disabled="editingDisabled"
@@ -210,7 +138,7 @@
                   </label>
                 </div>
                 <!-- TEST AND CONNECT -->
-                <div v-if="!shouldUpsell" class="test-connect row flex-middle">
+                <div class="test-connect row flex-middle">
                   <span class="expand" />
                   <div class="btn-group">
                     <button
@@ -243,7 +171,6 @@
                   </div>
                 </div>
                 <SaveConnectionForm
-                  v-if="!shouldUpsell"
                   :config="config"
                   :folders="connectionFolders"
                   :disabled="editingDisabled"
@@ -252,12 +179,6 @@
               </div>
             </form>
           </div>
-          <upgrade-panel
-            v-if="shouldUpsell"
-            :feature-name="friendlyConnectionType"
-            standalone
-            class="connection-upgrade-panel"
-          />
           <template v-if="!config.connectionType">
             <div class="pitch" v-if="!isUltimate">
               🌟 <strong>Upgrade</strong> to access the JSON sidebar, AI shell, robust import/export and much more!
@@ -295,19 +216,7 @@ import SqliteForm from './connection/SqliteForm.vue'
 import SqlServerForm from './connection/SqlServerForm.vue'
 import SaveConnectionForm from './connection/SaveConnectionForm.vue'
 import BigQueryForm from './connection/BigQueryForm.vue'
-import FirebirdForm from './connection/FirebirdForm.vue'
-import ClickHouseForm from './connection/ClickHouseForm.vue'
-import LibSQLForm from './connection/LibSQLForm.vue'
-import CassandraForm from './connection/CassandraForm.vue'
-import OracleForm from './connection/OracleForm.vue'
-import MongoDbForm from './connection/MongoDBForm.vue'
-import DuckDbForm from './connection/DuckDBForm.vue'
-import SqlAnywhereForm from './connection/SqlAnywhereForm.vue'
-import TrinoForm from './connection/TrinoForm.vue'
-import SurrealDbForm from './connection/SurrealDBForm.vue'
 import RedisForm from './connection/RedisForm.vue'
-import DynamoDbForm from './connection/DynamoDBForm.vue'
-import SnowflakeForm from './connection/SnowflakeForm.vue'
 import Split from 'split.js'
 import ImportButton from './connection/ImportButton.vue'
 import LoadingSSOModal from '@/components/common/modals/LoadingSSOModal.vue'
@@ -319,10 +228,8 @@ import { dialectFor } from '@shared/lib/dialects/models'
 import { escapeHtml } from '@shared/lib/tabulator'
 import { findClient } from '@/lib/db/clients'
 import { AzureAuthType } from '@/lib/db/types'
-import UpgradePanel from '@/components/upsell/UpgradePanel.vue'
 import Vue from 'vue'
 import { AppEvent } from '@/common/AppEvent'
-import { isUltimateType } from '@/common/interfaces/IConnection'
 import { SmartLocalStorage } from '@/common/LocalStorage'
 import ContentPlaceholderHeading from '@/components/common/loading/ContentPlaceholderHeading.vue'
 import { FriendlyErrorHelper } from '@/frontend/utils/FriendlyErrorHelper'
@@ -333,7 +240,7 @@ const log = rawLog.scope('ConnectionInterface')
 // import ImportUrlForm from './connection/ImportUrlForm';
 
 export default Vue.extend({
-  components: { ConnectionSidebar, MysqlForm, BedrockForm, PostgresForm, RedshiftForm, CassandraForm, Sidebar, SqliteForm, SqlServerForm, SaveConnectionForm, ImportButton, ErrorAlert, OracleForm, BigQueryForm, FirebirdForm, UpgradePanel, LibSqlForm: LibSQLForm, LoadingSsoModal: LoadingSSOModal, ClickHouseForm, TrinoForm, MongoDbForm, DuckDbForm, SqlAnywhereForm, RedisForm, DynamoDbForm, ContentPlaceholderHeading, SurrealDbForm, PrivacyBanner, SnowflakeForm,
+  components: { ConnectionSidebar, MysqlForm, BedrockForm, PostgresForm, RedshiftForm, Sidebar, SqliteForm, SqlServerForm, SaveConnectionForm, ImportButton, ErrorAlert, BigQueryForm, LoadingSsoModal: LoadingSSOModal, RedisForm, ContentPlaceholderHeading, PrivacyBanner,
     DatabaseIcon,
   },
 
@@ -371,21 +278,11 @@ export default Vue.extend({
       }
       return !this.config.canWrite;
     },
-    communityConnectionTypes() {
-      return this.$config.defaults.connectionTypes.filter((ct) => !isUltimateType(ct.value))
-    },
-    ultimateConnectionTypes() {
-      return this.$config.defaults.connectionTypes.filter((ct) => isUltimateType(ct.value)).map((ct) => ({ ...ct, name: `${ct.name}*`}))
-    },
     connectionTypes() {
       return this.$config.defaults.connectionTypes
     },
     friendlyConnectionType() {
       return this.$config.defaults.connectionTypes.find((ct) => ct.value === this.config?.connectionType)?.name ?? "Premium"
-    },
-    shouldUpsell() {
-      if (this.isUltimate) return false
-      return isUltimateType(this.config.connectionType)
     },
     isNewConnection() {
       return _.isNil(this.config) || _.isNil(this.config.id);
@@ -599,10 +496,6 @@ export default Vue.extend({
       if (this.connecting) {
         return
       }
-      if (!this.isUltimate && isUltimateType(this.config.connectionType)) {
-        return
-      }
-
       this.beforeConnect()
       this.connectionError = null
       try {
@@ -625,10 +518,6 @@ export default Vue.extend({
       await this.submit()
     },
     async testConnection() {
-      if (!this.isUltimate && isUltimateType(this.config.connectionType)) {
-        return
-      }
-
       this.beforeConnect()
 
       try {

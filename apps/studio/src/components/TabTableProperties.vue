@@ -160,7 +160,6 @@ import TableIndexesVue from './tableinfo/TableIndexes.vue'
 import TableRelationsVue from './tableinfo/TableRelations.vue'
 import TableTriggersVue from './tableinfo/TableTriggers.vue'
 import TablePartitionsVue from './tableinfo/TablePartitions.vue'
-import TableSchemaValidationVue from './tableinfo/TableSchemaValidation.vue'
 import TableLength from '@/components/common/TableLength.vue'
 import { format as humanBytes } from 'bytes'
 import { AppEvent } from '@/common/AppEvent'
@@ -226,15 +225,6 @@ export default {
           needsProperties: true,
           needsPartitions: true,
           component: TablePartitionsVue,
-          dirty: false
-        },
-        {
-          id: 'schema-validation',
-          name: 'Schema Validation',
-          tableOnly: true,
-          mongoOnly: true,
-          needsProperties: false,
-          component: TableSchemaValidationVue,
           dirty: false
         }
       ],
@@ -304,10 +294,6 @@ export default {
           (this.supportedFeatures.editPartitions && this.table.tabletype != partitionTableType)))) {
           return false
         }
-        if (p.mongoOnly && this.dialect !== 'mongodb') {
-          return false
-        }
-
         if (p.tableOnly) {
           return isTable
         }
