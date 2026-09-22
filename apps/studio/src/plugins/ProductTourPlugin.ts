@@ -38,7 +38,7 @@ const flows: Record<
           const learnMore = document.createElement("a");
           learnMore.innerText = "Learn more";
           learnMore.classList.add("btn", "btn-flat");
-          learnMore.href = "https://beekeeperstudio.io/features/sql-ai";
+          learnMore.href = "https://supersedurestudio.io/features/sql-ai";
           popover.footerButtons.prepend(learnMore);
           const dialect: DialectData = context.store.getters.dialectData;
           if (dialect) {

@@ -1,13 +1,13 @@
 ---
 title: SQL Server
 summary: "Connect to Microsoft SQL Server, including integrated Windows / Kerberos authentication."
-description: "Beekeeper Studio connects to SQL Server with SQL logins, Azure authentication, and integrated Windows / Kerberos (SSPI) authentication. This guide covers the prerequisites for passwordless integrated authentication on Windows, Linux, and macOS."
+description: "Supersedure Studio connects to SQL Server with SQL logins, Azure authentication, and integrated Windows / Kerberos (SSPI) authentication. This guide covers the prerequisites for passwordless integrated authentication on Windows, Linux, and macOS."
 icon: material/database
 ---
 
 # How To Connect to SQL Server
 
-Beekeeper Studio supports several ways to authenticate to Microsoft SQL Server.
+Supersedure Studio supports several ways to authenticate to Microsoft SQL Server.
 Pick the one that matches how your server is set up:
 
 ### SQL Login
@@ -103,7 +103,7 @@ connection — no username, no password — negotiates one of:
 - **NTLM**: the fallback used for standalone/workgroup machines, `localhost`
   connections, or when the Kerberos prerequisites are not met.
 
-Beekeeper Studio uses the same code path for both; the host environment determines
+Supersedure Studio uses the same code path for both; the host environment determines
 which protocol is negotiated.
 
 ## Prerequisites for integrated authentication
@@ -125,7 +125,7 @@ If connections fail, install the latest
 ### Linux
 
 Integrated authentication on Linux requires the following host packages — they are
-**not** bundled with Beekeeper Studio because they register system-wide and depend on
+**not** bundled with Supersedure Studio because they register system-wide and depend on
 your distribution's libraries:
 
 1. **unixODBC** — the ODBC driver manager.

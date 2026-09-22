@@ -15,7 +15,7 @@ const electron = require('@electron/remote');
 const testMode = process.env.TEST_MODE ? true : false;
 let userDirectory =  testMode ? './tmp' : electron?.app.getPath("userData")
 if (process.env.PORTABLE_EXECUTABLE_DIR) {
-  userDirectory = path.join(process.env.PORTABLE_EXECUTABLE_DIR, 'beekeeper_studio_data')
+  userDirectory = path.join(process.env.PORTABLE_EXECUTABLE_DIR, 'supersedure_studio_data')
 }
 
 function fileExistsSync(filename: string): boolean {
@@ -86,7 +86,7 @@ export const api = {
     return path.basename(p, ext);
   },
   readVimrc(pathToVimrc?: string): string[] {
-    const vimrcPath = path.join(pathToVimrc ?? userDirectory, ".beekeeper.vimrc");
+    const vimrcPath = path.join(pathToVimrc ?? userDirectory, ".supersedure.vimrc");
     if (fileExistsSync(vimrcPath)) {
       const data = fs.readFileSync(vimrcPath, { encoding: 'utf-8', flag: 'r'});
       const dataSplit = data.split("\n");

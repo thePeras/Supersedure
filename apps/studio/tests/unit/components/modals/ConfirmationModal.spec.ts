@@ -43,7 +43,7 @@ describe("ConfirmationModal.vue", () => {
     });
   }
 
-  // This is what `$confirmById` (BeekeeperPlugin) does.
+  // This is what `$confirmById` (SupersedurePlugin) does.
   function confirmById(id: string): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
       wrapper.vm.$root.$emit(AppEvent.showConfirmModal, {

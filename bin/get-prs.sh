@@ -8,7 +8,7 @@ if [[ -n "${1-}" ]]; then
     echo "Using provided tag: $TAG"
 else
     # Fetch all tags from GitHub API
-    tags=$(curl -s https://api.github.com/repos/beekeeper-studio/beekeeper-studio/tags | jq -r '.[].name')
+    tags=$(curl -s https://api.github.com/repos/thePeras/supersedure-studio/tags | jq -r '.[].name')
 
     # Filter only valid semver tags (excluding beta/alpha), allowing for 'v' prefix
     valid_tags=$(echo "$tags" | grep -E '^v?[0-9]+\.[0-9]+\.[0-9]+$' | grep -vE 'beta|alpha' | sort -Vr | head -n 9)

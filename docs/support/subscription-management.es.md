@@ -3,7 +3,7 @@ title: Gestion de Suscripciones
 summary: "Como administrar licencias, datos de facturacion y facturas"
 ---
 
-Para administrar tus licencias existentes puedes usar el panel de gestion de licencias disponible en [app.beekeeperstudio.io/purchases][1]
+Para administrar tus licencias existentes puedes usar el panel de gestion de licencias disponible en [app.supersedurestudio.io/purchases][1]
 
 ## Descargar facturas
 
@@ -41,4 +41,4 @@ Se te facturara proporcionalmente por el resto del periodo de facturacion.
 
 
 
-[1]: https://app.beekeeperstudio.io/purchases
+[1]: https://app.supersedurestudio.io/purchases

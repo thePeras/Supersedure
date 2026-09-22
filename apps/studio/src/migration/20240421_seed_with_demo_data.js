@@ -34,8 +34,8 @@ JOIN
     countries ON cheeses.origin_country_id = countries.id;
 
 -- Links:
--- Beekeeper Studio Docs: https://docs.beekeeperstudio.io
--- Website: https://beekeeperstudio.io
+-- Supersedure Studio Docs: https://docs.supersedurestudio.io
+-- Website: https://supersedurestudio.io
 
 `, true)
 

@@ -1,7 +1,7 @@
 ---
 title: Importar datos (CSV, JSON, etc)
-summary: "Toma tus datos e importalos a Beekeeper Studio usando nuestra interfaz facil de apuntar y hacer clic"
-old_url: "https://docs.beekeeperstudio.io/docs/importing-data-csv-json-etc"
+summary: "Toma tus datos e importalos a Supersedure Studio usando nuestra interfaz facil de apuntar y hacer clic"
+old_url: "https://docs.supersedurestudio.io/docs/importing-data-csv-json-etc"
 icon: material/import
 ---
 
@@ -40,7 +40,7 @@ Si prefieres crear una nueva tabla, cambia el interruptor. Solo puedes seguir un
 
 - Elige el archivo a importar.
 - Decide si recortar espacios en blanco de cada celda.
-- Beekeeper auto-detecta separadores y establece valores predeterminados sensatos - puedes anularlos.
+- Supersedure auto-detecta separadores y establece valores predeterminados sensatos - puedes anularlos.
 - Especifica que valores en el archivo deben tratarse como `NULL`.
 - Usa la opcion de vista previa para ver las primeras 10 filas con la configuracion actual aplicada.
 - Cuando estes listo, haz clic en **Mapear a tabla** para continuar.
@@ -97,7 +97,7 @@ Si todo se ve correcto, haz clic en **Ejecutar la importacion**.
 - Si se crea una nueva tabla, se creara antes de que se ejecute la importacion.
 - Al completar, puedes cerrar la ventana o ver tus datos recien importados.
 
-Si hay un error, Beekeeper mostrara el error de la base de datos, que puedes copiar para soporte.
+Si hay un error, Supersedure mostrara el error de la base de datos, que puedes copiar para soporte.
 Como las importaciones se ejecutan en transacciones, las fallas resultan en una reversion - el estado de tu tabla permanecera sin cambios (o la nueva tabla sera eliminada).
 
-Necesitas ayuda? Unete a nuestra [comunidad de Slack](https://launchpass.com/beekeeperstud-lvg5276).
+Necesitas ayuda? Unete a nuestra [comunidad de Slack](https://launchpass.com/supersedurestud-lvg5276).

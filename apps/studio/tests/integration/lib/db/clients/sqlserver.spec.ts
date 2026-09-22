@@ -71,7 +71,7 @@ function testWith(dockerTag: string, readonly: boolean) {
       } as IDbConnectionServerConfig
 
       // Create a test database (tempdb doesn't support READ_COMMITTED_SNAPSHOT)
-      const testDbName = 'beekeeper_test_db'
+      const testDbName = 'supersedure_test_db'
 
       // Connect to master to create the test database
       const masterUtil = new DBTestUtil(config, "master", { defaultSchema: 'dbo', dialect: 'sqlserver'})
@@ -104,7 +104,7 @@ function testWith(dockerTag: string, readonly: boolean) {
     })
 
     afterAll(async () => {
-      const testDbName = 'beekeeper_test_db'
+      const testDbName = 'supersedure_test_db'
       const config = {
         client: 'sqlserver',
         host: container.getHost(),
@@ -397,8 +397,8 @@ function testWith(dockerTag: string, readonly: boolean) {
 
       beforeAll(async () => {
         // util.knex is a direct knex connection; it is not affected by
-        // Beekeeper's readOnlyMode gate, so we can set up fixtures even when
-        // the Beekeeper client is in read-only mode.
+        // Supersedure's readOnlyMode gate, so we can set up fixtures even when
+        // the Supersedure client is in read-only mode.
         await util.knex.schema.raw(`DROP TABLE IF EXISTS dbo.[${dottedTable}]`)
         await util.knex.schema.raw(
           `CREATE TABLE dbo.[${dottedTable}](id int, company_name varchar(255), fingerprint varchar(32))`

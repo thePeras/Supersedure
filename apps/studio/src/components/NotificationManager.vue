@@ -22,7 +22,7 @@ export default Vue.extend({
         closeWith: ['button'],
         buttons: [
           Noty.button('Close', 'btn btn-flat', () => Noty.closeAll('upsell')),
-          Noty.button('Get Started', 'btn btn-primary', () => window.main.openExternally('https://beekeeperstudio.io/pricing/'))
+          Noty.button('Get Started', 'btn btn-primary', () => window.main.openExternally('https://supersedurestudio.io/pricing/'))
         ]
       },
       onboardingNoty: null as Noty | null,
@@ -96,11 +96,11 @@ export default Vue.extend({
       const n = new Noty({
         text: `<div class="noty-onboarding-title">
                 <img class="noty-onboarding-logo" src="${logoUrl}">
-                Welcome to Beekeeper Studio!
+                Welcome to Supersedure Studio!
               </div>
               <div class="noty-onboarding-body">
                 Double click the demo database to explore app features
-                or read the <a class="link" href="https://docs.beekeeperstudio.io/getting-started-guide/">getting started guide</a>.
+                or read the <a class="link" href="https://docs.supersedurestudio.io/getting-started-guide/">getting started guide</a>.
               </div>`,
         closeWith: ['button'],
         layout: 'bottomRight',

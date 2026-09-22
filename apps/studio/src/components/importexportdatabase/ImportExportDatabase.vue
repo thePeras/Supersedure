@@ -29,7 +29,7 @@
       />
     </status-bar>
     <modal
-      class="vue-dialog beekeeper-modal relative job-status success"
+      class="vue-dialog supersedure-modal relative job-status success"
       :name="`success-modal-${tab.id}`"
       @opened="focusCloseTab"
     >
@@ -56,7 +56,7 @@
       </div>
     </modal>
     <modal
-      class="vue-dialog beekeeper-modal relative job-status fail"
+      class="vue-dialog supersedure-modal relative job-status fail"
       :name="`fail-modal-${tab.id}`"
       @opened="focusTryAgain"
     >

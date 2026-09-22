@@ -22,7 +22,7 @@
 | `clipboard`         | `Clipboard`                                               | Custom clipboard handler for the editor used in vim. If provided, it must implement a `write` method to copy text to the clipboard. See [MDN Clipboard API](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard) for more details. | `undefined` | ⚠️     |
 | `height`            | `number`                                                  | **[Deprecated]** Use CSS to control the editor height instead.                                                                                                                                                                            | `undefined` | ❌     |
 
-<!-- Not sure if autofocus should be here, see https://github.com/beekeeper-studio/beekeeper-studio/issues/3051 -->
+<!-- Not sure if autofocus should be here, see https://github.com/thePeras/supersedure-studio/issues/3051 -->
 <!-- | `autoFocus`         | `boolean`                                                 | Automatically focus the editor when it regains window focus after blur.                                                                                                                                                                   | `false`     | ⚠️     | -->
 
 ### Vim Directives

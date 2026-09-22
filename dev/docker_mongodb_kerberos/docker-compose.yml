@@ -107,7 +107,7 @@ services:
     environment:
       KRB_REALM: BKS.TEST
       KRB_TEST_USER: testuser
-      KRB_TEST_PASS: "Beekeeper*1User"
+      KRB_TEST_PASS: "Supersedure*1User"
       MONGODB_KERBEROS_TEST: "1"
       MONGODB_KERBEROS_HOST: mongodb.bks.test
       MONGODB_KERBEROS_PORT: "27017"

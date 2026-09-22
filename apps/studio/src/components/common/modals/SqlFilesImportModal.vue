@@ -8,9 +8,9 @@
       Import SQL Files into Saved Queries
     </template>
     <div v-if="!importing" class="message">
-      This will make a copy of your .sql files and add them to your Beekeeper
+      This will make a copy of your .sql files and add them to your Supersedure
       Studio saved queries. Any changes to the original .sql files will not be
-      reflected in Beekeeper Studio.
+      reflected in Supersedure Studio.
     </div>
     <div v-if="!importing" class="form-group">
       <div class="form-group">

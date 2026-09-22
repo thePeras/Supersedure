@@ -7,15 +7,15 @@ icon: octicons/sparkles-fill-16
 
 ![Vista general de AI](../assets/images/ai/ai-overview-image.png)
 
-El AI Shell de Beekeeper Studio esta modelado segun [Claude Code](https://www.anthropic.com/claude-code) y [Aider](https://aider.chat/). Esta disenado para aumentar la productividad de usuarios tecnicos (como tu!).
+El AI Shell de Supersedure Studio esta modelado segun [Claude Code](https://www.anthropic.com/claude-code) y [Aider](https://aider.chat/). Esta disenado para aumentar la productividad de usuarios tecnicos (como tu!).
 
 
 
 ## Programacion profunda y autoaprendizaje de IA
 
-El AI Shell integra tu agente directamente dentro de Beekeeper Studio. Tiene profundo conocimiento de SQL y la capacidad de explorar esquemas, entender relaciones y restricciones, y escribir y ejecutar SQL (con permiso), directamente dentro de la aplicacion.
+El AI Shell integra tu agente directamente dentro de Supersedure Studio. Tiene profundo conocimiento de SQL y la capacidad de explorar esquemas, entender relaciones y restricciones, y escribir y ejecutar SQL (con permiso), directamente dentro de la aplicacion.
 
-[Visita nuestro sitio web](https://beekeeperstudio.io/features/ai-sql) para videos, capturas de pantalla y mas.
+[Visita nuestro sitio web](https://supersedurestudio.io/features/ai-sql) para videos, capturas de pantalla y mas.
 
 ## Como usar el AI Shell
 
@@ -28,13 +28,13 @@ El AI Shell integra tu agente directamente dentro de Beekeeper Studio. Tiene pro
 
 ## Precios del AI Shell
 
-El AI Shell **esta incluido en todas las versiones de pago de Beekeeper Studio**, sin cargo adicional. Ten en cuenta que eres responsable de los costos incurridos con tu proveedor de IA, ya que Beekeeper no actua como intermediario de ninguna manera.
+El AI Shell **esta incluido en todas las versiones de pago de Supersedure Studio**, sin cargo adicional. Ten en cuenta que eres responsable de los costos incurridos con tu proveedor de IA, ya que Supersedure no actua como intermediario de ninguna manera.
 
-Todas las descargas de Beekeeper Studio vienen con una prueba gratuita de 14 dias, [descarga Beekeeper Studio](https://beekeeperstudio.io/get) para probar el AI Shell ahora mismo.
+Todas las descargas de Supersedure Studio vienen con una prueba gratuita de 14 dias, [descarga Supersedure Studio](https://supersedurestudio.io/get) para probar el AI Shell ahora mismo.
 
 ## Herramientas del AI Shell
 
-Tu agente de IA tiene acceso a las siguientes herramientas desde dentro de Beekeeper Studio:
+Tu agente de IA tiene acceso a las siguientes herramientas desde dentro de Supersedure Studio:
 
 - [x] Listar esquemas, tablas, vistas, funciones y procedimientos
 - [x] Ver relaciones y restricciones de tablas
@@ -46,7 +46,7 @@ Tu agente de IA tiene acceso a las siguientes herramientas desde dentro de Beeke
 
 ## Configuracion del AI Shell
 
-Puedes configurar el AI Shell usando el [sistema de configuracion](./configuration.md) de Beekeeper Studio.
+Puedes configurar el AI Shell usando el [sistema de configuracion](./configuration.md) de Supersedure Studio.
 
 {% ini-include section="plugins.bks-ai-shell" %}
 
@@ -65,9 +65,9 @@ Para detalles, consulta [el repositorio de instrucciones](https://github.com/bee
 
 ## Privacidad de datos del AI Shell
 
-El AI shell es 100% opcional. Incluso cuando esta en uso, ningun dato se envia desde el AI Shell a los servidores de Beekeeper Studio. El AI Shell se comunica directamente con tu agente de IA elegido -- sin intermediarios.
+El AI shell es 100% opcional. Incluso cuando esta en uso, ningun dato se envia desde el AI Shell a los servidores de Supersedure Studio. El AI Shell se comunica directamente con tu agente de IA elegido -- sin intermediarios.
 
-Para comenzar a usar el AI Shell debes elegir tu agente e ingresar una clave API. Al hacerlo, estas permitiendo que el AI Shell de Beekeeper Studio se comunique con tu agente de IA elegido.
+Para comenzar a usar el AI Shell debes elegir tu agente e ingresar una clave API. Al hacerlo, estas permitiendo que el AI Shell de Supersedure Studio se comunique con tu agente de IA elegido.
 
 ### Informacion compartida con el agente
 
@@ -110,7 +110,7 @@ Incluso si el usuario de la aplicacion ha ingresado previamente una clave API, e
 
 ### Problema al obtener Ollama
 
-Si el AI Shell no puede conectarse a Ollama, puede deberse a **restricciones CORS**. Necesitaras permitir solicitudes desde Beekeeper Studio.
+Si el AI Shell no puede conectarse a Ollama, puede deberse a **restricciones CORS**. Necesitaras permitir solicitudes desde Supersedure Studio.
 
 #### macOS
 
@@ -120,7 +120,7 @@ Ejecuta uno de los siguientes comandos:
 # Permitir todos los origenes
 launchctl setenv OLLAMA_ORIGINS "*"
 
-# Permitir solo Beekeeper Studio
+# Permitir solo Supersedure Studio
 launchctl setenv OLLAMA_ORIGINS "plugin://*"
 ```
 
@@ -134,7 +134,7 @@ Establece una variable de entorno:
 4. Establece el valor a:
 
    * `*` (permitir todos los origenes), o
-   * `plugin://*` (solo Beekeeper Studio).
+   * `plugin://*` (solo Supersedure Studio).
 
 #### Linux
 

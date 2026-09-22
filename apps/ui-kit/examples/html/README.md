@@ -1,6 +1,6 @@
-# Beekeeper Studio UI Kit - HTML Example
+# Supersedure Studio UI Kit - HTML Example
 
-This example shows how to use Beekeeper Studio UI Kit components in a basic HTML application with Vite.
+This example shows how to use Supersedure Studio UI Kit components in a basic HTML application with Vite.
 
 ## Getting Started
 

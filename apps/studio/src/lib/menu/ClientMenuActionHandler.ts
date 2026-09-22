@@ -48,7 +48,7 @@ export default class ClientMenuActionHandler implements IMenuActionHandler {
   }
   reload = () => send('reload')
   disconnect = () => send('disconnect')
-  addBeekeeper = () => send('addBeekeeper')
+  addSupersedure = () => send('addSupersedure')
   togglePrimarySidebar = () => send('togglePrimarySidebar')
   toggleSecondarySidebar = () => send('toggleSecondarySidebar')
   enterLicense = () => send('enterLicense')

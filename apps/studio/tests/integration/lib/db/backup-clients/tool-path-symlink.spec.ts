@@ -1,7 +1,7 @@
 /*
  * Regression coverage for issue #4355:
- *   "BUG: Beekeeper does not follow symlinks (e.g. for az-cli)"
- *   https://github.com/beekeeper-studio/beekeeper-studio/issues/4355
+ *   "BUG: Supersedure does not follow symlinks (e.g. for az-cli)"
+ *   https://github.com/thePeras/supersedure-studio/issues/4355
  *
  * Homebrew exposes a stable symlink (e.g. /opt/homebrew/bin/az) that always
  * points at the currently-installed version under the Cellar

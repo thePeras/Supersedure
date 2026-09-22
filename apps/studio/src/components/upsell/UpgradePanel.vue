@@ -42,7 +42,7 @@
 import Vue from 'vue'
 import UpsellButtons from './common/UpsellButtons.vue'
 
-const UPGRADE_URL = 'https://www.beekeeperstudio.io/upgrade'
+const UPGRADE_URL = 'https://www.supersedurestudio.io/upgrade'
 
 const LIFETIME_TOOLTIP =
   'Subscribe for 12+ months and get lifetime access to any version released within your subscription period.'
@@ -110,7 +110,7 @@ export default Vue.extend({
     headingText(): string {
       if (this.title) return this.title
       if (this.featureName) return `${this.featureName} needs a paid license`
-      return 'Upgrade Beekeeper Studio'
+      return 'Upgrade Supersedure Studio'
     },
     descriptionText(): string {
       if (this.description) return this.description

@@ -3,16 +3,16 @@
     <div class="alert alert-info">
       <i class="material-icons-outlined">info</i>
       <div v-if="showCli">
-        You are signing in using the <b>'Azure CLI'</b> Beekeeper Studio will attempt to use the AZ tool in path specified.
-        <a href="https://docs.beekeeperstudio.io/user_guide/connecting/azure-entraid/#azure-cli-authentication">Learn more</a>
+        You are signing in using the <b>'Azure CLI'</b> Supersedure Studio will attempt to use the AZ tool in path specified.
+        <a href="https://docs.supersedurestudio.io/user_guide/connecting/azure-entraid/#azure-cli-authentication">Learn more</a>
       </div>
       <div v-else>
         You are using azure authentication, depending on the authentication
         method you might need to configure some existing items first. Please
         refer to our
         <a
-          href="https://docs.beekeeperstudio.io/user_guide/connecting/azure-entraid"
-        >Beekeeper Docs</a>
+          href="https://docs.supersedurestudio.io/user_guide/connecting/azure-entraid"
+        >Supersedure Docs</a>
         for more information
       </div>
     </div>
@@ -21,7 +21,7 @@
         v-show="showCli"
         tool-name="az"
         label="Azure CLI Path"
-        docs-href="https://docs.beekeeperstudio.io/user_guide/connecting/azure-entraid"
+        docs-href="https://docs.supersedurestudio.io/user_guide/connecting/azure-entraid"
         :value="config.azureAuthOptions.cliPath"
         @input="val => $set(config.azureAuthOptions, 'cliPath', val)"
       />

@@ -3,9 +3,9 @@ import { parseRowData } from '../../../../../src/lib/db/clients/bigquery'
 describe("BigQuery unit tests", () => {
   describe("parseRowData", () => {
     it("should pass through primitive values unchanged", () => {
-      const data = [{ id: 1, name: "beekeeper", active: true, missing: null }]
+      const data = [{ id: 1, name: "supersedure", active: true, missing: null }]
       expect(parseRowData(data)).toEqual([
-        { id: 1, name: "beekeeper", active: true, missing: null },
+        { id: 1, name: "supersedure", active: true, missing: null },
       ])
     })
 

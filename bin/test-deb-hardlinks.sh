@@ -9,7 +9,7 @@ DEB_FILE="${1:-}"
 if [ -z "$DEB_FILE" ] || [ ! -f "$DEB_FILE" ]; then
   echo "Usage: $0 <path-to-deb-file>"
   echo ""
-  echo "Example: $0 apps/studio/dist_electron/beekeeper-studio_5.5.3_amd64.deb"
+  echo "Example: $0 apps/studio/dist_electron/supersedure-studio_5.5.3_amd64.deb"
   exit 1
 fi
 
@@ -74,36 +74,36 @@ docker run --rm --privileged \
     echo '=== Verifying Installation ==='
 
     # Check package is installed
-    if ! apt list --installed 2>/dev/null | grep -q beekeeper-studio; then
+    if ! apt list --installed 2>/dev/null | grep -q supersedure-studio; then
       echo '✗ ERROR: Package not found in installed packages'
       exit 1
     fi
     echo '✓ Package is installed'
 
     # Check binary exists
-    if [ ! -f '/opt/Beekeeper Studio/beekeeper-studio' ]; then
-      echo '✗ ERROR: Binary not found at /opt/Beekeeper Studio/beekeeper-studio'
+    if [ ! -f '/opt/Supersedure Studio/supersedure-studio' ]; then
+      echo '✗ ERROR: Binary not found at /opt/Supersedure Studio/supersedure-studio'
       exit 1
     fi
-    echo '✓ Binary exists at /opt/Beekeeper Studio/beekeeper-studio'
+    echo '✓ Binary exists at /opt/Supersedure Studio/supersedure-studio'
 
     # Check symlink was created
-    if [ ! -L '/usr/bin/beekeeper-studio' ]; then
-      echo '✗ ERROR: Symlink not found at /usr/bin/beekeeper-studio'
+    if [ ! -L '/usr/bin/supersedure-studio' ]; then
+      echo '✗ ERROR: Symlink not found at /usr/bin/supersedure-studio'
       exit 1
     fi
-    echo '✓ Symlink exists at /usr/bin/beekeeper-studio'
+    echo '✓ Symlink exists at /usr/bin/supersedure-studio'
 
     # Check symlink target
-    LINK_TARGET=\$(readlink '/usr/bin/beekeeper-studio')
-    if [ \"\$LINK_TARGET\" != '/opt/Beekeeper Studio/beekeeper-studio' ]; then
+    LINK_TARGET=\$(readlink '/usr/bin/supersedure-studio')
+    if [ \"\$LINK_TARGET\" != '/opt/Supersedure Studio/supersedure-studio' ]; then
       echo \"✗ ERROR: Symlink points to wrong target: \$LINK_TARGET\"
       exit 1
     fi
     echo '✓ Symlink points to correct target'
 
     # Check binary has executable permissions (at source, not via symlink)
-    if [ ! -x '/opt/Beekeeper Studio/beekeeper-studio' ]; then
+    if [ ! -x '/opt/Supersedure Studio/supersedure-studio' ]; then
       echo '⚠ Warning: Binary does not have execute permissions'
       echo '  (This is a tmpfs limitation, not a hardlinks issue)'
     else

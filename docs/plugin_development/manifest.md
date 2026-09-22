@@ -7,7 +7,7 @@ icon: material/code-json
 # Plugin Manifest Reference
 
 !!! warning "Beta Feature"
-    The plugin system is in beta (available in Beekeeper Studio 5.3+). We'd love your feedback!
+    The plugin system is in beta (available in Supersedure Studio 5.3+). We'd love your feedback!
 
 The `manifest.json` file defines your plugin's metadata, capabilities, settings, and permissions. This file must be located in the root of your plugin directory.
 
@@ -24,7 +24,7 @@ The `manifest.json` file defines your plugin's metadata, capabilities, settings,
 | `capabilities`    | `Capabilities`         | Yes      | Defines what views your plugin provides.                                                                                   |
 | `pluginEntryDir`  | `string`               | No       | Path to your plugin's built files relative to the plugin root. Defaults to project root.                                   |
 | `manifestVersion` | `1 \| 0`               | No       | Version of the manifest format. Defaults to `0`.                                                                           |
-| `minAppVersion`   | `string`               | No       | Minimum Beekeeper Studio version required. If not specified, all version of Beekeeper Studio are supported.                |
+| `minAppVersion`   | `string`               | No       | Minimum Supersedure Studio version required. If not specified, all version of Supersedure Studio are supported.                |
 | `settings`        | `unknown`              | No       | _(Planned for future releases)_ Configuration options that can be set via config files.                                    |
 | `permissions`     | `unknown`              | No       | _(Planned for future releases)_ List of permissions your plugin requires.                                                  |
 

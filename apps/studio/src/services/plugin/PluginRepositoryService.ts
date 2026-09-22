@@ -13,7 +13,7 @@ export default class PluginRepositoryService {
   constructor(options?: { octokitOptions?: OctokitOptions }) {
     this.octokit = new Octokit({
       baseUrl: process.env.BKS_PLUGIN_GITHUB_API_BASE_URL,
-      userAgent: "Beekeeper Studio",
+      userAgent: "Supersedure Studio",
       auth: process.env.BKS_PLUGIN_GITHUB_TOKEN,
       log,
       ...options?.octokitOptions,
@@ -86,16 +86,16 @@ export default class PluginRepositoryService {
 
   async fetchOfficial(): Promise<PluginRegistryEntry[]> {
     return await this.fetchJson(
-      "beekeeper-studio",
-      "beekeeper-studio-plugins",
+      "supersedure-studio",
+      "supersedure-studio-plugins",
       "plugins.json"
     );
   }
 
   async fetchCommunity(): Promise<PluginRegistryEntry[]> {
     return await this.fetchJson(
-      "beekeeper-studio",
-      "beekeeper-studio-plugins",
+      "supersedure-studio",
+      "supersedure-studio-plugins",
       "community-plugins.json"
     );
   }

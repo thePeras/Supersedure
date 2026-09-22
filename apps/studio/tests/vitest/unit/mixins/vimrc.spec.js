@@ -108,7 +108,7 @@ describe("Vimrc parsing: noremap", () => {
     ])
   })
 
-  // https://github.com/beekeeper-studio/beekeeper-studio/issues/2953
+  // https://github.com/thePeras/supersedure-studio/issues/2953
   it("rejects a recursive mapping that contains its own key", () => {
     const { directives, errors } = parseVimrc(['nmap y "*y'])
 

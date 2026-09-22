@@ -3,7 +3,7 @@
     <div class="alert alert-warning">
       <i class="material-icons">warning</i>
       <span>
-        Redis support is still in beta. Please report any problems on <a href="https://github.com/beekeeper-studio/beekeeper-studio/issues/new/choose">our issue tracker</a>.
+        Redis support is still in beta. Please report any problems on <a href="https://github.com/thePeras/supersedure-studio/issues/new/choose">our issue tracker</a>.
       </span>
     </div>
     

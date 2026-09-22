@@ -23,8 +23,8 @@ module.exports = async function (context) {
     'resources',
     'launcher-script.sh'
   )
-  // rename beekeeper-studio to beekeeper-studio-bin
+  // rename supersedure-studio to supersedure-studio-bin
   await renameAsync(sourceExecutable, targetExecutable)
-  // rename launcher script to beekeeper-studio
+  // rename launcher script to supersedure-studio
   await renameAsync(launcherScript, sourceExecutable)
 }

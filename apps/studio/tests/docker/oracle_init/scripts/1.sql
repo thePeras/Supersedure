@@ -1,5 +1,5 @@
 
-ALTER SESSION SET CONTAINER=BEEKEEPER;
+ALTER SESSION SET CONTAINER=SUPERSEDURE;
 --
 -- Table structure for table actor, just to get things working
 --

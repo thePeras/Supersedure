@@ -31,13 +31,13 @@ describe("MongoDB SSH Tunnel Tests", () => {
     const config = {
       connectionType: 'mongodb',
       // mongo is reachable from the ssh container via the ssh_mongo network (by container name)
-      url: 'mongodb://beekeeper:password@mongo:27017/bee?authSource=admin',
+      url: 'mongodb://supersedure:password@mongo:27017/bee?authSource=admin',
       sshEnabled: true,
       sshMode: 'userpass',
       // ssh is directly reachable from the test runner via its mapped port
       sshHost: sshContainer.getHost(),
       sshPort: sshContainer.getMappedPort(2222),
-      sshUsername: 'beekeeper',
+      sshUsername: 'supersedure',
       sshPassword: 'password',
     }
 
@@ -63,19 +63,19 @@ describe("MongoDB SSH Tunnel Tests", () => {
     beforeAll(async () => {
       const config = {
         connectionType: 'mongodb',
-        url: 'mongodb://beekeeper:password@mongo:27017/bee?authSource=admin',
+        url: 'mongodb://supersedure:password@mongo:27017/bee?authSource=admin',
         sshEnabled: true,
         sshMode: 'userpass',
         // ssh is reachable from the bastion container via the bastion_ssh network (by container name)
         sshHost: 'test_ssh_mongo_gateway',
         sshPort: 2222,
-        sshUsername: 'beekeeper',
+        sshUsername: 'supersedure',
         sshPassword: 'password',
         // bastion is the only ssh container reachable from the test runner via its mapped port
         sshBastionHost: bastionContainer.getHost(),
         sshBastionHostPort: bastionContainer.getMappedPort(2222),
         sshBastionMode: 'userpass',
-        sshBastionUsername: 'beekeeper',
+        sshBastionUsername: 'supersedure',
         sshBastionPassword: 'password',
       }
 

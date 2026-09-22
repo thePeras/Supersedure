@@ -21,7 +21,7 @@
             v-else-if="!config.connectionType"
             class="empty-state"
           >
-            <h3>Welcome to Beekeeper Studio</h3>
+            <h3>Welcome to Supersedure Studio</h3>
             <p>Start by adding new connection.</p>
             <p>Or connection from a URL.</p>
             <div class="actions">
@@ -261,22 +261,22 @@
           <template v-if="!config.connectionType">
             <div class="pitch" v-if="!isUltimate">
               🌟 <strong>Upgrade</strong> to access the JSON sidebar, AI shell, robust import/export and much more!
-              <a href="https://beekeeperstudio.io/pricing" class="">Upgrade</a>.
+              <a href="https://supersedurestudio.io/pricing" class="">Upgrade</a>.
             </div>
             <div class="pitch" v-else-if="isTrial">
               🌟 <strong>Trial expires {{ $bks.timeAgo(trialLicense.validUntil) }}</strong> Upgrade now to make sure you
               don't lose access.
-              <a href="https://beekeeperstudio.io/pricing" class="">Upgrade</a>.
+              <a href="https://supersedurestudio.io/pricing" class="">Upgrade</a>.
             </div>
             <div class="pitch" v-else>
               🌟 <strong>AI Shell</strong> - Let an LLM explore your database and write SQL for you. Bring your own API key. Simply open a new tab to get started.
-              <a href="https://www.beekeeperstudio.io/features/sql-ai">Learn more</a>
+              <a href="https://www.supersedurestudio.io/features/sql-ai">Learn more</a>
             </div>
           </template>
         </div>
 
         <small class="app-version">
-          <a href="https://www.beekeeperstudio.io/releases/latest">Beekeeper Studio {{ version }}</a>
+          <a href="https://www.supersedurestudio.io/releases/latest">Supersedure Studio {{ version }}</a>
         </small>
       </div>
     </div>

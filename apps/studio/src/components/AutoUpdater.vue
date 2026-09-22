@@ -41,7 +41,7 @@ export default Vue.extend({
         queue: 'download'
       }),
       installNotification: new Noty({
-        text: "Update downloaded. Restart Beekeeper Studio to install",
+        text: "Update downloaded. Restart Supersedure Studio to install",
         layout: 'bottomRight',
         timeout: false,
         closeWith: ['button'],
@@ -80,7 +80,7 @@ export default Vue.extend({
       this.manualNotification.show()
     },
     linkToDownload() {
-      window.main.openExternally("https://beekeeperstudio.io/get");
+      window.main.openExternally("https://supersedurestudio.io/get");
     },
     triggerInstall() {
       window.main.triggerInstall();

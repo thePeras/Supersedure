@@ -1,6 +1,6 @@
 <template>
   <portal to="modals">
-    <modal class="vue-dialog beekeeper-modal" :name="modalName">
+    <modal class="vue-dialog supersedure-modal" :name="modalName">
       <div class="dialog-content">
         <div class="dialog-c-title">
           Your license has ended
@@ -13,7 +13,7 @@
         </button>
         <a
           ref="learnMore"
-          href="https://docs.beekeeperstudio.io/docs/upgrading-from-the-community-edition"
+          href="https://docs.supersedurestudio.io/docs/upgrading-from-the-community-edition"
           class="btn btn-flat"
         >
           Learn more

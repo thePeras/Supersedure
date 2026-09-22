@@ -18,7 +18,7 @@
     <div class="not-supported">
       <div class="card-flat padding">
         <h3 class="card-title">
-          Beekeeper does not currently support {{ isRestore ? 'restore' : 'backups' }} for {{ dialect }} ☹️
+          Supersedure does not currently support {{ isRestore ? 'restore' : 'backups' }} for {{ dialect }} ☹️
         </h3>
       </div>
     </div>
@@ -45,7 +45,7 @@
       class="backup-tab-progress"
     >
       <modal
-        class="vue-dialog beekeeper-modal relative job-status success"
+        class="vue-dialog supersedure-modal relative job-status success"
         :name="`success-modal-${tab.id}`"
         @opened="focusCloseTab"
       >
@@ -72,7 +72,7 @@
         </div>
       </modal>
       <modal
-        class="vue-dialog beekeeper-modal relative job-status fail"
+        class="vue-dialog supersedure-modal relative job-status fail"
         :name="`fail-modal-${tab.id}`"
         @opened="focusTryAgain"
       >

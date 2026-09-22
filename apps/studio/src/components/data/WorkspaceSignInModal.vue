@@ -1,7 +1,7 @@
 <template>
   <modal
     name="workspace"
-    class="vue-dialog beekeeper-modal"
+    class="vue-dialog supersedure-modal"
     @opened="focus"
   >
     <form @submit.prevent="login">
@@ -18,7 +18,7 @@
         >
           Team workspace account sign-in <a
             v-tooltip="'Store connections and queries in the cloud, share with colleagues. Click to learn more.'"
-            href="https://beekeeperstudio.io/workspaces"
+            href="https://supersedurestudio.io/workspaces"
           ><i class="material-icons">help_outlined</i></a>
         </div>
         <error-alert :error="error" />
@@ -45,11 +45,11 @@
       <div class="vue-dialog-buttons flex-between">
         <span class="left">
           <a
-            href="https://app.beekeeperstudio.io/users/sign_up"
+            href="https://app.supersedurestudio.io/users/sign_up"
             class="small text-muted"
           >Create Account</a>
           <a
-            href="https://app.beekeeperstudio.io/users/sign_in"
+            href="https://app.supersedurestudio.io/users/sign_in"
             class="small text-muted"
           >Forgot Password</a>
         </span>

@@ -14,7 +14,7 @@
 //   - a separate, unencrypted key is loaded into a real ssh-agent and authorized
 //     on the server,
 //   - agent mode with no ~/.ssh/config IdentityFile entries.
-// Beekeeper must skip the encrypted default key and authenticate via the agent.
+// Supersedure must skip the encrypted default key and authenticate via the agent.
 
 import { execSync } from 'child_process'
 import * as fs from 'fs'
@@ -122,7 +122,7 @@ describe('SSH Tunnel Tests (skip encrypted default IdentityFile in agent mode)',
       sshMode: 'agent',
       sshHost: container.getHost(),
       sshPort: container.getMappedPort(2222),
-      sshUsername: 'beekeeper',
+      sshUsername: 'supersedure',
     }
 
     connection = ConnectionProvider.for(config)

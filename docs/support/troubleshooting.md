@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting
-summary: "How to debug issues with Beekeeper Studio"
-old_url: "https://docs.beekeeperstudio.io/docs/troubleshooting"
+summary: "How to debug issues with Supersedure Studio"
+old_url: "https://docs.supersedurestudio.io/docs/troubleshooting"
 ---
 
 
@@ -12,8 +12,8 @@ Hopefully you can solve your problems with the details below. If not please  [Co
 
 Feel free to file an issue or start a discussion, even if you're not sure if something is wrong. We're a super nice community, and we all help each other out.
 
-- [File an issue](https://github.com/beekeeper-studio/beekeeper-studio/issues/new/choose)
-- [Start a discussion](https://github.com/beekeeper-studio/beekeeper-studio/discussions/new)
+- [File an issue](https://github.com/thePeras/supersedure-studio/issues/new/choose)
+- [Start a discussion](https://github.com/thePeras/supersedure-studio/discussions/new)
 
 
 ## Tools for taking screen recordings when reporting issues.
@@ -29,7 +29,7 @@ Here are the tooks I recommend for taking quick and easy screen captures as GIF 
 Just copy/paste the screen recording into your Github issue and GitHub will figure out the rest.
 
 
-## How to Debug Beekeeper Studio
+## How to Debug Supersedure Studio
 
 ### Check Developer Tools for errors
 
@@ -39,11 +39,11 @@ Are there any errors here? Take a screenshot and attach them to a new issue!
 
 ### Enable Debug Mode and Collect Logs
 
-You can find logs for Beekeeper Studio in these directories:
+You can find logs for Supersedure Studio in these directories:
 
-- Linux: `~/.config/beekeeper-studio/logs/{process}.log`
-- macOS: `~/Library/Logs/beekeeper-studio/{process}.log`
-- Windows: `%USERPROFILE%\AppData\Roaming\beekeeper-studio\logs\{process}.log`
+- Linux: `~/.config/supersedure-studio/logs/{process}.log`
+- macOS: `~/Library/Logs/supersedure-studio/{process}.log`
+- Windows: `%USERPROFILE%\AppData\Roaming\supersedure-studio\logs\{process}.log`
 
 `{process}` is `main` for the Electron main process and `utility` for the
 database driver process.
@@ -68,22 +68,22 @@ Example invocations:
 
 ```bash
 # Linux / macOS
-BKS_LOG_LEVEL=debug beekeeper-studio
+BKS_LOG_LEVEL=debug supersedure-studio
 
 # Just turn everything on
-DEBUG=1 beekeeper-studio
+DEBUG=1 supersedure-studio
 ```
 
 ```cmd
 :: Windows (cmd)
 set BKS_LOG_LEVEL=debug
-"Beekeeper Studio.exe"
+"Supersedure Studio.exe"
 ```
 
 ```powershell
 # Windows (PowerShell)
 $env:BKS_LOG_LEVEL = "debug"
-& "Beekeeper Studio.exe"
+& "Supersedure Studio.exe"
 ```
 
 Reproduce the issue, then attach the contents of `main.log` and `utility.log`
@@ -100,13 +100,13 @@ Before version 8.0 MySQL did not support `DESC` indexes, but it did support the 
 
 This is a 'feature' of MySQL to make it more compatible with other engines.
 
-If you edit your indexes in Beekeeper Studio and create a `DESC` index it will simply create a `ASC` index instead.
+If you edit your indexes in Supersedure Studio and create a `DESC` index it will simply create a `ASC` index instead.
 
 As of version 8.0 this issue has been solved.
 
 ### I get a SQL syntax error when trying to create a stored procedure
 
-When using the `mysql` command line client you need to remap delimiters using `DELIMITER`, however this syntax isn't supported by MySQL server itself, so it errors when run through Beekeeper Studio.
+When using the `mysql` command line client you need to remap delimiters using `DELIMITER`, however this syntax isn't supported by MySQL server itself, so it errors when run through Supersedure Studio.
 
 You'll likely get an error like `You have an error in your SQL syntax`. Simply remove the delimiter statements to fix it.
 
@@ -149,7 +149,7 @@ If you are writing a SQL query for SQLite and receive the error `no such column`
 - Single quotes are for strings.
 
 
-SQLite originally allowed both single quoted (`'some string'`) and double quoted strings (`"some string"`) in order to stay compatible with MySQL, but the maintainers have since stated that they regret this move, and now recommend that [sqlite be compiled with this feature turned off](https://www.sqlite.org/compile.html#recommended_compile_time_options). Beekeeper Studio follows the recommended compilation options.
+SQLite originally allowed both single quoted (`'some string'`) and double quoted strings (`"some string"`) in order to stay compatible with MySQL, but the maintainers have since stated that they regret this move, and now recommend that [sqlite be compiled with this feature turned off](https://www.sqlite.org/compile.html#recommended_compile_time_options). Supersedure Studio follows the recommended compilation options.
 
 To fix this problem, change your double quoted strings to single quoted strings:
 
@@ -170,10 +170,10 @@ This is usually caused by the sandboxed packaging format (Snap or Flatpak) not h
 
 **Flatpak users:**
 
-Flatpak restricts file access by default. The file picker may show a sandboxed path (e.g. `/run/user/1000/...`) instead of the real path. To grant Beekeeper Studio access to your files:
+Flatpak restricts file access by default. The file picker may show a sandboxed path (e.g. `/run/user/1000/...`) instead of the real path. To grant Supersedure Studio access to your files:
 
 ```bash
-sudo flatpak override io.beekeeperstudio.Studio --filesystem=host
+sudo flatpak override io.supersedurestudio.Studio --filesystem=host
 ```
 
 **Snap users:**
@@ -181,16 +181,16 @@ sudo flatpak override io.beekeeperstudio.Studio --filesystem=host
 If the database is on an external or removable drive, you need to grant extra permissions:
 
 ```bash
-sudo snap connect beekeeper-studio:removable-media :removable-media
+sudo snap connect supersedure-studio:removable-media :removable-media
 ```
 
 If neither of these applies, please [open a ticket][bug] and we'll try to help you debug the problem.
 
-[bug]: https://github.com/beekeeper-studio/beekeeper-studio/issues/new?template=bug_report.md&title=BUG:
+[bug]: https://github.com/thePeras/supersedure-studio/issues/new?template=bug_report.md&title=BUG:
 
 ## PostgreSQL
 
-Please note that Beekeeper Studio only officially supports Postgres 9.3+, although older versions may mostly work.
+Please note that Supersedure Studio only officially supports Postgres 9.3+, although older versions may mostly work.
 
 ### I get a `column does not exist` error, but the column does exist!
 
@@ -219,7 +219,7 @@ See [this StackOverflow answer](https://stackoverflow.com/a/20880247/18818) or [
 
 If you use a time-limited IP allowlist to connect to your database (for example, `gcloud sql connect` which allowlists your IP for 5 minutes), you may find that queries fail after the allowlist window closes.
 
-Beekeeper Studio uses a connection pool that keeps connections alive while idle. By default, idle connections are dropped after 20 seconds. Once dropped, the pool creates new connections on demand — but if your IP is no longer allowlisted, those new connections will be rejected.
+Supersedure Studio uses a connection pool that keeps connections alive while idle. By default, idle connections are dropped after 20 seconds. Once dropped, the pool creates new connections on demand — but if your IP is no longer allowlisted, those new connections will be rejected.
 
 To work around this, you can increase the idle timeout in your [user configuration file](../user_guide/configuration.md) so that connections stay alive longer:
 
@@ -240,7 +240,7 @@ For a more permanent solution, consider using an [SSH tunnel](../user_guide/conn
 
 ### Weird colors on Wayland (wrong saturation, contrast, or readability)
 
-If colors look wrong when running Beekeeper Studio on Wayland — for example oranges appearing yellow, greys looking almost black, whites being overly bright, or text being hard to read — this is caused by a [Chromium/Electron bug with the Wayland color management protocol](https://github.com/electron/electron/issues/49566).
+If colors look wrong when running Supersedure Studio on Wayland — for example oranges appearing yellow, greys looking almost black, whites being overly bright, or text being hard to read — this is caused by a [Chromium/Electron bug with the Wayland color management protocol](https://github.com/electron/electron/issues/49566).
 
 To fix this, add the following flag to your `~/.config/bks-flags.conf` file:
 
@@ -248,7 +248,7 @@ To fix this, add the following flag to your `~/.config/bks-flags.conf` file:
 echo "--disable-features=WaylandWpColorManagerV1" >> ~/.config/bks-flags.conf
 ```
 
-Then restart Beekeeper Studio. See [Linux Installation - Wayland support](../installation/linux.md#wayland-support-including-fractional-scaling) for more details on configuring Wayland flags.
+Then restart Supersedure Studio. See [Linux Installation - Wayland support](../installation/linux.md#wayland-support-including-fractional-scaling) for more details on configuring Wayland flags.
 
 ## Linux (Snap)
 

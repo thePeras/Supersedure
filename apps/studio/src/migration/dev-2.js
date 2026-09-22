@@ -22,7 +22,7 @@ export default {
       serviceName: 'SAKILA',
       defaultDatabase: 'sakila',
       password: 'example',
-      username: 'beekeeper'
+      username: 'supersedure'
     }
   ],
 

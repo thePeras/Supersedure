@@ -1,7 +1,7 @@
 <template>
   <modal
     :name="modalName"
-    class="vue-dialog beekeeper-modal create-workspace-modal"
+    class="vue-dialog supersedure-modal create-workspace-modal"
     @opened="focus"
   >
     <form @submit.prevent="submit">

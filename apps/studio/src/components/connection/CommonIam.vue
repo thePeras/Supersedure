@@ -12,7 +12,7 @@
             credentials.
             <a
               href="https://docs.aws.amazon.com/redshift/latest/mgmt/generating-user-credentials.html"
-            >Amazon Docs</a> - <a href="https://docs.beekeeperstudio.io/user_guide/connecting/amazon-rds">Beekeeper Docs</a>
+            >Amazon Docs</a> - <a href="https://docs.supersedurestudio.io/user_guide/connecting/amazon-rds">Supersedure Docs</a>
           </div>
         </div>
       </div>
@@ -21,8 +21,8 @@
         v-show="showCli"
         tool-name="aws"
         label="AWS CLI Path"
-        docs-href="https://docs.beekeeperstudio.io/user_guide/connecting/amazon-rds"
-        help-tooltip="You are signing in using the <code>AWS CLI</code>. Beekeeper Studio will attempt to use the AWS CLI tool at the specified path."
+        docs-href="https://docs.supersedurestudio.io/user_guide/connecting/amazon-rds"
+        help-tooltip="You are signing in using the <code>AWS CLI</code>. Supersedure Studio will attempt to use the AWS CLI tool at the specified path."
         :value="cliPath"
         @input="val => $set(config.iamAuthOptions, 'cliPath', val)"
       />

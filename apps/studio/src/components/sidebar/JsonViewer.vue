@@ -75,7 +75,7 @@
  * dataId:  use this to update the component with new data.
  */
 import Vue from "vue";
-import TextEditor from "@beekeeperstudio/ui-kit/vue/text-editor"
+import TextEditor from "@supersedure-studio/ui-kit/vue/text-editor"
 import {
   ExpandablePath,
   findKeyPosition,
@@ -87,7 +87,7 @@ import {
   eachPaths,
 } from "@/lib/data/jsonViewer";
 import { mapGetters } from "vuex";
-import { EditorMarker, LineGutter } from "@beekeeperstudio/ui-kit";
+import { EditorMarker, LineGutter } from "@supersedure-studio/ui-kit";
 import { persistJsonFold } from "@/lib/editor/extensions/persistJsonFold";
 import { partialReadonly } from "@/lib/editor/extensions/partialReadOnly";
 import JsonViewerUpsell from '@/components/upsell/JsonViewerSidebarUpsell.vue'

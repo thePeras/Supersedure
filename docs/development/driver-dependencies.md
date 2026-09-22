@@ -159,7 +159,7 @@ existing driver code that already reads that setting needs no changes.
 - Accept and confirm progress noty cycles through downloading →
   extracting → installing → complete.
 - Confirm the file lands under
-  `~/.config/beekeeper-studio/driver-deps/<requirement-id>/`.
+  `~/.config/supersedure-studio/driver-deps/<requirement-id>/`.
 - Confirm the user setting now contains the install path and that
   clearing it (the small "x" on the filled card) removes the install
   directory.

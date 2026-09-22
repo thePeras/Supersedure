@@ -166,7 +166,7 @@ export default Vue.extend({
 
         this.cleanupProgress();
         if (this.providerInfo?.restartRequired) {
-          this.$noty.success("Download complete. Restart Beekeeper Studio to use this driver.");
+          this.$noty.success("Download complete. Restart Supersedure Studio to use this driver.");
         } else {
           this.$noty.success("Download complete.");
         }

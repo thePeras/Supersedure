@@ -2,7 +2,7 @@
   <portal to="modals">
     <modal
       :name="modalName"
-      :class="['vue-dialog', 'beekeeper-modal', 'plugin-manager-modal', { 'plugin-page-open': selectedPlugin }]"
+      :class="['vue-dialog', 'supersedure-modal', 'plugin-manager-modal', { 'plugin-page-open': selectedPlugin }]"
     >
       <div class="dialog-content">
         <div class="dialog-c-title">
@@ -15,7 +15,7 @@
         <div class="plugin-manager-content">
           <div class="plugin-list-container">
             <div class="description">
-              Manage and install plugins in Beekeeper Studio.
+              Manage and install plugins in Supersedure Studio.
             </div>
             <div class="alerts">
               <div
@@ -120,7 +120,7 @@ export default Vue.extend({
     pluginManagerStatus: {
       async handler() {
         if (this.pluginManagerStatus === "failed-to-initialize") {
-          this.errors = ["Plugin system was not initialized properly. Please restart Beekeeper Studio to continue using plugins or report this issue."]
+          this.errors = ["Plugin system was not initialized properly. Please restart Supersedure Studio to continue using plugins or report this issue."]
         } else {
           this.errors = null
         }
@@ -262,7 +262,7 @@ export default Vue.extend({
 
         const entry = entries.find((entry) => entry.id === manifest.id);
 
-        // if the plugin is found in the beekeeper-studio-plugins
+        // if the plugin is found in the supersedure-studio-plugins
         if (entry) {
           data.repo = entry.repo;
           data.updateAvailable = await this.$util

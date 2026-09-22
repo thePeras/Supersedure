@@ -1,4 +1,4 @@
-// Regression tests for https://github.com/beekeeper-studio/beekeeper-studio/issues/4193
+// Regression tests for https://github.com/thePeras/supersedure-studio/issues/4193
 // SSH agent mode must not attempt to read a private key file from disk.
 
 import type { IDbConnectionServerConfig, IDbConnectionServerSSHConfig } from "@/lib/db/types";
@@ -148,7 +148,7 @@ describe("connectTunnel SSH agent handling (#4193)", () => {
     expect(mockReadFileSync.mock.calls[0][0]).toContain("/keys/bastion_key");
   });
 
-  // Regression for https://github.com/beekeeper-studio/beekeeper-studio/issues/4366
+  // Regression for https://github.com/thePeras/supersedure-studio/issues/4366
   // Automatic (agent) mode must skip ~/.ssh/config IdentityFile entries it can't
   // read, mirroring ssh(1), instead of throwing and aborting the connection.
   it("agent mode skips a missing IdentityFile and reads the next existing one (#4366)", async () => {

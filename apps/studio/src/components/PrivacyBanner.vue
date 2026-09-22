@@ -1,7 +1,7 @@
 <template>
   <div class="banner" v-if="privacyMode">
     <span>
-      <a href="https://docs.beekeeperstudio.io/user_guide/security/#privacy-mode">Privacy mode</a> is enabled. Some information is redacted.
+      <a href="https://docs.supersedurestudio.io/user_guide/security/#privacy-mode">Privacy mode</a> is enabled. Some information is redacted.
     </span>
     <button
       type="button"

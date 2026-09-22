@@ -240,14 +240,14 @@ export class AzureAuthService {
     if (refreshToken) {
       return refreshToken;
     }
-    log.debug('Getting beekeeper cloud token');
+    log.debug('Getting supersedure cloud token');
     const res = await axios.post(globals.azureCloudTokenUrl) as Response;
 
-    const beekeeperCloudToken = res.data?.cloud_token;
+    const supersedureCloudToken = res.data?.cloud_token;
     const authCodeUrlParams: msal.AuthorizationUrlRequest = {
       scopes: globals.azureCloudScopes,
-      redirectUri: beekeeperCloudToken.fulfillment_url,
-      state: beekeeperCloudToken.id,
+      redirectUri: supersedureCloudToken.fulfillment_url,
+      state: supersedureCloudToken.id,
       prompt: BksConfig.azure.ssoPrompt
     };
     const authUrl = await this.pca.getAuthCodeUrl(authCodeUrlParams);
@@ -256,11 +256,11 @@ export class AzureAuthService {
 
     process.parentPort.postMessage({ type: 'openExternal', url: authUrl });
 
-    const result = await this.checkStatus(beekeeperCloudToken.url);
+    const result = await this.checkStatus(supersedureCloudToken.url);
     if (!result || result?.data?.cloud_token?.status !== 'fulfilled') {
       throw new Error(`Looks like you didn't sign in on your browser. Please try again.`);
     }
-    await axios.put(beekeeperCloudToken.url, { status: 'claimed' });
+    await axios.put(supersedureCloudToken.url, { status: 'claimed' });
 
     const params = result.data.cloud_token.params;
     const code = params['code'];
@@ -269,8 +269,8 @@ export class AzureAuthService {
       const tokenRequest = {
         code: code,
         scopes: globals.azureCloudScopes,
-        redirectUri: beekeeperCloudToken.fulfillment_url,
-        state: beekeeperCloudToken.id
+        redirectUri: supersedureCloudToken.fulfillment_url,
+        state: supersedureCloudToken.id
       };
 
       const tokenResponse = await this.pca.acquireTokenByCode(tokenRequest)

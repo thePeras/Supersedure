@@ -212,7 +212,7 @@ describe("Firebird Tests", () => {
     });
   });
 
-  // https://github.com/beekeeper-studio/beekeeper-studio/issues/2036
+  // https://github.com/thePeras/supersedure-studio/issues/2036
   it("should return correct data after applying changes", async () => {
     const queries = [
       // Domain creation

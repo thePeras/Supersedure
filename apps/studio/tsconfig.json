@@ -19,8 +19,8 @@
       "@shared/*": ["./src/shared/*"],
       "@commercial/*": ["./src-commercial/*"],
       "@tests/*": ["./tests/*"],
-      "@beekeeperstudio/ui-kit": ["../ui-kit/dist"],
-      "@beekeeperstudio/ui-kit/*": ["../ui-kit/dist/*"]
+      "@supersedure-studio/ui-kit": ["../ui-kit/dist"],
+      "@supersedure-studio/ui-kit/*": ["../ui-kit/dist/*"]
     },
     "lib": [
       "esnext",

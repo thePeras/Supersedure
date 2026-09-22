@@ -2,7 +2,7 @@
 title: How To Connect To SQLite
 summary: "Connect to a SQLite database by double clicking, from the command line, or from the app. You can also optionally load runtime extensions"
 description: Connect to SQLite by double clicking, from the command line, or from the app. Works on Mac, Linux and Windows.
-old_url: "https://docs.beekeeperstudio.io/docs/sqlite"
+old_url: "https://docs.supersedurestudio.io/docs/sqlite"
 icon: simple/sqlite
 ---
 
@@ -12,19 +12,19 @@ Connecting to a SQLite database from the app is pretty easy, simply select `SQLi
 
 ## Creating a new SQLite database
 
-You can create a new SQLite database directly from Beekeeper Studio. Select `SQLite` as the connection type, then click the `Create` button next to the file picker. You'll be prompted to choose a location and filename for your new database.
+You can create a new SQLite database directly from Supersedure Studio. Select `SQLite` as the connection type, then click the `Create` button next to the file picker. You'll be prompted to choose a location and filename for your new database.
 
 ![Creating a new SQLite database](../../assets/images/create-sqlite.png)
 
 ## Connect to SQLite by double clicking
 
-When you install Beekeeper Studio it will create an association for files with the following extensions: `.db`, `.sqlite3`, and `.sqlite`.
+When you install Supersedure Studio it will create an association for files with the following extensions: `.db`, `.sqlite3`, and `.sqlite`.
 
-So long as Beekeeper Studio remains the default app for these file types, you can now just double click any SQLite file to open it in Beekeeper Studio.
+So long as Supersedure Studio remains the default app for these file types, you can now just double click any SQLite file to open it in Supersedure Studio.
 
 ## Opening SQLite files from the command line
 
-You can also use your terminal to open a database in Beekeeper Studio so long as you have the file associations set-up.
+You can also use your terminal to open a database in Supersedure Studio so long as you have the file associations set-up.
 
 - **MacOS** `open ./path/to/example.db`
 - **Linux** `xdg-open ./path/to/example.db`
@@ -48,7 +48,7 @@ allowRuntimeExtensions = false
 
 There are many such extensions, a lot of them are open source. For example [sqlean](https://github.com/nalgeon/sqlean) is an extension that provides a range of new functions and features from crypto functions, to array handling.
 
-Beekeeper Studio provides the ability to load a SQLite extension whenever you connect to a SQLite database.
+Supersedure Studio provides the ability to load a SQLite extension whenever you connect to a SQLite database.
 
 This is a **global** setting, so it applies to any and all SQLite connections on the machine.
 

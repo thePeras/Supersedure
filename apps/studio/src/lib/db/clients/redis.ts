@@ -30,7 +30,7 @@ import _ from "lodash";
 import rawLog from "@bksLogger";
 import { RedisChangeBuilder } from "@shared/lib/sql/change_builder/RedisChangeBuilder";
 import fs from "fs/promises";
-import REDIS_COMMAND_DOCS from "@beekeeperstudio/ui-kit/lib/components/text-editor/extensions/redisCommands.json";
+import REDIS_COMMAND_DOCS from "@supersedure-studio/ui-kit/lib/components/text-editor/extensions/redisCommands.json";
 
 type RedisQueryResult = BaseQueryResult;
 

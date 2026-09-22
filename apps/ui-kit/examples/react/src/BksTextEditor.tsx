@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { TextEditorElement, TextEditorValueChangeEvent } from "@beekeeperstudio/ui-kit";
+import { TextEditorElement, TextEditorValueChangeEvent } from "@supersedure-studio/ui-kit";
 
 export default function BksTextEditor() {
   const [initialized, setInitialized] = useState(false);
@@ -28,8 +28,8 @@ export default function BksTextEditor() {
     //   transport: {
     //     wsUri: "ws://localhost:3000/server",
     //   },
-    //   rootUri: "/home/user/dev/beekeeper-studio/apps/ui-kit/tests/fixtures/",
-    //   documentUri: "/home/user/dev/beekeeper-studio/apps/ui-kit/tests/fixtures/index.ts",
+    //   rootUri: "/home/user/dev/supersedure-studio/apps/ui-kit/tests/fixtures/",
+    //   documentUri: "/home/user/dev/supersedure-studio/apps/ui-kit/tests/fixtures/index.ts",
     // }
 
     textEditorRef.current.addEventListener(

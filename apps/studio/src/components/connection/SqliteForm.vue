@@ -25,7 +25,7 @@
                 <span class="flex">
                   <span class="expand">
                     This is a global setting that affects all SQLite connections.
-                    <a href="https://docs.beekeeperstudio.io/docs/sqlite#runtime-extensions">Learn more</a>
+                    <a href="https://docs.supersedurestudio.io/docs/sqlite#runtime-extensions">Learn more</a>
                   </span>
                 </span>
               </div>
@@ -39,7 +39,7 @@
                   <span class="expand">
                     Runtime extensions are disabled. Configured extensions will be ignored until you set
                     <code>allowRuntimeExtensions = true</code> under <code>[security]</code> in your user config file.
-                    <a href="https://docs.beekeeperstudio.io/docs/sqlite#runtime-extensions">Learn more</a>
+                    <a href="https://docs.supersedurestudio.io/docs/sqlite#runtime-extensions">Learn more</a>
                   </span>
                 </span>
               </div>

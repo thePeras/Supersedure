@@ -8,7 +8,7 @@
       Import Connections from JSON files
     </template>
     <div v-if="!importing" class="message">
-      This will import connections exported from Beekeeper Studio Cloud
+      This will import connections exported from Supersedure Studio Cloud
     </div>
     <div v-if="!importing" class="form-group">
       <div class="form-group">

@@ -4,17 +4,17 @@ summary: Pay once, use the app forever, with no additional payments, even after 
 
 ---
 
-You can purchase a Beekeeper Studio license from [the pricing page](https://beekeeperstudio.io/pricing).
+You can purchase a Supersedure Studio license from [the pricing page](https://supersedurestudio.io/pricing).
 
-Licenses are issued to *people*, not machines. So buy one license for each individual person using the app. Compare plans [on the pricing page](https://beekeeperstudio.io/pricing)
+Licenses are issued to *people*, not machines. So buy one license for each individual person using the app. Compare plans [on the pricing page](https://supersedurestudio.io/pricing)
 
 ## Lifetime Access
 
-Whether you choose an annual or a monthly subscription plan for Beekeeper Studio, you're eligible for a **lifetime usage license**. This means you gain perpetual access to any version of Beekeeper Studio released within your subscription period, allowing you to use the software indefinitely without any additional payments.
+Whether you choose an annual or a monthly subscription plan for Supersedure Studio, you're eligible for a **lifetime usage license**. This means you gain perpetual access to any version of Supersedure Studio released within your subscription period, allowing you to use the software indefinitely without any additional payments.
 
 ### Annual subscribers get lifetime access right away
 
-Suppose you start an annual subscription on March 10, 2021. You'll receive a lifetime license for any version of Beekeeper Studio released until March 10, 2022. Even if your subscription ends, you can continue using any of these versions forever.
+Suppose you start an annual subscription on March 10, 2021. You'll receive a lifetime license for any version of Supersedure Studio released until March 10, 2022. Even if your subscription ends, you can continue using any of these versions forever.
 
 ### Monthly subscribers get lifetime access after 12 months
 
@@ -22,9 +22,9 @@ If you opt for a monthly subscription and complete 12 consecutive months, the sa
 
 ### Lifetime Access Example
 
-- You subscribe to Beekeeper Studio on January 1, 2024
+- You subscribe to Supersedure Studio on January 1, 2024
 - Your subscription ends on February 28 2025
-- You can use any version of Beekeeper Studio (with the features you paid for) released until February 28, 2025 forever. No further payments required
+- You can use any version of Supersedure Studio (with the features you paid for) released until February 28, 2025 forever. No further payments required
 
 ![Lifetime access diagram](../assets/images/lifetime-diagram.png)
 
@@ -32,12 +32,12 @@ If you opt for a monthly subscription and complete 12 consecutive months, the sa
 
 ## Why Our Subscribers Stick Around
 
-Our customers are head over heels for the lifetime license, but there's more to Beekeeper Studio that keeps them subscribed:
+Our customers are head over heels for the lifetime license, but there's more to Supersedure Studio that keeps them subscribed:
 
 1. **20% Renewal Discount**: Stay with us beyond 12 months and receive a 20% discount on future subscription payments.
-2. **Ongoing Software Updates**: As a subscriber, you'll have immediate access to all new features and updates of Beekeeper Studio.
-3. **Access Cloud Storage and Team Workspaces**: Enhance your productivity with [cloud storage and collaborative workspaces](https://www.beekeeperstudio.io/features/workspace).
-4. **Guaranteed Email Support**: We're always here to help, ensuring your experience with Beekeeper Studio is smooth and enjoyable.
+2. **Ongoing Software Updates**: As a subscriber, you'll have immediate access to all new features and updates of Supersedure Studio.
+3. **Access Cloud Storage and Team Workspaces**: Enhance your productivity with [cloud storage and collaborative workspaces](https://www.supersedurestudio.io/features/workspace).
+4. **Guaranteed Email Support**: We're always here to help, ensuring your experience with Supersedure Studio is smooth and enjoyable.
 5. **Price Lock**: Your subscription price is locked in, even if we increase our pricing in the future. (which we should because it's pretty cheap!)
 
 
@@ -49,11 +49,11 @@ You can cancel your subscription anytime but you'll no longer have access to the
 
 ## One Time Payments
 
-We do not offer one-time payments for Beekeeper Studio
+We do not offer one-time payments for Supersedure Studio
 
 ## NET Terms and Master Services Agreements
 
 NET billing is available if you commit to 2 years of the team unlimited plan, or if you purchase an enterprise plan.
 
 
-[Contact Us](mailto:sales@beekeeperstudio.io) for more information.
+[Contact Us](mailto:sales@supersedurestudio.io) for more information.

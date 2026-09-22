@@ -112,7 +112,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import TextEditor from '@beekeeperstudio/ui-kit/vue/text-editor'
+import TextEditor from '@supersedure-studio/ui-kit/vue/text-editor'
 import ErrorAlert from '@/components/common/ErrorAlert.vue'
 import StatusBar from '@/components/common/StatusBar.vue'
 import rawLog from '@bksLogger'

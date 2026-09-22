@@ -17,7 +17,7 @@ import { FakeUtilityProcess } from "@tests/vitest/lib/FakeUtilityProcess"
 import { sleep } from "@tests/vitest/lib/promises"
 
 // End-to-end reproduction of the "Utility Process Crashed -> Disconnect" flow
-// from https://github.com/beekeeper-studio/beekeeper-studio/issues/4739, using
+// from https://github.com/thePeras/supersedure-studio/issues/4739, using
 // the real renderer pieces (Vuex store, ElectronUtilityConnectionClient,
 // UtilityConnection, the two modals) wired over a real MessageChannel to the
 // real backend handlers (connHandlers + handlerState). Only the Electron

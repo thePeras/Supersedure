@@ -39,7 +39,7 @@ export interface IMenuActionHandler {
   switchTheme: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   reload: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   disconnect: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
-  addBeekeeper: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
+  addSupersedure: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   enterLicense: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   backupDatabase: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   restoreDatabase: (menuItem: Electron.MenuItem, win: ElectronWindow) => void

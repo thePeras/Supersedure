@@ -13,7 +13,7 @@ export enum AppEvent {
   closeTab = 'ct',
   closeAllTabs = 'close_all_tabs',
   disconnect = 'dc',
-  beekeeperAdded = 'bkadd',
+  supersedureAdded = 'bkadd',
   openExternally = 'oe',
   togglePrimarySidebar = 'ts',
   toggleSecondarySidebar = 'toggleSecondarySidebar',

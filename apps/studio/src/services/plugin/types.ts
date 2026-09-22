@@ -150,7 +150,7 @@ export type ManifestV1 = Omit<ManifestV0, "manifestVersion" | "capabilities"> & 
 /**
  * The structure of a plugin entry.
  *
- * @see {@link https://github.com/beekeeper-studio/beekeeper-studio-plugins}
+ * @see {@link https://github.com/supersedure-studio/supersedure-studio-plugins}
  */
 export type PluginRegistryEntry = Pick<
   Manifest,
@@ -251,8 +251,8 @@ type DisableState =
 
 /**
  * Indicates where a plugin originates from:
- * - `official`: {@link https://github.com/beekeeper-studio/beekeeper-studio-plugins/blob/main/plugins.json}
- * - `community`: {@link https://github.com/beekeeper-studio/beekeeper-studio-plugins/blob/main/community-plugins.json}
+ * - `official`: {@link https://github.com/supersedure-studio/supersedure-studio-plugins/blob/main/plugins.json}
+ * - `community`: {@link https://github.com/supersedure-studio/supersedure-studio-plugins/blob/main/community-plugins.json}
  * - `unlisted`: Not listed in either repository
  */
 export type PluginOrigin = "official" | "community" | "unlisted";

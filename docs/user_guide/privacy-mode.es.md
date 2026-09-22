@@ -1,11 +1,11 @@
 ---
 title: Modo de privacidad
 summary: "Oculta datos sensibles."
-old_url: "https://docs.beekeeperstudio.io/docs/privacy-mode"
+old_url: "https://docs.supersedurestudio.io/docs/privacy-mode"
 icon: material/eye-off
 ---
 
-Beekeeper Studio proporciona un modo de privacidad que oculta datos sensibles cuando compartes tu pantalla, para que puedas mantener la informacion privada en privado.
+Supersedure Studio proporciona un modo de privacidad que oculta datos sensibles cuando compartes tu pantalla, para que puedas mantener la informacion privada en privado.
 
 
 ## Interaccion

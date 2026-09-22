@@ -1,7 +1,7 @@
 #! /bin/bash
 
-NEW_FILE=/etc/yum.repos.d/beekeeper-studio.repo
-TMP_GPG_KEY="/tmp/beekeeper.key"
+NEW_FILE=/etc/yum.repos.d/supersedure-studio.repo
+TMP_GPG_KEY="/tmp/supersedure.key"
 
 available()
 {
@@ -64,12 +64,12 @@ EOK
 
 # Create the repo file
 cat <<EOF > "$NEW_FILE"
-[beekeeper-studio]
-name=Beekeeper Studio Repository
-baseurl=https://rpm.beekeeperstudio.io/repo/
+[supersedure-studio]
+name=Supersedure Studio Repository
+baseurl=https://rpm.supersedurestudio.io/repo/
 enabled=1
 gpgcheck=1
-gpgkey=https://rpm.beekeeperstudio.io/beekeeper.key
+gpgkey=https://rpm.supersedurestudio.io/supersedure.key
 EOF
 
 
@@ -79,4 +79,4 @@ rpm --import "$TMP_GPG_KEY"
 # Remove the temporary key file
 rm -f "$TMP_GPG_KEY"
 
-echo "Beekeeper Studio repository and GPG key have been configured!"
+echo "Supersedure Studio repository and GPG key have been configured!"

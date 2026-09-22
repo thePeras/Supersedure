@@ -39,7 +39,7 @@ function buildStore(options: { isLifetime: boolean, lastUsedWorkspace: number })
 function seedCloudWorkspace(store: ReturnType<typeof buildStore>) {
   store.commit('credentials/add', {
     id: 1,
-    credential: { id: 1, appId: 'beekeeper-app-x', email: 'user@example.com', token: 'token' },
+    credential: { id: 1, appId: 'supersedure-app-x', email: 'user@example.com', token: 'token' },
     client: null,
     workspaces: [{ id: 42, name: 'Team Workspace' }],
   })

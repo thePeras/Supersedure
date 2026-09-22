@@ -114,7 +114,7 @@ import { mapGetters, mapState } from 'vuex'
 import ProgressBar from './editor/ProgressBar.vue'
 import ResultTable from './editor/ResultTable.vue'
 import ShortcutHints from './editor/ShortcutHints.vue'
-import MongoShell from '@beekeeperstudio/ui-kit/vue/mongo-shell'
+import MongoShell from '@supersedure-studio/ui-kit/vue/mongo-shell'
 import { mongoHintExtension } from '@/lib/editor/extensions/mongoHint'
 
 import QueryEditorStatusBar from './editor/QueryEditorStatusBar.vue'

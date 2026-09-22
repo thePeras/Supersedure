@@ -1,6 +1,6 @@
 <template>
   <portal to="modals">
-    <modal class="vue-dialog beekeeper-modal" :name="modalName">
+    <modal class="vue-dialog supersedure-modal" :name="modalName">
       <div class="dialog-content">
         <div class="dialog-c-title">
           Cloud Workspaces require an active subscription
@@ -55,7 +55,7 @@ export default {
     },
     renew() {
       this.close();
-      this.$native.openLink("https://www.beekeeperstudio.io/pricing");
+      this.$native.openLink("https://www.supersedurestudio.io/pricing");
     },
   },
   mounted() {

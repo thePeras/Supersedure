@@ -1,11 +1,12 @@
 ## Contributing Guidelines
 
+(WIP) - IGNORE THIS
+
 Last updated: Feb 27 2022
 
 We welcome community contributions! If you're thinking of contributing, thank you!
 
-We ask that all contributors abide by our [code of conduct](https://github.com/beekeeper-studio/beekeeper-studio/blob/master/code_of_conduct.md)
-
+We ask that all contributors abide by our [code of conduct](https://github.com/thePeras/supersedure-studio/blob/master/code_of_conduct.md)
 
 ### Opening Issues
 
@@ -73,11 +74,11 @@ All contributions to this repository are made under the [MIT License](https://op
 
 #### What this means practically
 
-If you make a PR, the PR code is licensed as MIT. As soon as I copy (merge) the code into this repository it is then made available under the GPLv3 as part of Beekeeper Studio. The code is still copyright to you, and your original MIT license still applies to the code in your PR. The MIT license requires that I maintain the copyright notice, which is made available below.
+If you make a PR, the PR code is licensed as MIT. As soon as I copy (merge) the code into this repository it is then made available under the GPLv3 as part of Supersedure Studio. The code is still copyright to you, and your original MIT license still applies to the code in your PR. The MIT license requires that I maintain the copyright notice, which is made available below.
 
 #### Why do it this way
 
-Practically speaking, we need to have the ability to change the Beekeeper Studio license in the future if we need to, by providing your contributions under the MIT license, we can do so without requiring that all contributors sign a [CLA](https://en.wikipedia.org/wiki/Contributor_License_Agreement) or hand over their copyright to us. This is a pretty common way to manage contributions for a large-ish open source project, so it should be totally fine for 99% of contributors.
+Practically speaking, we need to have the ability to change the Supersedure Studio license in the future if we need to, by providing your contributions under the MIT license, we can do so without requiring that all contributors sign a [CLA](https://en.wikipedia.org/wiki/Contributor_License_Agreement) or hand over their copyright to us. This is a pretty common way to manage contributions for a large-ish open source project, so it should be totally fine for 99% of contributors.
 
 #### MIT License for Contributions
 

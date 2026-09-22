@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import "@beekeeperstudio/ui-kit";
-import "@beekeeperstudio/ui-kit/style.css";
+import "@supersedure-studio/ui-kit";
+import "@supersedure-studio/ui-kit/style.css";
 import './index.css'
 import './custom-theme.css'
 import App from './App.jsx'

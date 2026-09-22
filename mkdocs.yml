@@ -1,22 +1,22 @@
-site_name: Beekeeper Studio Documentation
-site_url: https://docs.beekeeperstudio.io
-site_description: Beekeeper Studio user documentation - how to install, configure, and use Beekeeper Studio
+site_name: Supersedure Studio Documentation
+site_url: https://docs.supersedurestudio.io
+site_description: Supersedure Studio user documentation - how to install, configure, and use Supersedure Studio
 copyright: Copyright &copy; Beekeeper Studio, Inc
-repo_url: https://github.com/beekeeper-studio/beekeeper-studio
-repo_name: beekeeper-studio
+repo_url: https://github.com/thePeras/supersedure-studio
+repo_name: supersedure-studio
 edit_uri: edit/master/docs
 extra:
   social:
     - icon: fontawesome/brands/x-twitter
-      link: https://twitter.com/beekeeperdata
-      name: Beekeeper on X (Twitter)
+      link: https://twitter.com/superseduredata
+      name: Supersedure Studio on X (Twitter)
     - icon: fontawesome/brands/github
-      link: https://github.com/beekeeper-studio/beekeeper-studio
-      name: Beekeeper Studio on GitHub
+      link: https://github.com/thePeras/supersedure-studio
+      name: Supersedure Studio on GitHub
   generator: false
 theme:
   language: en
-  logo: assets/bks.svg
+  logo: assets/logo.svg
   favicon: assets/favicon-96x96.png
   name: material
   # Nav `icon:` resolves via theme templates as `.icons/<name>.svg` (see Material partials).
@@ -78,8 +78,8 @@ plugins:
         - locale: es
           name: Espanol
           build: true
-          site_name: Documentacion de Beekeeper Studio
-          site_description: Documentacion de usuario de Beekeeper Studio - como instalar, configurar y usar Beekeeper Studio
+          site_name: Documentacion de Supersedure Studio
+          site_description: Documentacion de usuario de Supersedure Studio - como instalar, configurar y usar Supersedure Studio
           nav_translations:
             Introduction: Introduccion
             Installation: Instalacion

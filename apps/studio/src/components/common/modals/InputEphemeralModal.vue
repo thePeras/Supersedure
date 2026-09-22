@@ -78,7 +78,7 @@ export default Vue.extend({
       this.submitting = false;
       this.value = null;
       this.errorMessage = null;
-      this.description = params.description || "Input a new value. Beekeeper will use it to connect";
+      this.description = params.description || "Input a new value. Supersedure will use it to connect";
       this.title = params.title || "Value"
     },
     opened() {

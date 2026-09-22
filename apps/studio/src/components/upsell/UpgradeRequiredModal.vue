@@ -1,7 +1,7 @@
 <template>
   <portal to="modals">
     <modal
-      class="vue-dialog beekeeper-modal upgrade-modal"
+      class="vue-dialog supersedure-modal upgrade-modal"
       name="upgrade-modal"
       height="auto"
       @opened="focusDialog"

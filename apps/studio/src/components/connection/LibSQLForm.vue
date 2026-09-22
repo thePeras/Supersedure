@@ -3,7 +3,7 @@
     <div class="alert alert-warning">
       <i class="material-icons">warning</i>
       <span>
-        LibSQL support is still in beta. Please report any problems on <a href="https://github.com/beekeeper-studio/beekeeper-studio/issues/new/choose">our issue tracker</a>.
+        LibSQL support is still in beta. Please report any problems on <a href="https://github.com/thePeras/supersedure-studio/issues/new/choose">our issue tracker</a>.
       </span>
     </div>
     <div class="form-group col">

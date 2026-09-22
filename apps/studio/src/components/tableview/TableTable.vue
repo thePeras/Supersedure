@@ -263,7 +263,7 @@
 
     <portal to="modals">
       <modal
-        class="vue-dialog beekeeper-modal"
+        class="vue-dialog supersedure-modal"
         :name="`discard-changes-modal-${tab.id}`"
       >
         <div v-kbd-trap="true">
@@ -390,8 +390,8 @@ export default Vue.extend({
       forceRedraw: false,
       rawPage: 1,
       initialized: false,
-      internalColumnPrefix: "__beekeeper_internal_",
-      internalIndexColumn: "__beekeeper_internal_index",
+      internalColumnPrefix: "__supersedure_internal_",
+      internalIndexColumn: "__supersedure_internal_index",
       selectedRowIndex: null,
 
       /** This is true when we switch to minimal mode while TableTable is not active */
@@ -779,7 +779,7 @@ export default Vue.extend({
         }
       ];
 
-      // Open the global Beekeeper context menu component.
+      // Open the global Supersedure context menu component.
       // @ts-ignore
       this.$bks.openMenu({
         event: e,

@@ -1,8 +1,8 @@
 ---
 title: MongoDB
-summary: "Connect to MongoDB with Beekeeper Studio"
+summary: "Connect to MongoDB with Supersedure Studio"
 icon: simple/mongodb
-description: "Use a MongoDB shell or SQL editor to run queries against MongoDB by using Beekeeper Studio"
+description: "Use a MongoDB shell or SQL editor to run queries against MongoDB by using Supersedure Studio"
 ---
 
 # MongoDB Support
@@ -29,9 +29,9 @@ description: "Use a MongoDB shell or SQL editor to run queries against MongoDB b
 ## Kerberos (GSSAPI) Authentication
 
 !!! note "Enterprise feature"
-    Kerberos authentication requires a Beekeeper Studio Enterprise license.
+    Kerberos authentication requires a Supersedure Studio Enterprise license.
 
-Beekeeper Studio connects to MongoDB with a connection URL, and Kerberos auth is
+Supersedure Studio connects to MongoDB with a connection URL, and Kerberos auth is
 configured entirely through that URL using the `GSSAPI` auth mechanism:
 
 ```
@@ -47,7 +47,7 @@ mongodb://user%40REALM.EXAMPLE.COM@host.example.com/?authMechanism=GSSAPI&authMe
 
 ### Prerequisites
 
-- The krb5 client libraries must be installed on the machine running Beekeeper Studio.
+- The krb5 client libraries must be installed on the machine running Supersedure Studio.
   On Linux/macOS that means a working krb5 client and a valid `/etc/krb5.conf`.
 - Obtain a ticket with `kinit` before connecting.
 - The server must have a registered SPN (`mongodb/<fqdn>`). Connect by the server's

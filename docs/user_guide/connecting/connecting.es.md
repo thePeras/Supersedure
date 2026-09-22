@@ -1,30 +1,30 @@
 ---
 title: Bases de datos compatibles
-summary: "Como empezar a usar Beekeeper Studio con la base de datos de tu eleccion."
-old_url: "https://docs.beekeeperstudio.io/docs/first-page"
+summary: "Como empezar a usar Supersedure Studio con la base de datos de tu eleccion."
+old_url: "https://docs.supersedurestudio.io/docs/first-page"
 ---
 
-Conectarte a tu base de datos desde Beekeeper Studio es facil. Puedes conectarte a una base de datos de varias maneras:
+Conectarte a tu base de datos desde Supersedure Studio es facil. Puedes conectarte a una base de datos de varias maneras:
 
 1. Para bases de datos SQLite, simplemente puedes hacer doble clic en el archivo en tu explorador de archivos
 2. Para otras bases de datos, puedes especificar host y puerto, o la ruta del socket unix.
-3. Algunos proveedores de nube admiten conexion con metodos de autenticacion personalizados, Beekeeper Studio tambien admite muchos de estos (ej: SSO para Azure SQL).
+3. Algunos proveedores de nube admiten conexion con metodos de autenticacion personalizados, Supersedure Studio tambien admite muchos de estos (ej: SSO para Azure SQL).
 
 
 ## Primer paso: Seleccionar tipo de conexion
 
-Cuando abras Beekeeper Studio por primera vez, veras la pantalla de conexion. Puedes seleccionar el tipo de conexion que deseas hacer desde el menu desplegable.
+Cuando abras Supersedure Studio por primera vez, veras la pantalla de conexion. Puedes seleccionar el tipo de conexion que deseas hacer desde el menu desplegable.
 
 Tambien puedes importar una URL de base de datos aqui, esto es muy util para Heroku Postgres, Azure SQL y otras bases de datos en la nube.
 
 ### Opcional: Explorar la base de datos de demostracion
 
-Cada nueva instalacion de Beekeeper Studio viene con una `Base de datos de demostracion` en el menu lateral derecho. Esta es una pequena base de datos SQLite que incluimos con la aplicacion. Puedes usarla para explorar las funciones de Beekeeper Studio sin conectarte a una base de datos real.
+Cada nueva instalacion de Supersedure Studio viene con una `Base de datos de demostracion` en el menu lateral derecho. Esta es una pequena base de datos SQLite que incluimos con la aplicacion. Puedes usarla para explorar las funciones de Supersedure Studio sin conectarte a una base de datos real.
 
 ## Completar
 
 ![Image Alt Tag](../../assets/images/first-page-5.png)
-La pantalla de conexion de Beekeeper Studio
+La pantalla de conexion de Supersedure Studio
 
 ## Modo de conexion
 
@@ -40,7 +40,7 @@ Ten en cuenta que SSL, SSH y otras opciones de conexion avanzadas solo estan dis
 
 ![Image Alt Tag](../../assets/images/first-page-7.png)
 
-Configuracion SSL de Beekeeper Studio
+Configuracion SSL de Supersedure Studio
 
 
 Hay tres formas de conectarse a una base de datos con SSL
@@ -49,7 +49,7 @@ Hay tres formas de conectarse a una base de datos con SSL
 2. **Certificado requerido:** Conectarse con SSL, proporcionar tus propios certificados y deshabilitar `rejectUnauthorized`.
 3. **Certificado verificado:** Conectarse con SSL, proporcionar tus propios certificados y habilitar `rejectUnauthorized`.
 
-Aqui hay una tabla de como los varios flags `sslmode` de clientes de linea de comandos se mapean a Beekeeper:
+Aqui hay una tabla de como los varios flags `sslmode` de clientes de linea de comandos se mapean a Supersedure:
 
 | sslmode     | Activar SSL? | rejectUnauthorized |
 | ----------- | ------------ | ------------------ |
@@ -67,7 +67,7 @@ Puedes proporcionar tus propios archivos de certificado personalizados si es nec
 
 ![Image Alt Tag](../../assets/images/first-page-8.png)
 
-Configuracion SSH de Beekeeper Studio
+Configuracion SSH de Supersedure Studio
 
 
 ### Configuracion del servidor
@@ -96,7 +96,7 @@ Si, el `+` es intencional
 ### Opciones de configuracion del cliente
 
 
-Beekeeper admite tunelizar tu conexion a traves de SSH. Para conectarte a una base de datos remota usando tu cuenta SSH en esa maquina:
+Supersedure admite tunelizar tu conexion a traves de SSH. Para conectarte a una base de datos remota usando tu cuenta SSH en esa maquina:
 
 1. **Activa el tunel SSH** para revelar los campos de detalles de conexion ssh
 
@@ -116,15 +116,15 @@ Beekeeper admite tunelizar tu conexion a traves de SSH. Para conectarte a una ba
 
     * `Archivo de clave` Selecciona tu **archivo de clave privada SSH** (y opcionalmente ingresa tu **frase de paso del archivo de clave**) si usas tu [clave publica SSH](https://stackoverflow.com/questions/7260/how-do-i-setup-public-key-authentication#answers-header) en el servidor para autenticacion
 
-7. **Ingresa un nombre para tu conexion** (opcionalmente marca la casilla **Guardar contrasenas**) y presiona **Guardar** para que Beekeeper recuerde todo lo anterior por ti
+7. **Ingresa un nombre para tu conexion** (opcionalmente marca la casilla **Guardar contrasenas**) y presiona **Guardar** para que Supersedure recuerde todo lo anterior por ti
 
 8. **Presiona el boton Conectar** para acceder a tu base de datos!
 
 ## Asociaciones de archivos
 
-Beekeeper Studio proporciona asociaciones de archivos para que puedas hacer lo siguiente sin abrir la aplicacion:
+Supersedure Studio proporciona asociaciones de archivos para que puedas hacer lo siguiente sin abrir la aplicacion:
 
-- Haz doble clic en un archivo sqlite `.db` en un explorador de archivos para abrirlo en Beekeeper Studio!
+- Haz doble clic en un archivo sqlite `.db` en un explorador de archivos para abrirlo en Supersedure Studio!
 - Abre URLs y archivos desde la terminal:
   - Mac: `open postgresql://user@host/database` o `open ./example.db`
   - Linux: `xdg-open postgresql://user@host/database` o `xdg-open ./example.db`

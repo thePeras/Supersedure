@@ -96,7 +96,7 @@ export default class DriverDepFileManager {
     const finalDirectory = this.getDirectoryOf(requirementId);
     const tmpDirectory = path.join(
       tmpdir(),
-      `beekeeper-driver-dep-${requirementId}-${Date.now()}`
+      `supersedure-driver-dep-${requirementId}-${Date.now()}`
     );
 
     try {

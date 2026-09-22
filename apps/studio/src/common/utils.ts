@@ -229,7 +229,7 @@ export const rowHeaderField = '--row-header--bks';
 
 export function isBksInternalColumn(field: string) {
   return field.endsWith('--bks')
-    || field.startsWith('__beekeeper_internal')
+    || field.startsWith('__supersedure_internal')
     || field === rowHeaderField;
 }
 

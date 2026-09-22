@@ -1,4 +1,4 @@
-import { Entity, TableEntity } from "@beekeeperstudio/ui-kit";
+import { Entity, TableEntity } from "@supersedure-studio/ui-kit";
 
 const cheeses: TableEntity = {
   name: "cheeses",

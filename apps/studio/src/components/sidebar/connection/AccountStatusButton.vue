@@ -14,7 +14,7 @@
       </span>
     </a>
     <modal
-      class="beekeeper-dialog vue-dialog account-status-modal"
+      class="supersedure-dialog vue-dialog account-status-modal"
       name="account-status-modal"
       height="auto"
       :scrollable="true"
@@ -54,7 +54,7 @@
                     <x-menu style="--target-align: right;">
                       <x-menuitem>
                         <x-label>
-                          <a href="https://app.beekeeperstudio.io">Account Dashboard</a>
+                          <a href="https://app.supersedurestudio.io">Account Dashboard</a>
                         </x-label>
                       </x-menuitem>
                       <x-menuitem @click.prevent="refresh">
@@ -127,7 +127,7 @@ export default Vue.extend({
   },
   methods: {
     goToAccountDashboard() {
-      window.location.href = "https://app.beekeeperstudio.io"
+      window.location.href = "https://app.supersedurestudio.io"
     },
     workspaceText(blob: CredentialBlob) {
       return this.$pluralize("Workspace", blob.workspaces.length, true)

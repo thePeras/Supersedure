@@ -1,40 +1,40 @@
 ---
 title: Seguridad y privacidad
-summary: Configuracion y funciones para darte mas control de tu instalacion de Beekeeper Studio
+summary: Configuracion y funciones para darte mas control de tu instalacion de Supersedure Studio
 icon: material/security
 ---
 
-Beekeeper ofrece varias funciones disenadas para ayudarte a gestionar la privacidad de tu sesion, asegurar tu entorno o aplicar configuraciones de seguridad para todos los usuarios.
+Supersedure ofrece varias funciones disenadas para ayudarte a gestionar la privacidad de tu sesion, asegurar tu entorno o aplicar configuraciones de seguridad para todos los usuarios.
 
 
 ## Configuraciones de seguridad
 
-Beekeeper Studio tiene varias configuraciones de seguridad
+Supersedure Studio tiene varias configuraciones de seguridad
 
 {% ini-include section="security" %}
 
 ### Modo de bloqueo con PIN
 
-Habilitar el modo de bloqueo con PIN requiere que cualquier usuario de Beekeeper Studio ingrese un codigo PIN antes de conectarse a una base de datos. Combina esta configuracion con la desconexion automatica para mayor seguridad.
+Habilitar el modo de bloqueo con PIN requiere que cualquier usuario de Supersedure Studio ingrese un codigo PIN antes de conectarse a una base de datos. Combina esta configuracion con la desconexion automatica para mayor seguridad.
 
 !!! warning "No olvides tu PIN"
     Si olvidas tu PIN, la unica forma de recuperarlo es eliminando tu instalacion local o deshabilitando el modo PIN por completo.
 
 #### Pasos de restablecimiento (si olvidas tu PIN)
 
-1. **Cierra Beekeeper Studio completamente**
+1. **Cierra Supersedure Studio completamente**
 
 2. **Elimina el directorio de datos de la aplicacion**:
-   - **Windows**: `%APPDATA%\beekeeper-studio\`
-   - **macOS**: `~/Library/Application Support/beekeeper-studio/`
-   - **Linux**: `~/.config/beekeeper-studio/`
+   - **Windows**: `%APPDATA%\supersedure-studio\`
+   - **macOS**: `~/Library/Application Support/supersedure-studio/`
+   - **Linux**: `~/.config/supersedure-studio/`
 
-3. **Reinicia Beekeeper Studio** - comenzara de nuevo con la configuracion predeterminada
+3. **Reinicia Supersedure Studio** - comenzara de nuevo con la configuracion predeterminada
 
 
 ### Recomendaciones de seguridad empresarial
 
-Para aplicar configuraciones de seguridad a todos los usuarios de Beekeeper Studio, puedes implementar un archivo de configuracion de administrador (`system.config.ini`) (consulta la [documentacion de configuracion](./configuration.md) como referencia)
+Para aplicar configuraciones de seguridad a todos los usuarios de Supersedure Studio, puedes implementar un archivo de configuracion de administrador (`system.config.ini`) (consulta la [documentacion de configuracion](./configuration.md) como referencia)
 
 1. Crea un archivo ini
 2. Habilita `lockMode = pin`.
@@ -46,7 +46,7 @@ Esto obliga a todos los usuarios a establecer un PIN en la primera carga de la a
 
 ## Modo de privacidad
 
-Beekeeper Studio proporciona un modo de privacidad que oculta datos sensibles cuando compartes tu pantalla, para que puedas mantener la informacion privada en privado.
+Supersedure Studio proporciona un modo de privacidad que oculta datos sensibles cuando compartes tu pantalla, para que puedas mantener la informacion privada en privado.
 
 Al pasar el cursor sobre la barra lateral, puedes ver el boton "Alternar modo de privacidad", representado con un ojo.
 Hacer clic en este boton alternara el modo de privacidad entre encendido/apagado.

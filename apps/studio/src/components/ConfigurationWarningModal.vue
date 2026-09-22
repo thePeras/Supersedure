@@ -1,6 +1,6 @@
 <template>
   <portal to="modals">
-    <modal class="vue-dialog beekeeper-modal" :name="modalName">
+    <modal class="vue-dialog supersedure-modal" :name="modalName">
       <div class="dialog-content">
         <div class="dialog-c-title">
           <i class="material-icons alert-warning">warning</i>
@@ -78,7 +78,7 @@
               </li>
             </ul>
             <span>
-              <a href="https://www.beekeeperstudio.io/support/deprecated-configs">Learn more</a>
+              <a href="https://www.supersedurestudio.io/support/deprecated-configs">Learn more</a>
             </span>
           </template>
         </div>

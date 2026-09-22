@@ -1,7 +1,7 @@
 <template>
   <div>
     <modal
-      class="vue-dialog beekeeper-modal export-modal"
+      class="vue-dialog supersedure-modal export-modal"
       name="export-modal"
       height="auto"
       :scrollable="true"

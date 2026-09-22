@@ -1,4 +1,4 @@
-# Beekeeper Studio 5.9.0
+# Supersedure Studio 5.9.0
 
 This is a big one. Snowflake support — which we've been teasing for a couple of releases — has finally landed, bringing our fully-featured driver count up another notch. SQL Server gets proper integrated (Windows/Kerberos) authentication, and there's a pile of everyday-workflow upgrades: paste copied data straight in as new rows, pick enum values from a dropdown, rename things inline in the sidebar, and move queries, folders, and connections around from a single dialog. On top of that there's a long tail of bug fixes, SSH and packaging improvements, and a security fix worth calling out.
 
@@ -23,7 +23,7 @@ This is a big one. Snowflake support — which we've been teasing for a couple o
 
 - **New "unix timestamp" query magic.** Convert a Unix timestamp (seconds, milliseconds, microseconds, or nanoseconds) to a readable date string, with timezone and ISO formatting options — e.g. `columnname__format__unixtime__ms__utc`.
 
-- **Smarter SSH config handling.** Previously-silent `~/.ssh/config` problems now surface as non-blocking warning toasts on connect/test (unparseable config, bad ownership/permissions, or a missing `IdentityFile` in agent mode). SSH tunnels now skip entries with a missing `IdentityFile`, and Beekeeper uses ssh-config's native `Match exec` handling instead of stripping Match blocks by hand. A new `[security] allowSshConfigMatchExec` option (default true, matching `ssh(1)`) lets you disable execution of `Match exec` directives.
+- **Smarter SSH config handling.** Previously-silent `~/.ssh/config` problems now surface as non-blocking warning toasts on connect/test (unparseable config, bad ownership/permissions, or a missing `IdentityFile` in agent mode). SSH tunnels now skip entries with a missing `IdentityFile`, and Supersedure uses ssh-config's native `Match exec` handling instead of stripping Match blocks by hand. A new `[security] allowSshConfigMatchExec` option (default true, matching `ssh(1)`) lets you disable execution of `Match exec` directives.
 
 - **SSH tunneling for more engines.** Fixed SSH tunneling for ClickHouse and Firebird, and added bastion/jump-host support for MongoDB (forcing `directConnection` so it actually works).
 

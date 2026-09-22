@@ -124,7 +124,7 @@ describe('OracleClient connection error handling', () => {
       buildServer({ oracleConfigLocation: '/different/config/path' }),
       buildDatabase()
     );
-    await expect(client2.connect()).rejects.toThrow('Please restart Beekeeper Studio');
+    await expect(client2.connect()).rejects.toThrow('Please restart Supersedure Studio');
   });
 
   it('should return the real error when createPool rejects in thin mode', async () => {

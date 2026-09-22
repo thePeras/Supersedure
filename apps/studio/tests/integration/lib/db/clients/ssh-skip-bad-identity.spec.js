@@ -1,4 +1,4 @@
-// Regression test for https://github.com/beekeeper-studio/beekeeper-studio/issues/4366
+// Regression test for https://github.com/thePeras/supersedure-studio/issues/4366
 //
 // OpenSSH behaviour: when ~/.ssh/config lists several IdentityFile entries,
 // ssh(1) tries them in order and simply SKIPS any entry it cannot use (e.g. a
@@ -10,7 +10,7 @@
 //     the server,
 //   - ~/.ssh/config lists a non-existent IdentityFile FIRST, then the valid
 //     key second, with IdentitiesOnly yes.
-// Beekeeper skips the missing first entry and authenticates with the second,
+// Supersedure skips the missing first entry and authenticates with the second,
 // matching ssh(1).
 
 import { execSync } from 'child_process'
@@ -127,7 +127,7 @@ describe('SSH Tunnel Tests (skip bad ssh-config IdentityFile, #4366)', () => {
       sshMode: 'agent',
       sshHost: container.getHost(),
       sshPort: container.getMappedPort(2222),
-      sshUsername: 'beekeeper',
+      sshUsername: 'supersedure',
     }
 
     connection = ConnectionProvider.for(config)

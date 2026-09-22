@@ -1,4 +1,4 @@
-import { LanguageId } from "@beekeeperstudio/ui-kit";
+import { LanguageId } from "@supersedure-studio/ui-kit";
 
 // According to the HTML spec, comments end at the forst -->
 // So nested comments aren't a thing.

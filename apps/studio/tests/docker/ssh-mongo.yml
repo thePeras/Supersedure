@@ -9,7 +9,7 @@ services:
     image: mongo:latest
     container_name: test_ssh_mongo
     environment:
-      MONGO_INITDB_ROOT_USERNAME: beekeeper
+      MONGO_INITDB_ROOT_USERNAME: supersedure
       MONGO_INITDB_ROOT_PASSWORD: password
       MONGO_INITDB_DATABASE: bee
     healthcheck:
@@ -32,7 +32,7 @@ services:
       - TZ=Europe/London
       - PASSWORD_ACCESS=true
       - USER_PASSWORD=password
-      - USER_NAME=beekeeper
+      - USER_NAME=supersedure
       - SUDO_ACCESS=true
     ports:
       - 2222
@@ -51,7 +51,7 @@ services:
       - TZ=Europe/London
       - PASSWORD_ACCESS=true
       - USER_PASSWORD=password
-      - USER_NAME=beekeeper
+      - USER_NAME=supersedure
       - SUDO_ACCESS=true
     ports:
       - 2222

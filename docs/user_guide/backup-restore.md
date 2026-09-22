@@ -1,11 +1,11 @@
 ---
 title: Backup & Restore
 summary: "Backup your whole database (or just a slice) - schemas, data, or both."
-old_url: "https://docs.beekeeperstudio.io/docs/backup-restore"
+old_url: "https://docs.supersedurestudio.io/docs/backup-restore"
 icon: material/backup-restore
 ---
 
-Beekeeper Studio provides an interface to native tools to easily backup and restore your databases.
+Supersedure Studio provides an interface to native tools to easily backup and restore your databases.
 
 ## Supported Tools
 - Postgres

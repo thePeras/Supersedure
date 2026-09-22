@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { DataEditorElement, Table } from "@beekeeperstudio/ui-kit";
+import { DataEditorElement, Table } from "@supersedure-studio/ui-kit";
 
 interface BksDataEditorProps {
   tables: Table[];

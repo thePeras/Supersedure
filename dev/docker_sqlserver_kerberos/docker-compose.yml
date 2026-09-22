@@ -107,7 +107,7 @@ services:
     environment:
       KRB_REALM: BKS.TEST
       KRB_TEST_USER: testuser
-      KRB_TEST_PASS: "Beekeeper*1User"
+      KRB_TEST_PASS: "Supersedure*1User"
       SQLSERVER_KERBEROS_TEST: "1"
       SQLSERVER_KERBEROS_HOST: mssql.bks.test
       SQLSERVER_KERBEROS_PORT: "1433"

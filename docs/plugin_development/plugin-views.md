@@ -1,15 +1,15 @@
 ---
 title: Plugin Views
-summary: "Learn about the different types of plugin views available in Beekeeper Studio and how to implement them."
+summary: "Learn about the different types of plugin views available in Supersedure Studio and how to implement them."
 icon: material/view-dashboard
 ---
 
 # Plugin Views
 
 !!! warning "Beta Feature"
-    The plugin system is in beta (available in Beekeeper Studio 5.3+). We'd love your feedback!
+    The plugin system is in beta (available in Supersedure Studio 5.3+). We'd love your feedback!
 
-Plugins can integrate with Beekeeper Studio through different types of views, each designed for specific use cases. Views define where and how your plugin's interface appears within the application. The different view types are listed [here](/docs/plugin_development/manifest.md/?h=manifest#pluginviewtype)
+Plugins can integrate with Supersedure Studio through different types of views, each designed for specific use cases. Views define where and how your plugin's interface appears within the application. The different view types are listed [here](/docs/plugin_development/manifest.md/?h=manifest#pluginviewtype)
 
 ## Tab Views
 

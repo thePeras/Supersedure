@@ -3,7 +3,7 @@
     <div class="alert alert-warning">
       <i class="material-icons">warning</i>
       <span>
-        BigQuery support is still in beta. Please report any problems on <a href="https://github.com/beekeeper-studio/beekeeper-studio/issues/new/choose">our issue tracker</a>.
+        BigQuery support is still in beta. Please report any problems on <a href="https://github.com/thePeras/supersedure-studio/issues/new/choose">our issue tracker</a>.
       </span>
     </div>
     <div class="form-group">
@@ -66,7 +66,7 @@
           <i class="material-icons-outlined">info</i>
           <span>
             You need a service account with the roles 'BigQuery Data Viewer' and 'BigQuery Job User' - <a
-              href="https://docs.beekeeperstudio.io/docs/google-bigquery"
+              href="https://docs.supersedurestudio.io/docs/google-bigquery"
             > Read More</a>
           </span>
         </div>

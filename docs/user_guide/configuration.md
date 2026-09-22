@@ -1,20 +1,20 @@
 ---
 title: Configuration
-summary: "Customize Beekeeper Studio's behavior with INI configuration files - adjust shortcuts, timeouts, security settings, and more."
+summary: "Customize Supersedure Studio's behavior with INI configuration files - adjust shortcuts, timeouts, security settings, and more."
 old_url: ""
 icon: material/cog
 ---
 
 # Configuration
 
-Beekeeper Studio uses an `ini` configuration system that lets you customize the app to match your workflow and preferences. Using simple INI configuration files, you can adjust everything from keyboard shortcuts and database connection timeouts to security settings like PIN protection.
+Supersedure Studio uses an `ini` configuration system that lets you customize the app to match your workflow and preferences. Using simple INI configuration files, you can adjust everything from keyboard shortcuts and database connection timeouts to security settings like PIN protection.
 
 !!! tip "Quick Start"
     New to configuration? Jump to the [Getting Started section](#getting-started-with-configuration) for a simple walkthrough, or check out our [example configurations](#example-configurations) to see common customizations.
 
 ## Configuration Files
 
-Beekeeper Studio uses a three-tier configuration system that gives you flexible control over settings. Settings are loaded in the order below.
+Supersedure Studio uses a three-tier configuration system that gives you flexible control over settings. Settings are loaded in the order below.
 
 | Configuration | Purpose                                       | Load Order |
 | ------------------- | --------------------------------------------- | ---- |
@@ -34,7 +34,7 @@ That means: Admin settings override user settings, user settings override defaul
 Decide which file to change (user or administrator). If the file doesn't exist yet, create it using any text editor. Here's a simple starter configuration. I can put this in my **User configuration**:
 
 ```ini
-; My Beekeeper Studio Configuration
+; My Supersedure Studio Configuration
 ; Lines starting with semicolons are comments
 
 [ui.tableTable]
@@ -45,7 +45,7 @@ pageSize = 200                          ; Show more rows per page
 ### Step 2: Save and Restart
 
 1. Save your configuration file
-2. Restart Beekeeper Studio
+2. Restart Supersedure Studio
 3. Your new settings will take effect
 
 
@@ -56,10 +56,10 @@ pageSize = 200                          ; Show more rows per page
     - **Syntax errors**: Verify INI syntax (section headers in `[brackets]`, spaces around `=`)
     - **Restart required**: Configuration changes require a complete application restart
     - **Setting names**: Check for typos in section names or setting keys
-    - **File permissions**: Ensure the configuration file is readable by Beekeeper Studio
+    - **File permissions**: Ensure the configuration file is readable by Supersedure Studio
     - **Check logs**: Enable debug logging to see configuration loading details
 
 ## Configuration Reference
 
-Below are the default configuration values for Beekeeper Studio, copy and modify as needed.
+Below are the default configuration values for Supersedure Studio, copy and modify as needed.
 {% ini-include %}

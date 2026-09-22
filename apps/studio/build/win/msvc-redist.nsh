@@ -17,7 +17,7 @@
 
 
   ${If} $isInstalled != "1"
-    MessageBox MB_YESNO "Beekeeper Studio requires$\r$\n\
+    MessageBox MB_YESNO "Supersedure Studio requires$\r$\n\
       'Microsoft Visual C++ Redistributable'$\r$\n\
       to function properly.$\r$\n$\r$\n\
       Download and install now?" /SD IDYES IDNO VSRedistInstalled

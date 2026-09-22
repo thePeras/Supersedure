@@ -8,7 +8,7 @@ import { Routine, SupportedFeatures, TableOrView } from "../lib/db/models"
 import { IDbConnectionPublicServer } from '../lib/db/serverTypes'
 import { CoreTab, EntityFilter } from './models'
 import { entityFilter } from '../lib/db/sql_tools'
-import { BeekeeperPlugin } from '../plugins/BeekeeperPlugin'
+import { SupersedurePlugin } from '../plugins/SupersedurePlugin'
 
 import RawLog from '@bksLogger'
 import { Dialect, DialectTitles, dialectFor } from '@shared/lib/dialects/models'
@@ -64,8 +64,8 @@ function shouldPromptSnowflakeMFA(config: Nullable<IConnection>) {
 
 async function resolveEphemeralValues(config: IConnection): Promise<IConnection | null> {
   if (shouldPromptCockroachJwt(config)) {
-    const { token, cancelled } = await BeekeeperPlugin.promptJwtToken(
-      BeekeeperPlugin.buildConnectionName(config)
+    const { token, cancelled } = await SupersedurePlugin.promptJwtToken(
+      SupersedurePlugin.buildConnectionName(config)
     );
 
     if (cancelled) return null;
@@ -75,7 +75,7 @@ async function resolveEphemeralValues(config: IConnection): Promise<IConnection 
     resolvedConfig.password = token;
     return resolvedConfig;
   } else if (shouldPromptSnowflakeMFA(config)) {
-    const { passcode, cancelled } = await BeekeeperPlugin.promptSnowflakeMFAPasscode();
+    const { passcode, cancelled } = await SupersedurePlugin.promptSnowflakeMFAPasscode();
 
     if (cancelled) return null;
 
@@ -186,7 +186,7 @@ const store = new Vuex.Store<State>({
     selectedSidebarItem: null,
     workspaceId: LocalWorkspace.id,
     storeInitialized: false,
-    windowTitle: 'Beekeeper Studio',
+    windowTitle: 'Supersedure Studio',
     defaultSchema: null,
     versionString: null,
     connError: null,
@@ -515,8 +515,8 @@ const store = new Vuex.Store<State>({
     updateWindowTitle(context) {
       const config = context.state.usedConfig
       let title = config
-        ? `${BeekeeperPlugin.buildConnectionName(config)} - Beekeeper Studio`
-        : 'Beekeeper Studio'
+        ? `${SupersedurePlugin.buildConnectionName(config)} - Supersedure Studio`
+        : 'Supersedure Studio'
       if (context.getters.isTrial && context.getters.isUltimate) {
         const days = context.rootGetters['licenses/licenseDaysLeft']
         title += ` - Free Trial (${pluralize('day', days, true)} left)`

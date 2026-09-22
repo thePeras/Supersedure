@@ -1,11 +1,11 @@
 ---
 title: Structure View
 icon: material/hammer-wrench
-summary: "Beekeeper Studio's SQL Table Creator lets you visually build a SQL table without having to remember the right syntax."
-old_url: "https://docs.beekeeperstudio.io/docs/editing-data"
+summary: "Supersedure Studio's SQL Table Creator lets you visually build a SQL table without having to remember the right syntax."
+old_url: "https://docs.supersedurestudio.io/docs/editing-data"
 ---
 
-Beekeeper Studio lets you **CREATE** and **ALTER** database tables with a user-friendly UI **without having to write any SQL**.
+Supersedure Studio lets you **CREATE** and **ALTER** database tables with a user-friendly UI **without having to write any SQL**.
 
 ## Creating new SQL Tables
 
@@ -25,7 +25,7 @@ You can add as many of these as you like.
 
 ### Adding a primary key
 
-You'll probably want to set a primary key on your new table, by default we select the `id` column as the primary key, but you can check multiple columns and Beekeeper Studio will create a compound primary key.
+You'll probably want to set a primary key on your new table, by default we select the `id` column as the primary key, but you can check multiple columns and Supersedure Studio will create a compound primary key.
 
 ### Creating indexes and relations
 
@@ -47,11 +47,11 @@ This view works much the same as the table creation view, except you also have o
 
 ![Image Alt Tag](../assets/images/editing-data-22.png)
 
-**Note**: Some database engines don't support some types of schema modifications, in these cases Beekeeper Studio will provide a warning and that feature will be disabled
+**Note**: Some database engines don't support some types of schema modifications, in these cases Supersedure Studio will provide a warning and that feature will be disabled
 {: .alert .alert-info }
 
 ## SQL Table Creator Preview
 
-Want to play around with our table creator code? You can use the online version of the table creator on the [SQL Tools website here](https://sqltools.beekeeperstudio.io/build). This is a stripped down version of our built-in table creator and cannot create your new table, but rather provides you with the generated SQL to download.
+Want to play around with our table creator code? You can use the online version of the table creator on the [SQL Tools website here](https://sqltools.supersedurestudio.io/build). This is a stripped down version of our built-in table creator and cannot create your new table, but rather provides you with the generated SQL to download.
 
 

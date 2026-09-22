@@ -19,18 +19,18 @@
     <div v-else-if="!snapshot.loadable" class="plugin-status">
       <p>
         Plugin "{{ snapshot.manifest.name }}" isn’t compatible with this version
-        of Beekeeper Studio. It requires version
+        of Supersedure Studio. It requires version
         {{ snapshot.manifest.minAppVersion }} or newer.
       </p>
 
       <p>To fix this:</p>
 
       <ol>
-        <li>Upgrade your Beekeeper Studio.</li>
+        <li>Upgrade your Supersedure Studio.</li>
         <li>
           Or install an older plugin version manually (see
           <a
-            href="https://docs.beekeeperstudio.io/user_guide/plugins/#installing-a-specific-plugin-version"
+            href="https://docs.supersedurestudio.io/user_guide/plugins/#installing-a-specific-plugin-version"
           >instructions</a>).
         </li>
       </ol>

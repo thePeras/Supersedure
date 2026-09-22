@@ -4,7 +4,7 @@
       :name="modalName"
       :click-to-close="false"
       @opened="opened"
-      class="vue-dialog beekeeper-modal create-pin-modal"
+      class="vue-dialog supersedure-modal create-pin-modal"
     >
       <form v-kbd-trap="true" @submit.prevent="submit">
         <div class="dialog-content">
@@ -73,7 +73,7 @@
               <span>
                 Make sure to remember your PIN - if you lose it, it CANNOT be recovered.
                 Learn about
-                <external-link href="https://docs.beekeeperstudio.io/user_guide/configuration#forgot-pin">
+                <external-link href="https://docs.supersedurestudio.io/user_guide/configuration#forgot-pin">
                   PIN recovery.
                 </external-link>
               </span>

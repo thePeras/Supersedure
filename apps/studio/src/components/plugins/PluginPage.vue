@@ -85,7 +85,7 @@
       <div class="alert alert-danger" v-if="!plugin.loadable && plugin.installed">
         <i class="material-icons">error_outline</i>
         <div class="alert-body expand">
-          <span>This plugin was not loaded because it requires Beekeeper Studio {{ plugin.minAppVersion }}+. Please upgrade the app or <a href="https://docs.beekeeperstudio.io/user_guide/plugins/#installing-a-specific-plugin-version">install a compatible plugin version</a>.</span>
+          <span>This plugin was not loaded because it requires Supersedure Studio {{ plugin.minAppVersion }}+. Please upgrade the app or <a href="https://docs.supersedurestudio.io/user_guide/plugins/#installing-a-specific-plugin-version">install a compatible plugin version</a>.</span>
         </div>
       </div>
       <div class="alert alert-danger" v-if="plugin.error">
@@ -93,7 +93,7 @@
         <div class="alert-body expand" style="white-space: pre-wrap;">
           <span v-if="plugin.error.toString?.().includes('not compatible')">
             {{ plugin.error }}
-            Or <a href="https://docs.beekeeperstudio.io/user_guide/plugins/#installing-a-specific-plugin-version">install</a> a compatible plugin version.
+            Or <a href="https://docs.supersedurestudio.io/user_guide/plugins/#installing-a-specific-plugin-version">install</a> a compatible plugin version.
           </span>
           <span v-else>{{ plugin.error }}</span>
         </div>

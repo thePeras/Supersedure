@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@beekeeperstudio/ui-kit@link:../..":
+"@supersedure-studio/ui-kit@link:../..":
   version "0.3.2"
   dependencies:
     "@codemirror/autocomplete" "^6.18.4"

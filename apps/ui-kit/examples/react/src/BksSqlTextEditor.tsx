@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Entity, SqlTextEditorElement } from "@beekeeperstudio/ui-kit";
+import { Entity, SqlTextEditorElement } from "@supersedure-studio/ui-kit";
 
 interface BksSqlTextEditorProps {
   entities: Entity[]

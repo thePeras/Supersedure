@@ -1,14 +1,14 @@
 ---
 title: Oracle Database
 summary: "Instrucciones especificas para hacer conexiones con Oracle Database"
-description: "Beekeeper Studio soporta conexion a bases de datos Oracle tanto en modo thin como thick. Esta guia proporciona instrucciones para configurar Oracle Instant Client y conectarte a tu base de datos."
-old_url: "https://docs.beekeeperstudio.io/docs/oracle-database"
+description: "Supersedure Studio soporta conexion a bases de datos Oracle tanto en modo thin como thick. Esta guia proporciona instrucciones para configurar Oracle Instant Client y conectarte a tu base de datos."
+old_url: "https://docs.supersedurestudio.io/docs/oracle-database"
 icon: material/database
 ---
 
 # Como conectarse a Oracle Database
 
-Beekeeper Studio soporta conexion a bases de datos Oracle en dos modos:
+Supersedure Studio soporta conexion a bases de datos Oracle en dos modos:
 
 1. **Modo Thin**: Este es el modo predeterminado y no requiere ninguna configuracion adicional. No todas las opciones de conexion estan disponibles en este modo. Si obtienes un error de `thin mode`, puede que necesites usar el `Modo Thick`.
 2. **Modo Thick**: Este modo requiere que Oracle Instant Client este instalado en tu sistema. Permite opciones de conexion mas avanzadas y es recomendado para la mayoria de los usuarios.
@@ -41,7 +41,7 @@ sudo yum install libaio #redhat/fedora
 
 ## Conectarse a bases de datos Oracle
 
-Hay varias formas de conectarte a una base de datos Oracle usando Beekeeper Studio.
+Hay varias formas de conectarte a una base de datos Oracle usando Supersedure Studio.
 
 1. Cadena de conexion PSA
 1. Cadena de conexion SID o Service Name
@@ -50,11 +50,11 @@ Hay varias formas de conectarte a una base de datos Oracle usando Beekeeper Stud
 
 ## Usando tnsnames.ora
 
-Puedes especificar tu directorio 'config' al agregar una conexion Oracle. Beekeeper Studio usara esto para encontrar tu archivo tnsnames.ora, luego puedes usar un alias en tu cadena de conexion.
+Puedes especificar tu directorio 'config' al agregar una conexion Oracle. Supersedure Studio usara esto para encontrar tu archivo tnsnames.ora, luego puedes usar un alias en tu cadena de conexion.
 
 ### Ingresa tu cadena de conexion Oracle
 
-Si estas usando una cadena de conexion para conectarte a tu base de datos, Beekeeper soporta todas las formas comunes de cadenas de conexion Oracle. Ve los ejemplos a continuacion, o [mas en el sitio web de Oracle](https://docs.oracle.com/en/database/other-databases/essbase/21/essoa/connection-string-formats.html)
+Si estas usando una cadena de conexion para conectarte a tu base de datos, Supersedure soporta todas las formas comunes de cadenas de conexion Oracle. Ve los ejemplos a continuacion, o [mas en el sitio web de Oracle](https://docs.oracle.com/en/database/other-databases/essbase/21/essoa/connection-string-formats.html)
 
 #### Ejemplos de cadenas de conexion Oracle
 

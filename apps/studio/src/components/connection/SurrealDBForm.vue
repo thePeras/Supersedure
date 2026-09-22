@@ -4,8 +4,8 @@
       <i class="material-icons">warning</i>
       <span>
         SurrealDB support is in alpha.
-        <a href="https://docs.beekeeperstudio.io/user_guide/connecting/surrealdb">Supported features</a>,
-        <a href="https://github.com/beekeeper-studio/beekeeper-studio/issues/new/choose">report an issue</a>.
+        <a href="https://docs.supersedurestudio.io/user_guide/connecting/surrealdb">Supported features</a>,
+        <a href="https://github.com/thePeras/supersedure-studio/issues/new/choose">report an issue</a>.
       </span>
     </div>
     <div class="host-port-user-password">

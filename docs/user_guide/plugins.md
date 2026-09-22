@@ -1,26 +1,26 @@
 ---
 title: Plugins
-summary: "Extend Beekeeper Studio with powerful plugins that add new functionality and enhance your database workflow."
+summary: "Extend Supersedure Studio with powerful plugins that add new functionality and enhance your database workflow."
 icon: material/puzzle
 ---
 
 # Plugins
 
-Plugins extend Beekeeper Studio with additional functionality, bringing new tools and capabilities directly into your database workflow. Think of them as specialized add-ons that enhance what you can do with your data.
+Plugins extend Supersedure Studio with additional functionality, bringing new tools and capabilities directly into your database workflow. Think of them as specialized add-ons that enhance what you can do with your data.
 
 ![Plugin Manager showing available plugins](../assets/images/plugin-manager-modal.png)
 
 ## What are Plugins?
 
-Plugins are mini-applications that run inside Beekeeper Studio to provide specialized functionality. They appear as new tabs or sidebar panels, integrating seamlessly with the rest of the interface.
+Plugins are mini-applications that run inside Supersedure Studio to provide specialized functionality. They appear as new tabs or sidebar panels, integrating seamlessly with the rest of the interface.
 
 Each plugin operates in its own secure environment while having access to your database connections and query capabilities through a controlled interface.
 
 ## Who Can Use Plugins?
 
-Plugins are available to **all Beekeeper Studio users**, including those using the free Community Edition.
+Plugins are available to **all Supersedure Studio users**, including those using the free Community Edition.
 
-However, some individual plugins may have their own access requirements. For example, premium plugins developed by the Beekeeper Studio team may require a paid subscription.
+However, some individual plugins may have their own access requirements. For example, premium plugins developed by the Supersedure Studio team may require a paid subscription.
 
 ## Available Plugins
 
@@ -42,7 +42,7 @@ The AI Shell appears as a new tab type that you can open alongside your regular 
 
 ## Updating Plugins
 
-Beekeeper Studio automatically checks for plugin updates everytime you start the application. When updates are available, Beekeeper Studio will automatically download and install them. Or you can disable this behaviour by:
+Supersedure Studio automatically checks for plugin updates everytime you start the application. When updates are available, Supersedure Studio will automatically download and install them. Or you can disable this behaviour by:
 
 1. Go to Tools > Manage Plugins
 2. Find the plugin
@@ -56,12 +56,12 @@ Beekeeper Studio automatically checks for plugin updates everytime you start the
 
 ## Installing a Specific Plugin Version
 
-Sometimes you might need a specific plugin version - maybe the latest plugin requires a newer Beekeeper Studio version than you have, you can't update the app for some reason, or you need to downgrade to an older plugin version. Here's how to manually install any plugin version:
+Sometimes you might need a specific plugin version - maybe the latest plugin requires a newer Supersedure Studio version than you have, you can't update the app for some reason, or you need to downgrade to an older plugin version. Here's how to manually install any plugin version:
 
 1. **Disable auto-update first**
     - Go to Tools > Manage Plugins
     - Find the plugin you want to install a specific version of
-    - Uncheck **Auto-update** (this prevents Beekeeper Studio from updating it back to the latest version)
+    - Uncheck **Auto-update** (this prevents Supersedure Studio from updating it back to the latest version)
 
 2. **Find the plugin in Plugin Manager**
     - Go to Tools > Manage Plugins
@@ -74,7 +74,7 @@ Sometimes you might need a specific plugin version - maybe the latest plugin req
 4. **Check version compatibility**
     - Click on a release to see its assets
     - Look for `manifest.json` in the release notes or assets
-    - Check the `minAppVersion` field to ensure compatibility with your Beekeeper Studio version
+    - Check the `minAppVersion` field to ensure compatibility with your Supersedure Studio version
     - Note the plugin `id` from the manifest
 
 5. **Download the plugin**
@@ -85,29 +85,29 @@ Sometimes you might need a specific plugin version - maybe the latest plugin req
 
         === "Linux"
             ```bash
-            ~/.config/beekeeper-studio/plugins/
+            ~/.config/supersedure-studio/plugins/
             ```
 
         === "macOS"
             ```bash
-            ~/Library/Application Support/beekeeper-studio/plugins/
+            ~/Library/Application Support/supersedure-studio/plugins/
             ```
 
         === "Windows"
             ```
-            %APPDATA%\beekeeper-studio\plugins\
+            %APPDATA%\supersedure-studio\plugins\
             ```
 
         === "Portable"
             ```bash
-            /path/to/beekeeper-studio/beekeeper-studio-data/plugins/
+            /path/to/supersedure-studio/supersedure-studio-data/plugins/
             ```
 
     - Find the existing plugin folder and delete it
     - Create a new folder with the same plugin ID
     - Extract the downloaded ZIP file contents into this new folder
 
-7. **Restart Beekeeper Studio**
+7. **Restart Supersedure Studio**
 
     The specific plugin version should now be installed and ready to use.
 

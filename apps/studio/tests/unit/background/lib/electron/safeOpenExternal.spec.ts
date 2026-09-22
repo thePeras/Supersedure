@@ -37,7 +37,7 @@ describe("isSafeExternalUrl", () => {
       "http://xn--bcher-kva.example/", // punycode
       "https://example.com",
       "https://example.com/",
-      "https://docs.beekeeperstudio.io/",
+      "https://docs.supersedurestudio.io/",
       "https://example.com/path?query=value&other=1",
       "https://example.com/path#fragment",
       "https://sub.domain.example.com:8443/deep/path/",
@@ -91,7 +91,7 @@ describe("isSafeExternalUrl", () => {
       "chrome://settings/",
       "about:blank",
       "view-source:https://example.com",
-      // app-internal protocols registered by Beekeeper itself
+      // app-internal protocols registered by Supersedure itself
       "app://index.html",
       "plugin://some-plugin/index.html",
       // intent: (Android), edge: (Windows)
@@ -160,9 +160,9 @@ describe("safeOpenExternal", () => {
   });
 
   it("calls shell.openExternal and returns true for a safe URL", () => {
-    expect(safeOpenExternal("https://docs.beekeeperstudio.io/")).toBe(true);
+    expect(safeOpenExternal("https://docs.supersedurestudio.io/")).toBe(true);
     expect(mockOpenExternal).toHaveBeenCalledTimes(1);
-    expect(mockOpenExternal).toHaveBeenCalledWith("https://docs.beekeeperstudio.io/");
+    expect(mockOpenExternal).toHaveBeenCalledWith("https://docs.supersedurestudio.io/");
     expect(mockWarn).not.toHaveBeenCalled();
   });
 

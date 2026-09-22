@@ -4,8 +4,8 @@ const fpmOptions = [
 ]
 
 module.exports = {
-  appId: "io.beekeeperstudio.desktop",
-  productName: "Beekeeper Studio",
+  appId: "io.supersedurestudio.desktop",
+  productName: "Supersedure Studio",
   releaseInfo: {
     releaseNotesFile: "build/release-notes.md"
   },
@@ -113,7 +113,7 @@ module.exports = {
   mac: {
     entitlements: "./build/entitlements.mac.plist",
     entitlementsInherit: "./build/entitlements.mac.plist",
-    icon: './public/icons/mac/bk-icon.icns',
+    icon: './public/icons/mac/supersedure-icon.icns',
     category: "public.app-category.developer-tools",
     "hardenedRuntime": true,
     publish: ['github']
@@ -126,7 +126,7 @@ module.exports = {
     ],
     syncDesktopName: true,
     desktop: {
-      'StartupWMClass': 'beekeeper-studio'
+      'StartupWMClass': 'supersedure-studio'
     },
   },
   appImage: {

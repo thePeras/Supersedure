@@ -61,8 +61,8 @@ import { mapState } from 'vuex';
 
 export default {
   data: () => ({
-    learnUrl: 'https://www.beekeeperstudio.io/upgrade',
-    buyUrl: 'https://www.beekeeperstudio.io/pricing',
+    learnUrl: 'https://www.supersedurestudio.io/upgrade',
+    buyUrl: 'https://www.supersedurestudio.io/pricing',
   }),
   computed: {
     ...mapState('licenses', { 'licenseStatus': 'status' }),

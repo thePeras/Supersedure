@@ -1,10 +1,10 @@
 ---
 title: Descripcion general
-summary: "Como instalar Beekeeper Studio"
-old_url: "https://docs.beekeeperstudio.io/docs/overview"
+summary: "Como instalar Supersedure Studio"
+old_url: "https://docs.supersedurestudio.io/docs/overview"
 ---
 
-Beekeeper Studio esta disponible para Windows, Linux y MacOS
+Supersedure Studio esta disponible para Windows, Linux y MacOS
 
 Consulta las guias a continuacion para obtener instrucciones de instalacion especificas para cada sistema operativo:
 

@@ -372,7 +372,7 @@ function testWith(tag, socket = false, readonly = false, image = 'mysql', option
       })
     })
 
-    // Regression test: https://github.com/beekeeper-studio/beekeeper-studio/issues/2640
+    // Regression test: https://github.com/thePeras/supersedure-studio/issues/2640
     it("Should handle columns with binary collation", async () => {
       if (tag == "5.1") return;
 

@@ -14,7 +14,7 @@ export default class {
   registerCallbacks() {
     window.main.on(AppEvent.settingsChanged, this.settingsChanged.bind(this))
     window.main.on(AppEvent.disconnect, this.disconnect.bind(this))
-    window.main.on(AppEvent.beekeeperAdded, this.addBeekeeper.bind(this))
+    window.main.on(AppEvent.supersedureAdded, this.addSupersedure.bind(this))
     window.main.on(AppEvent.switchLicenseState, this.switchLicenseState.bind(this))
     window.main.on(AppEvent.simulatePlatform, this.simulatePlatform.bind(this))
     this.forward(AppEvent.disconnect)
@@ -51,17 +51,17 @@ export default class {
     this.vueApp.$emit(AppEvent.closeTab)
   }
 
-  async addBeekeeper() {
+  async addSupersedure() {
     const existing = await this.vueApp.$util.send('appdb/saved/findOneBy', { options: { defaultDatabase: platformInfo.appDbPath }});
     if (!existing) {
       const nu = {};
       nu.connectionType = 'sqlite'
       nu.defaultDatabase = platformInfo.appDbPath
-      nu.name = "Beekeeper's Database"
+      nu.name = "Supersedure's Database"
       nu.labelColor = 'orange'
       await this.vueApp.$util.send('appdb/saved/save', { obj: nu });
     }
-    this.vueApp.$noty.success("Beekeeper's Database has been added to your Saved Connections")
+    this.vueApp.$noty.success("Supersedure's Database has been added to your Saved Connections")
     this.vueApp.$store.dispatch('data/connections/load')
   }
 

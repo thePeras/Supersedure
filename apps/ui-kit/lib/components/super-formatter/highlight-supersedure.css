@@ -1,6 +1,6 @@
 /**
- * Beekeeper Studio theme for highlight.js
- * Matches CodeMirror Monokai theme colors used in Beekeeper
+ * Supersedure Studio theme for highlight.js
+ * Matches CodeMirror Monokai theme colors used in Supersedure
  * Uses transparent backgrounds and CSS variables for theme compatibility
  */
 
@@ -104,7 +104,7 @@
   color: var(--bks-brand-danger, #ff5d59);
 }
 
-/* Light theme overrides - use Beekeeper's theme classes */
+/* Light theme overrides - use Supersedure's theme classes */
 body.theme-light .hljs,
 body.theme-solarized .hljs {
   color: var(--bks-text-editor-fg-color, rgba(0, 0, 0, 0.87));

@@ -176,7 +176,7 @@
     <portal to="modals">
       <modal
         :name="modalName"
-        class="beekeeper-modal vue-dialog sure header-sure"
+        class="supersedure-modal vue-dialog sure header-sure"
         @opened="sureOpened"
         @closed="sureClosed"
         @before-open="beforeOpened"
@@ -214,7 +214,7 @@
 
       <modal
         :name="duplicateTableModal"
-        class="beekeeper-modal vue-dialog sure header-sure"
+        class="supersedure-modal vue-dialog sure header-sure"
         @opened="sureOpened"
         @closed="sureClosed"
         @before-open="beforeOpened"

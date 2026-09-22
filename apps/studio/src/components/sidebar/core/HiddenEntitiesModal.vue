@@ -1,6 +1,6 @@
 <template>
   <modal
-    class="vue-dialog beekeeper-modal"
+    class="vue-dialog supersedure-modal"
     @before-open="onBeforeOpened"
     :name="modalName"
   >

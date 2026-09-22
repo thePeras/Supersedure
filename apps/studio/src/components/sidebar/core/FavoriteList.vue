@@ -249,7 +249,7 @@ import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
 import SidebarLoading from '../../common/SidebarLoading.vue'
 import FavoriteListItem from './favorite_list/FavoriteListItem.vue'
 import { AppEvent } from '@/common/AppEvent'
-import { Tree, TreeFolder } from "@beekeeperstudio/ui-kit/vue/tree";
+import { Tree, TreeFolder } from "@supersedure-studio/ui-kit/vue/tree";
 import EditableText from '@/components/common/EditableText.vue'
 import ContentPlaceholder from '@/components/common/loading/ContentPlaceholder.vue'
 import ContentPlaceholderText from '@/components/common/loading/ContentPlaceholderText.vue'
@@ -631,7 +631,7 @@ export default {
       }
       this.$bks.openMenu({ event, item: folder, options })
     },
-    /** @param event {import("@beekeeperstudio/ui-kit").TreeNodeMoveEvent} */
+    /** @param event {import("@supersedure-studio/ui-kit").TreeNodeMoveEvent} */
     async handleTreeNodeMove(event) {
       /** @type {import("@/common/utils/folderTree").ExtendedNode} */
       const source = event.source;

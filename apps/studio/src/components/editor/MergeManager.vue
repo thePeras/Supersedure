@@ -64,7 +64,7 @@
     <portal to="modals">
       <modal
         name="diff-modal"
-        class="beekeeper-modal vue-dialog diff-modal"
+        class="supersedure-modal vue-dialog diff-modal"
       >
         <div v-kbd-trap="true">
           <!-- TODO: Make sure one of the elements in this modal is focused so that the keyboard trap works -->

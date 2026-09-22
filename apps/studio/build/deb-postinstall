@@ -1,7 +1,7 @@
 #! /bin/bash
 
-OLD_FILE=/etc/apt/sources.list.d/beekeeper-studio.list
-NEW_FILE=/etc/apt/sources.list.d/beekeeper-studio-app.list
+OLD_FILE=/etc/apt/sources.list.d/supersedure-studio.list
+NEW_FILE=/etc/apt/sources.list.d/supersedure-studio-app.list
 
 available()
 {
@@ -13,14 +13,14 @@ if [ -f $NEW_FILE ]; then
 fi
 
 if [ -f $OLD_FILE ]; then
-  echo "--> Beekeeper Studio has migrated to a new apt repo, adding it, and removing the old one"
-  echo "--> For more information see https://docs.beekeeperstudio.io/installation"
+  echo "--> Supersedure Studio has migrated to a new apt repo, adding it, and removing the old one"
+  echo "--> For more information see https://docs.supersedurestudio.io/installation"
   rm -f $OLD_FILE
   rm -f $OLD_FILE.save
 fi
 
-if [ ! -f /usr/bin/beekeeper-studio ]; then
-  ln -s /opt/Beekeeper\ Studio/beekeeper-studio /usr/bin/beekeeper-studio
+if [ ! -f /usr/bin/supersedure-studio ]; then
+  ln -s /opt/Supersedure\ Studio/supersedure-studio /usr/bin/supersedure-studio
 fi
 
 if available apt-key
@@ -69,5 +69,5 @@ vEIGKwKpFx6ySE6DsU5fSJBT9dgw2Z6/KUJjWQSvjmOJmoOlCahos0L4Hmqyo39d
 -----END PGP PUBLIC KEY BLOCK-----
 
 EOF
-    echo "deb https://deb.beekeeperstudio.io stable main" > $NEW_FILE
+    echo "deb https://deb.supersedurestudio.io stable main" > $NEW_FILE
 fi

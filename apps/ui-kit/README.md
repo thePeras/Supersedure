@@ -1,16 +1,16 @@
-# @beekeeperstudio/ui-kit
+# @supersedure-studio/ui-kit
 
-`@beekeeperstudio/ui-kit` library provides a set of reusable UI custom elements used in
-[Beekeeper Studio](https://beekeeperstudio.io).
+`@supersedure-studio/ui-kit` library provides a set of reusable UI custom elements used in
+[Supersedure Studio](https://supersedurestudio.io).
 
-Get started with the [docs](https://github.com/beekeeper-studio/beekeeper-studio/tree/master/apps/ui-kit/docs/getting-started.md).
+Get started with the [docs](https://github.com/thePeras/supersedure-studio/tree/master/apps/ui-kit/docs/getting-started.md).
 
 ## Installation
 
-Install the `@beekeeperstudio/ui-kit` library to your project with:
+Install the `@supersedure-studio/ui-kit` library to your project with:
 
 ```bash
-npm install @beekeeperstudio/ui-kit
+npm install @supersedure-studio/ui-kit
 ```
 
 ## Development
@@ -27,4 +27,4 @@ yarn dev # start development server, ideal for testing components quickly
 Beekeeper Studio's UI Kit is dual licensed:
 
 1. AGPL license
-2. Commercial license (please contact sales@beekeeperstudio.io for more information)
+2. Commercial license (please contact sales@supersedurestudio.io for more information)

@@ -55,9 +55,9 @@ export function mainPlatformInfo(): IPlatformInfo {
 
   const windowPrefersDarkMode = false
 
-  const updatesDisabled = !!p.env.BEEKEEPER_DISABLE_UPDATES
+  const updatesDisabled = !!p.env.SUPERSEDURE_DISABLE_UPDATES
 
-  // previous builds of Beekeeper Studio required native libs for Oracle,
+  // previous builds of Supersedure Studio required native libs for Oracle,
   // but now it should work on all platforms
   // FIXME: Windows ARM - this needs to be disabled
   // as instant client not available there
@@ -68,7 +68,7 @@ export function mainPlatformInfo(): IPlatformInfo {
   const downloadsDirectory = testMode ? './tmp' : e.app.getPath('downloads')
   const homeDirectory = testMode ? './tmp' : e.app.getPath('home')
   if (p.env.PORTABLE_EXECUTABLE_DIR) {
-    userDirectory = join(p.env.PORTABLE_EXECUTABLE_DIR, 'beekeeper_studio_data')
+    userDirectory = join(p.env.PORTABLE_EXECUTABLE_DIR, 'supersedure_studio_data')
   }
   const pluginsDirectory = join(userDirectory, 'plugins')
   const driverDepsDirectory = join(userDirectory, 'driver-deps')
@@ -122,15 +122,15 @@ export function mainPlatformInfo(): IPlatformInfo {
     updatesDisabled,
     appVersion,
     parsedAppVersion,
-    // cloudUrl: isDevEnv ? 'https://staging.beekeeperstudio.io' : 'https://app.beekeeperstudio.io',
-    // cloudUrl: 'https://app.beekeeperstudio.io',
+    // cloudUrl: isDevEnv ? 'https://staging.supersedurestudio.io' : 'https://app.supersedurestudio.io',
+    // cloudUrl: 'https://app.supersedurestudio.io',
     locale,
     // Resolved here once so main, utility, and renderer all read the same
     // value: main consumes platformInfo directly, utility receives it as a
     // JSON env var when forked, renderer fetches it over IPC.
     logLevel: resolveLevel(p.env, isDevEnv),
 
-    cloudUrl: isDevEnv ? 'http://localhost:3000' : 'https://app.beekeeperstudio.io'
+    cloudUrl: isDevEnv ? 'http://localhost:3000' : 'https://app.supersedurestudio.io'
   }
 }
 

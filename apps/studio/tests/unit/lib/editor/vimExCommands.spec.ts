@@ -13,7 +13,7 @@ describe("vim ex commands", () => {
     trigger = jest.fn();
   });
 
-  // https://github.com/beekeeper-studio/beekeeper-studio/issues/1930
+  // https://github.com/thePeras/supersedure-studio/issues/1930
   // Ex commands are registered on a global vim singleton, so a handler that
   // captured a tab would act on whichever tab mounted last. These broadcast
   // instead, leaving the active tab to decide.
@@ -64,7 +64,7 @@ describe("vim ex commands", () => {
 });
 
 describe("default vim mappings", () => {
-  // https://github.com/beekeeper-studio/beekeeper-studio/issues/3446
+  // https://github.com/thePeras/supersedure-studio/issues/3446
   it("routes ctrl-p to quick search through an ex command", () => {
     const mapping = DEFAULT_VIM_MAPPINGS.find((m) => m.lhs === "<C-p>");
 

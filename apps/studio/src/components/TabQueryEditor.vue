@@ -123,7 +123,7 @@
                   v-tooltip="getCommitModeVTooltip({
                     title: 'Manual commit mode',
                     description: 'Write actions will require you to manually commit your changes',
-                    learnMoreLink: 'https://docs.beekeeperstudio.io/user_guide/sql_editor/manual-transaction-management',
+                    learnMoreLink: 'https://docs.supersedurestudio.io/user_guide/sql_editor/manual-transaction-management',
                   })"
                 >
                   <span class="togglebutton-content">
@@ -140,7 +140,7 @@
                   ...getCommitModeVTooltip({
                     title: `<i class='material-icons'>commit</i><span>Transaction active</span>`,
                     description: 'Once committed or rolled back, it will be deactivated.',
-                    learnMoreLink: 'https://docs.beekeeperstudio.io/user_guide/sql_editor/manual-transaction-management',
+                    learnMoreLink: 'https://docs.supersedurestudio.io/user_guide/sql_editor/manual-transaction-management',
                     className: 'transaction-active',
                     show: showTransactionActiveTooltip,
                     onClose() {
@@ -402,7 +402,7 @@
     <!-- Super-Formatter Modal -->
     <portal to="modals">
       <modal
-        class="vue-dialog beekeeper-modal super-formatter-modal"
+        class="vue-dialog supersedure-modal super-formatter-modal"
         @opened="getPresets"
         :name="superFormatterId"
         :scrollable="true"
@@ -446,7 +446,7 @@
     <!-- Save Modal -->
     <portal to="modals">
       <modal
-        class="vue-dialog beekeeper-modal"
+        class="vue-dialog supersedure-modal"
         :name="`save-modal-${tab.id}`"
         @closed="selectEditor"
         @opened="selectTitleInput"
@@ -510,7 +510,7 @@
     <!-- Parameter modal -->
     <portal to="modals">
       <modal
-        class="vue-dialog beekeeper-modal"
+        class="vue-dialog supersedure-modal"
         :name="`parameters-modal-${tab.id}`"
         @opened="selectFirstParameter"
         @closed="selectEditor"
@@ -583,11 +583,11 @@
   import ProgressBar from './editor/ProgressBar.vue'
   import ResultTable from './editor/ResultTable.vue'
   import ShortcutHints from './editor/ShortcutHints.vue'
-  import SqlTextEditor from "@beekeeperstudio/ui-kit/vue/sql-text-editor"
-  import BksSuperFormatter from "@beekeeperstudio/ui-kit/vue/super-formatter"
-  import SurrealTextEditor from "@beekeeperstudio/ui-kit/vue/surreal-text-editor"
+  import SqlTextEditor from "@supersedure-studio/ui-kit/vue/sql-text-editor"
+  import BksSuperFormatter from "@supersedure-studio/ui-kit/vue/super-formatter"
+  import SurrealTextEditor from "@supersedure-studio/ui-kit/vue/surreal-text-editor"
   import InAppFolderPicker from "@/components/common/form/InAppFolderPicker.vue"
-  import { divider, type Entity } from "@beekeeperstudio/ui-kit";
+  import { divider, type Entity } from "@supersedure-studio/ui-kit";
 
   import QueryEditorStatusBar from './editor/QueryEditorStatusBar.vue'
   import QueryEditHistory from '@/components/editor/QueryEditHistory.vue'
@@ -1434,7 +1434,7 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
             this.$noty.warning("Editing results cannot be enabled because no primary keys are included in the query", {
               buttons: [
                 Noty.button('Learn More', 'btn btn-primary', () => {
-                  window.main.openExternally('https://beekeeperstudio.io/user_guide_sql_editor/editing-data.md')
+                  window.main.openExternally('https://supersedurestudio.io/user_guide_sql_editor/editing-data.md')
                 })
               ]
             })
@@ -1777,7 +1777,7 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
             await this.toggleCommitMode();
           }
 
-          // https://github.com/beekeeper-studio/beekeeper-studio/issues/1435
+          // https://github.com/thePeras/supersedure-studio/issues/1435
           if (!document.hasFocus() && window.Notification && Notification.permission === "granted") {
             new window.Notification("Query Complete", {
               body: `${this.tab.title} has been executed successfully.`,
@@ -2006,7 +2006,7 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         this.querySelectionError = error;
       },
       openTroubleshooting() {
-        window.main.openExternally('https://docs.beekeeperstudio.io/support/troubleshooting/')
+        window.main.openExternally('https://docs.supersedurestudio.io/support/troubleshooting/')
       },
       async copyQuerySelectionError() {
         await this.$native.clipboard.writeText(this.querySelectionError?.stack ?? this.querySelectionError?.message)

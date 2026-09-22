@@ -1,7 +1,7 @@
 <template>
   <portal to="modals">
     <modal 
-      class="vue-dialog beekeeper-modal"
+      class="vue-dialog supersedure-modal"
       name="util-died-modal"
     >
       <div class="dialog-content">
@@ -9,7 +9,7 @@
           Utility Process Crashed
         </div>
         <div>
-          Looks like the utility process has crashed! We've automatically restarted it, but you may need to reconnect to your database if you were previously connected. If this persists, please report it on our <a class="text-primary" href="https://github.com/beekeeper-studio/beekeeper-studio/issues/new/choose">issue tracker</a>.
+          Looks like the utility process has crashed! We've automatically restarted it, but you may need to reconnect to your database if you were previously connected. If this persists, please report it on our <a class="text-primary" href="https://github.com/thePeras/supersedure-studio/issues/new/choose">issue tracker</a>.
         </div>
       </div>
       <div class="vue-dialog-buttons">

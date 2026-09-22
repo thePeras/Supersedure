@@ -17,8 +17,8 @@
           <div class="alert alert-info">
             <i class="material-icons-outlined">info</i>
             <div>
-              Providing certificate files is optional. By default Beekeeper will just trust the server certificate.
-              <external-link href="https://docs.beekeeperstudio.io/user_guide/connecting/connecting/#ssl">
+              Providing certificate files is optional. By default Supersedure will just trust the server certificate.
+              <external-link href="https://docs.supersedurestudio.io/user_guide/connecting/connecting/#ssl">
                 Read More
               </external-link>
             </div>

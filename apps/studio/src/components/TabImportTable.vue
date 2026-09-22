@@ -5,7 +5,7 @@
   >
     <div class="not-supported">
       <p>
-        Beekeeper does not currently support Import from File for {{ this.dialectTitle }} ☹️
+        Supersedure does not currently support Import from File for {{ this.dialectTitle }} ☹️
       </p>
     </div>
   </div>
