@@ -37,7 +37,6 @@ import {
   DatabaseFilterOptions,
   ExtendedTableColumn,
   FilterOptions,
-  ImportFuncOptions,
   NgQueryResult,
   OrderBy,
   PrimaryKeyColumn,
@@ -1306,9 +1305,6 @@ export class MysqlClient extends BasicDatabaseClient<ResultType, mysql.PoolConne
       properties: true,
       partitions: false,
       editPartitions: false,
-      backups: true,
-      backDirFormat: false,
-      restore: true,
       indexNullsNotDistinct: false,
       transactions: true,
       filterTypes: ['standard']
@@ -1499,26 +1495,10 @@ export class MysqlClient extends BasicDatabaseClient<ResultType, mysql.PoolConne
     return defaultValue;
   }
 
-  async importBeginCommand(_table: TableOrView, { executeOptions }: ImportFuncOptions): Promise<any> {
-    return this.rawExecuteQuery('START TRANSACTION;', executeOptions)
-  }
 
-  async importTruncateCommand (table: TableOrView, { executeOptions }: ImportFuncOptions): Promise<any> {
-    const { name } = table
-    return this.rawExecuteQuery(`TRUNCATE TABLE ${this.wrapIdentifier(name)};`, executeOptions)
-  }
 
-  async importLineReadCommand (_table: TableOrView, sqlString: string, { executeOptions }: ImportFuncOptions): Promise<any> {
-    return this.rawExecuteQuery(sqlString, executeOptions)
-  }
 
-  async importCommitCommand (_table: TableOrView, { executeOptions }: ImportFuncOptions): Promise<any> {
-    return this.rawExecuteQuery('COMMIT;', executeOptions)
-  }
 
-  async importRollbackCommand (_table: TableOrView, { executeOptions }: ImportFuncOptions): Promise<any> {
-    return this.rawExecuteQuery('ROLLBACK;', executeOptions)
-  }
 
   async reserveConnection(tabId: number): Promise<void> {
     this.throwIfHasConnection(tabId);

@@ -147,14 +147,6 @@
         </div>
         <div class="vue-dialog-buttons">
           <button
-            class="btn btn-flat btn-icon"
-            type="button"
-            @click.prevent="importExportTables"
-          >
-            <i class="material-icons">tab</i>
-            Export multiple tables
-          </button>
-          <button
             class="btn btn-primary"
             type="submit"
             :disabled="!filePath"
@@ -317,16 +309,8 @@ export default {
       this.$emit('export', payload) // handled by ExportManager
       this.$modal.hide('export-modal')
     },
-    importExportTables() {
-      this.$root.$emit(AppEvent.exportTables);
-      this.closeModal();
-    },
     closeModal() {
       this.$modal.hide('export-modal')
-    },
-    upgradeModal() {
-      this.closeModal()
-      this.$root.$emit(AppEvent.upgradeModal, 'Multi-table Export')
     },
     toggleAdvanced() {
       this.advancedToggled = !this.advancedToggled

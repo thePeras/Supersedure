@@ -1,4 +1,4 @@
-import { CancelableQuery, DatabaseFilterOptions, ExtendedTableColumn, FieldDescriptor, FieldEditData, FilterOptions, ImportFuncOptions, NgQueryResult, OrderBy, PrimaryKeyColumn, Routine, SchemaFilterOptions, ServerStatistics, StreamResults, SupportedFeatures, TableChanges, TableColumn, TableFilter, TableIndex, TableInsert, TableOrView, TablePartition, TableProperties, TableResult, TableTrigger, TableUpdateResult } from './models';
+import { CancelableQuery, DatabaseFilterOptions, ExtendedTableColumn, FieldDescriptor, FieldEditData, FilterOptions, NgQueryResult, OrderBy, PrimaryKeyColumn, Routine, SchemaFilterOptions, ServerStatistics, StreamResults, SupportedFeatures, TableChanges, TableColumn, TableFilter, TableIndex, TableInsert, TableOrView, TablePartition, TableProperties, TableResult, TableTrigger, TableUpdateResult } from './models';
 import { AlterPartitionsSpec, AlterTableSpec, CreateTableSpec, IndexAlterations, RelationAlterations, TableKey } from '@shared/lib/dialects/models';
 import type { SshMode } from '@/common/interfaces/IConnection';
 
@@ -367,14 +367,6 @@ export interface IBasicDatabaseClient {
   syncDatabase(): Promise<void>
 
   getServerStatistics(): Promise<ServerStatistics | null>
-
-  importStepZero(table: TableOrView): Promise<any>
-  importBeginCommand(table: TableOrView, importOptions?: ImportFuncOptions): Promise<any>
-  importTruncateCommand (table: TableOrView, importOptions?: ImportFuncOptions): Promise<any>
-  importLineReadCommand (table: TableOrView, sqlString: string|string[], importOptions?: ImportFuncOptions): Promise<any>
-  importCommitCommand (table: TableOrView, importOptions?: ImportFuncOptions): Promise<any>
-  importRollbackCommand (table: TableOrView, importOptions?: ImportFuncOptions): Promise<any>
-  importFinalCommand (table: TableOrView, importOptions?: ImportFuncOptions): Promise<any>
 
   /** Returns a query for the given filter */
   getQueryForFilter(filter: TableFilter): Promise<string>

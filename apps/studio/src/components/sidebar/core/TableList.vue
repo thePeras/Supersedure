@@ -140,19 +140,6 @@
                   {{ newTableOrCollection }}
                 </x-label>
               </x-menuitem>
-              <x-menuitem
-                :disabled="tablesLoading || createDisabled"
-                @click.prevent="newTableFromFile"
-                :title="createDisabled ? `Creating tables is not supported for ${dialect}` : ''"
-              >
-                <x-label>
-                  {{ newTableOrCollection }} from File
-                  <i
-                    v-if="$store.getters.isCommunity"
-                    class="material-icons menu-icon"
-                  >stars</i>
-                </x-label>
-              </x-menuitem>
             </x-menu>
           </x-button>
         </div>
@@ -346,9 +333,6 @@
       },
       newTable() {
         this.$root.$emit(AppEvent.createTable)
-      },
-      newTableFromFile() {
-        this.$root.$emit(AppEvent.createTableFromFile)
       },
       maybeUnselect(e) {
         if (this.selectedSidebarItem) {

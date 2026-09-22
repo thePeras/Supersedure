@@ -1,6 +1,6 @@
 import { DatabaseElement, IBasicDatabaseClient } from "../db/types";
 import Vue from 'vue';
-import { CancelableQuery, DatabaseFilterOptions, ExtendedTableColumn, FilterOptions, NgQueryResult, OrderBy, PrimaryKeyColumn, Routine, SchemaFilterOptions, SupportedFeatures, TableChanges, TableFilter, TableColumn, TableIndex, TableOrView, TablePartition, TableResult, TableProperties, StreamResults, TableInsert, TableTrigger, ImportFuncOptions, FieldDescriptor, FieldEditData, ServerStatistics } from "../db/models";
+import { CancelableQuery, DatabaseFilterOptions, ExtendedTableColumn, FilterOptions, NgQueryResult, OrderBy, PrimaryKeyColumn, Routine, SchemaFilterOptions, SupportedFeatures, TableChanges, TableFilter, TableColumn, TableIndex, TableOrView, TablePartition, TableResult, TableProperties, StreamResults, TableInsert, TableTrigger, FieldDescriptor, FieldEditData, ServerStatistics } from "../db/models";
 import { AlterPartitionsSpec, AlterTableSpec, CreateTableSpec, IndexAlterations, RelationAlterations, TableKey } from "@shared/lib/dialects/models";
 import { IConnection } from "@/common/interfaces/IConnection";
 
@@ -282,33 +282,12 @@ export class ElectronUtilityConnectionClient implements IBasicDatabaseClient {
     return await Vue.prototype.$util.send('conn/azureSignOut', { config });
   }
 
-  async importStepZero(_table: TableOrView): Promise<any> {
-    throw new Error ('Do not use on front end')
-  }
 
-  async importBeginCommand(_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    throw new Error ('Do not use on front end')
-  }
 
-  async importTruncateCommand(_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    throw new Error ('Do not use on front end')
-  }
 
-  async importLineReadCommand(_table: TableOrView, _sqlString: string | string[], _importOptions?: ImportFuncOptions): Promise<any> {
-    throw new Error ('Do not use on front end')
-  }
 
-  async importCommitCommand(_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    throw new Error ('Do not use on front end')
-  }
 
-  async importRollbackCommand(_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    throw new Error ('Do not use on front end')
-  }
 
-  async importFinalCommand(_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    throw new Error ('Do not use on front end')
-  }
 
   /** Returns a query for the given filter */
   async getQueryForFilter(filter: TableFilter): Promise<string> {

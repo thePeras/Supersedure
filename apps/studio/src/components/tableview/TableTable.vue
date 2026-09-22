@@ -234,15 +234,6 @@
             <x-menuitem @click="showColumnFilterModal">
               <x-label>Hide columns ({{ hiddenColumnCount }})</x-label>
             </x-menuitem>
-            <x-menuitem @click="importTab" :disabled="dialectData?.disabledFeatures?.importFromFile || usedConfig.readOnlyMode">
-              <x-label>
-                Import from file
-                <i
-                  v-if="$store.getters.isCommunity"
-                  class="material-icons menu-icon"
-                >stars</i>
-              </x-label>
-            </x-menuitem>
             <x-menuitem @click="openQueryTab">
               <x-label>Copy view to SQL</x-label>
             </x-menuitem>
@@ -1812,9 +1803,6 @@ export default Vue.extend({
       pendingUpdate.cell.setValue(pendingUpdate.oldValue)
       pendingUpdate.cell.getElement().classList.remove('edited')
       pendingUpdate.cell.getElement().classList.remove('edit-error')
-    },
-    importTab() {
-      this.trigger(AppEvent.beginImport, { table: this.table })
     },
     openQueryTab() {
       const page = this.tabulator.getPage();

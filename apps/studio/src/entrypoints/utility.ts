@@ -15,10 +15,8 @@ import { newState, removeState, state } from '@/handlers/handlerState';
 import { QueryHandlers } from '@/handlers/queryHandlers';
 import { TabHistoryHandlers } from '@/handlers/tabHistoryHandlers'
 import { ExportHandlers } from '@/handlers/exportHandlers';
-import { BackupHandlers } from '@/handlers/backupHandlers';
 import { CliHandlers } from '@/handlers/cliHandlers';
 import { AwsHandlers } from '@/handlers/awsHandlers';
-import { ImportHandlers } from '@/handlers/importHandlers';
 import { EnumHandlers } from '@/handlers/enumHandlers';
 import { TempHandlers } from '@/handlers/tempHandlers';
 import { DevHandlers } from '@/handlers/devHandlers';
@@ -83,9 +81,7 @@ export const handlers: Handlers = {
   ...QueryHandlers,
   ...GeneratorHandlers,
   ...ExportHandlers,
-  ...ImportHandlers,
   ...AppDbHandlers,
-  ...BackupHandlers,
   ...CliHandlers,
   ...AwsHandlers,
   ...FileHandlers,

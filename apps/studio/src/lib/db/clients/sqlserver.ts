@@ -31,7 +31,7 @@ import {
   ExecutionContext,
   QueryLogOptions
 } from './BasicDatabaseClient'
-import { FilterOptions, OrderBy, TableFilter, ExtendedTableColumn, TableIndex, TableProperties, TableResult, StreamResults, Routine, TableOrView, NgQueryResult, DatabaseFilterOptions, TableChanges, ImportFuncOptions, DatabaseEntity, BksFieldType, BksField, IncludedFilterTypes } from '../models';
+import { FilterOptions, OrderBy, TableFilter, ExtendedTableColumn, TableIndex, TableProperties, TableResult, StreamResults, Routine, TableOrView, NgQueryResult, DatabaseFilterOptions, TableChanges, DatabaseEntity, BksFieldType, BksField, IncludedFilterTypes } from '../models';
 import { AlterTableSpec, IndexAlterations, RelationAlterations } from '@shared/lib/dialects/models';
 import { AzureAuthService } from '../authentication/azure';
 import { IDbConnectionServer } from '../backendTypes';
@@ -1149,42 +1149,11 @@ export class SQLServerClient extends BasicDatabaseClient<SQLServerResult, Transa
     return data.recordset && data.recordset.length > 0;
   }
 
-  async importStepZero(table: TableOrView): Promise<any> {
-    const transaction = new sql.Transaction(this.pool)
 
-    return {
-      transaction,
-      request: new sql.Request(transaction),
-      hasIdentityColumn: await this.hasIdentityColumn(table)
-    }
-  }
 
-  async importBeginCommand(_table: TableOrView, { clientExtras }: ImportFuncOptions): Promise<any> {
-    await clientExtras.transaction.begin()
-  }
 
-  async importTruncateCommand (table: TableOrView, { clientExtras, executeOptions }: ImportFuncOptions): Promise<any> {
-    const { name, schema } = table
-    const schemaString = schema ? `${this.wrapIdentifier(schema)}.` : ''
-    await clientExtras.request.query(`TRUNCATE TABLE ${schemaString}${this.wrapIdentifier(name)};`, executeOptions)
-  }
 
-  async importLineReadCommand (table: TableOrView, sqlString: string, { executeOptions }: ImportFuncOptions): Promise<any> {
-    const { name, schema } = table
-    const schemaString = schema ? `${this.wrapIdentifier(schema)}.` : ''
-    const identOn = executeOptions.hasIdentityColumn ? `SET IDENTITY_INSERT ${schemaString}${this.wrapIdentifier(name)} ON;` : '';
-    const identOff = executeOptions.hasIdentityColumn ? `SET IDENTITY_INSERT ${schemaString}${this.wrapIdentifier(name)} OFF;` : '';
-    const query = `${identOn}${sqlString};${identOff}`;
-    return await executeOptions.request.query(query, executeOptions)
-  }
 
-  async importCommitCommand (_table: TableOrView, { clientExtras }: ImportFuncOptions): Promise<any> {
-    return await clientExtras.transaction.commit()
-  }
-
-  async importRollbackCommand (_table: TableOrView, { clientExtras }: ImportFuncOptions): Promise<any> {
-    return await clientExtras.transaction.rollback()
-  }
 
   /* helper functions and settings below! */
 
@@ -1241,9 +1210,6 @@ export class SQLServerClient extends BasicDatabaseClient<SQLServerResult, Transa
       properties: true,
       partitions: false,
       editPartitions: false,
-      backups: false,
-      backDirFormat: false,
-      restore: false,
       indexNullsNotDistinct: false,
       transactions: true,
       filterTypes: ['standard' as IncludedFilterTypes]

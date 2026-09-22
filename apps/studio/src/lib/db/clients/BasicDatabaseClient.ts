@@ -1,4 +1,4 @@
-import { SupportedFeatures, FilterOptions, TableOrView, Routine, TableColumn, SchemaFilterOptions, DatabaseFilterOptions, TableChanges, OrderBy, TableFilter, TableResult, StreamResults, CancelableQuery, ExtendedTableColumn, PrimaryKeyColumn, TableProperties, TableIndex, TableTrigger, TableInsert, NgQueryResult, TablePartition, TableUpdateResult, ImportFuncOptions, DatabaseEntity, BksField, FieldDescriptor, FieldReadOnlyReason, ServerStatistics, FieldEditData } from '../models';
+import { SupportedFeatures, FilterOptions, TableOrView, Routine, TableColumn, SchemaFilterOptions, DatabaseFilterOptions, TableChanges, OrderBy, TableFilter, TableResult, StreamResults, CancelableQuery, ExtendedTableColumn, PrimaryKeyColumn, TableProperties, TableIndex, TableTrigger, TableInsert, NgQueryResult, TablePartition, TableUpdateResult, DatabaseEntity, BksField, FieldDescriptor, FieldReadOnlyReason, ServerStatistics, FieldEditData } from '../models';
 import { AlterPartitionsSpec, AlterTableSpec, CreateTableSpec, IndexAlterations, RelationAlterations, TableKey } from '@shared/lib/dialects/models';
 import { buildInsertQueries, buildInsertQuery, errorMessages, isAllowedReadOnlyQuery, joinQueries, applyChangesSql } from './utils';
 import { Knex } from 'knex';
@@ -449,89 +449,15 @@ export abstract class BasicDatabaseClient<RawResultType extends BaseQueryResult,
   abstract queryStream(query: string, chunkSize: number): Promise<StreamResults>;
   // ****************************************************************************
 
-  // For Import *****************************************************************
-  async importStepZero(_table: TableOrView, _options?: { connection: any }): Promise<any> {
-    return null
-  }
-  async importBeginCommand(_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    return null
-  }
 
-  async importTruncateCommand (_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    return null
-  }
 
-  async importLineReadCommand (_table: TableOrView, _sqlString: string|string[], _importOptions?: ImportFuncOptions): Promise<any> {
-    return null
-  }
 
-  async importCommitCommand (_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    return null
-  }
 
-  async importRollbackCommand (_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    return null
-  }
-
-  async importFinalCommand (_table: TableOrView, _importOptions?: ImportFuncOptions): Promise<any> {
-    return null
-  }
 
   protected async runWithConnection<T>(_child: (c: any) => Promise<T>): Promise<T> {
     throw new Error(`runWithConnection not implemented for ${this.dialect}`);
   }
 
-  async importFile(
-    table: TableOrView,
-    importScriptOptions: ImportFuncOptions,
-    readStream: (b: {[key: string]: any}, executeOptions?: any, c?: string) => Promise<any>,
-    createTableSql?: string
-  ) {
-    const {
-      executeOptions,
-      importerOptions,
-      storeValues
-    } = importScriptOptions;
-
-    return await this.runWithConnection(async (connection) => {
-      try {
-        executeOptions.connection = connection
-        importScriptOptions.clientExtras = await this.importStepZero(table, { connection })
-        await this.importBeginCommand(table, importScriptOptions)
-        if (storeValues.createNewTable) {
-          await this.rawExecuteQuery(createTableSql, {}) as RawResultType[]
-        }
-        if (storeValues.truncateTable) {
-          await this.importTruncateCommand(table, importScriptOptions)
-        }
-
-        const readOptions = {
-          connection,
-          ...importScriptOptions.clientExtras
-        };
-        const result = await readStream(importerOptions, readOptions, storeValues.fileName)
-        if (result.aborted) {
-          throw new Error(`Import aborted: ${result.error}`);
-        }
-        await this.importCommitCommand(table, importScriptOptions)
-      } catch (err) {
-        log.error('Error importing data: ', err)
-        await this.importRollbackCommand(table, importScriptOptions)
-        throw err;
-      } finally {
-        await this.importFinalCommand(table, importScriptOptions)
-      }
-    })
-  }
-
-  async getImportSQL(importedData: any[], tableName: string, schema: string = null, runAsUpsert = false): Promise<string | string[]> {
-    const queries = []
-    const primaryKeysPromise = await this.getPrimaryKeys(tableName, schema)
-    const primaryKeys = primaryKeysPromise.map(v => v.columnName)
-    const createUpsertFunc = this.createUpsertFunc ?? null
-    queries.push(buildInsertQueries(this.knex, importedData, { runAsUpsert, primaryKeys, createUpsertFunc }).join(';'))
-    return joinQueries(queries)
-  }
   // ****************************************************************************
 
   // Duplicate Table ************************************************************

@@ -297,24 +297,6 @@ export function menuItems(actionHandler: IMenuActionHandler, settings: IGroupedU
       click: actionHandler.enterLicense,
 
     },
-    backupDatabase: {
-      id: 'backup-database',
-      label: "Create a Database Backup",
-      click: actionHandler.backupDatabase,
-      enabled: false,
-    },
-    restoreDatabase: {
-      id: 'restore-database',
-      label: "Restore a Database Backup",
-      click: actionHandler.restoreDatabase,
-      enabled: false,
-    },
-    exportTables: {
-      id: 'export-tables',
-      label: 'Export Data',
-      click: actionHandler.exportTables,
-      enabled: false,
-    },
     updatePin: {
       id: 'update-pin',
       label: 'Update Pin',

@@ -150,9 +150,6 @@ export default class extends DefaultMenu {
         id: "tools",
         label: "Tools",
         submenu: [
-          this.menuItems.backupDatabase,
-          this.menuItems.restoreDatabase,
-          this.menuItems.exportTables,
           ...(this.bksConfig.security.lockMode === "pin" ? [this.menuItems.updatePin] : []),
           { type: 'separator' },
           this.menuItems.managePlugins,

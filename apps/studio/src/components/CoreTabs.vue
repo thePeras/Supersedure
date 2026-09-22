@@ -133,38 +133,6 @@
           :tab="tab"
           :tab-id="tab.id"
         />
-        <ImportExportDatabase
-          v-if="tab.tabType === 'import-export-database'"
-          :schema="tab.schemaName"
-          :tab="tab"
-          :active="activeTab?.id === tab.id"
-          @close="close"
-        />
-        <DatabaseBackup
-          v-if="tab.tabType === 'backup'"
-          :connection="connection"
-          :is-restore="false"
-          :active="activeTab?.id === tab.id"
-          :tab="tab"
-          @close="close"
-        />
-        <DatabaseBackup
-          v-if="tab.tabType === 'restore'"
-          :connection="connection"
-          :is-restore="true"
-          :active="activeTab?.id === tab.id"
-          :tab="tab"
-          @close="close"
-        />
-        <ImportTable
-          v-if="tab.tabType === 'import-table'"
-          :tab="tab"
-          :schema="tab.schemaName"
-          :table="tab.tableName"
-          :active="activeTab?.id === tab.id"
-          :connection="connection"
-          @close="close"
-        />
       </div>
     </div>
     <portal to="modals">
@@ -296,9 +264,6 @@ import CoreTabHeader from './CoreTabHeader.vue'
 import TableTable from './tableview/TableTable.vue'
 import TableProperties from './TabTableProperties.vue'
 import TableBuilder from './TabTableBuilder.vue'
-import ImportExportDatabase from './importexportdatabase/ImportExportDatabase.vue'
-import ImportTable from './TabImportTable.vue'
-import DatabaseBackup from './TabDatabaseBackup.vue'
 import PluginShell from './TabPluginShell.vue'
 import PluginBase from './TabPluginBase.vue'
 import { AppEvent } from '../common/AppEvent'
@@ -330,14 +295,11 @@ export default Vue.extend({
     CoreTabHeader,
     TableTable,
     TableProperties,
-    ImportExportDatabase,
-    ImportTable,
     Draggable,
     ShortcutHints,
     TableBuilder,
     TabWithTable,
     TabIcon,
-    DatabaseBackup,
     PendingChangesButton,
     ConfirmationModal,
     SqlFilesImportModal,
@@ -428,7 +390,6 @@ export default Vue.extend({
         { event: AppEvent.newTab, handler: this.createQuery },
         { event: AppEvent.newCustomTab, handler: this.addTab },
         { event: AppEvent.createTable, handler: this.openTableBuilder },
-        { event: AppEvent.createTableFromFile, handler: this.beginImport },
         { event: 'historyClick', handler: this.createQueryFromItem },
         { event: AppEvent.loadTable, handler: this.openTable },
         { event: AppEvent.openTableProperties, handler: this.openTableProperties },
@@ -445,10 +406,6 @@ export default Vue.extend({
         { event: AppEvent.duplicateDatabaseTable, handler: this.duplicateDatabaseTable },
         { event: AppEvent.dropzoneDrop, handler: this.handleDropzoneDrop },
         { event: AppEvent.promptQueryExport, handler: this.handlePromptQueryExport },
-        { event: AppEvent.exportTables, handler: this.importExportTables },
-        { event: AppEvent.backupDatabase, handler: this.backupDatabase },
-        { event: AppEvent.beginImport, handler: this.beginImport },
-        { event: AppEvent.restoreDatabase, handler: this.restoreDatabase },
         { event: AppEvent.switchUserKeymap, handler: this.switchUserKeymap },
         { event: AppEvent.pasteAsNewRows, handler: this.pasteAsNewRowsWrongTabCheck },
       ]
@@ -764,52 +721,6 @@ export default Vue.extend({
 
       this.$modal.show(this.modalName)
     },
-    importExportTables() {
-      // we want this to open a tab with the schema and tables open
-      const t = { tabType: 'import-export-database' }
-      t.title = `Data Export`
-      t.unsavedChanges = false
-      const existing = this.tabItems.find((tab) => matches(tab, t))
-      if (existing) return this.$store.dispatch('tabs/setActive', existing)
-      this.addTab(t)
-    },
-    backupDatabase() {
-      const t = { tabType: 'backup' }
-      t.title = 'Backup';
-      t.unsavedChanges = false;
-      const existing = this.tabItems.find((tab) => matches(tab, t));
-      if (existing) return this.$store.dispatch('tabs/setActive', existing);
-      this.addTab(t);
-    },
-    beginImport(data = {}) {
-      const { table } = data
-      if (table && table.entityType !== 'table') {
-        this.$noty.error("You can only import data into a table")
-        return;
-      }
-      if (this.$store.getters.isCommunity) {
-        this.$root.$emit(AppEvent.upgradeModal, 'Import From File')
-        return;
-      }
-      const t = { tabType: 'import-table' }
-      t.title = table ? `Import Table: ${table.name}` : 'Create Table and Import Data'
-      t.unsavedChanges = false
-      if (table) {
-        t.schemaName = table.schema
-        t.tableName = table.name
-      }
-      const existing = this.tabItems.find(tab => matches(tab, t))
-      if (existing) return this.$store.dispatch('tabs/setActive', existing)
-      this.addTab(t)
-    },
-    restoreDatabase() {
-      const t = { tabType: 'restore' };
-      t.title = 'Restore';
-      t.unsavedChanges = false;
-      const existing = this.tabItems.find((tab) => matches(tab, t));
-      if (existing) return this.$store.dispatch('tabs/setActive', existing);
-      this.addTab(t);
-    },
     duplicateDatabaseTable({ item: dbActionParams, action: dbAction }) {
       this.dbElement = dbActionParams.name
       this.dbAction = dbAction
@@ -1043,9 +954,6 @@ export default Vue.extend({
       // ensure the tab is active
       this.$store.dispatch('tabs/setActive', tab);
       switch (tab.tabType) {
-        case 'backup':
-        case 'restore':
-          break;
         case 'query':
           return this.close(tab, { ignoreUnsavedChanges: true });
         default:

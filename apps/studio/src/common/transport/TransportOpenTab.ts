@@ -6,7 +6,7 @@ import { JsonValue } from "@/types";
 import { LoadViewParams } from "@beekeeperstudio/plugin";
 
 export type PluginTabType = 'plugin-base' | 'plugin-shell';
-export type CoreTabType = 'query' | 'table' | 'table-properties' | 'settings' | 'table-builder' | 'backup' | 'import-export-database' | 'restore' | 'import-table'
+export type CoreTabType = 'query' | 'table' | 'table-properties' | 'settings' | 'table-builder'
 export type TabType = CoreTabType | PluginTabType
 
 const pickable = ['title', 'tabType', 'unsavedChanges', 'unsavedQueryText', 'tableName', 'schemaName', 'context']
@@ -125,10 +125,8 @@ export function getFilters(obj: TransportOpenTab): Nullable<TableFilter[]> {
   return null;
 }
 
-export function isBeta(obj: TransportOpenTab): boolean {
-  const betaTypes = ['backup', 'import-export-database', 'restore', 'import-table'];
-
-  return betaTypes.includes(obj.tabType);
+export function isBeta(_obj: TransportOpenTab): boolean {
+  return false;
 }
 
 export function duplicate(obj: TransportOpenTab): TransportOpenTab {
@@ -191,21 +189,9 @@ export function matches(obj: TransportOpenTab, other: TransportOpenTab): boolean
       return obj.tableName === other.tableName &&
         (obj.schemaName || null) === (other.schemaName || null) &&
         (obj.entityType || null) === (other.entityType || null);
-    case 'import-export-database':
-      // we store export state in the store, so don't want multiple open
-      // at a time.
-      return obj.tabType === 'import-export-database'
     case 'query':
       return (obj.queryId === other.queryId && !_.isNil(obj.queryId) && !_.isNil(other.queryId)) ||
         (obj.usedQueryId === other.usedQueryId && !_.isNil(obj.usedQueryId) && !_.isNil(other.usedQueryId))
-    case 'backup':
-      return obj.tabType === 'backup';
-    case 'restore':
-      return obj.tabType === 'restore';
-    case 'import-table':
-      return obj.tabType === 'import-table' &&
-      obj.tableName === other.tableName &&
-      (obj.schemaName || null) === (other.schemaName || null);
     default:
       return false
   }

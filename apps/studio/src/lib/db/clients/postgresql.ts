@@ -9,7 +9,7 @@ import knexlib from 'knex'
 import logRaw from '@bksLogger'
 
 import { DatabaseElement, IDbConnectionDatabase } from '../types'
-import { FilterOptions, OrderBy, TableFilter, TableUpdateResult, TableResult, Routine, TableChanges, TableInsert, TableUpdate, TableDelete, DatabaseFilterOptions, SchemaFilterOptions, NgQueryResult, StreamResults, ExtendedTableColumn, PrimaryKeyColumn, TableIndex, CancelableQuery, SupportedFeatures, TableColumn, TableOrView, TableProperties, TableTrigger, TablePartition, ImportFuncOptions, BksField, BksFieldType } from "../models";
+import { FilterOptions, OrderBy, TableFilter, TableUpdateResult, TableResult, Routine, TableChanges, TableInsert, TableUpdate, TableDelete, DatabaseFilterOptions, SchemaFilterOptions, NgQueryResult, StreamResults, ExtendedTableColumn, PrimaryKeyColumn, TableIndex, CancelableQuery, SupportedFeatures, TableColumn, TableOrView, TableProperties, TableTrigger, TablePartition, BksField, BksFieldType } from "../models";
 import { buildDatabaseFilter, buildDeleteQueries, buildInsertQueries, buildSchemaFilter, buildSelectQueriesFromUpdates, buildUpdateQueries, escapeString, refreshTokenIfNeeded, joinQueries, errorMessages } from './utils';
 import { createCancelablePromise, joinFilters } from '../../../common/utils';
 import { errors } from '../../errors';
@@ -118,9 +118,6 @@ export class PostgresClient extends BasicDatabaseClient<QueryResult, PoolClient>
       properties: true,
       partitions: hasPartitions,
       editPartitions: hasPartitions,
-      backups: true,
-      backDirFormat: true,
-      restore: true,
       indexNullsNotDistinct: this.version.number >= 150_000,
       transactions: true,
       filterTypes: ['standard', 'ilike']
@@ -1315,38 +1312,11 @@ export class PostgresClient extends BasicDatabaseClient<QueryResult, PoolClient>
     return data.rows.map((row) => `${createViewSql}\n${row.pg_get_viewdef}`);
   }
 
-  async getImportSQL(importedData: any[], tableName: string, schema: string = null, runAsUpsert = false): Promise<string | string[]> {
-    let setRunAsUpsert = runAsUpsert
-    if ( setRunAsUpsert ) {
-      setRunAsUpsert = this.version.number >= 90500
-    }
-    const queries = []
-    const primaryKeysPromise = await this.getPrimaryKeys(tableName, schema)
-    const primaryKeys = primaryKeysPromise.map(v => v.columnName)
-    queries.push(buildInsertQueries(this.knex, importedData, { runAsUpsert: setRunAsUpsert, primaryKeys }).join(';'))
-    return joinQueries(queries)
-  }
 
-  async importBeginCommand(_table: TableOrView, importOptions: ImportFuncOptions): Promise<any> {
-    return await this.rawExecuteQuery('BEGIN;', importOptions.executeOptions)
-  }
 
-  async importTruncateCommand(table: TableOrView, importOptions: ImportFuncOptions): Promise<any> {
-    const { name, schema } = table
-    return await this.rawExecuteQuery(`TRUNCATE TABLE ${this.wrapIdentifier(schema)}.${this.wrapIdentifier(name)};`, importOptions.executeOptions)
-  }
 
-  async importLineReadCommand(_table: TableOrView, sqlString: string, importOptions: ImportFuncOptions): Promise<any> {
-    return await this.rawExecuteQuery(sqlString, importOptions.executeOptions)
-  }
 
-  async importCommitCommand(_table: TableOrView, importOptions: ImportFuncOptions): Promise<any> {
-    return await this.rawExecuteQuery('COMMIT;', importOptions.executeOptions)
-  }
 
-  async importRollbackCommand(_table: TableOrView, importOptions?: ImportFuncOptions): Promise<any> {
-    return await this.rawExecuteQuery('ROLLBACK;', importOptions.executeOptions)
-  }
 
   // Manual transaction management
   async reserveConnection(tabId: number) {

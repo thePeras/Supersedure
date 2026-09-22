@@ -29,8 +29,6 @@ import { LicenseModule } from './modules/LicenseModule'
 import { CredentialsModule, WSWithClient } from './modules/CredentialsModule'
 import { UserEnumsModule } from './modules/UserEnumsModule'
 import MultiTableExportStoreModule from './modules/exports/MultiTableExportModule'
-import ImportStoreModule from './modules/imports/ImportStoreModule'
-import { BackupModule } from './modules/backup/BackupModule'
 import { CloudClient } from '@/lib/cloud/CloudClient'
 import { ConnectionTypes } from '@/lib/db/types'
 import { SidebarModule, State as SidebarState } from './modules/SidebarModule'
@@ -131,8 +129,6 @@ const store = new Vuex.Store<State>({
     userEnums: UserEnumsModule,
     pinnedConnections: PinConnectionModule,
     multiTableExports: MultiTableExportStoreModule,
-    imports: ImportStoreModule,
-    backups: BackupModule,
     sidebar: SidebarModule,
     popupMenu: PopupMenuModule,
     menuBar: MenuBarModule,
@@ -548,10 +544,6 @@ const store = new Vuex.Store<State>({
           window.main.enableConnectionMenuItems();
           context.commit('connected', true);
           context.dispatch('updateWindowTitle', resolvedConfig)
-
-          if (supportedFeatures.backups) {
-            context.dispatch('backups/setConnectionConfigs', { config: resolvedConfig, supportedFeatures, serverConfig });
-          }
 
           await context.dispatch('updateDatabaseList')
           await context.dispatch('updateTables')
