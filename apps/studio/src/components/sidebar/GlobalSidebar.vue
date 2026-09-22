@@ -28,14 +28,11 @@
       <span class="material-icons">history</span>
     </a>
     <span class="expand" />
-    <core-account-button v-if="$store.state.workspaceId > 0" />
   </div>
 </template>
 
 <script>
-  import CoreAccountButton from './core/CoreAccountButton.vue'
   export default {
     props: ['activeItem'],
-    components: { CoreAccountButton },
   }
 </script>

@@ -1,6 +1,5 @@
 <template>
   <div class="sidebar-wrap row">
-    <workspace-sidebar />
 
     <!-- QUICK CONNECT -->
     <div class="tab-content flex-col expand">
@@ -114,19 +113,12 @@
                       <x-menuitem @click.prevent="importFromComputer">
                         <x-label>Import .json files into Saved Connections</x-label>
                       </x-menuitem>
-                      <x-menuitem
-                        v-if="isCloud"
-                        @click.prevent="importFromLocal"
-                      >
-                        <x-label>Import connections from local workspace</x-label>
-                      </x-menuitem>
                     </x-menu>
                   </x-button>
                   <a @click.prevent="refresh">
                     <i class="material-icons">refresh</i>
                   </a>
                   <sidebar-sort-buttons
-                    v-if="!isCloud"
                     v-model="sort"
                     :sort-options="sortables"
                   />
@@ -189,16 +181,6 @@
                   <div class="empty">
                     <div class="empty-title">
                       No Saved Connections
-                    </div>
-                    <div
-                      class="empty-actions"
-                      v-if="isCloud"
-                    >
-                      <a
-                        class="btn btn-flat btn-block btn-icon"
-                        @click.prevent="importFromLocal"
-                        title="Import connections from local workspace"
-                      ><i class="material-icons">save_alt</i> Import</a>
                     </div>
                   </div>
                 </template>
@@ -324,7 +306,6 @@
 
 <script>
 import _ from 'lodash'
-import WorkspaceSidebar from './WorkspaceSidebar.vue'
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import ConnectionListItem from './connection/ConnectionListItem.vue'
 import SidebarLoading from '@/components/common/SidebarLoading.vue'
@@ -353,7 +334,6 @@ export default {
     TreeFolder,
     EditableText,
     SidebarSortButtons,
-    WorkspaceSidebar,
   },
   props: ['selectedConfig'],
   data: () => ({
@@ -409,9 +389,6 @@ export default {
     ...mapGetters({
       usedConfigs: 'data/usedconnections/orderedUsedConfigs',
       settings: 'settings/settings',
-      isCloud: 'isCloud',
-      isUltimate: 'isUltimate',
-      activeWorkspaces: 'credentials/activeWorkspaces',
       pinnedConnections: 'pinnedConnections/pinnedConnections',
       filteredConnections: 'data/connections/filteredConnections',
       privacyMode: 'settings/privacyMode'
@@ -564,9 +541,6 @@ export default {
     importFromComputer() {
       this.$root.$emit(AppEvent.promptConnectionFilesImport)
     },
-    importFromLocal() {
-      this.$root.$emit(AppEvent.promptConnectionImport)
-    },
     async refresh() {
       await this.$store.dispatch('refreshConnections')
     },
@@ -589,20 +563,7 @@ export default {
       return `label-${color}`
     },
     createFolder() {
-      if (this.isCloud) {
-        // Find personal folder
-        const parent = this.folders.find((f) => f.personal && !f.parentId);
-        if (!parent) {
-          this.$noty.error(
-            "No personal folder found. Right-click an existing folder and choose New Folder to create a folder instead."
-          );
-          return;
-        }
-        this.startDrafting(parent.id);
-        this.expandFolder(parent.id);
-      } else {
-        this.startDrafting(null);
-      }
+      this.startDrafting(null);
     },
     startDrafting(parentId) {
       this.draftParentId = parentId
@@ -647,17 +608,8 @@ export default {
           this.expandFolder(item.id);
         },
       }];
-      if (!this.isCloud || !isRoot) {
+      {
         options.push(...[
-          {
-            type: "divider",
-            hideIf: !this.isCloud || folder.personal,
-          },
-          {
-            name: "Share",
-            handler: ({ item }) => this.share(item),
-            hideIf: !this.isCloud || folder.personal,
-          },
           {
             type: "divider",
             hideIf: !canWrite,
@@ -738,12 +690,6 @@ export default {
         }
         this.$noty.error(errorMessage);
       }
-    },
-    share(folder) {
-      this.trigger(AppEvent.openShareModal, {
-        id: folder.id,
-        module: "data/connectionFolders",
-      });
     },
     renameFolder(folder) {
       this.renamingFolderId = folder.id

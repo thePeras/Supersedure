@@ -17,9 +17,7 @@ import { TabHistoryHandlers } from '@/handlers/tabHistoryHandlers'
 import { ExportHandlers } from '@/handlers/exportHandlers';
 import { EnumHandlers } from '@/handlers/enumHandlers';
 import { TempHandlers } from '@/handlers/tempHandlers';
-import { DevHandlers } from '@/handlers/devHandlers';
 import { FormatterPresetHandlers } from '@/handlers/formatterPresetHandlers';
-import { LicenseHandlers } from '@/handlers/licenseHandlers';
 import { LockHandlers } from '@/handlers/lockHandlers';
 import { PluginHandlers } from '@/handlers/pluginHandlers';
 import { PluginManager } from '@/services/plugin';
@@ -83,14 +81,12 @@ export const handlers: Handlers = {
   ...FileHandlers,
   ...EnumHandlers,
   ...TempHandlers,
-  ...LicenseHandlers,
   ...PluginHandlers(pluginManager),
   ...DriverDepHandlers(driverDepManager),
   ...TabHistoryHandlers,
   ...LockHandlers,
   ...FormatterPresetHandlers,
   ...WorkspaceHandlers,
-  ...(platformInfo.isDevelopment && DevHandlers),
 };
 
 _.mixin({

@@ -9,7 +9,6 @@ import rawLog from "@bksLogger";
 import connectTunnel from '../tunnel';
 import { IDbConnectionServer } from '../backendTypes';
 import platformInfo from '@/common/platform_info';
-import { LicenseKey } from '@/common/appdb/models/LicenseKey';
 import { Dialect as IdentifierDialect, IdentifyResult } from 'sql-query-identifier/lib/defines';
 import { Transcoder } from '../serialization/transcoders';
 import { ColumnReference, TableReference } from 'sql-query-identifier/lib/defines';
@@ -89,12 +88,6 @@ export abstract class BasicDatabaseClient<RawResultType extends BaseQueryResult,
     this.database = database;
     this.db = database?.database
     this.connectionType = this.server?.config.client;
-  }
-
-  async checkAllowReadOnly() {
-    if (platformInfo.testMode) return true;
-    const status = await LicenseKey.getLicenseStatus()
-    return status.isUltimate;
   }
 
   set connectionHandler(fn: (msg: string) => void) {
@@ -487,7 +480,7 @@ export abstract class BasicDatabaseClient<RawResultType extends BaseQueryResult,
       log.warn('Was not able to correctly identify query: ', error.message);
     }
 
-    if (await this.checkAllowReadOnly() && this.violatesReadOnly(statements, options)) {
+    if (this.violatesReadOnly(statements, options)) {
       throw new Error(errorMessages.readOnly);
     }
 
@@ -526,7 +519,7 @@ export abstract class BasicDatabaseClient<RawResultType extends BaseQueryResult,
       log.warn('Was not able to correctly identify query: ', error.message);
     }
 
-    if (await this.checkAllowReadOnly() && this.violatesReadOnly(statements, options)) {
+    if (this.violatesReadOnly(statements, options)) {
       throw new Error(errorMessages.readOnly);
     }
 

@@ -46,7 +46,7 @@
             <folder-tree-picker
               v-model="selectedFolderId"
               :folder-path="folderPath"
-              :show-top-level="!isCloud"
+              :show-top-level="true"
             />
           </div>
           <div class="folder-slideover-footer">
@@ -82,7 +82,7 @@
         <folder-tree-picker
           v-model="selectedFolderId"
           :folder-path="folderPath"
-          :show-top-level="!isCloud"
+          :show-top-level="true"
           @update:loading="loadingFolders = $event"
         />
       </template>
@@ -149,7 +149,6 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapGetters(["isCloud"]),
     folders(): IFolder[] {
       return this.$store.state[this.folderPath]?.items ?? [];
     },

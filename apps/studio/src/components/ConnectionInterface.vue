@@ -39,15 +39,6 @@
               <h3 class="card-title">
                 {{ pageTitle }}
               </h3>
-              <button
-                v-if="isCloud && !isNewConnection && !isPersonal"
-                type="button"
-                class="btn btn-link btn-icon btn-small share-btn"
-                @click="share"
-              >
-                <i class="material-icons">share</i>
-                Share
-              </button>
               <ImportButton :config="config" :disabled="editingDisabled">
                 Import from URL
               </ImportButton>
@@ -179,21 +170,6 @@
               </div>
             </form>
           </div>
-          <template v-if="!config.connectionType">
-            <div class="pitch" v-if="!isUltimate">
-              🌟 <strong>Upgrade</strong> to access the JSON sidebar, AI shell, robust import/export and much more!
-              <a href="https://supersedurestudio.io/pricing" class="">Upgrade</a>.
-            </div>
-            <div class="pitch" v-else-if="isTrial">
-              🌟 <strong>Trial expires {{ $bks.timeAgo(trialLicense.validUntil) }}</strong> Upgrade now to make sure you
-              don't lose access.
-              <a href="https://supersedurestudio.io/pricing" class="">Upgrade</a>.
-            </div>
-            <div class="pitch" v-else>
-              🌟 <strong>AI Shell</strong> - Let an LLM explore your database and write SQL for you. Bring your own API key. Simply open a new tab to get started.
-              <a href="https://www.supersedurestudio.io/features/sql-ai">Learn more</a>
-            </div>
-          </template>
         </div>
 
         <small class="app-version">
@@ -263,8 +239,6 @@ export default Vue.extend({
     ...mapState(['username']),
     ...mapState('data/connections', { 'connections': 'items' }),
     ...mapState('data/connectionFolders', { connectionFolders: 'items' }),
-    ...mapGetters(['isUltimate', 'isCloud']),
-    ...mapGetters('licenses', ['isTrial', 'trialLicense']),
     ...mapGetters({
       privacyMode: 'settings/privacyMode'
     }),
@@ -387,7 +361,6 @@ export default Vue.extend({
 
     await this.$store.dispatch('pinnedConnections/loadPins')
     await this.$store.dispatch('pinnedConnections/reorder')
-    await this.$store.dispatch('credentials/load')
   },
   beforeDestroy() {
     if (this.split) {
@@ -560,12 +533,6 @@ export default Vue.extend({
     },
     afterConnect() {
       // no-op
-    },
-    share() {
-      this.trigger(AppEvent.openShareModal, {
-        id: this.config.id,
-        module: "data/connections",
-      });
     },
   },
 })

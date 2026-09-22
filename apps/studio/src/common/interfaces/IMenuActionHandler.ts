@@ -1,6 +1,5 @@
 // import { OpenOptions } from "@/background/WindowBuilder"
 
-import { DevLicenseState } from "@/lib/license";
 import { CustomMenuAction } from "@/types";
 
 type ElectronWindow = Electron.BrowserWindow | undefined
@@ -40,16 +39,13 @@ export interface IMenuActionHandler {
   reload: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   disconnect: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   addSupersedure: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
-  enterLicense: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   backupDatabase: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   restoreDatabase: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   exportTables: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
-  upgradeModal: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   checkForUpdates: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   importSqlFiles: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   importConnectionFiles: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   toggleMinimalMode: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
-  switchLicenseState: (menuItem: Electron.MenuItem, win: ElectronWindow, state: DevLicenseState) => void
   simulatePlatform: (menuItem: Electron.MenuItem, win: ElectronWindow, platform: string) => void
   toggleBeta: (menuItem: Electron.MenuItem, win: ElectronWindow) => void
   managePlugins: (menuItem: Electron.MenuItem, win: ElectronWindow) => void

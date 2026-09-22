@@ -8,7 +8,6 @@ import path from 'path'
 import { IGroupedUserSettings } from '../common/appdb/models/user_setting'
 import { IMenuActionHandler } from '@/common/interfaces/IMenuActionHandler'
 import { autoUpdater } from "electron-updater"
-import { DevLicenseState } from '@/lib/license';
 import { setAllowBeta } from './update_manager'
 import { CustomMenuAction } from '@/types'
 
@@ -155,10 +154,6 @@ export default class NativeMenuActionHandlers implements IMenuActionHandler {
     if (win) win.webContents.send(AppEvent.newTab)
   }
 
-  enterLicense = (_menuItem: Electron.MenuItem, win: Electron.BrowserWindow) => {
-    if (win) win.webContents.send(AppEvent.enterLicense)
-  }
-
   newTab = this.newQuery
   closeTab = (_1: Electron.MenuItem, win: ElectronWindow): void => {
     if (win) win.webContents.send(AppEvent.closeTab)
@@ -193,10 +188,6 @@ export default class NativeMenuActionHandlers implements IMenuActionHandler {
     if (win) win.webContents.send(AppEvent.disconnect)
   }
 
-  upgradeModal = (_menuItem: Electron.MenuItem, win: ElectronWindow) => {
-    if (win) win.webContents.send(AppEvent.upgradeModal);
-  }
-
   importSqlFiles = (_menuItem: Electron.MenuItem, win: ElectronWindow) => {
     if (win) win.webContents.send(AppEvent.promptSqlFilesImport);
   }
@@ -219,10 +210,6 @@ export default class NativeMenuActionHandlers implements IMenuActionHandler {
     getActiveWindows().forEach(window => {
       window.send(AppEvent.settingsChanged)
     })
-  }
-
-  switchLicenseState = async (state: Electron.MenuItem | DevLicenseState, win: ElectronWindow) => {
-    if (win) win.webContents.send(AppEvent.switchLicenseState, state)
   }
 
   simulatePlatform = async (platform: Electron.MenuItem | string, win: ElectronWindow) => {

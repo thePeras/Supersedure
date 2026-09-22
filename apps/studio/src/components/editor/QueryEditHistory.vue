@@ -84,12 +84,6 @@
                 </span>
                 <time class="title" v-text="audit.time" />
                 <span
-                  v-if="isCloud && 'name' in audit.queryAudit.user"
-                  class="editor-label"
-                >
-                  {{ audit.queryAudit.user.name }}
-                </span>
-                <span
                   v-if="
                     audit.queryAudit.action === 'update' &&
                     audit.queryAudit.title != null
@@ -214,7 +208,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["connectionType", "tables"]),
-    ...mapGetters(["dialectData", "isCloud"]),
+    ...mapGetters(["dialectData"]),
     ...mapState("data/queries", {
       queries: "items"
     }),

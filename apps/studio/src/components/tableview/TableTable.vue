@@ -808,7 +808,6 @@ export default Vue.extend({
             this.openEditorMenu(cell),
             this.setAsNullMenuItem(ranges),
             { separator: true },
-            this.quickFilterMenuItem(cell),
               ...copyActionsMenu({
                 ranges,
                 table: this.table.name,
@@ -1263,30 +1262,6 @@ export default Vue.extend({
 
         default:
           return clickedValue;
-      }
-    },
-    quickFilterMenuItem(cell: CellComponent) {
-      const symbols = [
-        '=', '!=', '<', '<=', '>', '>=', 'in', 'like'
-      ]
-      return {
-        label: createMenuItem("Quick Filter", "", this.$store.getters.isCommunity),
-        disabled: _.isNil(cell.getValue()),
-        menu: symbols.map((s) => {
-          return {
-            label: createMenuItem(`${cell.getField()} ${s} value`),
-            disabled: this.$store.getters.isCommunity,
-            action: async (_e, cell: CellComponent) => {
-              const newFilter = [{
-                field: cell.getField(),
-                type: s,
-                value: this.getActionValue(cell, s)
-              }]
-              this.tableFilters = newFilter
-              this.triggerFilter(this.tableFilters)
-            }
-          }
-        })
       }
     },
     openCellEditorModal(cell: CellComponent, isReadOnly: boolean) {

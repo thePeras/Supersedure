@@ -120,12 +120,6 @@ export default Vue.extend({
         },
         { type: 'divider' },
         {
-          name: "Share",
-          slug: 'share',
-          handler: this.share,
-          hideIf: !this.isCloud || !this.item.id || this.isPersonal,
-        },
-        {
           name: "Duplicate",
           handler: ({ item }) => this.$emit('duplicate', item)
         },
@@ -161,12 +155,6 @@ export default Vue.extend({
         item, event,
         options
       })
-    },
-    share() {
-      this.trigger(AppEvent.openShareModal, {
-        id: this.item.id,
-        module: "data/queries",
-      });
     },
     async submitRename(title) {
       if (this.draft) {

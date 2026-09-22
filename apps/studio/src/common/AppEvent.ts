@@ -1,6 +1,5 @@
 import Vue from "vue"
 import rawLog from '@bksLogger'
-import { ShareableModule } from "@/store/DataModules";
 
 const log = rawLog.scope('AppEvent')
 
@@ -34,7 +33,6 @@ export enum AppEvent {
   promptSqlFilesImport = 'q_files_import',
   promptConnectionFilesImport = 'c_files_import',
   openAddFieldModal = 'add_field_modal',
-  enterLicense = 'enter_license',
   hideEntity = 'hideEntity',
   hideSchema = 'hideSchema',
   toggleHideEntity = 'toggleHideEntity',
@@ -43,7 +41,6 @@ export enum AppEvent {
   deleteDatabaseElement = 'deleteDatabaseElement',
   dropDatabaseElement = 'dropDatabaseElement',
   duplicateDatabaseTable = 'duplicateDatabaseTable',
-  upgradeModal = 'upgradeModal',
   /** Triggered when a lifetime (expired subscription) license tries to use cloud workspaces */
   cloudWorkspacesBlocked = 'cloudWorkspacesBlocked',
   toggleExpandTableList = 'toggleExpandTableList',
@@ -58,7 +55,6 @@ export enum AppEvent {
   licenseValidDateExpired = 'licenseValidDateExpired',
   /** Triggered when the license support date has expired */
   licenseSupportDateExpired = 'licenseSupportDateExpired',
-  switchLicenseState = 'switchLicenseState',
   toggleBeta = 'toggleBeta',
   switchUserKeymap = 'switchUserKeymap',
   openPluginManager = 'openPluginManager',
@@ -80,12 +76,6 @@ export enum AppEvent {
    * this.trigger(AppEvent.openQueryEditHistory, savedQueryId);
    **/
   openQueryEditHistory = 'openQueryEditHistory',
-  /** Open a share modal by passing the subject as the first parameter (See {@link OpenShareModalOptions}).
-   * The subject should be available in the cloud.
-   * @example
-   * this.trigger(AppEvent.openShareModal, { id: 1, module: "data/queries" });
-   */
-  openShareModal = 'openShareModal',
   /** Paste clipboard contents as new rows in the active table's Data tab. */
   pasteAsNewRows = 'pasteAsNewRows',
   /** Open a modal to move a connection or a saved query to a folder
@@ -110,11 +100,6 @@ export enum AppEvent {
   vimWrite = 'vimWrite',
   /** Vim's `:x` and `:wq`. Broadcast, so only the active tab should act. */
   vimWriteQuit = 'vimWriteQuit',
-}
-
-export type OpenShareModalOptions =  {
-  id: number;
-  module: ShareableModule;
 }
 
 export interface RootBinding {

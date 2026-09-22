@@ -38,21 +38,6 @@
         @change="onChange"
         @mergeAccepted="originalText = query.text"
       />
-      <div
-        class="no-content"
-        v-if="remoteDeleted"
-      >
-        <div class="alert alert-danger">
-          <i class="material-icons">error_outline</i>
-          <div class="alert-body">
-            This query was deleted by someone else. It is no longer editable.
-          </div>
-          <a
-            @click.prevent="close"
-            class="btn btn-flat"
-          >Close Tab</a>
-        </div>
-      </div>
       <component
         :is="editorComponent"
         :value="unsavedText"
@@ -625,12 +610,10 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           primaryRead: () => Promise<void>,
           secondaryRead: () => Promise<void>,
         },
-        pollInterval: null,
-        queryDeleted: false
       }
     },
     computed: {
-      ...mapGetters(['dialect', 'dialectData', 'defaultSchema', 'isCloud']),
+      ...mapGetters(['dialect', 'dialectData', 'defaultSchema']),
       ...mapGetters({
         'userKeymap': 'settings/userKeymap',
       }),
@@ -646,9 +629,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           { event: AppEvent.vimWrite, handler: this.handleVimWrite },
           { event: AppEvent.vimWriteQuit, handler: this.handleVimWriteQuit },
         ];
-      },
-      updatedByName() {
-        return this.latestAudit?.user?.name;
       },
       updatedAt() {
         if (!this.latestAudit) {
@@ -669,20 +649,10 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
 
         const time = dateFormat(this.updatedAt, "d mmm yyyy HH:MM:ss");
 
-        if (this.isCloud && this.updatedByName) {
-          return `Updated by ${this.updatedByName} at ${time}`;
-        }
-
         return `Updated at ${time}`;
       },
       readOnly() {
         if (this.tab.isLoading) {
-          return true;
-        }
-        if (this.remoteDeleted) {
-          return true;
-        }
-        if (this.isCloud && this.query.id && !this.query.canWrite) {
           return true;
         }
         return false;
@@ -708,9 +678,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
       },
       shouldInitialize() {
         return this.storeInitialized && this.active && !this.initialized
-      },
-      remoteDeleted() {
-        return this.storeInitialized && this.tab.queryId && this.queryDeleted
       },
       query() {
         return this.fullQuery || this.savedQueries.find((q) => q.id === this.tab.queryId) || this.blankQuery
@@ -1002,12 +969,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         this.tab.unsavedQueryText = this.unsavedText
         this.saveTab()
       },
-      remoteDeleted() {
-        if (this.remoteDeleted) {
-          this.tab.unsavedChanges = false
-          this.tab.alert = true
-        }
-      },
       unsavedChanges() {
         this.tab.unsavedChanges = this.unsavedChanges
       },
@@ -1023,18 +984,11 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         if (this.active) {
           setTimeout(this.selectEditor, 0)
 
-          this.maybePollOriginalText();
         }
 
         if (!this.active) {
           this.focusElement = 'none'
           this.$modal.hide(`save-modal-${this.tab.id}`)
-
-
-          if (!_.isNil(this.pollInterval)) {
-            clearInterval(this.pollInterval)
-            this.pollInterval = null;
-          }
         }
       },
       async focusElement(element, oldElement) {
@@ -1353,7 +1307,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         }
       },
       async saveQuery() {
-        if (this.remoteDeleted) return
         if (!this.hasTitle || !this.hasText) {
           this.saveError = new Error("You need both a title, and some query text.")
           return
@@ -1490,8 +1443,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         }
       },
       async submitQuery(rawQuery, fromModal = false) {
-        if (this.remoteDeleted) return;
-
         //Cancel existing query before starting a new one
         if(this.running && this.runningQuery){
           await this.cancelQuery();
@@ -1641,9 +1592,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           this.originalText = originalText
           this.unsavedText = editorText
         }
-      },
-      fakeRemoteChange() {
-        this.query.text = "select * from foo"
       },
       // Right click menu handlers
       writeQuit() {
@@ -1830,16 +1778,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
                 },
               ]
             : []),
-          ...(window.platformInfo.isDevelopment && this.isCloud && this.query?.id
-            ? [
-                divider,
-                {
-                  label: "[DEV] Make Fake Remote Change",
-                  id: "fake-remote-change",
-                  handler: this.fakeRemoteChange,
-                },
-              ]
-            : []),
           ...this.getExtraPopupMenu("editor.query", { transform: "ui-kit" }),
         ];
       },
@@ -1910,55 +1848,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
           }
         };
       },
-      maybePollOriginalText() {
-        if (this.active && this.tab.queryId && this.isCloud && _.isNil(this.pollInterval)) {
-          this.pollInterval = setInterval(async () => {
-            let query: ISavedQuery;
-            try {
-              query = await this.$store.dispatch('data/queries/findOne', this.tab.queryId);
-            } catch (e) {
-              if (e?.status === 404) {
-                this.handleQueryDeleted();
-                return;
-              }
-
-              log.error('Error polling saved query', e);
-              return;
-            }
-
-            if (!query) return;
-
-            this.fullQuery = query;
-
-            if (this.tab.title !== query.title) {
-              this.tab.title = query.title;
-              this.updateTab();
-            }
-
-            if (_.trim(this.originalText) !== _.trim(query.text)) {
-              if (!this.unsavedChanges) {
-                this.originalText = query.text;
-                this.unsavedText = query.text;
-
-                if (this.hasTitle) {
-                  this.$noty.info(`${this.query.title} updated from cloud`);
-                }
-              }
-              this.query.text = query.text;
-            }
-          }, this.$bksConfig.general.workspaceSyncInterval)
-        }
-      },
-      handleQueryDeleted() {
-        this.queryDeleted = true;
-        this.fullQuery = null;
-        this.originalText = "";
-        this.unsavedText = "";
-        if (!_.isNil(this.pollInterval)) {
-          clearInterval(this.pollInterval);
-          this.pollInterval = null;
-        }
-      }
     },
     created() {
       this.registerHandlers(this.rootBindings)
@@ -1977,7 +1866,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
         if (this.tab.queryId) {
           this.fullQuery = await this.$store.dispatch('data/queries/findOne', this.tab.queryId);
 
-          this.maybePollOriginalText();
         } else if (this.tab.usedQueryId) {
           this.fullQuery = await this.$store.dispatch('data/usedQueries/findOne', this.tab.usedQueryId);
         }
@@ -2019,9 +1907,6 @@ import { KeybindingPath } from '@/common/bksConfig/BksConfigProvider'
       this.connection.releaseConnection(this.tab.id)
       this.containerResizeObserver.disconnect()
       this.removeTransactionTimeoutListener();
-      if (!_.isNil(this.pollInterval)) {
-        clearInterval(this.pollInterval);
-      }
     },
   }
 </script>

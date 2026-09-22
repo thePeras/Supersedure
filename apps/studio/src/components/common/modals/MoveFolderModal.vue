@@ -13,7 +13,6 @@
     </template>
     <template v-if="target">
       <label
-        v-if="!isCloud"
         class="move-folder-row"
         :class="{ selected: selectedFolderId === null }"
       >
@@ -112,7 +111,6 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapGetters(["isCloud"]),
     folderPath() {
       if (this.target?.type === "queryFolder") {
         return "data/queryFolders";
@@ -131,10 +129,6 @@ export default Vue.extend({
     folderNodes() {
       return buildFolderNodes(
         this.folders.filter((folder: IFolder) => {
-          // Prevent moving a team folder to a personal folder
-          if (this.isCloud && !this.target.value.personal && folder.personal) {
-            return false;
-          }
 
           // Prevent showing own subtree, so users can't move this folder to
           // its own children

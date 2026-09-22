@@ -6,6 +6,11 @@ export interface Version {
   patch: number;
 }
 
+export interface BksVersion extends Version {
+  channel: 'stable' | 'beta' | 'alpha'
+  channelRelease?: number
+}
+
 /**
  * Usage:
  *

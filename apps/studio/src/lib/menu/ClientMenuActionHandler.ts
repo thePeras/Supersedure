@@ -17,7 +17,6 @@ export default class ClientMenuActionHandler implements IMenuActionHandler {
   constructor() {
     // TODO: implement
   }
-  upgradeModal = () => send('upgradeModal')
 
   quit = () => send('quit')
   undo = () => send('undo')
@@ -51,7 +50,6 @@ export default class ClientMenuActionHandler implements IMenuActionHandler {
   addSupersedure = () => send('addSupersedure')
   togglePrimarySidebar = () => send('togglePrimarySidebar')
   toggleSecondarySidebar = () => send('toggleSecondarySidebar')
-  enterLicense = () => send('enterLicense')
   backupDatabase = () => send('backupDatabase')
   restoreDatabase = () => send('restoreDatabase')
   exportTables = () => send('exportTables')
@@ -60,7 +58,6 @@ export default class ClientMenuActionHandler implements IMenuActionHandler {
   importConnectionFiles = () => send('importConnectionFiles')
   toggleMinimalMode = () => send('toggleMinimalMode')
   togglePrivacyMode = () => send('togglePrivacyMode')
-  switchLicenseState = (_menuItem, _win, type) => send('switchLicenseState', type)
   simulatePlatform = (_menuItem, _win, platform) => send('simulatePlatform', platform)
   toggleBeta = (menuItem) => {
     send('toggleBeta', menuItem);

@@ -1,8 +1,6 @@
 import { HasId } from "@/common/interfaces/IGeneric";
-import { having } from "@/common/utils";
 import _ from "lodash";
 import rawLog from '@bksLogger'
-import type { CloudClient } from "@/lib/cloud/CloudClient";
 
 const log = rawLog.scope('StoreHelpers')
 export type ClientError = Error | string | Error[] | string[] | null
@@ -12,32 +10,7 @@ interface BasicContext {
     loading: boolean
     error: ClientError
   }
-  rootGetters: {
-    cloudClient: any | null
-  }
   commit(str: string, item: any)
-}
-
-export function havingCli<U>(context: BasicContext, f: (c: CloudClient) => Promise<U>) {
-  return having(context.rootGetters.cloudClient, f, "You are not logged in")
-}
-
-export function safelyDo<U>(context: BasicContext, f: (c: CloudClient) => Promise<U>, onError?: (error: ClientError) => void) {
-
-  const safeRunner = async (c: any) => {
-    try {
-      context.commit('loading', true)
-      context.commit('error', null)
-      await f(c)
-    } catch (error) {
-      context.commit('error', error)
-      log.error('safelyDo', error)
-      onError?.(error)
-    } finally {
-      context.commit('loading', false)
-    }
-  }
-  return havingCli(context, safeRunner)
 }
 
 export async function safely<U>(context: BasicContext, f: () => Promise<U>, onError?: (error: ClientError) => void) {

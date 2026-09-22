@@ -45,7 +45,6 @@ export default class extends DefaultMenu {
       submenu: [
         this.menuItems.reload,
         this.menuItems.simulatePlatform,
-        this.menuItems.licenseState,
       ],
     }
   }
@@ -69,7 +68,6 @@ export default class extends DefaultMenu {
         { type: 'separator' },
         // Moved to Supersedure Studio menu for mac
         ...(!this.platformInfo.isMac ? [this.menuItems.about] : []),
-        this.menuItems.enterLicense,
       ]
     };
 

@@ -25,11 +25,8 @@ import { ElectronUtilityConnectionClient } from '@/lib/utility/ElectronUtilityCo
 
 import { SmartLocalStorage } from '@/common/LocalStorage'
 
-import { LicenseModule } from './modules/LicenseModule'
-import { CredentialsModule, WSWithClient } from './modules/CredentialsModule'
 import { UserEnumsModule } from './modules/UserEnumsModule'
 import MultiTableExportStoreModule from './modules/exports/MultiTableExportModule'
-import { CloudClient } from '@/lib/cloud/CloudClient'
 import { ConnectionTypes } from '@/lib/db/types'
 import { SidebarModule, State as SidebarState } from './modules/SidebarModule'
 import { isVersionLessThanOrEqual, parseVersion } from '@/common/version'
@@ -38,7 +35,6 @@ import { WebPluginManagerStatus } from '@/services/plugin'
 import { MenuBarModule } from './modules/MenuBarModule'
 import { PluginsModule, PluginsState } from './modules/plugins'
 import { VimStoreModule } from './modules/VimStoreModule'
-import { pluralize } from '@/vendor/pluralize'
 
 
 const log = RawLog.scope('store/index')
@@ -123,8 +119,6 @@ const store = new Vuex.Store<State>({
     pins: PinModule,
     tabs: TabModule,
     search: SearchModule,
-    licenses: LicenseModule,
-    credentials: CredentialsModule,
     hideEntities: HideEntityModule,
     userEnums: UserEnumsModule,
     pinnedConnections: PinConnectionModule,
@@ -179,35 +173,14 @@ const store = new Vuex.Store<State>({
     friendlyConnectionType(state) {
       return ConnectionTypes.find((ct) => ct.value == state.connectionType)?.name ?? "Default Connection"
     },
-    workspace(state, getters): IWorkspace {
-      if (state.workspaceId === LocalWorkspace.id) return LocalWorkspace
-
-      const workspaces: WSWithClient[] = getters['credentials/workspaces']
-      const result = workspaces.find(({workspace }) => workspace.id === state.workspaceId)
-
-      if (!result) return LocalWorkspace
-      return result.workspace
-    },
-    isCloud(state: State) {
-      return state.workspaceId !== LocalWorkspace.id
-    },
-    workspaceEmail(_state: State, getters): string | null {
-      return getters.cloudClient?.options?.email || null
+    workspace(): IWorkspace {
+      return LocalWorkspace
     },
     pollError(state) {
       return DataModules.map((module) => {
         const pollError = state[module.path]['pollError']
         return pollError || null
       }).find((e) => !!e)
-    },
-    cloudClient(state: State, getters): CloudClient | null {
-      if (state.workspaceId === LocalWorkspace.id) return null
-
-      const workspaces: WSWithClient[] = getters['credentials/workspaces']
-      const result = workspaces.find(({workspace}) => workspace.id === state.workspaceId)
-      if (!result) return null
-      return result.client.cloneWithWorkspace(result.workspace.id)
-
     },
     dialect(state: State): Dialect | null {
       if (!state.usedConfig) return null
@@ -277,21 +250,6 @@ const store = new Vuex.Store<State>({
     // TODO (@day): this may need to be removed
     versionString(state) {
       return state.server.versionString();
-    },
-    isCommunity(_state, _getters, _rootState, rootGetters) {
-      return rootGetters['licenses/isCommunity']
-    },
-    isUltimate(_state, _getters, _rootState, rootGetters) {
-      return rootGetters['licenses/isUltimate']
-    },
-    isTrial(_state, _getters, _rootState, rootGetters) {
-      return rootGetters['licenses/isTrial']
-    },
-    isLifetime(_state, _getters, _rootState, rootGetters) {
-      return rootGetters['licenses/isLifetime']
-    },
-    canAccessCloudWorkspaces(_state, _getters, _rootState, rootGetters) {
-      return rootGetters['licenses/canAccessCloudWorkspaces']
     },
     expandFKDetailsByDefault(state) {
       return state.expandFKDetailsByDefault
@@ -472,16 +430,9 @@ const store = new Vuex.Store<State>({
 
     updateWindowTitle(context) {
       const config = context.state.usedConfig
-      let title = config
+      const title = config
         ? `${SupersedurePlugin.buildConnectionName(config)} - Supersedure Studio`
         : 'Supersedure Studio'
-      if (context.getters.isTrial && context.getters.isUltimate) {
-        const days = context.rootGetters['licenses/licenseDaysLeft']
-        title += ` - Free Trial (${pluralize('day', days, true)} left)`
-      }
-      if (context.getters.isCommunity) {
-        title += ' - Free Version'
-      }
       context.commit('updateWindowTitle', title)
       window.main.setWindowTitle(title);
     },
@@ -797,12 +748,8 @@ const store = new Vuex.Store<State>({
     },
     async initRootStates(context) {
       await context.dispatch('fetchUsername')
-      await context.dispatch('licenses/init')
       await context.dispatch('userEnums/init')
       await context.dispatch('updateWindowTitle')
-    },
-    licenseEntered(context) {
-      context.dispatch('updateWindowTitle')
     },
     toggleFlag(context, { flag, value }: { flag: string, value?: boolean }) {
       if (typeof value === 'undefined') {

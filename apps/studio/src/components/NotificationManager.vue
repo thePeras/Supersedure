@@ -29,16 +29,10 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapGetters({
-      'isCommunity': 'isCommunity',
-    }),
     ...mapGetters(['onboardingNotyShown', 'connected']),
     ...mapState(['connected']),
   },
   watch: {
-    isCommunity() {
-      this.initNotifyInterval()
-    },
     connected() {
       if (this.connected && !this.onboardingNotyShown) {
         this.setOnboardingNotyShown()
@@ -58,10 +52,6 @@ export default Vue.extend({
         clearTimeout(this.timeoutID)
         this.timeoutID = null
       }
-      if (!this.isCommunity) {
-        return
-      }
-
       this.notificationInterval = setInterval(() => {
         this.notifyUpsell()
       }, intervalTime)

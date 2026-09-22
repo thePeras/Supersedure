@@ -132,7 +132,7 @@ import { stringToTypedArray } from '@/common/utils'
     },
     computed: {
       ...mapState(['usedConfig', 'defaultSchema', 'connectionType', 'connection']),
-      ...mapGetters(['isUltimate', 'dialectData', 'dialect']),
+      ...mapGetters(['dialectData', 'dialect']),
       ...mapGetters('popupMenu', ['getExtraPopupMenu']),
       queryDialect() {
         return this.dialectData?.queryDialectOverride ?? this.dialect;

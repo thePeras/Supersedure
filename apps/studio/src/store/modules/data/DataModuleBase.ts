@@ -3,13 +3,12 @@ import { HasId } from "@/common/interfaces/IGeneric";
 
 import ISavedQuery from "@/common/interfaces/ISavedQuery";
 import _ from "lodash";
-import { havingCli, safely, safelyDo, upsert } from "./StoreHelpers";
+import { safely, upsert } from "./StoreHelpers";
 import { ClientError } from '@/store/modules/data/StoreHelpers'
 import { ActionContext, ActionTree, Module, MutationTree } from "vuex";
 import { State as RootState } from '../../index'
 import Vue from "vue";
 import { Transport } from "@/common/transport";
-import { ListOptions } from "@/lib/cloud/controllers/GenericController";
 import rawLog from "@bksLogger";
 
 const log = rawLog.scope('DataModuleBase');
@@ -44,7 +43,10 @@ export type ReplacePayload<T> =
   | T[]
   | { items: T[]; replaceIf?: (item: T) => boolean }
 
-export type LoadOptions<T> = Partial<ListOptions> & {
+export type LoadOptions<T> = {
+  offset?: number
+  limit?: number
+  order?: Record<string, 'ASC' | 'DESC'>
   replaceIf?: (item: T) => boolean
   onError?: (error: ClientError) => void
 }
@@ -269,107 +271,3 @@ export function utilActionsFor<T extends Transport>(type: string, other: any = {
     ...other
   }
 }
-
-export function actionsFor<T extends HasId>(scope: string, obj: any) {
-  return {
-    async initialize(context) {
-      await context.dispatch("load");
-    },
-    async load(context, options: LoadOptions<T> = {}) {
-      context.commit("error", null)
-      await safelyDo(context, async (cli) => {
-        const items: any[] = await cli[scope].list(undefined, options)
-        // this is to account for when the store module changes
-        const rightItems = items.filter((i) => i.workspaceId === context.rootState.workspaceId)
-        if (rightItems.length === items.length) {
-          await context.dispatch('mutate', {
-            type: 'replace',
-            data: { items: rightItems, replaceIf: options.replaceIf },
-          })
-        }
-      }, options.onError)
-    },
-    async search(context, q: string) {
-      if (!q) {
-        return
-      }
-      context.commit('searching', true)
-      try {
-        await safelyDo(context, async (cli) => {
-          const items = await cli[scope].search(q)
-          await context.dispatch('mutate', { type: 'upsert', data: items })
-        })
-      } finally {
-        context.commit('searching', false)
-      }
-    },
-    // TODO THIS ISNT WORKING
-    async poll(context) {
-      // TODO (matthew): This should only fetch items since last update.
-      await havingCli(context, async (cli) => {
-        try {
-          // we just re-fetch everything. It's pretty heavy handed
-          // we don't call load because that updates `loading`.
-
-          const items = await cli[scope].list()
-          // this is to account for when the store module changes
-          const rightItems = items.filter((item) => item.workspaceId === context.rootState.workspaceId)
-          if (rightItems.length === items.length) {
-            await context.dispatch('mutate', { type: 'replace', data: rightItems })
-          }
-          context.commit('pollError', null)
-        } catch (ex) {
-          context.commit('pollError', ex)
-        }
-      })
-    },
-    async save(context, item: T): Promise<T> {
-      return await havingCli(context, async (cli) => {
-        const updated = await cli[scope].upsert(item)
-        await context.dispatch('mutate', { type: 'upsert', data: updated })
-        return updated.id
-      })
-    },
-    async remove(context, item: T) {
-      await havingCli(context, async (cli) => {
-        await cli[scope].delete(item)
-        await context.dispatch('mutate', { type: 'remove', data: item })
-      })
-    },
-
-    async clearError(context) {
-      context.commit('error', null)
-    },
-    async reload(context, id: number): Promise<T | null> {
-      return await havingCli(context, async (cli) => {
-        try {
-          const updated = await cli[scope].get(id)
-          await context.dispatch('mutate', { type: 'upsert', data: updated })
-          return updated.id
-        } catch (ex) {
-          if (ex.status && ex.status === 404) {
-            await context.dispatch('mutate', { type: 'remove', data: id })
-          }
-          return null
-        }
-      })
-    },
-    async clone(_context, item: T): Promise<T> {
-      const result: T = _.cloneDeep(item)
-      result['id'] = null
-      result['createdAt'] = null
-      return result
-    },
-    async findOne(context, id: number): Promise<T> {
-      let item;
-      await havingCli(context, async (cli) => {
-        item = await cli[scope].get(id);
-      });
-      return item;
-    },
-    ...mutateActions<T>(),
-    ...obj
-  }
-}
-
-

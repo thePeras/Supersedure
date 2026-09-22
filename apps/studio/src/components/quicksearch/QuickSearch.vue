@@ -194,7 +194,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(['usedConfig']),
-    ...mapGetters({ database: 'search/database', isUltimate: 'isUltimate' }),
+    ...mapGetters({ database: 'search/database' }),
     ...mapState(['tables']),
     ...mapState('search', ['searching']),
     ...mapState('tabs', { 'tabs': 'tabs' }),

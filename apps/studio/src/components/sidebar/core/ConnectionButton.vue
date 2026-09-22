@@ -195,7 +195,6 @@ export default {
       workspace: 'workspace',
       connectionColor: 'connectionColor',
       savedConnections: 'data/connections/filteredConnections',
-      isUltimate: 'isUltimate',
       privacyMode: 'settings/privacyMode'
     }),
     connectionName() {

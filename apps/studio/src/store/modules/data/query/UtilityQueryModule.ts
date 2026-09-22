@@ -2,7 +2,6 @@ import { TransportFavoriteQuery } from '@/common/transport';
 import _ from 'lodash'
 import Vue from 'vue'
 import { mutationsFor, DataState, DataStore, utilActionsFor } from '../DataModuleBase'
-import { accessGrantActions, accessGrantMutations } from '@/store/modules/data/access_grant/accessGrantStore'
 import { FolderFetchModule, treeActions } from "@/store/modules/data/tree/treeStore";
 import { ItemNodeModule } from "@/store/modules/data/tree/ItemNodeModule";
 
@@ -25,7 +24,6 @@ export const UtilQueryModule: DataStore<TransportFavoriteQuery, State> = {
     queryFilter(state: DataState<TransportFavoriteQuery>, str: string) {
       state.filter = str;
     },
-    ...accessGrantMutations(),
   }, { field: 'title', direction : 'asc'}),
   modules: {
     nodes: ItemNodeModule('queryFolderId', 'title'),
@@ -33,7 +31,6 @@ export const UtilQueryModule: DataStore<TransportFavoriteQuery, State> = {
   },
   actions: {
     ...utilActionsFor<TransportFavoriteQuery>('query', {}, {}, { text: true, title: true, database: true, excerpt: true, id: true }),
-    ...accessGrantActions('queries'),
     ...treeActions<TransportFavoriteQuery>({ plural: 'queryFolderIds', singular: 'queryFolderId' }, true),
     async initialize() {
       // noop

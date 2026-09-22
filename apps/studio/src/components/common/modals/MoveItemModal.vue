@@ -18,7 +18,7 @@
         :key="`${folderPath}-${target.value.id}`"
         :folder-path="folderPath"
         v-model="selectedFolderId"
-        :show-top-level="!isCloud"
+        :show-top-level="true"
         :current-location-id="parentId"
         :show-loading-placeholder="false"
         @update:loading="loadingFolders = $event"
@@ -66,7 +66,6 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapGetters(["isCloud"]),
     folderPath() {
       if (this.target?.type === "query") {
         return "data/queryFolders";

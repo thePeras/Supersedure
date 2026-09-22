@@ -2,7 +2,7 @@ import { PinnedConnection } from "@/common/appdb/models/PinnedConnection";
 import { SavedConnection } from "@/common/appdb/models/saved_connection"
 import { UsedConnection } from "@/common/appdb/models/used_connection"
 import { IConnection } from "@/common/interfaces/IConnection"
-import { Transport, TransportCloudCredential, TransportFavoriteQuery, TransportLicenseKey, TransportPinnedConn, TransportUsedQuery, TransportFormatterPreset } from "@/common/transport";
+import { Transport, TransportFavoriteQuery, TransportPinnedConn, TransportUsedQuery, TransportFormatterPreset } from "@/common/transport";
 import { FindManyOptions, FindOneOptions, FindOptionsWhere, In, IsNull, SaveOptions } from "typeorm";
 import _ from 'lodash';
 import { FavoriteQuery } from "@/common/appdb/models/favorite_query";
@@ -22,9 +22,6 @@ import { TransportTabulatorPersistence } from "@/common/transport/TransportTabul
 import { TabulatorPersistence } from "@/common/appdb/models/TabulatorPersistence";
 import { TransportUserSetting } from "@/common/transport/TransportUserSetting";
 import { UserSetting } from "@/common/appdb/models/user_setting";
-import { TokenCache } from "@/common/appdb/models/token_cache";
-import { CloudCredential } from "@/common/appdb/models/CloudCredential";
-import { LicenseKey } from "@/common/appdb/models/LicenseKey";
 import rawLog from "@bksLogger"
 import { validate } from "class-validator";
 import { QueryAudit } from "@/common/appdb/models/QueryAudit";
@@ -188,14 +185,6 @@ async function transformSetting(obj: UserSetting, _cls: any): Promise<TransportU
   };
 }
 
-async function transformLicense(obj: LicenseKey, _cls: any): Promise<TransportLicenseKey> {
-  if (_.isNil(obj)) return null
-  return {
-    ...obj,
-    active: obj?.active ?? false
-  };
-}
-
 async function transformConn(obj: SavedConnection, cls: any): Promise<IConnection> {
   if (_.isNil(obj)) return null;
 
@@ -219,8 +208,6 @@ export const AppDbHandlers = {
   ...handlersFor<TransportFormatterPreset>('formatterPreset', FormatterPreset),
   ...handlersFor<TransportHiddenSchema>('hiddenSchema', HiddenSchema),
   ...handlersFor<TransportUserSetting>('setting', UserSetting, transformSetting),
-  ...handlersFor<TransportCloudCredential>('credential', CloudCredential),
-  ...handlersFor<TransportLicenseKey>('license', LicenseKey, transformLicense),
   ...handlersFor<IQueryFolder>('queryFolder', QueryFolder),
   ...handlersFor<IConnectionFolder>('connectionFolder', ConnectionFolder),
   ...handlersFor<TransportTabulatorPersistence>('tabulatorPersistence', TabulatorPersistence),
@@ -243,15 +230,6 @@ export const AppDbHandlers = {
   },
   'appdb/setting/get': async function({ key }: { key: string }) {
     return transformSetting(await UserSetting.findOneBy({key}), UserSetting);
-  },
-  'appdb/cache/remove': async function({ authId }: { authId: number }) {
-    const cache = await TokenCache.findOneBy({ id: authId });
-    await cache.remove();
-  },
-  'appdb/cache/new': async function() {
-    let cache = new TokenCache();
-    cache = await cache.save();
-    return cache.id;
   },
   'appdb/queryAudit/get': async function ({ auditId }: { auditId: number; }): Promise<TransportQueryAuditDetail | null> {
     const audit = await QueryAudit.findOneByOrFail({ id: auditId });

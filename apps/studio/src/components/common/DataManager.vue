@@ -5,7 +5,7 @@
 import _ from 'lodash'
 import { DataModules } from '@/store/DataModules'
 import Vue from 'vue'
-import { mapActions, mapGetters, mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import rawLog from '@bksLogger'
 
 const log = rawLog.scope('DataManager')
@@ -30,8 +30,7 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapState(['workspaceId', 'usedConfig']),
-    ...mapGetters(['workspace']),
+    ...mapState(['usedConfig']),
     ...mapState('tabs', {'activeTab': 'active'}),
     importantTabStuff() {
       if (!this.activeTab) return []
@@ -45,11 +44,6 @@ export default Vue.extend({
 
   },
   watch: {
-    workspaceId() {
-      this.mountAndRefresh()
-      this.$store.dispatch('data/usedconnections/load')
-      this.$store.dispatch('pinnedConnections/loadPins')
-    },
     importantTabStuff: {
       deep: true,
       handler() {
@@ -71,12 +65,9 @@ export default Vue.extend({
       })
     },
     mountAndRefresh() {
-      log.info('mount and refresh: ', this.workspace)
-      if (!this.workspace) return
-      const scope = this.$store.getters.isUltimate ? this.workspace.type : 'local'
       DataModules.forEach((module) => {
-        const choice = module[scope]
-        if (!choice) throw new Error(`No module defined for ${scope} - ${module.path}`)
+        const choice = module.local
+        if (!choice) throw new Error(`No module defined for ${module.path}`)
         log.info("DataManager checking", module.path)
         if (this.$store.hasModule(module.path)) {
           log.info("DataManager --> unregistering", module.path)

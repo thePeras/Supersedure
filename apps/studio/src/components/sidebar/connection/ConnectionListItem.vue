@@ -214,12 +214,6 @@ export default {
         },
         { type: "divider", hideIf: this.isRecentList },
         {
-          name: "Share",
-          slug: 'share',
-          handler: this.share,
-          hideIf: !this.isCloud || !this.savedConnection || !this.savedConnection.id || this.isPersonal,
-        },
-        {
           name: "Duplicate",
           slug: 'duplicate',
           handler: this.duplicate
@@ -278,12 +272,6 @@ export default {
     },
     duplicate() {
       this.$emit('duplicate', this.config)
-    },
-    share() {
-      this.trigger(AppEvent.openShareModal, {
-        id: this.savedConnection.id,
-        module: "data/connections",
-      });
     },
     async copyUrl() {
       try {
