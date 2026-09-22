@@ -145,25 +145,16 @@ nav:
     - user_guide/connecting/redis.md
     - SQL Server: user_guide/connecting/sql-server.md
     - SQLite: user_guide/connecting/sqlite.md
-    - user_guide/connecting/azure-entraid.md
 
   - Features:
     - user_guide/sql_editor/editor.md
     - user_guide/sql-query-formatter.md
     - user_guide/sql_editor/manual-transaction-management.md
-    - user_guide/sql_editor/editing-data.md
-    - user_guide/sql-ai-shell.md
     - user_guide/editing-data.md
     - user_guide/modify-tables.md
     - user_guide/sql_editor/saving_queries.md
-    - user_guide/json-sidebar.md
     - user_guide/query-magics.md
-    - Data Import: user_guide/importing-data-csv-json-etc.md
     - user_guide/data-export.md
-    - Diagrams: user_guide/entity-relationship-diagrams-erd.md
-    - user_guide/backup-restore.md
-    - Cloud Workspaces: user_guide/cloud-storage-team-workspaces.md
-    - Sharing & Permissions: user_guide/sharing.md
     - user_guide/security.md
     - Plugins: user_guide/plugins.md
     - Configuration: user_guide/configuration.md
@@ -175,10 +166,6 @@ nav:
   #   - API Reference: plugin_development/api-reference.md
   #   - Publishing: plugin_development/publishing-plugins.md
   - Support:
-    - purchasing/purchasing-a-license.md
-    - purchasing/license-types.md
-    - Upgrading: support/how-to-upgrade.md
-    - support/subscription-management.md
     - support/contact-support.md
     - support/open-source.md
     - support/troubleshooting.md

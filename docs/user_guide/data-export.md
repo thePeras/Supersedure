@@ -57,19 +57,6 @@ From here, simply click run to start the process and generate your export.
 
 Exporting a large table can take a long time. You'll see a notification in the bottom right of the app to indicate the progress as it runs.
 
-### Multi-Table Export
-
-Select `Export multiple tables` on the export modal or go through the app toolbar (tools -> export).
-
-![Multiple Table Export](../assets/images/data-export-156.gif)
-
-All tables in the database will be shown grouped by schemas (if the database supports them) and you have the ability to select all tables in a schema (or all of them really) with a simple click or pick and choose what you want.
-
-Each table is stored as a separate file with a determined format of `tablename.{sql,csv,json}`.
-
-!!! note
-    The export process can take a long time depending on table size and number of tables being exported.
-
 ### Table export formats
 
 - CSV

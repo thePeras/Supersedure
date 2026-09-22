@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Supersedure Studio is a cross-platform SQL editor and database manager built with Electron, Vue.js 2, and TypeScript. It is GPLv3 throughout — the commercial-licensed code and the databases it supported were removed from this fork.
+Supersedure Studio is a cross-platform SQL editor and database manager built with Electron, Vue.js 2, and TypeScript. It is GPLv3 throughout and has no paid edition: the commercial-licensed code, the databases it supported, and every license-gated feature were removed from this fork.
 
 ## Architecture
 

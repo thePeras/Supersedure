@@ -43,7 +43,7 @@ from starter repository
 
 ## License
 
-Supersedure Studio is licensed under the GPLv3 license. The code it derives from is Copyright (C) 2020-present Beekeeper Studio, Inc — see [LICENSE.md](./LICENSE.md).
+Supersedure Studio is licensed under the GPLv3 license. There is no paid edition — all commercial code and license-gated features have been removed. The code it derives from is Copyright (C) 2020-present Beekeeper Studio, Inc — see [LICENSE.md](./LICENSE.md).
 
 Third party assets bundled with the app, such as the database icons, are credited in [ATTRIBUTIONS.md](./ATTRIBUTIONS.md).
 
