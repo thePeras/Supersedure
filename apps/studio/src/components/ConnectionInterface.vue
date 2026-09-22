@@ -252,7 +252,7 @@ export default Vue.extend({
       return this.$config.defaults.connectionTypes
     },
     friendlyConnectionType() {
-      return this.$config.defaults.connectionTypes.find((ct) => ct.value === this.config?.connectionType)?.name ?? "Premium"
+      return this.$config.defaults.connectionTypes.find((ct) => ct.value === this.config?.connectionType)?.name ?? "Connection"
     },
     isNewConnection() {
       return _.isNil(this.config) || _.isNil(this.config.id);
