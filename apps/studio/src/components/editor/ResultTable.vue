@@ -75,29 +75,13 @@
   import { vueEditor } from '@shared/lib/tabulator/helpers';
   import NullableInputEditorVue from '@shared/components/tabulator/NullableInputEditor.vue';
   import rawLog from '@bksLogger';
-  import { FieldDescriptor, FieldEditData, FieldReadOnlyReasonStr, NgQueryResult, TableUpdate } from '@/lib/db/models'
+  import { FieldDescriptor, NgQueryResult } from '@/lib/db/models'
   import { CellComponent, RangeComponent, RowComponent } from 'tabulator-tables'
   import { PropType } from 'vue'
   import { safeSqlFormat } from '@/common/utils'
 import { stringToTypedArray } from '@/common/utils'
 
   const log = rawLog.scope('ResultTable');
-
-  type TableUpdatePayload = TableUpdate & { key: string, field: string, oldValue: any };
-
-  type CellData = { cell: CellComponent, data: FieldEditData };
-
-  type Filter = {
-    field: string,
-    type: string,
-    value: string
-  }
-
-  type ClassTracker = {
-    edited: Set<string>,
-    editError: Set<string>,
-    editSuccess: Set<string>,
-  }
 
   export default {
     components: { EditorModal },
@@ -108,20 +92,10 @@ import { stringToTypedArray } from '@/common/utils'
         actualTableHeight: '100%',
         filterValue: '',
         hiddenFilter: true,
-        pendingChanges: {
-          updates: [],
-          deletes: []
-        },
-        internalClassTrackerColumn: "__supersedure_internal_class_tracker",
-        propogatedChangesFilters: new Map<string, Filter[]>(),
-        fieldOriginalClassMap: new Map<string, string>(),
-        saveError: null,
       }
     },
     props: {
       result: Object as PropType<NgQueryResult>,
-      editData: Map as PropType<Map<string, FieldEditData>>,
-      editingData: Boolean,
       tableHeight: Number,
       query: Object,
       active: Boolean,
@@ -167,8 +141,6 @@ import { stringToTypedArray } from '@/common/utils'
         return this.$vHotkeyKeymap({
           'queryEditor.copyResultSelection': this.copySelection.bind(this),
           'queryEditor.openTableFilter': this.focusOnFilterInput.bind(this),
-          'general.save': this.saveChanges.bind(this),
-          'general.openInSqlEditor': this.copyToSql.bind(this),
           'resultTable.openEditorModal': this.openEditorMenuByShortcut.bind(this)
         });
       },
@@ -183,46 +155,8 @@ import { stringToTypedArray } from '@/common/utils'
       tableTruncated() {
           return this.result.truncated
       },
-      pendingChangesCount() {
-        return this.pendingChanges.updates.length;
-      },
-      pendingChangesString() {
-        const updateStrings = Object.entries(_.groupBy(this.pendingChanges.updates, (v: TableUpdatePayload) => {
-          const schema = v.schema ? `${v.schema}.` : "";
-          return `${schema}${v.table}`
-        })).map(([table, updates]) => {
-          return `${this.$pluralize('update', updates.length, true)} to ${table}`;
-        });
-
-        const lastUpdate = updateStrings.pop();
-        return updateStrings.length > 0 ?
-          `${updateStrings.join(', ')}, and ${lastUpdate}` :
-          lastUpdate || '';
-      },
-      hasPendingChanges() {
-        return this.pendingChangesCount > 0
-      },
-      hasPendingUpdates() {
-        return this.pendingChanges.updates.length > 0
-      },
       tableColumns() {
-        const results = this.result.fields.flatMap((field, index) => this.createColumnFromProps(field, index));
-
-        const result = {
-          title: this.internalClassTrackerColumn,
-          field: this.internalClassTrackerColumn,
-          maxWidth: this.$bksConfig.ui.tableTable.maxColumnWidth,
-          maxInitialWidth: this.$bksConfig.ui.tableTable.maxInitialWidth,
-          cellEditCancelled: cell => cell.getRow().normalizeHeight(),
-          formatter: this.cellFormatter,
-          visible: false,
-          clipboard: false,
-          print: false,
-          download: false
-        }
-
-        results.push(result);
-        return results;
+        return this.result.fields.flatMap((field, index) => this.createColumnFromProps(field, index));
       },
       columnIdTitleMap() {
         const result = {}
@@ -252,10 +186,6 @@ import { stringToTypedArray } from '@/common/utils'
         if (this.tabulator) {
           this.tabulator.destroy()
         }
-        this.propogatedChangesFilters = new Map<string, Filter[]>();
-        this.fieldOriginalClassMap = new Map<string, string>();
-        this.resetPendingChanges();
-
         this.tabulator = tabulatorForTableData(this.$refs.tabulator, {
           table: this.result.tableName,
           schema: this.result.schema,
@@ -266,7 +196,6 @@ import { stringToTypedArray } from '@/common/utils'
           downloadConfig: {
             columnHeaders: true
           },
-          rowFormatter: this.rowFormatter,
           rowHeader: {
             // @ts-ignore
             contextMenu: (_e, cell) => {
@@ -297,55 +226,6 @@ import { stringToTypedArray } from '@/common/utils'
           },
         });
 
-        this.tabulator.on('cellEdited', this.cellEdited);
-      },
-      rowFormatter(row: RowComponent) {
-        const data = row.getData();
-        const classTracker: ClassTracker = data[this.internalClassTrackerColumn];
-        if (!classTracker) return
-        const hasReset = [];
-
-        if (classTracker.edited && _.isSet(classTracker.edited)) {
-          this.setClassForCells(row, classTracker.edited, 'edited', hasReset);
-        }
-        if (classTracker.editError && _.isSet(classTracker.editError)) {
-          this.setClassForCells(row, classTracker.editError, 'edit-error', hasReset);
-        }
-        if (classTracker.editSuccess && _.isSet(classTracker.editSuccess)) {
-          this.setClassForCells(row, classTracker.editSuccess, 'edit-success', hasReset);
-        }
-      },
-      setClassForCells(row: RowComponent, fieldsWithClass: string[], classToAdd: string, hasReset: string[]) {
-        for (const field of fieldsWithClass) {
-          const element = row.getCell(field)?.getElement();
-          if (!element) continue;
-          if (!hasReset.includes(field)) {
-            element.classList.value = this.fieldOriginalClassMap.get(field);
-            hasReset.push(field);
-          }
-          element.classList.add(classToAdd);
-        }
-      },
-      setAsNullMenuItem(ranges: RangeComponent[]) {
-        const areAllCellsReadOnly = ranges
-          .flatMap((range) => range.getColumns())
-          .every((col) => !this.cellEditCheck(col));
-        return {
-          label: createMenuItem("Set as NULL"),
-          action: () => {
-            const targets = ranges.flatMap((range) => range.getCells().flat()).map((cell) => ({
-              row: cell.getRow(),
-              field: cell.getField()
-            }));
-
-            for (const { row, field } of targets) {
-              const cell = row.getCell(field);
-              if (!cell) continue;
-              if (this.cellEditCheck(cell)) cell.setValue(null);
-            }
-          },
-          disabled: areAllCellsReadOnly || !this.editingData,
-        }
       },
       openEditorMenuByShortcut() {
         const range: RangeComponent = _.last(this.tabulator.getRanges())
@@ -354,10 +234,10 @@ import { stringToTypedArray } from '@/common/utils'
         // FIXME maybe we can avoid calling child methods directly like this?
         // it should be done by calling an event using this.$modal.show(modalName)
         // or this.$trigger(AppEvent.something) if possible
-        this.openCellEditorModal(cell, !this.cellEditCheck(cell))
+        this.openCellEditorModal(cell, true)
       },
       openEditorMenu(cell: CellComponent) {
-        const isReadOnly = !this.cellEditCheck(cell);
+        const isReadOnly = true;
         let keybind = this.$bksConfig.getKeybindings("context-menu", 'resultTable.openEditorModal');
         keybind = Array.isArray(keybind) ? keybind[0] : keybind;
         return {
@@ -372,8 +252,7 @@ import { stringToTypedArray } from '@/common/utils'
         this.$refs.editorModal.openModal(cell.getValue(), undefined, eventParams)
       },
       onSaveEditorModal(content: string, _l: any, cell: CellComponent){
-        const editData = this.editData?.get(cell.getField());
-        const isBinary = editData?.bksField?.bksType === 'BINARY' || _.isTypedArray(cell.getValue());
+        const isBinary = _.isTypedArray(cell.getValue());
 
         let value = content;
         if (isBinary) {
@@ -398,7 +277,6 @@ import { stringToTypedArray } from '@/common/utils'
 
           return [
             this.openEditorMenu(cell),
-            this.setAsNullMenuItem(ranges),
             { separator: true },
             ...copyActionsMenu({
               ranges: cell.getTable().getRanges(),
@@ -437,7 +315,6 @@ import { stringToTypedArray } from '@/common/utils'
 
         const magic: any = MagicColumnBuilder.build(column.name) || {}
         const title = magic?.title ?? column.name ?? `Result ${index}`
-        const editData: FieldEditData = this.editData?.get(column.id);
 
         let cssClass = 'hide-header-menu-icon';
 
@@ -445,17 +322,8 @@ import { stringToTypedArray } from '@/common/utils'
           cssClass += ` ${magic.cssClass}`;
         }
 
-        if (editData?.isPK) {
-          cssClass += ` primary-key`;
-        }
 
-        if (editData?.generated) {
-          cssClass += ' generated-column';
-        }
 
-        if (this.editData && !editData?.editable && !editData?.isPK) {
-          cssClass += ` read-only-field`;
-        }
 
         if (magic.formatterParams?.fk) {
           magic.formatterParams.fkOnClick = (_e, cell) => this.fkClick(magic.formatterParams.fk[0], cell)
@@ -463,25 +331,17 @@ import { stringToTypedArray } from '@/common/utils'
 
         const magicStuff = _.pick(magic, ['formatter', 'formatterParams'])
 
-        const editorType = this.editorType(editData?.dataType);
+        const editorType = this.editorType(undefined);
         const useVerticalNavigation = editorType === 'textarea'
 
         const formatterParams: FormatterParams = {
           fk: false,
           fkOnClick: undefined,
-          isPK: editData?.isPK,
           binaryEncoding: this.$bksConfig.ui.general.binaryEncoding,
         }
 
         let headerTooltip = escapeHtml(column.name);
 
-        if (editData) {
-          headerTooltip = escapeHtml(`${editData?.generated ? '[Generated]' : ''}${editData?.columnName ?? column.name} ${editData?.dataType ?? ''}`);
-
-          if (!editData.editable && !_.isNil(editData.readOnlyReason)) {
-            headerTooltip += ` -> Read-Only: ${FieldReadOnlyReasonStr[editData.readOnlyReason]}`
-          }
-        }
 
         const result = {
           title,
@@ -489,11 +349,8 @@ import { stringToTypedArray } from '@/common/utils'
           titleFormatter: this.headerFormatter,
           titleFormatterParams: {
             columnName: title,
-            dataType: editData?.dataType,
-            generated: editData?.generated
           },
           titleDownload: escapeHtml(column.name),
-          dataType: editData?.dataType,
           width: columnWidth,
           mutator: this.resolveTabulatorMutator(column.dataType, dialectFor(this.connectionType)),
           maxInitialWidth: this.$bksConfig.ui.tableTable.maxColumnWidth,
@@ -504,23 +361,18 @@ import { stringToTypedArray } from '@/common/utils'
           headerTooltip,
           resizable: 'header',
           cssClass,
-          editable: this.cellEditCheck,
           editor: editorType,
           cellEditCancelled: (cell: CellComponent) => cell.getRow().normalizeHeight(),
           formatter: this.cellFormatter,
           formatterParams,
           editorParams: {
             verticalNavigation: useVerticalNavigation ? 'editor' : undefined,
-            dataType: editData?.dataType,
             search: true,
             allowEmpty: true,
-            preserveObject: editData?.array,
             onPreserveObjectFail: (value: unknown) => {
               log.error('Failed to preserve object for', value)
               return true
             },
-            typeHint: editData?.dataType?.toLowerCase(),
-            bksField: editData?.bksField,
             binaryEncoding: this.$bksConfig.ui.general.binaryEncoding,
           },
           ...magicStuff
@@ -529,18 +381,6 @@ import { stringToTypedArray } from '@/common/utils'
         if (column.dataType === 'INTERVAL') {
           // add interval sorter
           result['sorter'] = this.intervalSorter;
-        } else if (editData?.dataType && /^(bool|boolean)$/i.test(editData?.dataType)) {
-          const values = [
-            { label: 'false', value: this.dialectData.boolean?.false ?? false },
-            { label: 'true', value: this.dialectData.boolean?.true ?? true },
-          ];
-          if (editData?.nullable) values.push({ label: '(NULL)', value: null });
-          result.editorParams['values'] = values;
-        } else if (editData?.enumValues?.length) {
-          result.editor = 'list';
-          const values = editData.enumValues.map((v) => ({ label: v, value: v }));
-          if (editData?.nullable) values.push({ label: '(NULL)', value: null });
-          result.editorParams['values'] = values;
         }
 
         const results = [];
@@ -576,196 +416,6 @@ import { stringToTypedArray } from '@/common/utils'
             return 'list'
           default: return ne
         }
-      },
-      cellEditCheck(cell: CellComponent): boolean {
-        if (!this.editingData) return false
-
-        const fieldEditData: FieldEditData = this.editData?.get(cell.getField());
-        if (!fieldEditData) {
-          return false;
-        }
-
-        return fieldEditData.editable;
-      },
-      cellEdited(cell: CellComponent) {
-        const fieldEditData: FieldEditData = this.editData?.get(cell.getField());
-        if (!fieldEditData) {
-          log.warn('Could not find matching field for', cell.getField());
-          return;
-        }
-
-        const pkFields: Map<string, FieldEditData> = new Map(
-          this.editData
-            .entries()
-            .filter(([_id, editData]) => editData?.isPK &&
-              editData?.linkedTable === fieldEditData?.linkedTable &&
-              editData?.linkedSchema === fieldEditData?.linkedSchema)
-        );
-        const pkCells: CellComponent[] = cell.getRow().getCells().filter((c) => pkFields.has(c.getField()));
-
-        if (cell.getOldValue() == cell.getValue()) {
-          return;
-        }
-
-        if (!pkCells || !pkCells.length || pkFields.size !== pkCells.length) {
-          this.$noty.error("Can't edit column -- couldn't figure out primary key");
-          cell.restoreOldValue();
-          return;
-        }
-
-        if (!this.fieldOriginalClassMap.has(cell.getField())) {
-          // If we don't have the unmodified original class value, store it so we can reset classes later on :)
-          this.fieldOriginalClassMap.set(cell.getField(), cell.getElement()?.classList.value);
-        }
-
-        // TODO (@day): if we're going to do inserts we'll have to check if edit is in a pending insert here
-
-        const pkValues = pkCells.map((cell) => cell.getValue()).join('-');
-        const key = `${pkValues}-${cell.getField()}`;
-
-        const hasCurrent = _.some(this.pendingChanges.updates, { key: key });
-        const existingEdited = this.maybeUpdateExistingEdit(key, cell);
-
-        if (!existingEdited && !hasCurrent) {
-          const pks = pkCells.map((cell) => ({ cell, data: pkFields.get(cell.getField())}));
-          const cellData: CellData = {
-            cell,
-            data: fieldEditData
-          };
-          this.createNewEdit(key, cellData, pks);
-        }
-
-        this.propogateChanges(pkCells, cell, key, !existingEdited && hasCurrent);
-      },
-      maybeUpdateExistingEdit(key: string, cell: CellComponent): boolean {
-        // This function returns whether or not an existing edit was edited in place
-        const currentEdit = _.find(this.pendingChanges.updates, { key: key });
-
-        if (!currentEdit) {
-          return false
-        }
-
-        if (typeof currentEdit?.oldValue === 'undefined' && cell.getValue() == null) {
-          // don't do anything because of an issue found when trying to set to null, undefined == null so was getting rid of the need to make a change\
-          return true;
-        } else if (currentEdit?.oldValue == cell.getValue()) {
-          this.$set(this.pendingChanges, 'updates', _.without(this.pendingChanges.updates, currentEdit));
-          return false; // no change made
-        } else {
-          currentEdit.value = cell.getValue();
-          return true;
-        }
-      },
-      createNewEdit(key: string, cellData: CellData, pks: CellData[]) {
-        const { cell, data: fieldEditData } = cellData;
-
-        const primaryKeys = pks.map(({ cell: pkCell, data }) => {
-          return {
-            column: data.columnName,
-            // Use old value if this primary key cell is the one being edited, otherwise current value
-            // This is for redis key renaming to work
-            value: pkCell === cell ? pkCell.getOldValue() : pkCell.getValue()
-          }
-        });
-
-        const payload: TableUpdatePayload = {
-          key: key,
-          field: cell.getField(),
-          table: fieldEditData?.linkedTable,
-          schema: fieldEditData?.linkedSchema,
-          dataset: null,
-          column: fieldEditData?.columnName,
-          columnType: fieldEditData?.dataType,
-          columnObject: undefined,
-          primaryKeys,
-          oldValue: cell.getOldValue(),
-          value: cell.getValue(),
-        };
-
-        // remove existing pending updates with identical pKey-column combo
-        let pendingUpdates = _.reject(this.pendingChanges.updates, { 'key': payload.key });
-        pendingUpdates.push(payload);
-        this.$set(this.pendingChanges, 'updates', pendingUpdates);
-      },
-      propogateChanges(pkCells: CellComponent[], cell: CellComponent, key: string, removeEdited: boolean = false) {
-        this.tabulator.blockRedraw();
-
-        if (!this.propogatedChangesFilters.has(key)) {
-          const filters = pkCells.map((cell) => {
-            return {
-              field: cell.getField(),
-              type: "=",
-              value: cell.getValue()
-            };
-          });
-          this.propogatedChangesFilters.set(key, filters);
-        }
-
-        const filters = this.propogatedChangesFilters.get(key);
-        const rows: RowComponent[] = this.tabulator.searchRows(filters);
-        rows.forEach((row) => {
-          const data = row.getData();
-          if (!data[this.internalClassTrackerColumn]) {
-            data[this.internalClassTrackerColumn] = {
-              edited: new Set<string>(),
-              editError: new Set<string>(),
-              editSuccess: new Set<string>()
-            }
-          }
-
-          const tracker = data[this.internalClassTrackerColumn];
-          const set = tracker.edited;
-          if (removeEdited) {
-            set.delete(cell.getField());
-          } else {
-            set.add(cell.getField())
-          }
-
-          row.update({
-            [cell.getField()]: cell.getValue(),
-            [this.internalClassTrackerColumn]: {
-              ...tracker,
-              edited: set
-            }
-          })
-
-          row.reformat();
-        })
-        this.tabulator.restoreRedraw();
-        this.$nextTick(() => {
-          this.tabulator.redraw()
-        })
-      },
-      buildPendingUpdates() {
-        return this.pendingChanges.updates.map((update) => {
-          return _.omit(update, ['key', 'oldValue', 'cell']);
-        });
-      },
-      discardChanges() {
-        this.saveError = null;
-
-        this.pendingChanges.updates.forEach((edit: TableUpdatePayload) => this.discardUpdate(edit));
-
-        this.resetPendingChanges();
-      },
-      discardUpdate(pendingUpdate: TableUpdatePayload) {
-        const filters = this.propogatedChangesFilters.get(pendingUpdate.key);
-        const rows: RowComponent[] = this.tabulator.searchRows(filters);
-        rows?.forEach((row: RowComponent) => {
-          this.discardCellUpdate(row, pendingUpdate.field, pendingUpdate.oldValue);
-        })
-      },
-      discardCellUpdate(row: RowComponent, field: string, oldValue: any) {
-        const tracker: ClassTracker = row?.getData()[this.internalClassTrackerColumn];
-        tracker?.edited?.delete(field);
-        tracker?.editError?.delete(field);
-
-        row.update({
-          [field]: oldValue,
-          [this.internalClassTrackerColumn]: tracker
-        });
-
-        row.reformat();
       },
       focusOnFilterInput() {
         this.hiddenFilter = false
@@ -824,137 +474,6 @@ import { stringToTypedArray } from '@/common/utils'
             el.scrollLeft = scrollLeft
           }
         })
-      },
-      resetPendingChanges() {
-        this.pendingChanges = {
-          updates: [],
-          deletes: []
-        }
-      },
-      async copyToSql() {
-        this.saveError = null;
-
-        if (!this.editingData) return;
-
-        try {
-          const changes = {
-            inserts: [],
-            updates: this.buildPendingUpdates(),
-            deletes: [],
-          };
-
-          const sql = await this.connection.applyChangesSql(changes);
-          const formatted = safeSqlFormat(sql, formatOptionsFor(this.queryDialect))
-          this.$root.$emit(AppEvent.newTab, formatted);
-        } catch (ex) {
-          log.error(ex)
-
-          this.pendingChanges.updates.forEach((edit: TableUpdatePayload) => {
-            const filters = this.propogatedChangesFilters.get(edit.key);
-            const rows: RowComponent[] = this.tabulator.searchRows(filters);
-            rows.forEach((row) => {
-              const tracker: ClassTracker = row?.getData()[this.internalClassTrackerColumn];
-              if (!tracker.editError) {
-                tracker.editError = new Set<string>();
-              }
-
-              tracker.editError.add(edit.field);
-              row.update({
-                [this.internalClassTrackerColumn]: tracker
-              });
-
-              row.reformat();
-            })
-          });
-
-          this.saveError = {
-            titile: ex.message,
-            message: ex.message,
-            ex
-          }
-
-          this.$noty.error(ex.message)
-          return
-        }
-      },
-      async saveChanges() {
-        this.saveError = null;
-
-        if (!this.editingData) return;
-
-        try {
-          const payload = {
-            inserts: [],
-            updates: this.buildPendingUpdates(),
-            deletes: [], // TODO (@day): deletes?
-          };
-
-          // @ts-ignore
-          const result = await this.connection.applyChanges(payload, this.isManualCommit ? this.tab.id : null);
-
-          if (this.hasPendingUpdates) {
-            this.tabulator.clearCellEdited();
-            //update data
-            this.pendingChanges.updates.forEach(edit => {
-              const filters = this.propogatedChangesFilters.get(edit.key);
-              const rows: RowComponent[] = this.tabulator.searchRows(filters);
-              rows.forEach((row) => {
-                const tracker: ClassTracker = row?.getData()[this.internalClassTrackerColumn];
-
-                tracker.editSuccess.add(edit.field);
-                tracker.edited.delete(edit.field);
-                row.update({
-                  [this.internalClassTrackerColumn]: tracker
-                });
-
-                row.reformat();
-              })
-
-              setTimeout(() => {
-                rows.forEach((row) => {
-                  const tracker: ClassTracker = row?.getData()[this.internalClassTrackerColumn];
-
-                  tracker.editSuccess.delete(edit.field);
-                  row.update({
-                    [this.internalClassTrackerColumn]: tracker
-                  });
-
-                  row.reformat();
-                })
-              }, 1000)
-            })
-          }
-
-          this.resetPendingChanges();
-
-        } catch (err) {
-          this.pendingChanges.updates.forEach((edit: TableUpdatePayload) => {
-            const filters = this.propogatedChangesFilters.get(edit.key);
-            const rows: RowComponent[] = this.tabulator.searchRows(filters);
-            rows.forEach((row) => {
-              const tracker: ClassTracker = row?.getData()[this.internalClassTrackerColumn];
-
-              tracker.editError.add(edit.field);
-              row.update({
-                [this.internalClassTrackerColumn]: tracker
-              });
-
-              row.reformat();
-            })
-          });
-
-          this.saveError = {
-            title: err.message,
-            message: err.message,
-            err
-          };
-
-          this.$noty.error(err.message);
-
-          return;
-        } finally {
-          // forceRedraw??
-        }
       },
       download(format) {
         let formatter = format;
