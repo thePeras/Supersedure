@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-hotkey="keymap"
-    class="table-filter"
-  >
+  <div class="table-filter">
     <form
       @submit.prevent="submit"
       @scroll="
@@ -224,11 +221,6 @@ export default Vue.extend({
       const [_, ...additional] = this.filters;
       return additional;
     },
-    keymap() {
-      return this.$vHotkeyKeymap({
-        'tableTable.focusOnFilterInput': this.focusOnInput,
-      });
-    },
     externalFilters() {
       return this.reactiveFilters;
     },
@@ -246,9 +238,19 @@ export default Vue.extend({
       this.filters = updated
     },
 
-    focusOnInput() {
-      if (this.filterMode === RAW) this.$refs.valueInput.focus();
-      else this.$refs.multipleFilters.querySelector('.filter-value')?.focus();
+    focusOnInput(field?: string) {
+      if (this.filterMode === RAW) {
+        this.$refs.valueInput.focus();
+        return;
+      }
+      if (field) this.setPrimaryFilterField(field);
+      this.$refs.multipleFilters.querySelector('.filter-value')?.focus();
+    },
+    setPrimaryFilterField(field: string) {
+      const [primary] = this.filters;
+      if (!primary || primary.field === field) return;
+      if (!this.columns.some((column) => column.columnName === field)) return;
+      this.$set(primary, "field", field);
     },
     async toggleFilterMode() {
       const filters: TableFilter[] = normalizeFilters(this.filters);
