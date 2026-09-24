@@ -7,6 +7,7 @@ import _ from "lodash";
 import { HeaderSortTabulatorModule } from './modules/HeaderSortTabulatorModule'
 import { EventBridgeTabulatorModule } from './modules/EventBridgeTabulatorModule'
 import { ForeignCacheTabulatorModule } from './modules/ForeignCacheTabulatorModule'
+import { attachRangeModifiers } from './rangeModifiers'
 
 export interface Options {
   rowHeaderOffset?: number | (() => number);
@@ -73,7 +74,11 @@ export function tabulatorForTableData(
     },
   };
   const mergedOptions = _.merge(defaultOptions, tabulatorOptions);
-  return new TabulatorFull(el, mergedOptions);
+  const tabulator = new TabulatorFull(el, mergedOptions);
+
+  attachRangeModifiers(tabulator);
+
+  return tabulator;
 }
 
 export function stringifyRangeData(rangeData: Record<string, any>[]) {
