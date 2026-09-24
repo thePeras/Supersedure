@@ -11,6 +11,7 @@ import {
   resizeAllColumnsToFixedWidth,
 } from "@/lib/menu/tableMenu";
 import { attachFillHandle } from "@/lib/tabulator/fillHandle";
+import { attachRangeModifiers } from "@/lib/tabulator/rangeModifiers";
 import { rowHeaderField } from "@/common/utils";
 import _ from "lodash";
 import rawLog from "@bksLogger";
@@ -105,6 +106,7 @@ export function tabulatorForTableData(
   const mergedOptions = _.merge(defaultOptions, tabulatorOptions);
   const tabulator = new TabulatorFull(el, mergedOptions);
 
+  attachRangeModifiers(tabulator);
   attachFillHandle(tabulator);
 
   if (options.onRangeChange) {
