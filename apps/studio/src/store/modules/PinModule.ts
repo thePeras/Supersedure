@@ -94,18 +94,12 @@ export const PinModule: Module<State, RootState> = {
           }
         });
         console.log('RECEIVED NEW PIN: ', newPin)
-        newPin.position = (context.getters.orderedPins.reverse()[0]?.position || 0) + 1
+        newPin.position = (_.last(context.getters.orderedPins)?.position || 0) + 1
         if(usedConfig.id) {
           newPin = await Vue.prototype.$util.send('appdb/pins/save', { obj: newPin });
         }
         context.commit('add', newPin)
       }
-    },
-    async reorder(context, pins: TransportPinnedEntity[]) {
-      pins.forEach((p, idx) => p.position = idx)
-      const { usedConfig } = context.rootState
-      context.commit('set', pins)
-      if (usedConfig.id) await Vue.prototype.$util.send('appdb/pins/save', { obj: pins });
     },
     async remove(context, item: DatabaseEntity) {
       const { database } = context.rootState

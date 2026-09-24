@@ -62,21 +62,7 @@
       style="margin-top: -5px;"
     />
 
-    <!-- Pinned Tables -->
-    <div
-      class="table-list pinned flex-col"
-      ref="pinned"
-      v-show="orderedPins.length > 0"
-    >
-      <pinned-table-list
-        :all-expanded="allExpanded"
-        :all-collapsed="allCollapsed"
-      />
-    </div>
-
     <!-- Tables -->
-    <hr v-show="pinnedEntities.length > 0"> <!-- Fake splitjs Gutter styling -->
-
     <nav
       class="list-group flex-col"
       ref="tables"
@@ -171,13 +157,10 @@
 </template>
 
 <script lang="ts">
-  import _ from 'lodash'
   import HiddenEntitiesModal from './HiddenEntitiesModal.vue'
-  import Split from 'split.js'
   import { mapState, mapGetters } from 'vuex'
   import TableFilter from '../../../mixins/table_filter'
   import TableListContextMenus from '../../../mixins/TableListContextMenus'
-  import PinnedTableList from '@/components/sidebar/core/PinnedTableList.vue'
   import { AppEvent } from '@/common/AppEvent'
   import VirtualTableList from './table_list/VirtualTableList.vue'
   import { TableOrView, Routine } from "@/lib/db/models";
@@ -185,18 +168,14 @@
 
   export default {
     mixins: [TableFilter, TableListContextMenus],
-    components: { PinnedTableList, HiddenEntitiesModal, VirtualTableList },
+    components: { HiddenEntitiesModal, VirtualTableList },
     data() {
       return {
         isDev: window.platformInfo.isDevelopment,
         tableLoadError: null,
-        allExpanded: null,
-        allCollapsed: null,
         isExpanded: false,
         listItemsCollapsed: null,
         activeItem: 'tables',
-        split: null,
-        sizes: [25,75],
         expandedTables: []
       }
     },
@@ -261,20 +240,11 @@
           this.$store.commit('showRoutines')
         }
       },
-      components() {
-        return [
-          this.$refs.pinned,
-          this.$refs.tables
-        ]
-      },
       supportsRoutines() {
         return this.supportedFeatures.customRoutines
       },
       canCreateTable() {
         return !this.dialectData.disabledFeatures?.createTable
-      },
-      loadedWithPins() {
-        return !this.tablesLoading && this.pinnedEntities.length > 0
       },
       rootBindings() {
         return [
@@ -285,15 +255,6 @@
     watch: {
       currentDatabase(){
         this.filterQuery = null
-      },
-      loadedWithPins (loaded, oldloaded) {
-        if (loaded && (!oldloaded)) {
-          this.$nextTick(() => {
-            this.split.setSizes(this.sizes);
-          });
-        } else if (!loaded) {
-          // this.split.destroy();
-        }
       },
     },
     methods: {
@@ -349,28 +310,13 @@
 
         if (pinned) this.$store.dispatch('pins/add', entity)
         else this.$store.dispatch('pins/remove', entity)
-
-        if (pinned && entity.entityType === 'table') {
-          this.$store.dispatch('updateTableColumns', entity)
-        }
       }
     },
     mounted() {
-      const components = [this.$refs.pinned, this.$refs.tables]
-      this.split = Split(components, {
-        elementStyle: (_dimension, size) => ({
-            'flex-basis': `calc(${size}%)`,
-        }),
-        direction: 'vertical',
-        sizes: this.sizes,
-      })
       this.registerHandlers(this.rootBindings)
     },
     beforeDestroy() {
       document.removeEventListener('mousedown', this.maybeUnselect)
-      if(this.split) {
-        this.split.destroy()
-      }
       this.unregisterHandlers(this.rootBindings)
     }
   }

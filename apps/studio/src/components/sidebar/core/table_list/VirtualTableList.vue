@@ -30,7 +30,7 @@ import TableListContextMenus from "@/mixins/TableListContextMenus";
 import ItemComponent from "./Item.vue";
 import VirtualList from "vue-virtual-scroll-list";
 import { AppEvent } from "@/common/AppEvent";
-import { mapGetters, mapState } from "vuex";
+import { mapGetters } from "vuex";
 import { entityId } from "@/common/utils";
 import "scrollyfills";
 import { TransportPinnedEntity } from "@/common/transport/TransportPinnedEntity";
@@ -104,26 +104,23 @@ export default Vue.extend({
       };
 
       const expandedMap = new Map();
-      const pinnedMap = new Map();
+      const pinnedOrder = new Map();
 
       if (this.generated && this.items.length > 0) {
         for (const item of this.items) {
           if (item.expanded) {
             expandedMap.set(item.key, true);
           }
-          if (item.pinned) {
-            pinnedMap.set(item.key, true);
-          }
         }
       }
 
-      for (const pin of this.pins) {
-        const key = entityId(pin.schemaName, pin.entity);
-        pinnedMap.set(key, true);
-      }
+      this.orderedPins.forEach((pin: TransportPinnedEntity, index: number) => {
+        pinnedOrder.set(entityId(pin.schemaName, pin.entity), index);
+      });
 
       this.schemaTables.forEach((schema: any) => {
         let parent: BaseItem;
+        const entityItems: Item[] = [];
 
         if (noFolder) {
           parent = root;
@@ -148,7 +145,7 @@ export default Vue.extend({
 
         schema.tables.forEach((table: TableOrView) => {
           const key = entityId(schema.schema, table);
-          items.push({
+          entityItems.push({
             type: "table",
             key,
             entity: table,
@@ -157,14 +154,14 @@ export default Vue.extend({
             contextMenu: this.tableMenuOptions,
             parent,
             level: noFolder ? 0 : 1,
-            pinned: pinnedMap.has(key) || false,
+            pinned: pinnedOrder.has(key),
             loadingColumns: false,
           });
         });
 
         schema.routines.forEach((routine: Routine) => {
           const key = entityId(schema.schema, routine);
-          items.push({
+          entityItems.push({
             entity: routine,
             key,
             type: "routine",
@@ -173,9 +170,16 @@ export default Vue.extend({
             contextMenu: this.routineMenuOptions,
             parent,
             level: noFolder ? 0 : 1,
-            pinned: pinnedMap.has(key) || false,
+            pinned: pinnedOrder.has(key),
           });
         });
+
+        const pinned = entityItems.filter((item) => item.pinned);
+        const unpinned = entityItems.filter((item) => !item.pinned);
+        pinned.sort(
+          (a, b) => pinnedOrder.get(a.key) - pinnedOrder.get(b.key)
+        );
+        items.push(...pinned, ...unpinned);
       });
 
       this.items = items;
@@ -274,15 +278,6 @@ export default Vue.extend({
         });
       }
     },
-    handleTogglePinned(entity: Entity, pinned?: boolean) {
-      const item = this.items.find((item: Item) => item.entity === entity);
-      if (!item) return;
-
-      if (typeof pinned === "undefined") {
-        pinned = !item.pinned;
-      }
-      item.pinned = pinned;
-    },
     handleScrollEnd() {
       this.updateTableColumnsInRange(true);
     },
@@ -303,10 +298,6 @@ export default Vue.extend({
           event: AppEvent.toggleExpandTableList,
           handler: this.handleToggleExpandedAll,
         },
-        {
-          event: AppEvent.togglePinTableList,
-          handler: this.handleTogglePinned,
-        },
       ];
     },
     ...mapGetters({
@@ -315,11 +306,15 @@ export default Vue.extend({
       minimalMode: "minimalMode",
       hiddenEntities: "hideEntities/databaseEntities",
       hiddenSchemas: "hideEntities/databaseSchemas",
+      orderedPins: "pins/orderedPins",
     }),
-    ...mapState("pins", ["pins"]),
   },
   watch: {
     schemaTables() {
+      this.generateItems();
+      this.generateDisplayItems();
+    },
+    orderedPins() {
       this.generateItems();
       this.generateDisplayItems();
     },
