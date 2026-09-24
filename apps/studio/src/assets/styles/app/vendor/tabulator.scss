@@ -348,6 +348,10 @@ $columnResizeGuideColor:      color.mix($query-editor-bg, $theme-base, 80%);
     &.tabulator-range-selected:not(.tabulator-range-only-cell-selected) {
       background-color: rgba($theme-base, 0.05);
     }
+    &.tabulator-range-fill-target,
+    &.tabulator-range-fill-target:hover {
+      background-color: rgba($theme-primary, 0.25);
+    }
   }
 
   i.fk-link {
@@ -840,6 +844,32 @@ $columnResizeGuideColor:      color.mix($query-editor-bg, $theme-base, 80%);
   }
   .tabulator-range.copied {
     border-style: dashed;
+  }
+
+  // The fill handle replaces tabulator's decorative corner dot with a real,
+  // grabbable element.
+  .tabulator-range.tabulator-range-has-fill-handle::after {
+    display: none;
+  }
+
+  .tabulator-range-fill-handle {
+    position: absolute;
+    right: -3px;
+    bottom: -3px;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background-color: color.adjust($theme-primary, $lightness: -20%);
+    pointer-events: auto;
+    // Filling only runs vertically.
+    cursor: ns-resize;
+
+    // Widen the grab area without growing the dot.
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -3px;
+    }
   }
 }
 

@@ -359,11 +359,15 @@ export async function pasteRange(range: RangeComponent) {
   }
 }
 
-export function setCellValue(cell: CellComponent, value: string) {
+export function isCellEditable(cell: CellComponent): boolean {
   const editableFunc = cell.getColumn().getDefinition().editable;
-  const editable =
-    typeof editableFunc === "function" ? editableFunc(cell) : editableFunc;
-  if (editable) cell.setValue(value);
+  return typeof editableFunc === "function"
+    ? !!editableFunc(cell)
+    : !!editableFunc;
+}
+
+export function setCellValue(cell: CellComponent, value: unknown) {
+  if (isCellEditable(cell)) cell.setValue(value);
 }
 
 // Helper function to map column IDs to column titles
