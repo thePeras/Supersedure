@@ -640,6 +640,10 @@ input[type=file] {
       background-color: inherit;
     }
   }
+  &.gutter-disabled {
+    pointer-events: none;
+    cursor: default;
+  }
   &.gutter-vertical {
     cursor: ns-resize;
     height: 0!important;
