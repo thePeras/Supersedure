@@ -51,6 +51,7 @@
     <ExportManager />
     <lost-connection-modal />
     <rename-database-element-modal />
+    <fk-preview-popup />
   </div>
 </template>
 
@@ -70,6 +71,7 @@
   import Vue from 'vue'
   import RenameDatabaseElementModal from './common/modals/RenameDatabaseElementModal.vue'
   import PrivacyBanner from '@/components/PrivacyBanner.vue'
+  import FkPreviewPopup from './tableview/FkPreviewPopup.vue'
   import { mapGetters, mapActions, mapState } from 'vuex'
   import _ from "lodash"
 
@@ -88,7 +90,8 @@
       SecondarySidebar,
       GlobalStatusBar,
       GlobalSidebar,
-      PrivacyBanner
+      PrivacyBanner,
+      FkPreviewPopup
     },
     data() {
       /* eslint-disable */

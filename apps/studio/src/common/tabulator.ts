@@ -28,6 +28,8 @@ export interface TabulatorFormatterParams {
   fk?: any[];
   isPK?: boolean;
   fkOnClick?: (e: MouseEvent, cell: CellComponent) => void
+  /** The key the fk link resolves to, used for the record preview popup. */
+  fkTarget?: any
   binaryEncoding?: string
 }
 

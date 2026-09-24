@@ -326,7 +326,8 @@ import { stringToTypedArray } from '@/common/utils'
 
 
         if (magic.formatterParams?.fk) {
-          magic.formatterParams.fkOnClick = (_e, cell) => this.fkClick(magic.formatterParams.fk[0], cell)
+          magic.formatterParams.fkTarget = magic.formatterParams.fk[0]
+          magic.formatterParams.fkOnClick = (_e, cell) => this.fkClick(magic.formatterParams.fkTarget, cell)
         }
 
         const magicStuff = _.pick(magic, ['formatter', 'formatterParams'])

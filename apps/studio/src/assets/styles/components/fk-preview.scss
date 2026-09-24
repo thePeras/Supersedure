@@ -1,0 +1,67 @@
+.fk-preview {
+  position: fixed;
+  z-index: 10000;
+  max-width: 420px;
+  min-width: 220px;
+  max-height: 320px;
+  overflow: hidden;
+  pointer-events: none;
+  padding: $gutter-h ($gutter-w * 0.75);
+  border-radius: $btn-border-radius-small;
+  border: 1px solid $border-color;
+  background: var(--menu-bg);
+  color: $text-dark;
+  font-size: 0.85rem;
+  box-shadow: var(--menu-shadow);
+
+  .fk-preview-header {
+    padding-bottom: $gutter-h;
+    margin-bottom: $gutter-h;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .fk-preview-table {
+    color: $text-light;
+    font-size: 0.8rem;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  .fk-preview-message {
+    color: $text-light;
+    &.error {
+      color: $brand-danger;
+    }
+  }
+
+  .fk-preview-field {
+    display: flex;
+    align-items: baseline;
+    gap: $gutter-w;
+    line-height: 1.6;
+  }
+
+  .fk-preview-field-name {
+    flex: 0 0 auto;
+    max-width: 45%;
+    color: $text-light;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fk-preview-field-value {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: $font-family-mono;
+
+    &.null-value {
+      color: $text-lighter;
+      font-style: italic;
+    }
+  }
+}
