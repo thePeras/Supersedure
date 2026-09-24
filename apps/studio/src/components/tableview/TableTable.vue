@@ -15,6 +15,7 @@
     <template v-else>
       <row-filter-builder
         v-if="table.columns && table.columns.length"
+        ref="filterBuilder"
         :columns="table.columns"
         :reactive-filters="tableFilters"
         @input="handleRowFilterBuilderInput"
@@ -453,6 +454,7 @@ export default Vue.extend({
         'tableTable.previousPage': this.navigatePage.bind(this, 'prev'),
         'tableTable.firstPage': this.navigatePage.bind(this, 'first'),
         'tableTable.openEditorModal': this.openEditorMenuByShortcut.bind(this),
+        'tableTable.focusOnFilterInput': this.focusOnFilterInput.bind(this),
       })
     },
 
@@ -1267,6 +1269,19 @@ export default Vue.extend({
     openCellEditorModal(cell: CellComponent, isReadOnly: boolean) {
       const eventParams = { cell, isReadOnly };
       this.$refs.editorModal.openModal(cell.getValue(), undefined, eventParams)
+    },
+
+    focusOnFilterInput() {
+      this.$refs.filterBuilder?.focusOnInput(this.selectedColumnField())
+    },
+    selectedColumnField(): string | undefined {
+      const range: RangeComponent = _.last(this.tabulator?.getRanges() || [])
+      if (!range) return undefined
+      const fields = range
+        .getColumns()
+        .map((column: ColumnComponent) => column.getField())
+        .filter((field: string) => field && field !== rowHeaderField && field !== this.internalIndexColumn)
+      return fields.length === 1 ? fields[0] : undefined
     },
 
     openEditorMenuByShortcut() {
