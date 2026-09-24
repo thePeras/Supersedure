@@ -1170,14 +1170,10 @@ export default Vue.extend({
         this.tabulator.modules.selectRange.restoreFocus()
       })
       this.tabulator.on('historyUndo', (action, component) => {
-        if (action === "cellEdit") {
-          this.cellEdited(component);
-        }
+        this.syncHistoryChange(action, component, 'undo')
       })
       this.tabulator.on('historyRedo', (action, component) => {
-        if (action === "cellEdit") {
-          this.cellEdited(component);
-        }
+        this.syncHistoryChange(action, component, 'redo')
       })
 
       this.tableFilters = getFilters(this.tab) || [createTableFilter(this.table.columns?.[0]?.columnName)]
@@ -1577,6 +1573,32 @@ export default Vue.extend({
 
       this.pendingChanges.inserts.push(payload)
     },
+    removeRowFromPendingInserts(row) {
+      this.$set(
+        this.pendingChanges,
+        'inserts',
+        this.pendingChanges.inserts.filter((insert) => insert.row !== row)
+      )
+    },
+    syncHistoryChange(action: string, component, direction: 'undo' | 'redo') {
+      const undoing = direction === 'undo'
+
+      if (action === 'cellEdit') {
+        this.cellEdited(component)
+      } else if (action === 'rowAdd') {
+        if (undoing) {
+          this.removeRowFromPendingInserts(component)
+        } else {
+          this.addRowToPendingInserts(component)
+        }
+      } else if (action === 'rowDelete') {
+        if (undoing) {
+          this.addRowToPendingInserts(component)
+        } else {
+          this.removeRowFromPendingInserts(component)
+        }
+      }
+    },
     addRowsToPendingDeletes(rows: RowComponent[]) {
       if (_.isEmpty(this.primaryKeys)) {
         this.$noty.error("Can't delete row -- couldn't figure out primary key")
@@ -1731,7 +1753,7 @@ export default Vue.extend({
           }
 
           this.resetPendingChanges()
-
+          this.tabulator.clearHistory()
 
         } catch (ex) {
           this.pendingChanges.updates.forEach(edit => {
@@ -1773,6 +1795,7 @@ export default Vue.extend({
       })
 
       this.resetPendingChanges()
+      this.tabulator.clearHistory()
     },
     discardColumnUpdate(pendingUpdate) {
       pendingUpdate.cell.setValue(pendingUpdate.oldValue)
