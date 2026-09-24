@@ -25,6 +25,7 @@ interface KeyData {
 export interface FormatterParams {
   fk: KeyData[] | false;
   fkOnClick: false | ((_e: Event, cell: { [key: string]: any }) => void);
+  fkTarget?: KeyData;
   isPK: boolean;
   binaryEncoding: string; // or boolean, depending on actual type
 }

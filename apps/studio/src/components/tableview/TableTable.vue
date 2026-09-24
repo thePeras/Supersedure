@@ -936,9 +936,12 @@ export default Vue.extend({
         headerTooltip += `<br/> ${escapeHtml(column.comment)}`
       }
 
+      const fkTarget = hasKeyDatas && (keyDatas[0][1].find((k) => !k.isComposite) ?? keyDatas[0][1][0])
+
       const formatterParams: FormatterParams = {
         fk: hasKeyDatas && keyDatas[0][1],
-        fkOnClick: hasKeyDatas && ((_e, cell) => this.fkClick(keyDatas[0][1].find((k) => !k.isComposite) ?? keyDatas[0][1][0], cell)),
+        fkOnClick: hasKeyDatas && ((_e, cell) => this.fkClick(fkTarget, cell)),
+        fkTarget: fkTarget || undefined,
         isPK: isPK,
         binaryEncoding: this.$bksConfig.ui.general.binaryEncoding,
       }

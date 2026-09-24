@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { Mutators } from '../lib/data/tools'
 import { TabulatorFormatterParams } from '@/common/tabulator'
+import { AppEvent } from '@/common/AppEvent'
 import helpers, { escapeHtml } from '@shared/lib/tabulator'
 export const NULL = '(NULL)'
 import {CellComponent} from 'tabulator-tables'
@@ -22,11 +23,13 @@ export function emptyResult(value: any) {
 }
 
 export function buildFormatterWithTooltip(cellValue: string, tooltip: string, icon?: string) {
+  const title = tooltip ? ` title="${escapeHtml(tooltip)}"` : ''
+
   if (!icon) {
-    return `<div class="cell-link-wrapper" title="${escapeHtml(tooltip)}">${escapeHtml(cellValue)}</div>`
+    return `<div class="cell-link-wrapper"${title}>${escapeHtml(cellValue)}</div>`
   }
 
-  return `<div class="cell-link-wrapper">${escapeHtml(cellValue)}<i class="material-icons fk-link" title="${escapeHtml(tooltip)}">${escapeHtml(icon)}</i></div>`
+  return `<div class="cell-link-wrapper">${escapeHtml(cellValue)}<i class="material-icons fk-link"${title}>${escapeHtml(icon)}</i></div>`
 }
 
 export default {
@@ -43,10 +46,16 @@ export default {
       return cellValue.map(cv => `<span class="mapper-pill">${cv}</span>`).join('')
     },
     cellTooltip(
-      _event,
+      event,
       cell: CellComponent
     ) {
       const params: TabulatorFormatterParams = cell.getColumn().getDefinition().formatterParams || {}
+
+      // the fk link has its own preview popup, don't stack a tooltip on top of it
+      if (params.fkTarget && (event?.target as HTMLElement)?.closest?.('.fk-link')) {
+        return ''
+      }
+
       let cellValue = cell.getValue()
 
       if (cellValue instanceof Uint8Array) {
@@ -69,7 +78,7 @@ export default {
     },
     cellFormatter(
       cell: CellComponent,
-      params: { fk?: any[], isPK?: boolean, fkOnClick?: (e: MouseEvent, cell: CellComponent) => void, binaryEncoding?: string } = {},
+      params: TabulatorFormatterParams = {},
       onRendered: (func: () => void) => void
     ) {
       const classNames = []
@@ -91,14 +100,26 @@ export default {
       let tooltip = ''
 
       if (params?.fk) {
-        if (params.fk.length === 1) tooltip = `View record in ${params.fk[0].toTable}`
-        else tooltip = `View records in ${(params.fk.map(item => item.toTable).join(', ') as string).replace(/, (?![\s\S]*, )/, ', or ')}`
+        // the preview popup stands in for a tooltip when we can resolve a target
+        if (!params.fkTarget) {
+          if (params.fk.length === 1) tooltip = `View record in ${params.fk[0].toTable}`
+          else tooltip = `View records in ${(params.fk.map(item => item.toTable).join(', ') as string).replace(/, (?![\s\S]*, )/, ', or ')}`
+        }
 
         result = buildFormatterWithTooltip(cellValue, tooltip, 'launch')
 
         onRendered(() => {
           const fkLink = cell.getElement().querySelector('.fk-link') as HTMLElement
           fkLink.onclick = (e) => params.fkOnClick(e, cell);
+
+          if (params.fkTarget) {
+            fkLink.onmouseenter = () => this.$root.$emit(AppEvent.showFkPreview, {
+              element: fkLink,
+              cell,
+              keyData: params.fkTarget,
+            })
+            fkLink.onmouseleave = () => this.$root.$emit(AppEvent.hideFkPreview)
+          }
         })
       }
 

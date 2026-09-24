@@ -2,8 +2,109 @@ import rawLog from '@bksLogger'
 import helpers from '@shared/lib/tabulator'
 import { CellComponent } from 'tabulator-tables';
 import { TabulatorFormatterParams } from '@/common/tabulator';
+import { TableFilter, TableOrView } from '@/lib/db/models';
 
 const log = rawLog.scope('fk_click');
+
+export interface FkTarget {
+  table: TableOrView
+  filters: TableFilter[]
+  values: any[]
+}
+
+export interface FkTargetContext {
+  tables: TableOrView[]
+  connection: any
+}
+
+/** Figure out which table and row a foreign key cell points at. */
+export async function resolveFkTarget(
+  rawKeyData: any,
+  cell: CellComponent,
+  { tables, connection }: FkTargetContext
+): Promise<FkTarget> {
+  const fromColumn = cell.getField().replace(/-link--bks$/g, "")
+
+  if (!rawKeyData) {
+    log.error("fk-click, couldn't find key data. Please open an issue. fromColumn:", fromColumn)
+    throw new Error("Unable to open foreign key. See dev console")
+  }
+
+  let tableName = rawKeyData.toTable
+  let schemaName = rawKeyData.toSchema
+  // Handle both regular and composite foreign keys
+  let columnName = rawKeyData.isComposite ?
+    rawKeyData.toColumn.join(',') :
+    rawKeyData.toColumn
+
+  let table = tables.find(t => {
+    return (!schemaName || schemaName === t.schema) && t.name === tableName
+  })
+
+  if (tableName && columnName && !schemaName && !table) {
+    // might be schema/table instead of table/column, we should check.
+    const sn = tableName
+    const tn = columnName
+    table = tables.find(t => {
+      return t.schema === sn && t.name === tn
+    })
+
+    if (table) {
+      schemaName = sn
+      tableName = tn
+      columnName = undefined
+    }
+  }
+
+  if (!table) {
+    log.error("fk-click: unable to find destination table", tableName)
+    throw new Error(`Table link: unable to find destination table '${tableName}'`)
+  }
+
+  if (!columnName) {
+    // just assume it's the primary key
+    columnName = await connection.getPrimaryKey(tableName, schemaName)
+  }
+
+  const filters: TableFilter[] = [];
+
+  // Handle source column(s) - might be composite keys
+  const FromColumnKeys = rawKeyData.isComposite ?
+    rawKeyData.fromColumn :
+    fromColumn.split(',');
+
+  // Handle target column(s)
+  const ToColumnKeys = columnName.split(',');
+  const values = [];
+
+  ToColumnKeys.forEach((key: string, index: number) => {
+    // Get the appropriate cell for this column from the foreign key
+    const sourceColumnName = FromColumnKeys[index] || fromColumn;
+    const valueCell = cell.getRow().getCell(sourceColumnName);
+
+    if (!valueCell) {
+      log.error(`fk-click: unable to find source column cell for '${sourceColumnName}'`);
+      return;
+    }
+
+    const params: TabulatorFormatterParams = valueCell.getColumn().getDefinition().formatterParams || {}
+    let value = valueCell.getValue()
+
+    if (value instanceof Uint8Array) {
+      const encoding = (params.binaryEncoding || 'hex') as 'hex' | 'base64'
+      value = helpers.niceString(value, false, encoding)
+    }
+
+    values.push(value);
+    filters.push({
+      value,
+      type: '=',
+      field: key
+    });
+  });
+
+  return { table, filters, values }
+}
 
 export const FkLinkMixin = {
   methods: {
@@ -58,93 +159,23 @@ export const FkLinkMixin = {
 
     async fkClick(rawKeyData, cell: CellComponent) {
       log.debug('fk click', rawKeyData)
-      const fromColumn = cell.getField().replace(/-link--bks$/g, "")
 
-      if (!rawKeyData) {
-        log.error("fk-click, couldn't find key data. Please open an issue. fromColumn:", fromColumn)
-        this.$noty.error("Unable to open foreign key. See dev console")
-      }
-
-
-
-      let tableName = rawKeyData.toTable
-      let schemaName = rawKeyData.toSchema
-      // Handle both regular and composite foreign keys
-      let columnName = rawKeyData.isComposite ? 
-        rawKeyData.toColumn.join(',') : 
-        rawKeyData.toColumn
-
-
-      let table = this.$store.state.tables.find(t => {
-        return (!schemaName || schemaName === t.schema) && t.name === tableName
-      })
-
-      if (tableName && columnName && !schemaName && !table) {
-        // might be schema/table instead of table/column, we should check.
-        const sn = tableName
-        const tn = columnName
-        table = this.$store.state.tables.find(t => {
-          return t.schema === sn && t.name === tn
+      let target: FkTarget
+      try {
+        target = await resolveFkTarget(rawKeyData, cell, {
+          tables: this.$store.state.tables,
+          connection: this.$store.state.connection,
         })
-
-        if (table) {
-          schemaName = sn
-          tableName = tn
-          columnName = undefined
-        }
-      }
-      if (!table) {
-        this.$noty.error(`Table link: unable to find destination table '${tableName}'`)
-        log.error("fk-click: unable to find destination table", tableName)
+      } catch (e) {
+        this.$noty.error(e.message)
         return
       }
 
-      if (!columnName) {
-        // just assume it's the primary key
-        columnName = await this.connection.getPrimaryKey(tableName, schemaName)
-      }
-
-      const filters = [];
-
-      // Handle source column(s) - might be composite keys
-      const FromColumnKeys = rawKeyData.isComposite ? 
-        rawKeyData.fromColumn : 
-        fromColumn.split(',');
-        
-      // Handle target column(s)
-      const ToColumnKeys = columnName.split(',');
-      const values = [];
-
-      ToColumnKeys.forEach((key: string, index: number) => {
-        // Get the appropriate cell for this column from the foreign key
-        const sourceColumnName = FromColumnKeys[index] || fromColumn;
-        const valueCell = cell.getRow().getCell(sourceColumnName);
-        const params: TabulatorFormatterParams = cell.getColumn().getDefinition().formatterParams || {}
-        
-        if (!valueCell) {
-          log.error(`fk-click: unable to find source column cell for '${sourceColumnName}'`);
-          return;
-        }
-        
-        let value = cell.getValue()
-
-        if (value instanceof Uint8Array) {
-          const encoding = (params.binaryEncoding || 'hex') as 'hex' | 'base64'
-          value = helpers.niceString(value, false, encoding)
-        }
-
-        values.push(value);
-        filters.push({
-          value,
-          type: '=',
-          field: key
-        });
-      });
-
-      const payload = {
-        table, filters, titleScope: values.join(','),
-      }
-      this.$root.$emit('loadTable', payload)
+      this.$root.$emit('loadTable', {
+        table: target.table,
+        filters: target.filters,
+        titleScope: target.values.join(','),
+      })
     },
 
   }
