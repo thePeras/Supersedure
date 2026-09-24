@@ -40,6 +40,7 @@
               }"
             >dock_to_right</i>
           </button>
+          <!--
           <button
             class="btn btn-link"
             @dblclick.prevent.stop
@@ -54,6 +55,7 @@
               }"
             >dock_to_left</i>
           </button>
+          -->
         </div>
         <div
           v-if="!$config.isMac"

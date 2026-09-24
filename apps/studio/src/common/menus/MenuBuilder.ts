@@ -24,7 +24,7 @@ export default class extends DefaultMenu {
         this.menuItems.editorFontSizeDecrease,
         { type: 'separator' },
         this.menuItems.primarySidebarToggle,
-        this.menuItems.secondarySidebarToggle,
+        // this.menuItems.secondarySidebarToggle,
         { type: 'separator' },
         this.menuItems.themeToggle,
         this.menuItems.reload,

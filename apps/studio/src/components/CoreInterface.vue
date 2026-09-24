@@ -73,6 +73,8 @@
   import { mapGetters, mapActions, mapState } from 'vuex'
   import _ from "lodash"
 
+  const SECONDARY_SIDEBAR_GUTTER_INDEX = 2
+
   export default Vue.extend({
     components: {
       CoreSidebar,
@@ -177,9 +179,12 @@
                 width: `${width}px`,
               };
             },
-            gutter: (_index, direction) => {
+            gutter: (index, direction) => {
                 const gutter = document.createElement('div')
                 gutter.className = `gutter gutter-${direction}`
+                if (index === SECONDARY_SIDEBAR_GUTTER_INDEX) {
+                  gutter.classList.add('gutter-disabled')
+                }
                 return gutter
             },
             onDragEnd: ([primarySidebarSize, _mainContentSize, secondarySidebarSize]) => {
